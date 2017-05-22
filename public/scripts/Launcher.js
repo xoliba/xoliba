@@ -63,10 +63,11 @@ function start() {
                       return;
                     }
                     firstClicked = this;
-                  } else {
-                    if(image != "whiteCircle64.png"){
-                      return;
-                    }
+                    this.scale.x += radius/20;
+                    this.scale.y += radius/20;
+                  } else if(image == "whiteCircle64.png"){
+                    firstClicked.scale.x -= radius/20;
+                    firstClicked.scale.y -= radius/20;
                     var helpx = firstClicked.x;
                     var helpy = firstClicked.y;
                     firstClicked.x = this.x;
@@ -74,6 +75,11 @@ function start() {
                     this.x = helpx;
                     this.y = helpy;
                     firstClicked = undefined;
+                  } else if(firstClicked.x == this.x && firstClicked.y == this.y){
+                    firstClicked.scale.x -= radius/20;
+                    firstClicked.scale.y -= radius/20;
+                    firstClicked = undefined;
+                    return;
                   }
               }
 
