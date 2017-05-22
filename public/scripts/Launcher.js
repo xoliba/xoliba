@@ -48,6 +48,8 @@ function start() {
 
               sprite.interactive = true;
               sprite.buttonMode = true;
+              sprite.anchor.x = 0.5;
+              sprite.anchor.y = 0.5;
               sprite.x = padding + i * px - radius;
               sprite.y = padding + j * px - radius;
               sprite.width = radius * 2;
