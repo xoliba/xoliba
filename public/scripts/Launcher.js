@@ -50,8 +50,8 @@ function start() {
               sprite.buttonMode = true;
               sprite.anchor.x = 0.5;
               sprite.anchor.y = 0.5;
-              sprite.x = padding + i * px - radius;
-              sprite.y = padding + j * px - radius;
+              sprite.x = padding + i * px;
+              sprite.y = padding + j * px;
               sprite.width = radius * 2;
               sprite.height = radius * 2;
 
