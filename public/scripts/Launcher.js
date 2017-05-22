@@ -11,6 +11,8 @@ function start() {
 
     var stonesArray = gameBoard.boardTable;
 
+    setGameboard(stonesArray);
+
     var firstClicked;
 
     var padding = size / 10;
@@ -32,7 +34,7 @@ function start() {
 
               var sprite;
 
-              let c = stonesArray[j][i];
+              let c = stonesArray[i][j];
               let path = "";
               if (c == -1) {
                   path = "images/blueCircle64.png";
@@ -68,6 +70,17 @@ function start() {
                     this.scale.x += radius/20;
                     this.scale.y += radius/20;
                   } else if(image == "whiteCircle64.png"){
+
+                    var firstX = Math.round((firstClicked.x - padding) / px);
+                    var firstY = Math.round((firstClicked.y - padding) / px);
+                    var secondX = Math.round((this.x - padding) / px);
+                    var secondY = Math.round((this.y - padding) / px);
+
+
+                    if (!validateMove(firstX, firstY, secondX, secondY)){
+                      return;
+                    }
+
                     firstClicked.scale.x -= radius/20;
                     firstClicked.scale.y -= radius/20;
                     var helpx = firstClicked.x;
@@ -77,6 +90,11 @@ function start() {
                     this.x = helpx;
                     this.y = helpy;
                     firstClicked = undefined;
+
+                    var help = stonesArray[firstX][firstY];
+                    stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
+                    stonesArray[secondX][secondY] = help;
+
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
                     firstClicked.scale.x -= radius/20;
                     firstClicked.scale.y -= radius/20;
