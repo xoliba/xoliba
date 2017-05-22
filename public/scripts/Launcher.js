@@ -48,8 +48,10 @@ function start() {
 
               sprite.interactive = true;
               sprite.buttonMode = true;
-              sprite.x = padding + i * px - radius;
-              sprite.y = padding + j * px - radius;
+              sprite.anchor.x = 0.5;
+              sprite.anchor.y = 0.5;
+              sprite.x = padding + i * px;
+              sprite.y = padding + j * px;
               sprite.width = radius * 2;
               sprite.height = radius * 2;
 
@@ -63,10 +65,11 @@ function start() {
                       return;
                     }
                     firstClicked = this;
-                  } else {
-                    if(image != "whiteCircle64.png"){
-                      return;
-                    }
+                    this.scale.x += radius/20;
+                    this.scale.y += radius/20;
+                  } else if(image == "whiteCircle64.png"){
+                    firstClicked.scale.x -= radius/20;
+                    firstClicked.scale.y -= radius/20;
                     var helpx = firstClicked.x;
                     var helpy = firstClicked.y;
                     firstClicked.x = this.x;
@@ -74,6 +77,11 @@ function start() {
                     this.x = helpx;
                     this.y = helpy;
                     firstClicked = undefined;
+                  } else if(firstClicked.x == this.x && firstClicked.y == this.y){
+                    firstClicked.scale.x -= radius/20;
+                    firstClicked.scale.y -= radius/20;
+                    firstClicked = undefined;
+                    return;
                   }
               }
 
