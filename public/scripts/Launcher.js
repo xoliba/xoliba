@@ -18,6 +18,7 @@ function start() {
     var padding = size / 10;
     var px = size / 7.5;
     var radius = px / 4;
+    var highlightScaling = radius / 100;
 
       PIXI.loader
       .add([
@@ -67,8 +68,8 @@ function start() {
                       return;
                     }
                     firstClicked = this;
-                    this.scale.x += radius/30;
-                    this.scale.y += radius/30;
+                    this.scale.x += highlightScaling;
+                    this.scale.y += highlightScaling;
                   } else if(image == "whiteCircle64.png"){
 
                     var firstX = Math.round((firstClicked.x - padding) / px);
@@ -81,8 +82,8 @@ function start() {
                       return;
                     }
 
-                    firstClicked.scale.x -= radius/30;
-                    firstClicked.scale.y -= radius/30;
+                    firstClicked.scale.x -= highlightScaling;
+                    firstClicked.scale.y -= highlightScaling;
                     var helpx = firstClicked.x;
                     var helpy = firstClicked.y;
                     firstClicked.x = this.x;
@@ -96,8 +97,8 @@ function start() {
                     stonesArray[secondX][secondY] = help;
 
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
-                    firstClicked.scale.x -= radius/30;
-                    firstClicked.scale.y -= radius/30;
+                    firstClicked.scale.x -= highlightScaling;
+                    firstClicked.scale.y -= highlightScaling;
                     firstClicked = undefined;
                     return;
                   }
