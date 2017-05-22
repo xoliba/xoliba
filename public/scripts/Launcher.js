@@ -67,8 +67,8 @@ function start() {
                       return;
                     }
                     firstClicked = this;
-                    this.scale.x += radius/20;
-                    this.scale.y += radius/20;
+                    this.scale.x += radius/30;
+                    this.scale.y += radius/30;
                   } else if(image == "whiteCircle64.png"){
 
                     var firstX = Math.round((firstClicked.x - padding) / px);
@@ -81,8 +81,8 @@ function start() {
                       return;
                     }
 
-                    firstClicked.scale.x -= radius/20;
-                    firstClicked.scale.y -= radius/20;
+                    firstClicked.scale.x -= radius/30;
+                    firstClicked.scale.y -= radius/30;
                     var helpx = firstClicked.x;
                     var helpy = firstClicked.y;
                     firstClicked.x = this.x;
@@ -96,8 +96,8 @@ function start() {
                     stonesArray[secondX][secondY] = help;
 
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
-                    firstClicked.scale.x -= radius/20;
-                    firstClicked.scale.y -= radius/20;
+                    firstClicked.scale.x -= radius/30;
+                    firstClicked.scale.y -= radius/30;
                     firstClicked = undefined;
                     return;
                   }

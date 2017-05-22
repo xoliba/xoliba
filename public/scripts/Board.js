@@ -8,6 +8,7 @@ class Board {
         this.create2DArray();
         this.generateStartingBoard();
         this.chosenStone = new Stone(0,0,-2);
+        
     }
 
     create2DArray() {
