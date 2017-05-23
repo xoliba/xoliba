@@ -74,10 +74,9 @@ var triangle = []
 function trianglesFound(positionX, positionY) {
     var color = gameboard[positionX][positionY];
     var found = 0;
-    var foundOnThisDirection = 0;
     let hypotenuseDirections = [[-1,0],[1,0],[0,-1],[0,1]]; //left, right, down, up
     let edgeDirections = [[-1,1,-1,-1],[1,1,1,-1],[-1,-1,1,-1],[-1,1,1,1]] //left, right, down, up
-    
+
     for (var i = 2; i <= 6; i += 2) { //for all possible triangle distances
         let distanceSide = i / 2;
         for (var j = 0; j < 4; j++) { //for all four directions
@@ -89,32 +88,49 @@ function trianglesFound(positionX, positionY) {
 
 function lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
     let foundOnThisDirection = 0;
-    try {
-        foundOnThisDirection = 0;
-        if (gameboard[originX + directionX][originY + directionY] == color) {
-            foundOnThisDirection += checkDiagonals(originX, originY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color);
-            if (foundOnThisDirection == 2) {
-                foundOnThisDirection++;
-            }
-        } else if (checkDiagonals(originX, originY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) == 2) {
-            foundOnThisDirection++;
-        }
-        console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
-            + "found " + foundOnThisDirection + " triangles");
-    } catch (e) {
+    let triangles = 0;
+    let targetX = originX + directionX;
+    let targetY = originY + directionY;
+    foundOnThisDirection += checkDiagonals(originX, originY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color);
+
+
+    if (!isThisOnBoard(targetX, targetY)) { //if the target is out of board
+      if (foundOnThisDirection == 2) { //if there are two on diagonals
+        triangles = 1;
+      } else {
+        triangles = 0;
+      }
+    } else if (foundOnThisDirection == 0 || (foundOnThisDirection == 1 && gameboard[originX + directionX][originY + directionY] != color)) { //no triangles, target on board
+      triangles = 0;
+    } else if (foundOnThisDirection == 2 && gameboard[originX + directionX][originY + directionY] == color) { //all four stones are the right colour
+      triangles = 3;
+    } else {
+      triangles = 1;
     }
-    return foundOnThisDirection;
+
+    console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
+        + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + isThisOnBoard(targetX, targetY));
+
+    return triangles;
+}
+
+function isThisOnBoard(x,y) {
+  return x >= 0 && x <= 6 && y <= 6 && y >= 0 //if the target is out of board
+
 }
 
 function checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
-    return checkDiagonal(positionX, positionY, firstChangeX, firstChangeY, color) + checkDiagonal(positionX, positionY, secondChangeX, secondChangeY, color);
+    return checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color) + checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color);
 }
 
-function checkDiagonal(positionX, positionY, firstChangeX, firstChangeY, color) {
+function checkIfColour(targetX, targetY, color) {
     var result = 0;
-    if (gameboard[positionX + firstChangeX][positionY + firstChangeY] == color) {
-        result++;
+    if (isThisOnBoard(targetX, targetY)) {
+      if (gameboard[targetX][targetY] == color) {
+          result++;
+      }
     }
+    console.log("checkDiagonal: stone at (" + targetX + ", " + targetY + ") is color " + color + " bool:" + result);
     return result;
 }
 
@@ -122,7 +138,7 @@ function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
     if (firstX == secondX) {
         hitVerticalTriangle(firstX, firstY, secondY, thirdX);
     } else if (firstX == thirdX) {
-
+        hitVerticalTriangle(firstX, firstY, thirdY, secondX);
     } else if (secondX == thirdX) {
 
     } else if (firstY == secondY) {

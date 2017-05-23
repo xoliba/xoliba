@@ -108,6 +108,8 @@ function start() {
                       var help = stonesArray[firstX][firstY];
                       stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
                       stonesArray[secondX][secondY] = help;
+                      
+                      console.log(trianglesFound(secondX, secondY));
 
                       triangleFirst = this;
                       moveDone++;
