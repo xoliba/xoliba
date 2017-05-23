@@ -13,7 +13,7 @@ function validateMove(firstX, firstY, secondX, secondY){
   return true;
 }
 
-function stonesBetweenAreWhite(firstX, firstY, secondX, secondY){
+function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
   if(firstX == secondX){
     var min = Math.min(firstY, secondY);
     var max = Math.max(firstY, secondY);
@@ -65,8 +65,87 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY){
   return true;
 }
 
-function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY){
+function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
   var diffX = Math.abs(firstX - secondX);
   var diffY = Math.abs(firstY - secondY);
   return firstX == secondX || firstY == secondY || diffX == diffY;
+}
+
+function trianglesFound(positionX, positionY) {
+  var color = gameboard[positionX][positionY];
+  var found = 0;
+  var foundOnThisDirection = 0;
+  for (var i = 2; i <= 6; i += 2) {
+    try {
+      foundOnThisDirection = 0;
+      if (gameboard[positionX + i][positionY] == color) {
+        foundOnThisDirection += checkDiagonals(positionX, positionY, i/2, i/2, i/2, -1 * i/2, color);
+        if(foundOnThisDirection == 2){
+          foundOnThisDirection++;
+        }
+        found += foundOnThisDirection;
+      } else if (checkDiagonals(positionX, positionY, i/2, i/2, i/2, -1 * i/2, color) == 2){
+        found++;
+      }
+      console.log(positionX + i, positionY, foundOnThisDirection, found);
+    } catch (e) {
+    }
+
+    try{
+      foundOnThisDirection = 0;
+      if (gameboard[positionX - i][positionY] == color) {
+        foundOnThisDirection += checkDiagonals(positionX, positionY, -1 * i/2, i/2, -1 * i/2, -1 * i/2, color);
+        if(foundOnThisDirection == 2){
+          foundOnThisDirection++;
+        }
+        found += foundOnThisDirection;
+      } else if (checkDiagonals(positionX, positionY, -1 * i/2, i/2, -1 * i/2, -1 * i/2, color) == 2){
+        found++;
+      }
+      console.log(positionX - i, positionY, foundOnThisDirection, found)
+    } catch (e){
+    }
+
+    try{
+      foundOnThisDirection = 0;
+      if (gameboard[positionX][positionY + i] == color) {
+        foundOnThisDirection += checkDiagonals(positionX, positionY, i/2, i/2, -1 * i/2, i/2, color);
+        if(foundOnThisDirection == 2){
+          foundOnThisDirection++;
+        }
+        found += foundOnThisDirection;
+      } else if (checkDiagonals(positionX, positionY, i/2, i/2, -1 * i/2, i/2, color) == 2){
+        found++;
+      }
+      console.log(positionX, positionY + i, foundOnThisDirection, found)
+    } catch (e){
+    }
+
+    try{
+      foundOnThisDirection = 0;
+      if (gameboard[positionX][positionY - i] == color) {
+        foundOnThisDirection += checkDiagonals(positionX, positionY, i/2, -1 * i/2, -1 * i/2, -1 * i/2, color);
+        if(foundOnThisDirection == 2){
+          foundOnThisDirection++;
+        }
+        found += foundOnThisDirection;
+      } else if (checkDiagonals(positionX, positionY, i/2, i/2, i/2, -1 * i/2, color) == 2){
+        found++;
+      }
+      console.log(positionX, positionY - i, foundOnThisDirection, found)
+    } catch (e){
+    }
+  }
+  return found;
+}
+
+function checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
+  var result = 0;
+  if (gameboard[positionX + firstChangeX][positionY + firstChangeY] == color) {
+    result++;
+  }
+  if (gameboard[positionX + secondChangeX][positionY + secondChangeY] == color) {
+    result++;
+  }
+  return result;
 }
