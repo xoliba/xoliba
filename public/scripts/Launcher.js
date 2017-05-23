@@ -71,47 +71,46 @@ function start() {
                   if(moveDone){
                     if(moveDone == 2){
                       triangleThird = this;
-                      
+
                       moveDone = 0;
                     } else {
                       triangleSecond = this;
                       moveDone++;
                     }
-                  }
-                  if(firstClicked === undefined){
-                    if(image == "whiteCircle64.png"){
-                      return;
-                    }
-                    firstClicked = this;
-                    this.scale.x += highlightScaling;
-                    this.scale.y += highlightScaling;
-                  } else if(image == "whiteCircle64.png"){
+                  } else if(firstClicked === undefined){
+                      if(image == "whiteCircle64.png"){
+                        return;
+                      }
+                      firstClicked = this;
+                      this.scale.x += highlightScaling;
+                      this.scale.y += highlightScaling;
+                    } else if(image == "whiteCircle64.png"){
 
-                    var firstX = getStonesArrayPosition(firstClicked.x);
-                    var firstY = getStonesArrayPosition(firstClicked.y);
-                    var secondX = getStonesArrayPosition(this.x);
-                    var secondY = getStonesArrayPosition(this.y);
+                      var firstX = getStonesArrayPosition(firstClicked.x);
+                      var firstY = getStonesArrayPosition(firstClicked.y);
+                      var secondX = getStonesArrayPosition(this.x);
+                      var secondY = getStonesArrayPosition(this.y);
 
-                    if (!validateMove(firstX, firstY, secondX, secondY)){
-                      return;
-                    }
+                      if (!validateMove(firstX, firstY, secondX, secondY)){
+                        return;
+                      }
 
-                    firstClicked.scale.x -= highlightScaling;
-                    firstClicked.scale.y -= highlightScaling;
-                    var helpx = firstClicked.x;
-                    var helpy = firstClicked.y;
-                    firstClicked.x = this.x;
-                    firstClicked.y = this.y;
-                    this.x = helpx;
-                    this.y = helpy;
-                    firstClicked = undefined;
+                      firstClicked.scale.x -= highlightScaling;
+                      firstClicked.scale.y -= highlightScaling;
+                      var helpx = firstClicked.x;
+                      var helpy = firstClicked.y;
+                      firstClicked.x = this.x;
+                      firstClicked.y = this.y;
+                      this.x = helpx;
+                      this.y = helpy;
+                      firstClicked = undefined;
 
-                    var help = stonesArray[firstX][firstY];
-                    stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
-                    stonesArray[secondX][secondY] = help;
+                      var help = stonesArray[firstX][firstY];
+                      stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
+                      stonesArray[secondX][secondY] = help;
 
-                    triangleFirst = this;
-                    moveDone++;
+                      triangleFirst = this;
+                      moveDone++;
 
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
                     firstClicked.scale.x -= highlightScaling;
