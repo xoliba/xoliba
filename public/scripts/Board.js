@@ -83,3 +83,6 @@ class Stone {
     }
 
 }
+
+//Tests wont run without export (cannot be accessed outside)
+module.exports.Board = Board;
