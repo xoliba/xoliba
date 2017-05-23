@@ -11,9 +11,15 @@ app.set('view engine', 'ejs');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
+var WebSocketClient = require('websocket').client;
+var aisocket = new WebSocketClient();
+
+
 app.get('/', function(req, res) {
 	res.render('index')
 });
+
+var table;
 
 io.on('connection', function(socket) {
 	socket.on('message', function(data) {
@@ -21,18 +27,16 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('table', function(data) {
-		console.log(data);
+		table = data;
+		console.log(table);
+		aisocket.connect('ws://127.0.0.1:4567/echo'); // edit for deployment
 	});
+
 });
 
-var WebSocketClient = require('websocket').client;
-var aisocket = new WebSocketClient();
-
-aisocket.connect('ws://127.0.0.1:4567/echo');
-
 aisocket.on('connect', function(connection) {
-	console.log('connected');
-	connection.sendUTF('asdasd');
+	console.log('connected to ai server');
+	connection.sendUTF(table);
 });
 
 server.listen(app.get('port'), function() {
