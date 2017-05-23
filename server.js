@@ -25,6 +25,16 @@ io.on('connection', function(socket) {
 	});
 });
 
+var WebSocketClient = require('websocket').client;
+var aisocket = new WebSocketClient();
+
+aisocket.connect('ws://127.0.0.1:4567/echo');
+
+aisocket.on('connect', function(connection) {
+	console.log('connected');
+	connection.sendUTF('asdasd');
+});
+
 server.listen(app.get('port'), function() {
 	console.log('Node running on port', app.get('port'));
 });
