@@ -13,12 +13,13 @@ function start() {
 
     setGameboard(stonesArray);
 
-    var firstClicked;
-    var triangleFirst;
-    var triangleSecond;
-    var triangleThird;
+    var sprites = [];
+    for (var i = 0; i < 7; i++) {
+      sprites[i] = [];
+    }
 
-    var moveDone = 0;
+    var firstClicked;
+    var corners = [];
 
     var padding = size / 10;
     var px = size / 7.5;
@@ -68,65 +69,69 @@ function start() {
 
               function onPointerDown(){
                 var image = this.texture.baseTexture.source.src.split("/").pop();
-                  if(moveDone){
-                    if(moveDone == 2){
-                      triangleThird = this;
 
-                      moveDone = 0;
-                    } else {
-                      triangleSecond = this;
-                      moveDone++;
+                if(corners.length == 4){
+                  corners.push(getStonesArrayPosition(this.x));
+                  corners.push(getStonesArrayPosition(this.y));
+                  hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+                  corners = [];
+                } else if(corners.length == 2) {
+                  corners.push(getStonesArrayPosition(this.x));
+                  corners.push(getStonesArrayPosition(this.y));
+                } else if(firstClicked === undefined){
+                    if(image == "whiteCircle64.png"){
+                      return;
                     }
-                  } else if(firstClicked === undefined){
-                      if(image == "whiteCircle64.png"){
-                        return;
-                      }
-                      firstClicked = this;
-                      this.scale.x += highlightScaling;
-                      this.scale.y += highlightScaling;
-                    } else if(image == "whiteCircle64.png"){
+                    firstClicked = this;
+                    this.scale.x += highlightScaling;
+                    this.scale.y += highlightScaling;
+                  } else if(image == "whiteCircle64.png"){
 
-                      var firstX = getStonesArrayPosition(firstClicked.x);
-                      var firstY = getStonesArrayPosition(firstClicked.y);
-                      var secondX = getStonesArrayPosition(this.x);
-                      var secondY = getStonesArrayPosition(this.y);
+                    var firstX = getStonesArrayPosition(firstClicked.x);
+                    var firstY = getStonesArrayPosition(firstClicked.y);
+                    var secondX = getStonesArrayPosition(this.x);
+                    var secondY = getStonesArrayPosition(this.y);
 
-                      if (!validateMove(firstX, firstY, secondX, secondY)){
-                        return;
-                      }
+                    if (!validateMove(firstX, firstY, secondX, secondY)){
+                      return;
+                    }
 
-                      firstClicked.scale.x -= highlightScaling;
-                      firstClicked.scale.y -= highlightScaling;
-                      var helpx = firstClicked.x;
-                      var helpy = firstClicked.y;
-                      firstClicked.x = this.x;
-                      firstClicked.y = this.y;
-                      this.x = helpx;
-                      this.y = helpy;
-                      firstClicked = undefined;
-
-                      var help = stonesArray[firstX][firstY];
-                      stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
-                      stonesArray[secondX][secondY] = help;
-                      
-                      console.log(trianglesFound(secondX, secondY));
-
-                      triangleFirst = this;
-                      moveDone++;
-
-                  } else if(firstClicked.x == this.x && firstClicked.y == this.y){
                     firstClicked.scale.x -= highlightScaling;
                     firstClicked.scale.y -= highlightScaling;
+                    var helpx = firstClicked.x;
+                    var helpy = firstClicked.y;
+                    firstClicked.x = this.x;
+                    firstClicked.y = this.y;
+                    this.x = helpx;
+                    this.y = helpy;
                     firstClicked = undefined;
-                    return;
-                  }
+
+                    var help = stonesArray[firstX][firstY];
+                    stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
+                    stonesArray[secondX][secondY] = help;
+
+                    console.log(trianglesFound(secondX, secondY));
+
+                    corners.push(getStonesArrayPosition(this.x));
+                    corners.push(getStonesArrayPosition(this.y));
+                    console.log(corners);
+
+                } else if(firstClicked.x == this.x && firstClicked.y == this.y){
+                  firstClicked.scale.x -= highlightScaling;
+                  firstClicked.scale.y -= highlightScaling;
+                  firstClicked = undefined;
+                  return;
+                }
               }
+
+              sprites[i][j] = sprite;
 
               app.stage.addChild(sprite);
 
             }
           }
         }
+        setSprites(sprites);
       }
 
       function getStonesArrayPosition(coordinate){

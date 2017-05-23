@@ -1,7 +1,12 @@
 var gameboard;
+var sprites;
 
 function setGameboard(gameBoard) {
     gameboard = gameBoard;
+}
+
+function setSprites(s){
+  sprites = s;
 }
 
 function validateMove(firstX, firstY, secondX, secondY) {
@@ -130,27 +135,27 @@ function checkIfColour(targetX, targetY, color) {
           result++;
       }
     }
-    console.log("checkDiagonal: stone at (" + targetX + ", " + targetY + ") is color " + color + " bool:" + result);
+    console.log("\tcheckDiagonal: stone at (" + targetX + ", " + targetY + ") is color " + color + " bool:" + result);
     return result;
 }
 
 function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
     if (firstX == secondX) {
-        hitVerticalTriangle(firstX, firstY, secondY, thirdX);
+        hitVerticalTriangle(firstY, secondY, firstX, thirdX);
     } else if (firstX == thirdX) {
-        hitVerticalTriangle(firstX, firstY, thirdY, secondX);
+        hitVerticalTriangle(firstY, thirdY, firstX, secondX);
     } else if (secondX == thirdX) {
-
+      hitVerticalTriangle(secondY, thirdY, secondX, firstX)
     } else if (firstY == secondY) {
-
+      hitHorizontalTriangle(firstX, secondX, firstY, thirdY);
     } else if (firstY == thirdY) {
-
+      hitHorizontalTriangle(firstX, thirdX, firstY, secondY);
     } else if (secondY == thirdY) {
-
+      hitHorizontalTriangle(secondX, thirdX, secondY, firstY);
     }
 }
 
-function hitVerticalTriangle(startX, firstY, secondY, endX) {
+function hitVerticalTriangle(firstY, secondY, startX, endX) {
     var min = Math.min(firstY, secondY);
     var max = Math.max(firstY, secondY);
     var n = 1;
@@ -171,4 +176,27 @@ function hitVerticalTriangle(startX, firstY, secondY, endX) {
         min++;
         max--;
     }
+}
+
+function hitHorizontalTriangle(firstX, secondX, startY, endY) {
+    var min = Math.min(firstX, secondX);
+    var max = Math.max(firstX, secondX);
+    var n = 1;
+    if (endY < startY) {
+        n *= -1;
+        var help = startY;
+        startY = endY;
+        endY = help;
     }
+    for (var i = startY; i < endY; i += n) {
+        for (var j = min; j < max; j++) {
+            if (j == firstX || j == secondX) {
+                continue;
+            }
+            gameboard[j][i] = 0;
+            sprites[j][i].setTexture("images/whiteCircle64.png");
+        }
+        min++;
+        max--;
+    }
+}
