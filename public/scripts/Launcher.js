@@ -14,6 +14,11 @@ function start() {
     setGameboard(stonesArray);
 
     var firstClicked;
+    var triangleFirst;
+    var triangleSecond;
+    var triangleThird;
+
+    var moveDone = 0;
 
     var padding = size / 10;
     var px = size / 7.5;
@@ -63,6 +68,16 @@ function start() {
 
               function onPointerDown(){
                 var image = this.texture.baseTexture.source.src.split("/").pop();
+                  if(moveDone){
+                    if(moveDone == 2){
+                      triangleThird = this;
+                      
+                      moveDone = 0;
+                    } else {
+                      triangleSecond = this;
+                      moveDone++;
+                    }
+                  }
                   if(firstClicked === undefined){
                     if(image == "whiteCircle64.png"){
                       return;
@@ -72,11 +87,10 @@ function start() {
                     this.scale.y += highlightScaling;
                   } else if(image == "whiteCircle64.png"){
 
-                    var firstX = Math.round((firstClicked.x - padding) / px);
-                    var firstY = Math.round((firstClicked.y - padding) / px);
-                    var secondX = Math.round((this.x - padding) / px);
-                    var secondY = Math.round((this.y - padding) / px);
-
+                    var firstX = getStonesArrayPosition(firstClicked.x);
+                    var firstY = getStonesArrayPosition(firstClicked.y);
+                    var secondX = getStonesArrayPosition(this.x);
+                    var secondY = getStonesArrayPosition(this.y);
 
                     if (!validateMove(firstX, firstY, secondX, secondY)){
                       return;
@@ -96,6 +110,9 @@ function start() {
                     stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
                     stonesArray[secondX][secondY] = help;
 
+                    triangleFirst = this;
+                    moveDone++;
+
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
                     firstClicked.scale.x -= highlightScaling;
                     firstClicked.scale.y -= highlightScaling;
@@ -109,6 +126,10 @@ function start() {
             }
           }
         }
+      }
+
+      function getStonesArrayPosition(coordinate){
+        return Math.round((coordinate - padding) / px);
       }
 
 
