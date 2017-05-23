@@ -1,5 +1,3 @@
-var webpack = require('webpack');
-
 var express = require('express');
 var app = express();
 
@@ -10,10 +8,17 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/public');
 app.set('view engine', 'ejs');
 
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
 app.get('/', function(req, res) {
 	res.render('index')
 });
 
-app.listen(app.get('port'), function() {
+io.on('connection', function(socket) {
+	console.log('user connected');
+});
+
+server.listen(app.get('port'), function() {
 	console.log('Node running on port', app.get('port'));
 });
