@@ -16,10 +16,12 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-	console.log('user connected');
-
 	socket.on('message', function(data) {
-		console.log('received a message');
+		console.log(data);
+	});
+
+	socket.on('table', function(data) {
+		console.log(data);
 	});
 });
 

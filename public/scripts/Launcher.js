@@ -96,6 +96,8 @@ function start() {
                     stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
                     stonesArray[secondX][secondY] = help;
 
+                    socket.emit('table', stonesArray);
+
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
                     firstClicked.scale.x -= highlightScaling;
                     firstClicked.scale.y -= highlightScaling;
