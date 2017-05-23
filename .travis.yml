@@ -4,3 +4,4 @@ node_js:
 cache:
         - node_modules
 dist: trusty
+before_install: npm install mocha
