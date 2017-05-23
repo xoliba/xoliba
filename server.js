@@ -17,6 +17,10 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket) {
 	console.log('user connected');
+
+	socket.on('message', function(data) {
+		console.log('received a message');
+	});
 });
 
 server.listen(app.get('port'), function() {
