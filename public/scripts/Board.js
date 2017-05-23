@@ -25,6 +25,7 @@ class Board {
         let reds = 17;
         let blues = 17;
         let whites = 11;
+        let startingTurn = 0;
 
         for (let i = 0; i < this.boardTable.length; i++) {
             for (let j = 0; j < this.boardTable.length; j++) {
@@ -44,6 +45,17 @@ class Board {
                 }
             }
         }
+        startingTurn = this.boardTable[0][1] + this.boardTable[0][5] + this.boardTable[1][0] + this.boardTable[1][5] +
+            this.boardTable[5][0] + this.boardTable[5][5] +this.boardTable[6][1] + this.boardTable[6][5];
+        if(startingTurn == 0) {
+            for(let i = 1; i < 6; i++) {
+                startingTurn += this.boardTable[i][0];
+                startingTurn += this.boardTable[i][6];
+                startingTurn += this.boardTable[0][i];
+                startingTurn += this.boardTable[6][i];
+            }
+        }
+        console.log("starting turn: " + startingTurn.valueOf());
     }
 
     clickStone (x,y) {
