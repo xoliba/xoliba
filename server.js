@@ -1,5 +1,3 @@
-var webpack = require('webpack');
-
 var express = require('express');
 var app = express();
 
