@@ -2,3 +2,6 @@ engines:
         eslint:
                 enabled: true
                 config: ./.eslintrc.json
+exclude_paths:
+        - "./karma.conf.js"
+        - "./webpack.config.js"
