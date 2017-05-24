@@ -13,7 +13,7 @@ class Board {
 
     create2DArray() {
         for (let i = 0; i < ROWS; i++) {
-            this.boardTable[i] = new Array(ROWS);
+            this.boardTable[i] = [];
             for (let j = 0; j < ROWS; j++) {
                 this.boardTable[i][j] = 0;
             }

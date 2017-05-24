@@ -114,9 +114,8 @@ function start() {
                             this.y = helpy;
                             firstClicked = undefined;
 
-                            var help = stonesArray[firstX][firstY];
-                            stonesArray[firstX][firstY] = stonesArray[secondX][secondY];
-                            stonesArray[secondX][secondY] = help;
+                            swap2DArrayPositions(stonesArray, firstX, firstY, secondX, secondY);
+                            swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
                             
                             console.log(trianglesFound(secondX, secondY));
 
@@ -142,7 +141,11 @@ function start() {
         return Math.round((coordinate - padding) / px);
     }
 
-
+    function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
+        var help = array[firstX][firstY];
+        array[firstX][firstY] = array[secondX][secondY];
+        array[secondX][secondY] = help;
+    }
 
     app.renderer.render(app.stage);
 }
