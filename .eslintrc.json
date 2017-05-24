@@ -1,0 +1,27 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+	"sourceType": "module"
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": 2,
+	"indent": ["warn", 4],
+	"camelcase": 1,
+	"array-bracket-spacing": 1,
+	"no-extra-parens": 1,
+	"no-prototype-builtins": 2,
+	"no-template-curly-in-string": 2,
+	"block-scoped-var": 1,
+	"eqeqeq": 2,
+	"curly": 1
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "plugins": [
+        "standard",
+        "promise"
+    ]
+}
