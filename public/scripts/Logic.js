@@ -14,9 +14,9 @@ function setGameboard(gameBoard) {
         }
     }
     if (startingTurn > 0) {
-        startingTurn = 1;
-    } else {
         startingTurn = -1;
+    } else {
+        startingTurn = 1;
     }
     turnCounter = 0;
 }
