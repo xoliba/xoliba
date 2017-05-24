@@ -6,7 +6,7 @@ var turnCounter;
 function setGameboard(gameBoard) {
     gameboard = gameBoard;
     startingTurn = gameBoard.startingTurn;
-    if(startingTurn == 0) {
+    if(startingTurn === 0) {
         if(Math.random() > 0.5) {
             startingTurn = 1;
         } else {
@@ -26,7 +26,7 @@ function setSprites(s){
 }
 
 function validateMove(firstX, firstY, secondX, secondY) {
-    if (gameboard[firstX][firstY] == startingTurn) {
+    if (gameboard[firstX][firstY] === startingTurn) {
         if (!stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
             return false;
         } else if (!stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
@@ -41,19 +41,19 @@ function validateMove(firstX, firstY, secondX, secondY) {
 }
 
 function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
-    if (firstX == secondX) {
+    if (firstX === secondX) {
         var min = Math.min(firstY, secondY);
         var max = Math.max(firstY, secondY);
         for (var i = min + 1; i < max; i++) {
-            if (gameboard[firstX][i] != 0) {
+            if (gameboard[firstX][i] !== 0) {
                 return false;
             }
         }
-    } else if (firstY == secondY) {
+    } else if (firstY === secondY) {
         var min = Math.min(firstX, secondX);
         var max = Math.max(firstX, secondX);
         for (var i = min + 1; i < max; i++) {
-            if (gameboard[i][firstY] != 0) {
+            if (gameboard[i][firstY] !== 0) {
                 return false;
             }
         }
@@ -63,7 +63,7 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
         var minY = Math.min(firstY, secondY);
         for (var i = minX + 1; i < maxX; i++) {
             minY++;
-            if (gameboard[i][minY] != 0) {
+            if (gameboard[i][minY] !== 0) {
                 console.log(i, minY, gameboard[i][minY]);
 
                 return false;
@@ -75,7 +75,7 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
         var minY = Math.max(firstY, secondY);
         for (var i = minX + 1; i < maxX; i++) {
             minY--;
-            if (gameboard[i][minY] != 0) {
+            if (gameboard[i][minY] !== 0) {
                 console.log(i, minY, gameboard[i][minY]);
 
                 return false;
@@ -86,7 +86,7 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
 }
 
 function changeTurn() {
-    if(startingTurn == 1) {
+    if(startingTurn === 1) {
         startingTurn = -1;
     } else {
         startingTurn = 1;
@@ -95,10 +95,10 @@ function changeTurn() {
 function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     var diffX = Math.abs(firstX - secondX);
     var diffY = Math.abs(firstY - secondY);
-    return firstX == secondX || firstY == secondY || diffX == diffY;
+    return firstX === secondX || firstY === secondY || diffX === diffY;
 }
 
-var triangle = []
+var triangle = [];
 function trianglesFound(positionX, positionY) {
     var color = gameboard[positionX][positionY];
     var found = 0;
@@ -108,7 +108,7 @@ function trianglesFound(positionX, positionY) {
     for (var i = 2; i <= 6; i += 2) { //for all possible triangle distances
         let distanceSide = i / 2;
         for (var j = 0; j < 4; j++) { //for all four directions
-            found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color)
+            found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color);
         }
     }
     return found;
@@ -123,14 +123,14 @@ function lookForTriangles(originX, originY, directionX, directionY, firstChangeX
 
 
     if (!isThisOnBoard(targetX, targetY)) { //if the target is out of board
-        if (foundOnThisDirection == 2) { //if there are two on diagonals
+        if (foundOnThisDirection === 2) { //if there are two on diagonals
             triangles = 1;
         } else {
             triangles = 0;
         }
-    } else if (foundOnThisDirection == 0 || (foundOnThisDirection == 1 && gameboard[originX + directionX][originY + directionY] != color)) { //no triangles, target on board
+    } else if (foundOnThisDirection === 0 || (foundOnThisDirection === 1 && gameboard[originX + directionX][originY + directionY] !== color)) { //no triangles, target on board
         triangles = 0;
-    } else if (foundOnThisDirection == 2 && gameboard[originX + directionX][originY + directionY] == color) { //all four stones are the right colour
+    } else if (foundOnThisDirection === 2 && gameboard[originX + directionX][originY + directionY] === color) { //all four stones are the right colour
         triangles = 3;
     } else {
         triangles = 1;
@@ -143,7 +143,7 @@ function lookForTriangles(originX, originY, directionX, directionY, firstChangeX
 }
 
 function isThisOnBoard(x, y) {
-    return x >= 0 && x <= 6 && y <= 6 && y >= 0 //if the target is out of board
+    return x >= 0 && x <= 6 && y <= 6 && y >= 0; //if the target is out of board
 
 }
 
@@ -154,7 +154,7 @@ function checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, second
 function checkIfColour(targetX, targetY, color) {
     var result = 0;
     if (isThisOnBoard(targetX, targetY)) {
-        if (gameboard[targetX][targetY] == color) {
+        if (gameboard[targetX][targetY] === color) {
             result++;
         }
     }
@@ -171,7 +171,7 @@ function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO va
     } else if (firstX === thirdX) {
         hitTriangle(firstY, thirdY, firstX, secondX, true);
     } else if (secondX === thirdX) {
-        hitTriangle(secondY, thirdY, secondX, firstX, true)
+        hitTriangle(secondY, thirdY, secondX, firstX, true);
     } else if (firstY === secondY) {
         hitTriangle(firstX, secondX, firstY, thirdY, false);
     } else if (firstY === thirdY) {
@@ -192,7 +192,7 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     }
     for (var i = 0; i < Math.abs(tipH - bottomH); i++) { //we walk through all the floors of the triangle
         for (var j = min; j <= max; j++) {
-            if (j == basis1 || j == basis2) {
+            if (j === basis1 || j === basis2) {
                 console.log("spare corner (" + i + ", " + j + ")");
                 continue;
             }
