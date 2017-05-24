@@ -1,22 +1,43 @@
 var gameboard;
 var sprites;
+var startingTurn;
+var turnCounter;
 
 function setGameboard(gameBoard) {
     gameboard = gameBoard;
+    startingTurn = gameBoard.startingTurn;
+    if(startingTurn == 0) {
+        if(Math.random() > 0.5) {
+            startingTurn = 1;
+        } else {
+            startingTurn = -1;
+        }
+    }
+    if(startingTurn > 0) {
+        startingTurn = 1;
+    } else {
+        startingTurn = -1;
+    }
+    turnCounter = 0;
 }
 
-function setSprites(s) {
+function setSprites(s){
     sprites = s;
 }
 
 function validateMove(firstX, firstY, secondX, secondY) {
-    if (!stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
-        return false;
-    } else if (!stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
-        return false;
+    if (gameboard[firstX][firstY] == startingTurn) {
+        if (!stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
+            return false;
+        } else if (!stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
+            return false;
+        }
+        hitStones(triangle[0], triangle[1], triangle[2], triangle[3], triangle[4], triangle[5]);
+        changeTurn();
+        //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
+        return true;
     }
-    hitStones(triangle[0], triangle[1], triangle[2], triangle[3], triangle[4], triangle[5]);
-    return true;
+    return false;
 }
 
 function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
@@ -64,6 +85,13 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
     return true;
 }
 
+function changeTurn() {
+    if(startingTurn == 1) {
+        startingTurn = -1;
+    } else {
+        startingTurn = 1;
+    }
+}
 function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     var diffX = Math.abs(firstX - secondX);
     var diffY = Math.abs(firstY - secondY);
