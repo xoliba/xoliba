@@ -14,9 +14,9 @@ function setGameboard(gameBoard) {
         }
     }
     if (startingTurn > 0) {
-        startingTurn = 1;
-    } else {
         startingTurn = -1;
+    } else {
+        startingTurn = 1;
     }
     turnCounter = 0;
 }
@@ -24,13 +24,25 @@ function setGameboard(gameBoard) {
 function setSprites(s) {
     sprites = s;
 }
-
+function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
+        var help = array[firstX][firstY];
+        array[firstX][firstY] = array[secondX][secondY];
+        array[secondX][secondY] = help;
+    }
+    
 function validateMove(firstX, firstY, secondX, secondY) {
     if (gameboard[firstX][firstY] === startingTurn) {
         if (!stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
             return false;
         } else if (!stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
             return false;
+        }  
+        swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
+        if ((trianglesFound(secondX, secondY)) == 0) {
+            swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
+            return false;
+        } else {
+            swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap back to the original positions 
         }
         hitStones(triangle[0], triangle[1], triangle[2], triangle[3], triangle[4], triangle[5]);
         changeTurn();
@@ -111,7 +123,9 @@ function trianglesFound(positionX, positionY) {
             found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color);
         }
     }
+    console.log("FOUND: " + found);
     return found;
+    
 }
 
 function lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
