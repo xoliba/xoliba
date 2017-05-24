@@ -29,6 +29,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "./node_modules/.bin/mocha",
+    "lint": "./node_modules/.bin/eslint .",
     "pixicp": "cp node_modules/pixi.js/dist/pixi.js public/"
   }
 }
