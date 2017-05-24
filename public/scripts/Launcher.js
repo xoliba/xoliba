@@ -98,6 +98,8 @@ function start() {
 
                     console.log(trianglesFound(secondX, secondY))
 
+                    aisocket.send(JSON.stringify(stonesArray));
+
                   } else if(firstClicked.x == this.x && firstClicked.y == this.y){
                     firstClicked.scale.x -= highlightScaling;
                     firstClicked.scale.y -= highlightScaling;
