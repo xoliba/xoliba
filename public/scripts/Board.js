@@ -5,11 +5,11 @@ var startingTurn;
 class Board {
 
     constructor() {
+        startingTurn = 0;
         this.boardTable = new Array(ROWS);
         this.create2DArray();
         this.generateStartingBoard();
         this.chosenStone = new Stone(0,0,-2);
-        startingTurn = 0;
     }
 
     create2DArray() {
@@ -80,11 +80,11 @@ class Board {
     }
 
     get gameBoard() {
-        return this.boardTable;
+        return boardTable;
     }
 
     get startingTurn() {
-        return this.startingTurn;
+        return startingTurn;
     }
 
 }

@@ -3,22 +3,28 @@ var sprites;
 var startingTurn;
 var turnCounter;
 
-function setGameboard(gameBoard) {
+function setGameboard(gameBoard, starting) {
     gameboard = gameBoard;
-    startingTurn = gameBoard.startingTurn;
+    startingTurn = starting;
+    console.log("starting turn in logic: " + startingTurn)
     if (startingTurn === 0) {
         if (Math.random() > 0.5) {
             startingTurn = 1;
+            turnIndicator("blue", "BLUES");
         } else {
             startingTurn = -1;
+            turnIndicator("red", "REDS");
         }
     }
     if (startingTurn > 0) {
         startingTurn = -1;
+        turnIndicator("blue", "BLUES");
     } else {
         startingTurn = 1;
+        turnIndicator("red", "REDS");
     }
     turnCounter = 0;
+
 }
 
 function setSprites(s) {
@@ -29,23 +35,21 @@ function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
         array[firstX][firstY] = array[secondX][secondY];
         array[secondX][secondY] = help;
     }
-    
+
 function validateMove(firstX, firstY, secondX, secondY) {
     if (gameboard[firstX][firstY] === startingTurn) {
         if (!stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
             return false;
         } else if (!stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
             return false;
-        }  
+        }
         swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
         if ((trianglesFound(secondX, secondY)) == 0) {
             swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
             return false;
         } else {
-            swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap back to the original positions 
+            swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap back to the original positions
         }
-        hitStones(triangle[0], triangle[1], triangle[2], triangle[3], triangle[4], triangle[5]);
-        changeTurn();
         //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
         return true;
     }
@@ -100,9 +104,17 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
 function changeTurn() {
     if (startingTurn === 1) {
         startingTurn = -1;
+        turnIndicator("blue", "BLUES");
     } else {
         startingTurn = 1;
+        turnIndicator("red", "REDS");
     }
+}
+
+function turnIndicator(color, turn){
+    var turnTeller = document.getElementById("turn");
+    turnTeller.style.color = color;
+    turnTeller.innerHTML = "It's " + turn + " turn!"
 }
 function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     var diffX = Math.abs(firstX - secondX);
@@ -125,7 +137,7 @@ function trianglesFound(positionX, positionY) {
     }
     console.log("FOUND: " + found);
     return found;
-    
+
 }
 
 function lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
@@ -225,4 +237,5 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
         min++;
         max--;
     }
+    changeTurn();
 }

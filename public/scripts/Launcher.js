@@ -10,8 +10,10 @@ function start() {
     drawTable(app.stage, gameBoard);
 
     var stonesArray = gameBoard.boardTable;
+    var starts = gameBoard.startingTurn;
+    console.log("on launcher starting turn is: " + starts);
 
-    setGameboard(stonesArray);
+    setGameboard(stonesArray, gameBoard.startingTurn);
 
     var sprites = [];
     for (var i = 0; i < 7; i++) {
@@ -70,15 +72,21 @@ function start() {
                     function onPointerDown() {
                         var image = this.texture.baseTexture.source.src.split("/").pop();
 
-                        if (corners.length == 4) { //two corners of the triangle choosed already
+                        if (corners.length == 4) { //two corners of the triangle chosen already
                             corners.push(getStonesArrayPosition(this.x));
                             corners.push(getStonesArrayPosition(this.y));
+                            sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
+                            sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
+                            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
+                            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
                             console.log(corners)
                             hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
                             corners = [];
-                        } else if (corners.length == 2) { //one corner of the triangle choosed
+                        } else if (corners.length == 2) { //one corner of the triangle chosen already
                             corners.push(getStonesArrayPosition(this.x));
                             corners.push(getStonesArrayPosition(this.y));
+                            this.scale.x += highlightScaling;
+                            this.scale.y += highlightScaling;
                             console.log(corners)
                         } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
                             if (image == "whiteCircle64.png") {
@@ -93,19 +101,17 @@ function start() {
                             var firstY = getStonesArrayPosition(firstClicked.y);
                             var secondX = getStonesArrayPosition(this.x);
                             var secondY = getStonesArrayPosition(this.y);
-                            
+
                             console.log("Launcher: change the place of stones (" + firstX + ", " + firstY + "), (" + secondX + ", " + secondY + ")");
 
                             if (!validateMove(firstX, firstY, secondX, secondY)) {
                                 return;
                             }
-                            
+
                             corners.push(getStonesArrayPosition(this.x));
                             corners.push(getStonesArrayPosition(this.y));
                             console.log(corners);
 
-                            firstClicked.scale.x -= highlightScaling;
-                            firstClicked.scale.y -= highlightScaling;
                             var helpx = firstClicked.x;
                             var helpy = firstClicked.y;
                             firstClicked.x = this.x;
@@ -116,7 +122,7 @@ function start() {
 
                             swap2DArrayPositions(stonesArray, firstX, firstY, secondX, secondY);
                             swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
-                            
+
                             console.log(trianglesFound(secondX, secondY));
 
                         } else if (firstClicked.x == this.x && firstClicked.y == this.y) {
