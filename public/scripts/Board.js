@@ -1,5 +1,5 @@
 const ROWS = 7;
-
+var startingTurn;
 
 class Board {
 
@@ -8,7 +8,7 @@ class Board {
         this.create2DArray();
         this.generateStartingBoard();
         this.chosenStone = new Stone(0,0,-2);
-        
+        startingTurn = 0;
     }
 
     create2DArray() {
@@ -25,7 +25,6 @@ class Board {
         let reds = 17;
         let blues = 17;
         let whites = 11;
-        let startingTurn = 0;
 
         for (let i = 0; i < this.boardTable.length; i++) {
             for (let j = 0; j < this.boardTable.length; j++) {
@@ -45,8 +44,11 @@ class Board {
                 }
             }
         }
-        startingTurn = this.boardTable[0][1] + this.boardTable[0][5] + this.boardTable[1][0] + this.boardTable[1][5] +
-            this.boardTable[5][0] + this.boardTable[5][5] +this.boardTable[6][1] + this.boardTable[6][5];
+        startingTurn = this.boardTable[0][1] + this.boardTable[0][5] + this.boardTable[1][0] + this.boardTable[1][6]
+            + this.boardTable[5][0] + this.boardTable[5][6] +this.boardTable[6][1] + this.boardTable[6][5];
+        console.log(this.boardTable[0][1] +" + " +this.boardTable[0][5]+" + " +this.boardTable[1][0] +" + " +this.boardTable[1][6]
+            +" + " +this.boardTable[5][0] +" + " +this.boardTable[5][6] +" + " +this.boardTable[6][1] +" + " +this.boardTable[6][5] +" = " +startingTurn
+    )
         if(startingTurn == 0) {
             for(let i = 1; i < 6; i++) {
                 startingTurn += this.boardTable[i][0];
@@ -78,6 +80,10 @@ class Board {
 
     get gameBoard() {
         return this.boardTable;
+    }
+
+    get startingTurn() {
+        return this.startingTurn;
     }
 
 }
