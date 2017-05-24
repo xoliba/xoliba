@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "./node_modules/.bin/mocha --compilers ts:typescript-require",
+    "test": "./node_modules/.bin/mocha",
     "pixicp": "cp node_modules/pixi.js/dist/pixi.js public/"
   }
 }
