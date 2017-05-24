@@ -6,14 +6,14 @@ var turnCounter;
 function setGameboard(gameBoard) {
     gameboard = gameBoard;
     startingTurn = gameBoard.startingTurn;
-    if(startingTurn === 0) {
-        if(Math.random() > 0.5) {
+    if (startingTurn === 0) {
+        if (Math.random() > 0.5) {
             startingTurn = 1;
         } else {
             startingTurn = -1;
         }
     }
-    if(startingTurn > 0) {
+    if (startingTurn > 0) {
         startingTurn = 1;
     } else {
         startingTurn = -1;
@@ -21,7 +21,7 @@ function setGameboard(gameBoard) {
     turnCounter = 0;
 }
 
-function setSprites(s){
+function setSprites(s) {
     sprites = s;
 }
 
@@ -86,7 +86,7 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
 }
 
 function changeTurn() {
-    if(startingTurn === 1) {
+    if (startingTurn === 1) {
         startingTurn = -1;
     } else {
         startingTurn = 1;
@@ -201,10 +201,10 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
 
             if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
                 gameboard[triangleFloor][j] = 0;
-                sprites[triangleFloor][j].visible = false;
+                sprites[triangleFloor][j].setTexture(PIXI.loader.resources["images/whiteCircle64.png"].texture);
             } else { //walk the floors in horizontal dir, (x-axis)
                 gameboard[j][triangleFloor] = 0;
-                sprites[j][triangleFloor].visible = false;
+                sprites[j][triangleFloor].setTexture(PIXI.loader.resources["images/whiteCircle64.png"].texture);
             }
         }
         triangleFloor += n; //we walk floors up if the tip is higher than bottom and vica verca
