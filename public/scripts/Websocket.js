@@ -1,4 +1,6 @@
-// requires running /socket.io/socket.io.js
+var server = 'ws://127.0.0.1:4567/echo'; // korjaa herokuun
+var aisocket = new WebSocket(server);
 
-var server = '127.0.0.1:5000'; // korjaa herokuun
-var socket = io.connect(server);
+aisocket.onmessage = function(event) {
+	console.log(event.data);
+}
