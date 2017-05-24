@@ -5,8 +5,8 @@ function setGameboard(gameBoard) {
     gameboard = gameBoard;
 }
 
-function setSprites(s){
-  sprites = s;
+function setSprites(s) {
+    sprites = s;
 }
 
 function validateMove(firstX, firstY, secondX, secondY) {
@@ -79,13 +79,13 @@ var triangle = []
 function trianglesFound(positionX, positionY) {
     var color = gameboard[positionX][positionY];
     var found = 0;
-    let hypotenuseDirections = [[-1,0],[1,0],[0,-1],[0,1]]; //left, right, down, up
-    let edgeDirections = [[-1,1,-1,-1],[1,1,1,-1],[-1,-1,1,-1],[-1,1,1,1]] //left, right, down, up
+    let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
+    let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]] //left, right, down, up
 
     for (var i = 2; i <= 6; i += 2) { //for all possible triangle distances
         let distanceSide = i / 2;
         for (var j = 0; j < 4; j++) { //for all four directions
-            found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide,edgeDirections[j][2] * distanceSide,edgeDirections[j][3] * distanceSide, color)
+            found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color)
         }
     }
     return found;
@@ -100,27 +100,27 @@ function lookForTriangles(originX, originY, directionX, directionY, firstChangeX
 
 
     if (!isThisOnBoard(targetX, targetY)) { //if the target is out of board
-      if (foundOnThisDirection == 2) { //if there are two on diagonals
-        triangles = 1;
-      } else {
-        triangles = 0;
-      }
+        if (foundOnThisDirection == 2) { //if there are two on diagonals
+            triangles = 1;
+        } else {
+            triangles = 0;
+        }
     } else if (foundOnThisDirection == 0 || (foundOnThisDirection == 1 && gameboard[originX + directionX][originY + directionY] != color)) { //no triangles, target on board
-      triangles = 0;
+        triangles = 0;
     } else if (foundOnThisDirection == 2 && gameboard[originX + directionX][originY + directionY] == color) { //all four stones are the right colour
-      triangles = 3;
+        triangles = 3;
     } else {
-      triangles = 1;
+        triangles = 1;
     }
 
     console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
-        + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + isThisOnBoard(targetX, targetY));
+            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + isThisOnBoard(targetX, targetY));
 
     return triangles;
 }
 
-function isThisOnBoard(x,y) {
-  return x >= 0 && x <= 6 && y <= 6 && y >= 0 //if the target is out of board
+function isThisOnBoard(x, y) {
+    return x >= 0 && x <= 6 && y <= 6 && y >= 0 //if the target is out of board
 
 }
 
@@ -131,70 +131,53 @@ function checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, second
 function checkIfColour(targetX, targetY, color) {
     var result = 0;
     if (isThisOnBoard(targetX, targetY)) {
-      if (gameboard[targetX][targetY] == color) {
-          result++;
-      }
+        if (gameboard[targetX][targetY] == color) {
+            result++;
+        }
     }
     console.log("\tcheckDiagonal: stone at (" + targetX + ", " + targetY + ") is color " + color + " bool:" + result);
     return result;
 }
 
-function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
+function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO validate that the triangle is legal
+    console.log("hit stones, corners at (" + firstX + ", " + firstY + "), (" + secondX + ", " + secondY + ") and (" + thirdX + ", " + thirdY + ")")
     if (firstX == secondX) {
-        hitVerticalTriangle(firstY, secondY, firstX, thirdX);
+        hitTriangle(firstY, secondY, firstX, thirdX, true);
     } else if (firstX == thirdX) {
-        hitVerticalTriangle(firstY, thirdY, firstX, secondX);
+        hitTriangle(firstY, thirdY, firstX, secondX, true);
     } else if (secondX == thirdX) {
-      hitVerticalTriangle(secondY, thirdY, secondX, firstX)
+        hitTriangle(secondY, thirdY, secondX, firstX, true)
     } else if (firstY == secondY) {
-      hitHorizontalTriangle(firstX, secondX, firstY, thirdY);
+        hitTriangle(firstX, secondX, firstY, thirdY, false);
     } else if (firstY == thirdY) {
-      hitHorizontalTriangle(firstX, thirdX, firstY, secondY);
+        hitTriangle(firstX, thirdX, firstY, secondY, false);
     } else if (secondY == thirdY) {
-      hitHorizontalTriangle(secondX, thirdX, secondY, firstY);
+        hitTriangle(secondX, thirdX, secondY, firstY, false);
     }
 }
 
-function hitVerticalTriangle(firstY, secondY, startX, endX) {
-    var min = Math.min(firstY, secondY);
-    var max = Math.max(firstY, secondY);
-    var n = 1;
-    if (endX < startX) {
-        n *= -1;
-        var help = startX;
-        startX = endX;
-        endX = help;
+function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
+    let min = Math.min(basis1, basis2);
+    let max = Math.max(basis1, basis2);
+    if (tipH < bottomH) {
+        let help = bottomH;
+        bottomH = tipH;
+        tipH = help;
     }
-    for (var i = startX; i < endX; i += n) {
+    for (var i = bottomH; i < tipH; i++) {
+        console.log(bottomH, tipH, i);
         for (var j = min; j < max; j++) {
-            if (j == firstY || j == secondY) {
+            if (j == basis1 || j == basis2) {
                 continue;
             }
-            gameboard[i][j] = 0;
-            sprites[i][j].setTexture("images/whiteCircle64.png");
-        }
-        min++;
-        max--;
-    }
-}
 
-function hitHorizontalTriangle(firstX, secondX, startY, endY) {
-    var min = Math.min(firstX, secondX);
-    var max = Math.max(firstX, secondX);
-    var n = 1;
-    if (endY < startY) {
-        n *= -1;
-        var help = startY;
-        startY = endY;
-        endY = help;
-    }
-    for (var i = startY; i < endY; i += n) {
-        for (var j = min; j < max; j++) {
-            if (j == firstX || j == secondX) {
-                continue;
+            if (isVertical) {
+                gameboard[i][j] = 0;
+                sprites[i][j].visible = false;
+            } else {
+                gameboard[j][i] = 0;
+                sprites[j][i].visible = false;
             }
-            gameboard[j][i] = 0;
-            sprites[j][i].setTexture("images/whiteCircle64.png");
         }
         min++;
         max--;
