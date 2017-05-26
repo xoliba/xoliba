@@ -1,7 +1,14 @@
+import * as PIXI from 'pixi.js';
+
 var gameboard;
 var sprites;
 var startingTurn;
-var turnCounter;
+
+function turnIndicator(color, turn) {
+    var turnTeller = document.getElementById("turn");
+    turnTeller.style.color = color;
+    turnTeller.innerHTML = "It's " + turn + " turn!";
+}
 
 function setGameboard(gameBoard, starting) {
     gameboard = gameBoard;
@@ -22,18 +29,18 @@ function setGameboard(gameBoard, starting) {
         startingTurn = 1;
         turnIndicator("red", "REDS");
     }
-    turnCounter = 0;
-
+    //TODO add turn counter to indicate amount of turns without stones being hit
 }
 
 function setSprites(s) {
     sprites = s;
 }
+
 function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
-        var help = array[firstX][firstY];
-        array[firstX][firstY] = array[secondX][secondY];
-        array[secondX][secondY] = help;
-    }
+    var help = array[firstX][firstY];
+    array[firstX][firstY] = array[secondX][secondY];
+    array[secondX][secondY] = help;
+}
 
 function validateMove(firstX, firstY, secondX, secondY) {
     if (gameboard[firstX][firstY] === startingTurn) {
@@ -43,7 +50,7 @@ function validateMove(firstX, firstY, secondX, secondY) {
             return false;
         }
         swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
-        if ((trianglesFound(secondX, secondY)) == 0) {
+        if (trianglesFound(secondX, secondY) === 0) {
             swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
             return false;
         }
@@ -55,36 +62,36 @@ function validateMove(firstX, firstY, secondX, secondY) {
 
 function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
     if (firstX === secondX) {
-        var min = Math.min(firstY, secondY);
-        var max = Math.max(firstY, secondY);
-        for (var i = min + 1; i < max; i++) {
+        let min = Math.min(firstY, secondY);
+        let max = Math.max(firstY, secondY);
+        for (let i = min + 1; i < max; i++) {
             if (gameboard[firstX][i] !== 0) {
                 return false;
             }
         }
     } else if (firstY === secondY) {
-        var min = Math.min(firstX, secondX);
-        var max = Math.max(firstX, secondX);
-        for (var i = min + 1; i < max; i++) {
+        let min = Math.min(firstX, secondX);
+        let max = Math.max(firstX, secondX);
+        for (let i = min + 1; i < max; i++) {
             if (gameboard[i][firstY] !== 0) {
                 return false;
             }
         }
     } else if ((firstX > secondX && firstY > secondY) || (firstX < secondX && firstY < secondY)) {
-        var minX = Math.min(firstX, secondX);
-        var maxX = Math.max(firstX, secondX);
-        var minY = Math.min(firstY, secondY);
-        for (var i = minX + 1; i < maxX; i++) {
+        let minX = Math.min(firstX, secondX);
+        let maxX = Math.max(firstX, secondX);
+        let minY = Math.min(firstY, secondY);
+        for (let i = minX + 1; i < maxX; i++) {
             minY++;
             if (gameboard[i][minY] !== 0) {
                 return false;
             }
         }
     } else {
-        var minX = Math.min(firstX, secondX);
-        var maxX = Math.max(firstX, secondX);
-        var minY = Math.max(firstY, secondY);
-        for (var i = minX + 1; i < maxX; i++) {
+        let minX = Math.min(firstX, secondX);
+        let maxX = Math.max(firstX, secondX);
+        let minY = Math.max(firstY, secondY);
+        for (let i = minX + 1; i < maxX; i++) {
             minY--;
             if (gameboard[i][minY] !== 0) {
                 return false;
@@ -104,11 +111,6 @@ function changeTurn() {
     }
 }
 
-function turnIndicator(color, turn){
-    var turnTeller = document.getElementById("turn");
-    turnTeller.style.color = color;
-    turnTeller.innerHTML = "It's " + turn + " turn!"
-}
 function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     var diffX = Math.abs(firstX - secondX);
     var diffY = Math.abs(firstY - secondY);
@@ -119,11 +121,11 @@ function trianglesFound(positionX, positionY) {
     var color = gameboard[positionX][positionY];
     var found = 0;
     let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
-    let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]] //left, right, down, up
+    let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
 
-    for (var i = 2; i <= 6; i += 2) { //for all possible triangle distances
+    for (let i = 2; i <= 6; i += 2) { //for all possible triangle distances
         let distanceSide = i / 2;
-        for (var j = 0; j < 4; j++) { //for all four directions
+        for (let j = 0; j < 4; j++) { //for all four directions
             found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color);
         }
     }
@@ -205,18 +207,18 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     if (tipH < bottomH) { //if tip is smaller, we have to go through the triangle from different direction
         n *= -1;
     }
-    for (var i = 0; i < Math.abs(tipH - bottomH); i++) { //we walk through all the floors of the triangle
-        for (var j = min; j <= max; j++) {
+    for (let i = 0; i < Math.abs(tipH - bottomH); i++) { //we walk through all the floors of the triangle
+        for (let j = min; j <= max; j++) {
             if (j === basis1 || j === basis2) {
                 continue;
             }
 
             if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
                 gameboard[triangleFloor][j] = 0;
-                sprites[triangleFloor][j].texture = (PIXI.loader.resources["images/whiteCircle64.png"].texture);
+                sprites[triangleFloor][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
             } else { //walk the floors in horizontal dir, (x-axis)
                 gameboard[j][triangleFloor] = 0;
-                sprites[j][triangleFloor].texture = (PIXI.loader.resources["images/whiteCircle64.png"].texture);
+                sprites[j][triangleFloor].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
             }
         }
         triangleFloor += n; //we walk floors up if the tip is higher than bottom and vica verca
@@ -226,4 +228,4 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     changeTurn();
 }
 
-export { setGameboard, setSprites, hitStones, validateMove, trianglesFound, };
+export { setGameboard, setSprites, hitStones, validateMove };

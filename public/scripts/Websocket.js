@@ -3,15 +3,15 @@ var aisocket;
 class AiSocket {
     constructor() {
         const server = 'ws://127.0.0.1:4567/echo';
-        this.aisocket = new WebSocket(server);
+        aisocket = new WebSocket(server);
 
-        this.aisocket.onmessage = function(event) {
+        aisocket.onmessage = function(event) {
             console.log(event.data);
         };
     }
 
     getSocket() {
-        return this.aisocket;
+        return aisocket;
     }
 }
 

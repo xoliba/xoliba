@@ -1,5 +1,5 @@
 import { scale, drawTable } from './Draw.js';
-import { setGameboard, setSprites, hitStones, validateMove, trianglesFound } from './Logic.js';
+import { setGameboard, setSprites, hitStones, validateMove } from './Logic.js';
 import { Board } from './Board.js';
 import { AiSocket } from './Websocket.js';
 import * as PIXI from 'pixi.js';
