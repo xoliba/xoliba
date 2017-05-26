@@ -47,8 +47,6 @@ function validateMove(firstX, firstY, secondX, secondY) {
         if ((trianglesFound(secondX, secondY)) == 0) {
             swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
             return false;
-        } else {
-            swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap back to the original positions
         }
         //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
         return true;

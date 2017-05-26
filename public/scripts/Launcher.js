@@ -120,7 +120,6 @@ function start() {
                             this.y = helpy;
                             firstClicked = undefined;
 
-                            swap2DArrayPositions(stonesArray, firstX, firstY, secondX, secondY);
                             swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
 
                             console.log(trianglesFound(secondX, secondY));
