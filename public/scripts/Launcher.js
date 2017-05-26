@@ -130,7 +130,7 @@ function setup() {
 
                         console.log(trianglesFound(secondX, secondY));
 
-                        aisocket.send(JSON.stringify(stonesArray));
+                        aisocket.getSocket().send(JSON.stringify(stonesArray));
 
                     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
                         firstClicked.scale.x -= highlightScaling;
