@@ -3,53 +3,58 @@
 function start() {
     var size = scale();
     var app = new PIXI.Application(size, size, {view: document.getElementById("gameboard")});
+    var gameBoard; //Board -object that creates an array that contains the positions of stones. Also gives the starting turn.
+    var stonesArray; //the array created by Board.object
+    var firstClicked; //first clicked stone
+    var sprites; //array that contains references to stones
+    var corners; //array that contains the coordinates for selected stones that will form a triangle
+    var padding; //the gameboards scaled distance from the edge of the window
+    var px; //the scaled space between stones
+    var radius; //the scaled radius of stones
+    var highlightScaling; //scaled value that is added to the size of stone when it's selected.
+
     app.renderer.backgroundColor = 0xE5E3DF;
 
-    var gameBoard = new Board();
+    gameBoard = new Board();
+    drawTable(app.stage);
 
-    drawTable(app.stage, gameBoard);
-
-    var stonesArray = gameBoard.boardTable;
-    var starts = gameBoard.startingTurn;
-    console.log("on launcher starting turn is: " + starts);
-
+    stonesArray = gameBoard.boardTable;
     setGameboard(stonesArray, gameBoard.startingTurn);
 
-    var sprites = [];
+    sprites = [];
     for (var i = 0; i < 7; i++) {
         sprites[i] = [];
     }
 
-    var firstClicked;
-    var corners = [];
+    corners = [];
 
-    var padding = size / 10;
-    var px = size / 7.5;
-    var radius = px / 4;
-    var highlightScaling = radius / 100;
+    padding = size / 10;
+    px = size / 7.5;
+    radius = px / 4;
+    highlightScaling = radius / 100;
 
-    PIXI.loader
-            .add([
+    PIXI.loader.
+            add([
                 "images/whiteCircle64.png",
                 "images/blueCircle64.png",
                 "images/redCircle64.png"
-            ])
-            .load(setup);
+            ]).
+            load(setup);
 
     function setup() {
         for (var i = 0; i < 7; i++) {
             for (var j = 0; j < 7; j++) {
-                if (!((i == 0 || i == 6) && (j == 0 || j == 6))) {
+                if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
 
                     var sprite;
 
                     let c = stonesArray[i][j];
                     let path = "";
-                    if (c == -1) {
+                    if (c === -1) {
                         path = "images/blueCircle64.png";
-                    } else if (c == 0) {
+                    } else if (c === 0) {
                         path = "images/whiteCircle64.png";
-                    } else if (c == 1) {
+                    } else if (c === 1) {
                         path = "images/redCircle64.png";
                     }
 
@@ -72,7 +77,7 @@ function start() {
                     function onPointerDown() {
                         var image = this.texture.baseTexture.source.src.split("/").pop();
 
-                        if (corners.length == 4) { //two corners of the triangle chosen already
+                        if (corners.length === 4) { //two corners of the triangle chosen already
                             corners.push(getStonesArrayPosition(this.x));
                             corners.push(getStonesArrayPosition(this.y));
                             sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
@@ -82,7 +87,7 @@ function start() {
                             console.log(corners)
                             hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
                             corners = [];
-                        } else if (corners.length == 2) { //one corner of the triangle chosen already
+                        } else if (corners.length === 2) { //one corner of the triangle chosen already
                             corners.push(getStonesArrayPosition(this.x));
                             corners.push(getStonesArrayPosition(this.y));
                             this.scale.x += highlightScaling;
@@ -95,7 +100,7 @@ function start() {
                             firstClicked = this;
                             this.scale.x += highlightScaling;
                             this.scale.y += highlightScaling;
-                        } else if (image == "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
+                        } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
 
                             var firstX = getStonesArrayPosition(firstClicked.x);
                             var firstY = getStonesArrayPosition(firstClicked.y);
@@ -126,7 +131,7 @@ function start() {
 
                             aisocket.send(JSON.stringify(stonesArray));
 
-                        } else if (firstClicked.x == this.x && firstClicked.y == this.y) {
+                        } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
                             firstClicked.scale.x -= highlightScaling;
                             firstClicked.scale.y -= highlightScaling;
                             firstClicked = undefined;
