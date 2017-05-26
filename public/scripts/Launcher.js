@@ -1,9 +1,9 @@
 import { scale, drawTable } from './Draw.js';
-import { setGameboard, setSprites, hitStones } from './Logic.js';
+import { setGameboard, setSprites, hitStones, validateMove, trianglesFound } from './Logic.js';
 import { Board } from './Board.js';
 import * as PIXI from 'pixi.js';
 
-var size = scale()
+var size = scale();
 var app = new PIXI.Application(size, size, {view: document.getElementById("gameboard")});
 var gameBoard; //Board -object that creates an array that contains the positions of stones. Also gives the starting turn.
 var stonesArray; //the array created by Board.object
@@ -24,7 +24,7 @@ stonesArray = gameBoard.boardTable;
 setGameboard(stonesArray, gameBoard.startingTurn);
 
 sprites = [];
-for (var i = 0; i < 7; i++) {
+for (let i = 0; i < 7; i++) {
     sprites[i] = [];
 }
 
@@ -35,20 +35,22 @@ px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
 
-PIXI.loader.
-        add([
-            "images/whiteCircle64.png",
-            "images/blueCircle64.png",
-            "images/redCircle64.png"
-        ]).
-        load(setup);
+function getStonesArrayPosition(coordinate) {
+    return Math.round((coordinate - padding) / px);
+}
+
+function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
+    var help = array[firstX][firstY];
+    array[firstX][firstY] = array[secondX][secondY];
+    array[secondX][secondY] = help;
+}
 
 function setup() {
-    for (var i = 0; i < 7; i++) {
-        for (var j = 0; j < 7; j++) {
+    for (let i = 0; i < 7; i++) {
+        for (let j = 0; j < 7; j++) {
             if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
 
-                var sprite;
+                let sprite;
 
                 let c = stonesArray[i][j];
                 let path = "";
@@ -73,11 +75,8 @@ function setup() {
                 sprite.width = radius * 2;
                 sprite.height = radius * 2;
 
-
-                sprite.on('pointerdown', onPointerDown)
-
                 function onPointerDown() {
-                    var image = this.texture.baseTexture.source.src.split("/").pop();
+                    let image = this.texture.baseTexture.source.src.split("/").pop();
 
                     if (corners.length === 4) { //two corners of the triangle chosen already
                         corners.push(getStonesArrayPosition(this.x));
@@ -86,7 +85,6 @@ function setup() {
                         sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
                         sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
                         sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-                        console.log(corners)
                         hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
                         corners = [];
                     } else if (corners.length === 2) { //one corner of the triangle chosen already
@@ -94,9 +92,8 @@ function setup() {
                         corners.push(getStonesArrayPosition(this.y));
                         this.scale.x += highlightScaling;
                         this.scale.y += highlightScaling;
-                        console.log(corners)
                     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
-                        if (image == "whiteCircle64.png") {
+                        if (image === "whiteCircle64.png") {
                             return;
                         }
                         firstClicked = this;
@@ -104,10 +101,10 @@ function setup() {
                         this.scale.y += highlightScaling;
                     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
 
-                        var firstX = getStonesArrayPosition(firstClicked.x);
-                        var firstY = getStonesArrayPosition(firstClicked.y);
-                        var secondX = getStonesArrayPosition(this.x);
-                        var secondY = getStonesArrayPosition(this.y);
+                        let firstX = getStonesArrayPosition(firstClicked.x);
+                        let firstY = getStonesArrayPosition(firstClicked.y);
+                        let secondX = getStonesArrayPosition(this.x);
+                        let secondY = getStonesArrayPosition(this.y);
 
                         console.log("Launcher: change the place of stones (" + firstX + ", " + firstY + "), (" + secondX + ", " + secondY + ")");
 
@@ -119,8 +116,8 @@ function setup() {
                         corners.push(getStonesArrayPosition(this.y));
                         console.log(corners);
 
-                        var helpx = firstClicked.x;
-                        var helpy = firstClicked.y;
+                        let helpx = firstClicked.x;
+                        let helpy = firstClicked.y;
                         firstClicked.x = this.x;
                         firstClicked.y = this.y;
                         this.x = helpx;
@@ -141,6 +138,8 @@ function setup() {
                     }
                 }
 
+                sprite.on('pointerdown', onPointerDown);
+
                 sprites[i][j] = sprite;
 
                 app.stage.addChild(sprite);
@@ -151,14 +150,12 @@ function setup() {
     setSprites(sprites);
 }
 
-function getStonesArrayPosition(coordinate) {
-    return Math.round((coordinate - padding) / px);
-}
-
-function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
-    var help = array[firstX][firstY];
-    array[firstX][firstY] = array[secondX][secondY];
-    array[secondX][secondY] = help;
-}
+PIXI.loader.
+        add([
+            "images/whiteCircle64.png",
+            "images/blueCircle64.png",
+            "images/redCircle64.png"
+        ]).
+        load(setup);
 
 app.renderer.render(app.stage);

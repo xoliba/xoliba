@@ -238,4 +238,4 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     changeTurn();
 }
 
-export { setGameboard, setSprites, hitStones };
+export { setGameboard, setSprites, hitStones, validateMove, trianglesFound };
