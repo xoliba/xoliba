@@ -33,14 +33,13 @@
     "babel-register": "6.24.1",
     "webpack": "2.6.1",
     "qunitjs": "^2.3.2",
-    "codecov": "2.2.0",
-    "nyc": "10.3.2"
+    "codecov": "2.2.0"
   },
   "scripts": {
     "prestart": "./node_modules/.bin/webpack",
     "start": "node server.js",
     "pretest": "./node_modules/.bin/webpack",
-    "test": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill && ./node_modules/.bin/codecov",
+    "test": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill && ./node_modules/.bin/nyc report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov",
     "lint": "./node_modules/.bin/eslint ."
   }
 }
