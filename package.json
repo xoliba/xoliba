@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "nyc mocha",
+    "test": "./node_modules/.bin/nyc mocha",
     "lint": "./node_modules/.bin/eslint ."
   }
 }
