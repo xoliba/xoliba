@@ -6,7 +6,6 @@ var turnCounter;
 function setGameboard(gameBoard, starting) {
     gameboard = gameBoard;
     startingTurn = starting;
-    console.log("starting turn in logic: " + startingTurn)
     if (startingTurn === 0) {
         if (Math.random() > 0.5) {
             startingTurn = 1;
@@ -78,8 +77,6 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
         for (var i = minX + 1; i < maxX; i++) {
             minY++;
             if (gameboard[i][minY] !== 0) {
-                console.log(i, minY, gameboard[i][minY]);
-
                 return false;
             }
         }
@@ -90,8 +87,6 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
         for (var i = minX + 1; i < maxX; i++) {
             minY--;
             if (gameboard[i][minY] !== 0) {
-                console.log(i, minY, gameboard[i][minY]);
-
                 return false;
             }
         }
@@ -181,12 +176,10 @@ function checkIfColour(targetX, targetY, color) {
             result++;
         }
     }
-    console.log("\tcheckDiagonal: stone at (" + targetX + ", " + targetY + ") is color " + color + " bool:" + result);
     return result;
 }
 
 function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO validate that the triangle is legal
-    console.log("hit stones, corners at (" + firstX + ", " + firstY + "), (" + secondX + ", " + secondY + ") and (" + thirdX + ", " + thirdY + ")");
 
 //TODO is it possible to get rid of this if thingy?
     if (firstX === secondX) {
@@ -205,7 +198,6 @@ function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO va
 }
 
 function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
-    console.log("hit triangle: basis b1,b2 " + basis1 + "," + basis2 + "; bottom height " + bottomH + "; tip height " + tipH + "; is vertical " + isVertical);
     let min = Math.min(basis1, basis2);
     let max = Math.max(basis1, basis2);
     let n = 1;
@@ -216,11 +208,8 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     for (var i = 0; i < Math.abs(tipH - bottomH); i++) { //we walk through all the floors of the triangle
         for (var j = min; j <= max; j++) {
             if (j === basis1 || j === basis2) {
-                console.log("spare corner (" + i + ", " + j + ")");
                 continue;
             }
-
-            console.log("hit stone i,j (" + i + ", " + j + ") is vertical " + isVertical);
 
             if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
                 gameboard[triangleFloor][j] = 0;
