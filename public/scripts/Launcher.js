@@ -108,15 +108,12 @@ function setup() {
                         let secondX = getStonesArrayPosition(this.x);
                         let secondY = getStonesArrayPosition(this.y);
 
-                        console.log("Launcher: change the place of stones (" + firstX + ", " + firstY + "), (" + secondX + ", " + secondY + ")");
-
                         if (!validateMove(firstX, firstY, secondX, secondY)) {
                             return;
                         }
 
                         corners.push(getStonesArrayPosition(this.x));
                         corners.push(getStonesArrayPosition(this.y));
-                        console.log(corners);
 
                         let helpx = firstClicked.x;
                         let helpy = firstClicked.y;
@@ -127,8 +124,6 @@ function setup() {
                         firstClicked = undefined;
 
                         swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
-
-                        console.log(trianglesFound(secondX, secondY));
 
                         aisocket.send(JSON.stringify(stonesArray));
 
