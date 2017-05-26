@@ -1,19 +1,20 @@
+"use strict";
 const ROWS = 7;
-
+var startingTurn;
 
 class Board {
 
     constructor() {
+        startingTurn = 0;
         this.boardTable = new Array(ROWS);
         this.create2DArray();
         this.generateStartingBoard();
         this.chosenStone = new Stone(0,0,-2);
-        
     }
 
     create2DArray() {
         for (let i = 0; i < ROWS; i++) {
-            this.boardTable[i] = new Array(ROWS);
+            this.boardTable[i] = [];
             for (let j = 0; j < ROWS; j++) {
                 this.boardTable[i][j] = 0;
             }
@@ -44,6 +45,20 @@ class Board {
                 }
             }
         }
+        startingTurn = this.boardTable[0][1] + this.boardTable[0][5] + this.boardTable[1][0] + this.boardTable[1][6]
+            + this.boardTable[5][0] + this.boardTable[5][6] +this.boardTable[6][1] + this.boardTable[6][5];
+        console.log(this.boardTable[0][1] +" + " +this.boardTable[0][5]+" + " +this.boardTable[1][0] +" + " +this.boardTable[1][6]
+            +" + " +this.boardTable[5][0] +" + " +this.boardTable[5][6] +" + " +this.boardTable[6][1] +" + " +this.boardTable[6][5] +" = " +startingTurn
+    )
+        if(startingTurn == 0) {
+            for(let i = 1; i < 6; i++) {
+                startingTurn += this.boardTable[i][0];
+                startingTurn += this.boardTable[i][6];
+                startingTurn += this.boardTable[0][i];
+                startingTurn += this.boardTable[6][i];
+            }
+        }
+        console.log("starting turn: " + startingTurn.valueOf());
     }
 
     clickStone (x,y) {
@@ -65,7 +80,11 @@ class Board {
     }
 
     get gameBoard() {
-        return this.boardTable;
+        return boardTable;
+    }
+
+    get startingTurn() {
+        return startingTurn;
     }
 
 }

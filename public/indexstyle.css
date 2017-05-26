@@ -2,6 +2,10 @@ body {
   background-color: #E5E3DF;
 }
 
+#turn {
+  font-size: 20;
+}
+
 #gameboard {
     position: absolute;
     top:0;
