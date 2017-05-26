@@ -1,7 +1,7 @@
 
 
 function start() {
-    var size = scale()
+    var size = scale();
     var app = new PIXI.Application(size, size, {view: document.getElementById("gameboard")});
     app.renderer.backgroundColor = 0xE5E3DF;
 
