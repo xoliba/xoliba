@@ -80,7 +80,7 @@ class Board {
     }
 
     get gameBoard() {
-        return boardTable;
+        return this.boardTable;
     }
 
     get startingTurn() {
