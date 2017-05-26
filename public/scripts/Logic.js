@@ -111,6 +111,10 @@ function changeTurn() {
     }
 }
 
+function getTurn(){
+    return startingTurn;
+}
+
 function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     var diffX = Math.abs(firstX - secondX);
     var diffY = Math.abs(firstY - secondY);
@@ -185,21 +189,27 @@ function hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO va
 
 //TODO is it possible to get rid of this if thingy?
     if (firstX === secondX) {
-        hitTriangle(firstY, secondY, firstX, thirdX, true);
+        return hitTriangle(firstY, secondY, firstX, thirdX, thirdY, true);
     } else if (firstX === thirdX) {
-        hitTriangle(firstY, thirdY, firstX, secondX, true);
+        return hitTriangle(firstY, thirdY, firstX, secondX, secondY, true);
     } else if (secondX === thirdX) {
-        hitTriangle(secondY, thirdY, secondX, firstX, true);
+        return hitTriangle(secondY, thirdY, secondX, firstX, firstY, true);
     } else if (firstY === secondY) {
-        hitTriangle(firstX, secondX, firstY, thirdY, false);
+        return hitTriangle(firstX, secondX, firstY, thirdY, thirdX, false);
     } else if (firstY === thirdY) {
-        hitTriangle(firstX, thirdX, firstY, secondY, false);
+        return hitTriangle(firstX, thirdX, firstY, secondY, secondX, false);
     } else if (secondY === thirdY) {
-        hitTriangle(secondX, thirdX, secondY, firstY, false);
+        return hitTriangle(secondX, thirdX, secondY, firstY, firstX, false);
     }
 }
 
-function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
+function hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
+    let width = Math.abs(basis1 - basis2);
+
+    if(width % 2 !== 0 || width / 2 !== Math.abs(tipH - bottomH) || Math.abs(basis1 - tipPosition) !== Math.abs(basis2 - tipPosition)){
+        return false;
+    }
+
     let min = Math.min(basis1, basis2);
     let max = Math.max(basis1, basis2);
     let n = 1;
@@ -226,6 +236,11 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
         max--;
     }
     changeTurn();
+    return true;
 }
 
-export { setGameboard, setSprites, hitStones, validateMove };
+function checkIfMovesAvailable(){
+
+}
+
+export { setGameboard, setSprites, hitStones, validateMove, getTurn };
