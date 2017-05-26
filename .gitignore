@@ -59,3 +59,4 @@ typings/
 
 /nbproject/private/
 .idea/
+public/scripts/bundle.js
