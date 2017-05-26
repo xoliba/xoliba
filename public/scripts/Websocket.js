@@ -1,6 +1,18 @@
-var server = 'ws://127.0.0.1:4567/echo'; // korjaa herokuun
-var aisocket = new WebSocket(server);
+var aisocket;
 
-aisocket.onmessage = function(event) {
-    console.log(event.data);
-};
+class AiSocket {
+    constructor() {
+        const server = 'ws://127.0.0.1:4567/echo';
+        this.aisocket = new WebSocket(server);
+
+        this.aisocket.onmessage = function(event) {
+            console.log(event.data);
+        };
+    }
+
+    getSocket() {
+        return this.aisocket;
+    }
+}
+
+export { AiSocket };
