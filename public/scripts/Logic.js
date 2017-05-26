@@ -50,7 +50,7 @@ function validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
             return false;
         }
         swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
-        if (trianglesFound(secondX, secondY) === 0) {
+        if (trianglesFound(secondX, secondY, false) === 0) {
             swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
             return false;
         } else if (movesAvailableCheck){
@@ -147,17 +147,25 @@ function moveFound(x, y){
     return false;
 }
 
-function trianglesFound(positionX, positionY) {
+function trianglesFound(positionX, positionY, getBiggest) {
     var color = gameboard[positionX][positionY];
     var found = 0;
     let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
     let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
 
+    let biggest = 0;
     for (let i = 2; i <= 6; i += 2) { //for all possible triangle distances
         let distanceSide = i / 2;
         for (let j = 0; j < 4; j++) { //for all four directions
             found += lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color);
         }
+        if(getBiggest && found > 0){
+            biggest = i / 2;
+            found = 0;
+        }
+    }
+    if (getBiggest){
+        return biggest;
     }
     console.log("FOUND: " + found);
     return found;
@@ -265,4 +273,4 @@ function hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
     return true;
 }
 
-export { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn };
+export { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn, trianglesFound };

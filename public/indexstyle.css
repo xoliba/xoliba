@@ -1,14 +1,6 @@
 body {
   background-color: #E5E3DF;
-}
-
-#turn {
   font-size: 20;
-}
-
-#notification {
-    style.color: black;
-    font-size: 20;
 }
 
 #gameboard {
