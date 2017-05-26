@@ -135,6 +135,66 @@ function setup() {
                 sprite.width = radius * 2;
                 sprite.height = radius * 2;
 
+                function onPointerDown() {
+                    let image = this.texture.baseTexture.source.src.split("/").pop();
+
+                    if (corners.length === 4) { //two corners of the triangle chosen already
+                        corners.push(getStonesArrayPosition(this.x));
+                        corners.push(getStonesArrayPosition(this.y));
+                        sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
+                        sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
+                        sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
+                        sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
+                        hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+                        corners = [];
+                    } else if (corners.length === 2) { //one corner of the triangle chosen already
+                        corners.push(getStonesArrayPosition(this.x));
+                        corners.push(getStonesArrayPosition(this.y));
+                        this.scale.x += highlightScaling;
+                        this.scale.y += highlightScaling;
+                    } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
+                        if (image === "whiteCircle64.png") {
+                            return;
+                        }
+                        firstClicked = this;
+                        this.scale.x += highlightScaling;
+                        this.scale.y += highlightScaling;
+                    } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
+
+                        let firstX = getStonesArrayPosition(firstClicked.x);
+                        let firstY = getStonesArrayPosition(firstClicked.y);
+                        let secondX = getStonesArrayPosition(this.x);
+                        let secondY = getStonesArrayPosition(this.y);
+
+                        if (!validateMove(firstX, firstY, secondX, secondY)) {
+                            return;
+                        }
+
+                        corners.push(getStonesArrayPosition(this.x));
+                        corners.push(getStonesArrayPosition(this.y));
+
+                        let helpx = firstClicked.x;
+                        let helpy = firstClicked.y;
+                        firstClicked.x = this.x;
+                        firstClicked.y = this.y;
+                        this.x = helpx;
+                        this.y = helpy;
+                        firstClicked = undefined;
+
+                        swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
+
+                        console.log(trianglesFound(secondX, secondY));
+
+                        aisocket.getSocket().send(JSON.stringify(stonesArray));
+                        
+                    } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
+                        firstClicked.scale.x -= highlightScaling;
+                        firstClicked.scale.y -= highlightScaling;
+                        firstClicked = undefined;
+                        return;
+                    }
+                }
+
                 sprite.on('pointerdown', onPointerDown);
 
                 sprites[i][j] = sprite;
