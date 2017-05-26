@@ -35,7 +35,11 @@
 	"no-unused-expressions": 1,
 	"no-useless-escape": 1,
 	"vars-on-top": 1,
-	"no-use-before-define": 2
+	"no-use-before-define": 2,
+	"block-spacing": 1,
+	"brace-style": 1,
+	"comma-spacing": 1,
+	"comma-style": 1
     },
     "env": {
         "browser": true,
