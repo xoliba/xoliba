@@ -42,7 +42,7 @@ function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
     array[secondX][secondY] = help;
 }
 
-function validateMove(firstX, firstY, secondX, secondY) {
+function validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
     if (gameboard[firstX][firstY] === startingTurn) {
         if (!stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
             return false;
@@ -53,6 +53,8 @@ function validateMove(firstX, firstY, secondX, secondY) {
         if (trianglesFound(secondX, secondY) === 0) {
             swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
             return false;
+        } else if (movesAvailableCheck){
+            swap2DArrayPositions(gameboard, firstX, firstY, secondX, secondY);
         }
         //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
         return true;
@@ -119,6 +121,30 @@ function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     var diffX = Math.abs(firstX - secondX);
     var diffY = Math.abs(firstY - secondY);
     return firstX === secondX || firstY === secondY || diffX === diffY;
+}
+
+function isMovesAvailable(){
+    for (let i = 0; i < 7; i++) {
+        for (let j = 0; j < 7; j++) {
+            if (gameboard[i][j] === startingTurn && moveFound(i, j)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function moveFound(x, y){
+    for (let i = 0; i < 7; i++) {
+        for (var j = 0; j < 7; j++) {
+            if((i === 0 && (j === 0 || j === 6)) || (i === 6 && ( j === 0 || j === 6)) || (x === i && y === j) || gameboard[i][j] !== 0){
+                continue;
+            } else if (validateMove(x, y, i, j, true)){
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function trianglesFound(positionX, positionY) {
@@ -239,8 +265,4 @@ function hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
     return true;
 }
 
-function checkIfMovesAvailable(){
-
-}
-
-export { setGameboard, setSprites, hitStones, validateMove, getTurn };
+export { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn };

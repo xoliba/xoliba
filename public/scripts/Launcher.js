@@ -1,5 +1,5 @@
 import { scale, drawTable } from './Draw.js';
-import { setGameboard, setSprites, hitStones, validateMove, getTurn } from './Logic.js';
+import { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn } from './Logic.js';
 import { Board } from './Board.js';
 import { AiSocket } from './Websocket.js';
 import * as PIXI from 'pixi.js';
@@ -15,6 +15,7 @@ var padding; //the gameboards scaled distance from the edge of the window
 var px; //the scaled space between stones
 var radius; //the scaled radius of stones
 var highlightScaling; //scaled value that is added to the size of stone when it's selected.
+var roundskipped = 0;
 var aisocket = new AiSocket();
 
 app.renderer.backgroundColor = 0xE5E3DF;
@@ -75,6 +76,17 @@ function onPointerDown() {
             sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
             sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
             corners = [];
+            let availableMoves = isMovesAvailable();
+            if(!availableMoves && roundskipped === 0){
+                roundskipped++;
+                alert("No moves available, skipping turn!");
+                changeTurn();
+            } else if(!availableMoves) {
+                alert("Two consecutive turns skipped, round ended!");
+                location.reload();
+            } else if(roundskipped !== 0) {
+                roundskipped = 0;
+            }
         }
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         let latestX = getStonesArrayPosition(this.x);
@@ -100,7 +112,7 @@ function onPointerDown() {
         let secondX = getStonesArrayPosition(this.x);
         let secondY = getStonesArrayPosition(this.y);
 
-        if (!validateMove(firstX, firstY, secondX, secondY)) {
+        if (!validateMove(firstX, firstY, secondX, secondY, false)) {
             return;
         }
 
