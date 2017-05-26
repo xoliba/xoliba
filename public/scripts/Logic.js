@@ -99,7 +99,7 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
     return true;
 }
 
-function chansetsurn() {
+function changeTurn() {
     if (startingTurn === 1) {
         startingTurn = -1;
         turnIndicator("blue", "BLUES");
@@ -120,7 +120,6 @@ function stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
     return firstX === secondX || firstY === secondY || diffX === diffY;
 }
 
-var triangle = [];
 function trianglesFound(positionX, positionY) {
     var color = gameboard[positionX][positionY];
     var found = 0;
@@ -225,10 +224,10 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
 
             if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
                 gameboard[triangleFloor][j] = 0;
-                sprites[triangleFloor][j].setTexture(PIXI.loader.resources["images/whiteCircle64.png"].texture);
+                sprites[triangleFloor][j].texture = (PIXI.loader.resources["images/whiteCircle64.png"].texture);
             } else { //walk the floors in horizontal dir, (x-axis)
                 gameboard[j][triangleFloor] = 0;
-                sprites[j][triangleFloor].setTexture(PIXI.loader.resources["images/whiteCircle64.png"].texture);
+                sprites[j][triangleFloor].texture = (PIXI.loader.resources["images/whiteCircle64.png"].texture);
             }
         }
         triangleFloor += n; //we walk floors up if the tip is higher than bottom and vica verca
@@ -238,4 +237,4 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     changeTurn();
 }
 
-export { setGameboard, setSprites, hitStones, validateMove, trianglesFound };
+export { setGameboard, setSprites, hitStones, validateMove, trianglesFound, };
