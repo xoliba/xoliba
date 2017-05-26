@@ -1,6 +1,7 @@
 import { scale, drawTable } from './Draw.js';
 import { setGameboard, setSprites, hitStones } from './Logic.js';
 import { Board } from './Board.js';
+import { AiSocket } from './Websocket.js';
 import * as PIXI from 'pixi.js';
 
     var size = scale()
@@ -14,6 +15,7 @@ import * as PIXI from 'pixi.js';
     var px; //the scaled space between stones
     var radius; //the scaled radius of stones
     var highlightScaling; //scaled value that is added to the size of stone when it's selected.
+    var aisocket = new AiSocket();
 
     app.renderer.backgroundColor = 0xE5E3DF;
 
