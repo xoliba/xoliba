@@ -99,7 +99,7 @@ function stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
     return true;
 }
 
-function changeTurn() {
+function chansetsurn() {
     if (startingTurn === 1) {
         startingTurn = -1;
         turnIndicator("blue", "BLUES");
@@ -237,3 +237,5 @@ function hitTriangle(basis1, basis2, bottomH, tipH, isVertical) {
     }
     changeTurn();
 }
+
+export { setGameboard, setSprites, hitStones };

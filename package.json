@@ -12,7 +12,8 @@
     "module": "1.2.5",
     "net": "1.0.2",
     "path": "0.12.7",
-    "mocha": "3.4.1"
+    "mocha": "3.4.1",
+    "pixi.js": "4.5.2"
   },
   "devDependencies": {
     "coveralls": "^2.13.1",
@@ -31,7 +32,7 @@
     "codecov": "2.2.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "webpack && node server.js",
     "test": "./node_modules/.bin/nyc mocha && ./node_modules/.bin/codecov",
     "lint": "./node_modules/.bin/eslint ."
   }
