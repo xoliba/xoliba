@@ -2,10 +2,10 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-  entry: "./server.js",
+  entry: "./public/scripts/Launcher.js",
   output: {
     path: __dirname,
-    filename: "bundle.js"
+    filename: "./public/scripts/bundle.js"
   },
   module: {
     rules: [
@@ -14,7 +14,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
-	    options: {
+	        options: {
             	presets: ['babel-preset-es2015']
           }
         }  

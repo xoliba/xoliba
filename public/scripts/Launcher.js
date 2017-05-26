@@ -1,6 +1,8 @@
+import { scale, drawTable } from './Draw.js';
+import { setGameboard, setSprites, hitStones } from './Logic.js';
+import { Board } from './Board.js';
+import * as PIXI from 'pixi.js';
 
-
-function start() {
     var size = scale()
     var app = new PIXI.Application(size, size, {view: document.getElementById("gameboard")});
     app.renderer.backgroundColor = 0xE5E3DF;
@@ -124,7 +126,7 @@ function start() {
 
                             console.log(trianglesFound(secondX, secondY));
 
-                            aisocket.send(JSON.stringify(stonesArray));
+                            //aisocket.send(JSON.stringify(stonesArray));
 
                         } else if (firstClicked.x == this.x && firstClicked.y == this.y) {
                             firstClicked.scale.x -= highlightScaling;
@@ -155,4 +157,4 @@ function start() {
     }
 
     app.renderer.render(app.stage);
-}
+
