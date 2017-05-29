@@ -41,6 +41,7 @@
     "start": "node server.js",
     "pretest": "./node_modules/.bin/webpack",
     "test": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill && ./node_modules/.bin/nyc report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov",
+    "testl": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill",
     "lint": "./node_modules/.bin/eslint ."
   }
 }
