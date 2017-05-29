@@ -71,6 +71,6 @@ class Board {
 }
 
 //Tests wont run without export (cannot be accessed outside)
-module.exports.Board = Board;
+//module.exports.Board = Board;
 
 export { Board };

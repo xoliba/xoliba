@@ -1,6 +1,7 @@
 import { scale, drawTable } from './Draw.js';
-import { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn, trianglesFound } from './Logic.js';
+//import { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn, trianglesFound } from './Logic.js';
 import { Board } from './Board.js';
+import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
 import * as PIXI from 'pixi.js';
 
@@ -18,13 +19,15 @@ var highlightScaling; //scaled value that is added to the size of stone when it'
 var roundskipped = 0;
 var aisocket = new AiSocket();
 
+var logic;
+
 app.renderer.backgroundColor = 0xE5E3DF;
 
 gameBoard = new Board();
+logic = new Logic(gameBoard.boardTable, gameBoard.startingTurn);
 drawTable(app.stage);
 
 stonesArray = gameBoard.boardTable;
-setGameboard(stonesArray, gameBoard.startingTurn);
 
 sprites = [];
 for (let i = 0; i < 7; i++) {
@@ -49,7 +52,7 @@ function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
 }
 
 function checkTurn(x, y){
-    return stonesArray[x][y] === getTurn();
+    return stonesArray[x][y] === logic.getTurn();
 }
 
 function updatePoints(){
@@ -62,13 +65,13 @@ function updatePoints(){
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                 if(stonesArray[i][j] == 1) {
                     reds++;
-                    let found = trianglesFound(i, j, true);
+                    let found = logic.trianglesFound(i, j, true);
                     if(found > redsBiggest) {
                         redsBiggest = found;
                     }
                 } else if (stonesArray[i][j] == -1){
                     blues++;
-                    let found = trianglesFound(i, j, true);
+                    let found = logic.trianglesFound(i, j, true);
                     if(found > bluesBiggest) {
                         bluesBiggest = found;
                     }
@@ -128,7 +131,7 @@ function onPointerDown() {
         }
         corners.push(latestX);
         corners.push(latestY);
-        let move = hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+        let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
         if(!move){
             sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
             sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
@@ -141,14 +144,14 @@ function onPointerDown() {
             sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
             sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
             corners = [];
-            let availableMoves = isMovesAvailable();
+            let availableMoves = logic.isMovesAvailable();
             if(!availableMoves && roundskipped === 0){
                 roundskipped++;
                 alert("No moves available, skipping turn!");
-                changeTurn();
+                logic.changeTurn();
             } else if(!availableMoves) {
                 alert("Two consecutive turns skipped, round ended!");
-                updatePoints();
+                logic.updatePoints();
             } else if(roundskipped !== 0) {
                 roundskipped = 0;
             }
@@ -177,7 +180,7 @@ function onPointerDown() {
         let secondX = getStonesArrayPosition(this.x);
         let secondY = getStonesArrayPosition(this.y);
 
-        if (!validateMove(firstX, firstY, secondX, secondY, false)) {
+        if (!logic.validateMove(firstX, firstY, secondX, secondY, false)) {
             return;
         }
 
@@ -244,7 +247,7 @@ function setup() {
             }
         }
     }
-    setSprites(sprites);
+    logic.setSprites(sprites);
 }
 
 function startNewGame(){
