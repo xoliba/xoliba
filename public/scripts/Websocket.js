@@ -2,7 +2,7 @@ var aisocket;
 
 class AiSocket {
     constructor() {
-        const server = 'wss://127.0.0.1:4567/echo';
+        const server = 'wss://xoliba-ai.herokuapp.com/ai';
         aisocket = new WebSocket(server);
 
         aisocket.onmessage = function(event) {
