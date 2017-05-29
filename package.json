@@ -1,7 +1,7 @@
 {
-  "name": "nodetesti",
-  "version": "1.0.0",
-  "description": "asdasd",
+  "name": "Xoliba",
+  "version": "0.1.0",
+  "description": "Online version for game Xoliba",
   "main": "index.js",
   "engines": {
     "node": "6.10.2"
