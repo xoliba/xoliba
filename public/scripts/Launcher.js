@@ -194,7 +194,8 @@ function onPointerDown() {
 
         swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
 
-        aisocket.getSocket().send(JSON.stringify(stonesArray));
+        //aisocket.getSocket().send(JSON.stringify(stonesArray));
+        aisocket.sendTable(stonesArray);
 
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
         firstClicked.scale.x -= highlightScaling;

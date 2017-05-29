@@ -13,6 +13,10 @@ class AiSocket {
     getSocket() {
         return aisocket;
     }
+
+    sendTable(table) {
+        aisocket.send(JSON.stringify(table));
+    }
 }
 
 export { AiSocket };
