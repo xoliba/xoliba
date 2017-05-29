@@ -1,4 +1,5 @@
 var aisocket;
+var latestTable;
 
 class AiSocket {
     constructor() {
@@ -6,6 +7,7 @@ class AiSocket {
         aisocket = new WebSocket(server);
 
         aisocket.onmessage = function(event) {
+            latestTable = event.data;
             console.log(event.data);
         };
     }
@@ -16,6 +18,10 @@ class AiSocket {
 
     sendTable(table) {
         aisocket.send(JSON.stringify(table));
+    }
+
+    getTable() {
+        return latestTable;
     }
 }
 
