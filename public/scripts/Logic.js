@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+//import * as PIXI from 'pixi.js';
 
 var gameboard;
 var sprites;
@@ -29,9 +29,9 @@ class Logic {
     }
 
     turnIndicator(color, turn) {
-        var turnTeller = document.getElementById("turn");
+        /*var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
-        turnTeller.innerHTML = "It's " + turn + " turn!";
+        turnTeller.innerHTML = "It's " + "turnTeller" + " turn!";*/
     }
 
     setSprites(s) {
@@ -258,10 +258,10 @@ class Logic {
 
                 if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
                     this.gameboard[triangleFloor][j] = 0;
-                    this.sprites[triangleFloor][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                    //this.sprites[triangleFloor][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
                 } else { //walk the floors in horizontal dir, (x-axis)
                     this.gameboard[j][triangleFloor] = 0;
-                    this.sprites[j][triangleFloor].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                    //this.sprites[j][triangleFloor].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
                 }
             }
             triangleFloor += n; //we walk floors up if the tip is higher than bottom and vica verca
@@ -274,7 +274,6 @@ class Logic {
 
 }
 
-//export { setGameboard, setSprites, hitStones, validateMove, getTurn, isMovesAvailable, changeTurn, trianglesFound };
-//module.exports.NewLogic NewLogic;
+module.exports.Logic = Logic;
 
 export { Logic };
