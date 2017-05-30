@@ -44,11 +44,8 @@ class Logic {
         this.gameboard[secondX][secondY] = help;
     }
 
-    //movesAvailableCheck:
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
             if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
-                return false;
-            } else if (!this.stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
                 return false;
             }
             this.swap2DArrayPositions(firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
@@ -63,6 +60,9 @@ class Logic {
     }
 
     stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
+        if (!this.stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
+            return false;
+        }
         if (firstX === secondX) { //vertical
             let min = Math.min(firstY, secondY);
             let max = Math.max(firstY, secondY);
