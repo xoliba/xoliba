@@ -1,11 +1,10 @@
 "use strict";
 const ROWS = 7;
-var startingTurn;
+let startingTurn;
 
 class Board {
 
     constructor() {
-        startingTurn = 0;
         this.boardTable = new Array(ROWS);
         this.create2DArray();
         this.generateStartingBoard();
@@ -25,6 +24,7 @@ class Board {
         let reds = 17;
         let blues = 17;
         let whites = 11;
+        startingTurn = 0;
 
         for (let i = 0; i < this.boardTable.length; i++) {
             for (let j = 0; j < this.boardTable.length; j++) {
@@ -46,8 +46,6 @@ class Board {
         }
         startingTurn = this.boardTable[0][1] + this.boardTable[0][5] + this.boardTable[1][0] + this.boardTable[1][6]
             + this.boardTable[5][0] + this.boardTable[5][6] +this.boardTable[6][1] + this.boardTable[6][5];
-        console.log(this.boardTable[0][1] +" + " +this.boardTable[0][5]+" + " +this.boardTable[1][0] +" + " +this.boardTable[1][6]
-            +" + " +this.boardTable[5][0] +" + " +this.boardTable[5][6] +" + " +this.boardTable[6][1] +" + " +this.boardTable[6][5] +" = " +startingTurn);
 
         if(startingTurn === 0) {
             for(let i = 1; i < 6; i++) {
@@ -57,7 +55,6 @@ class Board {
                 startingTurn += this.boardTable[6][i];
             }
         }
-        console.log("starting turn: " + startingTurn.valueOf());
     }
 
     get gameBoard() {
