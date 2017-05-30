@@ -153,8 +153,9 @@ function onPointerDown() {
             return;
         }
 
-        corners.push(latestX);
-        corners.push(latestY);
+        //corners.push(latestX);
+        //corners.push(latestY);
+        addCorner(latestX, latestY);
         enlarge(this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
         if (!checkTurn(latestX, latestY)) {
@@ -171,8 +172,9 @@ function onPointerDown() {
             return;
         }
 
-        corners.push(latestX);
-        corners.push(latestY);
+        //corners.push(latestX);
+        //corners.push(latestY);
+        addCorner(latestX, latestY);
 
         swapStones(this, firstClicked);
         firstClicked = undefined;
@@ -193,6 +195,11 @@ function swapStones(a, b) {
     a.y = b.y;
     b.x = tmpx;
     b.y = tmpy;
+}
+
+function addCorner(x, y) {
+    corners.push(x);
+    corners.push(y);
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
