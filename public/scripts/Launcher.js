@@ -152,6 +152,7 @@ function onPointerDown() {
         if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
             return;
         }
+
         corners.push(latestX);
         corners.push(latestY);
         enlarge(this);
@@ -159,21 +160,19 @@ function onPointerDown() {
         if (!checkTurn(latestX, latestY)) {
             return;
         }
+
         firstClicked = this;
         enlarge(this);
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
-
         let firstX = getStonesArrayPosition(firstClicked.x);
         let firstY = getStonesArrayPosition(firstClicked.y);
-        let secondX = latestX;
-        let secondY = latestY;
 
-        if (!logic.validateMove(firstX, firstY, secondX, secondY, false)) {
+        if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
             return;
         }
 
-        corners.push(secondX);
-        corners.push(secondY);
+        corners.push(latestX);
+        corners.push(latestY);
 
         let helpx = firstClicked.x;
         let helpy = firstClicked.y;
@@ -183,7 +182,7 @@ function onPointerDown() {
         this.y = helpy;
         firstClicked = undefined;
 
-        swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
+        swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
 
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
         minimize(firstClicked);
