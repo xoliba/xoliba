@@ -169,7 +169,11 @@ class Logic {
         if (getBiggest) {
             return biggest;
         }
+<<<<<<< 864f1b26438b7f45b7e1650eeefc2cf3768bce8f
         //console.log("FOUND: " + found);
+=======
+   
+>>>>>>> table from AI to front fixed
         return found;
     }
 
@@ -196,8 +200,12 @@ class Logic {
             triangles = 1;
         }
 
+<<<<<<< 864f1b26438b7f45b7e1650eeefc2cf3768bce8f
         /*console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
             + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));*/
+=======
+        
+>>>>>>> table from AI to front fixed
         return triangles;
     }
 

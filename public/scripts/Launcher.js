@@ -55,7 +55,9 @@ function checkTurn(x, y){
     return stonesArray[x][y] === logic.getTurn();
 }
 
-function updateBoard(stonesArray, sprites) {
+function updateBoard(newArray) {
+    stonesArray = newArray;
+    logic.gameboard = newArray;
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
@@ -64,7 +66,6 @@ function updateBoard(stonesArray, sprites) {
             } else if (stonesArray[i][j] === 1) {
                 sprites[i][j].texture = PIXI.loader.resources["images/redCircle64.png"].texture;
             } else if (stonesArray[i][j] === -1) {
-                console.log("haloo");
                 sprites[i][j].texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
             }
         }
@@ -148,8 +149,8 @@ function onPointerDown() {
         corners.push(latestX);
         corners.push(latestY);
         let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
-        aisocket.sendTable(stonesArray);
-        updateBoard(stonesArray, sprites);
+        
+        
         if(!move){
             sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
             sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
@@ -162,6 +163,11 @@ function onPointerDown() {
             sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
             sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
             corners = [];
+            
+            updateBoard(logic.gameboard);
+            aisocket.sendTable(stonesArray);
+            console.log("SEND TO AI: " + stonesArray);
+           
             let availableMoves = logic.isMovesAvailable();
             if(!availableMoves && roundskipped === 0){
                 roundskipped++;
@@ -214,7 +220,7 @@ function onPointerDown() {
         firstClicked = undefined;
 
         swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
-
+        
         //aisocket.getSocket().send(JSON.stringify(stonesArray));
         
 
