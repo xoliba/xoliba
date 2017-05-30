@@ -57,6 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
-/nbproject/private/
+nbproject/
 .idea/
 public/scripts/bundle.js

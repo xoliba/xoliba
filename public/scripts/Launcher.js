@@ -3,6 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
+//import { getStonesArrayPosition } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -143,97 +144,123 @@ function updatePoints(){
 
 function onPointerDown() {
     let image = this.texture.baseTexture.source.src.split("/").pop();
+    var latestX = getStonesArrayPosition(this.x);
+    var latestY = getStonesArrayPosition(this.y);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
-        let latestX = getStonesArrayPosition(this.x);
-        let latestY = getStonesArrayPosition(this.y);
-        if (!checkTurn(latestX, latestY)) {
-            return;
-        }
-        corners.push(latestX);
-        corners.push(latestY);
-        let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
-        
-        
-        if(!move){
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            for (let i = 0; i < 4; i++) {
-                corners.pop();
-            }
-        } else {
-            sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
-            sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            corners = [];
-            
-            updateBoard(logic.gameboard);
-            aisocket.sendTable(stonesArray);
-            console.log("SEND TO AI: " + stonesArray);
-           
-            let availableMoves = logic.isMovesAvailable();
-            if(!availableMoves && roundskipped === 0){
-                roundskipped++;
-                alert("No moves available, skipping turn!");
-                logic.changeTurn();
-            } else if(!availableMoves) {
-                alert("Two consecutive turns skipped, round ended!");
-                logic.updatePoints();
-            } else if(roundskipped !== 0) {
-                roundskipped = 0;
-            }
-        }
+        checkIfLegalTriangle(latestX, latestY);
     } else if (corners.length === 2) { //one corner of the triangle chosen already
-        let latestX = getStonesArrayPosition(this.x);
-        let latestY = getStonesArrayPosition(this.y);
-        if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
-            return;
-        }
-        corners.push(latestX);
-        corners.push(latestY);
-        this.scale.x += highlightScaling;
-        this.scale.y += highlightScaling;
+        parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
-        if (!checkTurn(getStonesArrayPosition(this.x), getStonesArrayPosition(this.y))) {
-            return;
-        }
-        firstClicked = this;
-        this.scale.x += highlightScaling;
-        this.scale.y += highlightScaling;
+        parseFirstCorner(latestX, latestY, this);
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
-
-        let firstX = getStonesArrayPosition(firstClicked.x);
-        let firstY = getStonesArrayPosition(firstClicked.y);
-        let secondX = getStonesArrayPosition(this.x);
-        let secondY = getStonesArrayPosition(this.y);
-
-        if (!logic.validateMove(firstX, firstY, secondX, secondY, false)) {
-            return;
-        }
-
-        corners.push(secondX);
-        corners.push(secondY);
-
-        let helpx = firstClicked.x;
-        let helpy = firstClicked.y;
-        firstClicked.x = this.x;
-        firstClicked.y = this.y;
-        this.x = helpx;
-        this.y = helpy;
-        firstClicked = undefined;
-
-        swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
-        
-        //aisocket.getSocket().send(JSON.stringify(stonesArray));
-        
-
+        parseClickOnWhiteStone(latestX, latestY, this);
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
-        firstClicked.scale.x -= highlightScaling;
-        firstClicked.scale.y -= highlightScaling;
-        firstClicked = undefined;
+        abortMove();
+    }
+}
+
+function parseFirstCorner(latestX, latestY, sprite) {
+    if (!checkTurn(latestX, latestY)) {
         return;
     }
+
+    firstClicked = sprite;
+    enlarge(sprite);
+}
+
+function abortMove() {
+    minimize(firstClicked);
+    firstClicked = undefined;
+    return;
+}
+
+function parseSecondCorner(latestX, latestY, sprite) {
+    if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
+            return;
+    }
+
+    addCorner(latestX, latestY);
+    enlarge(sprite);
+}
+
+function parseClickOnWhiteStone(latestX, latestY, sprite) {
+    let firstX = getStonesArrayPosition(firstClicked.x);
+    let firstY = getStonesArrayPosition(firstClicked.y);
+
+    if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
+        return;
+    }
+
+    addCorner(latestX, latestY);
+
+    swapPositions(sprite, firstClicked);
+    firstClicked = undefined;
+
+    swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
+}
+
+function swapPositions(a, b) {
+    let tmpx = a.x;
+    let tmpy = a.y;
+    a.x = b.x;
+    a.y = b.y;
+    b.x = tmpx;
+    b.y = tmpy;
+}
+
+function addCorner(x, y) {
+    corners.push(x);
+    corners.push(y);
+}
+
+function checkIfLegalTriangle(latestX, latestY) {
+    if (!checkTurn(latestX, latestY)) {
+            return;
+    }
+
+    addCorner(latestX, latestY);
+
+    let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+
+    aisocket.sendTable(stonesArray);
+    updateBoard(stonesArray, sprites);
+
+    checkIfLegalMove(moveIsLegal);
+}
+
+function checkIfLegalMove(moveIsLegal) {
+    minimize(sprites[corners[2]][corners[3]]);
+
+    if(!moveIsLegal){
+        for (let i = 0; i < 4; i++) {
+            corners.pop();
+        }
+    } else {
+        minimize(sprites[corners[0]][corners[1]]);
+        corners = [];
+        let availableMoves = logic.isMovesAvailable();
+        if(!availableMoves && roundskipped === 0){
+            roundskipped++;
+            alert("No moves available, skipping turn!");
+            logic.changeTurn();
+        } else if(!availableMoves) {
+            alert("Two consecutive turns skipped, round ended!");
+            logic.updatePoints();
+        } else if(roundskipped !== 0) {
+            roundskipped = 0;
+        }
+    }
+}
+
+function enlarge(sprite) {
+    sprite.scale.x += highlightScaling;
+    sprite.scale.y += highlightScaling;
+}
+
+function minimize(sprite) {
+    sprite.scale.x -= highlightScaling;
+    sprite.scale.y -= highlightScaling;
 }
 
 function setup() {

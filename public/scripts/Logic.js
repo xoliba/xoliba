@@ -43,11 +43,8 @@ class Logic {
         this.gameboard[secondX][secondY] = help;
     }
 
-    //movesAvailableCheck:
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
             if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
-                return false;
-            } else if (!this.stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
                 return false;
             }
             this.swap2DArrayPositions(firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
@@ -62,7 +59,10 @@ class Logic {
     }
 
     stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
-        if (firstX === secondX) {
+        if (!this.stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
+            return false;
+        }
+        if (firstX === secondX) { //vertical
             let min = Math.min(firstY, secondY);
             let max = Math.max(firstY, secondY);
             for (let i = min + 1; i < max; i++) {
@@ -70,7 +70,7 @@ class Logic {
                     return false;
                 }
             }
-        } else if (firstY === secondY) {
+        } else if (firstY === secondY) { //horizontal
             let min = Math.min(firstX, secondX);
             let max = Math.max(firstX, secondX);
             for (let i = min + 1; i < max; i++) {
@@ -149,8 +149,8 @@ class Logic {
     //If getBiggest is true, will return 1, 2 or 3.
     //If false, will return the amount of triangles.
     trianglesFound(positionX, positionY, getBiggest) {
-        var color = this.gameboard[positionX][positionY];
-        var found = 0;
+        let color = this.gameboard[positionX][positionY];
+        let found = 0;
         let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
         let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
 
@@ -171,7 +171,7 @@ class Logic {
         return found;
     }
 
-    //THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+    //THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
         let foundOnThisDirection = 0;
         let triangles = 0;
@@ -202,7 +202,7 @@ class Logic {
 
     }
 
-    //THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+    //THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
         return this.checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color) +
         this.checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color);
@@ -218,9 +218,9 @@ class Logic {
         return result;
     }
 
-    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO validate that the triangle is legal
+    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
 
-        //TODO is it possible to get rid of this if thingy?
+        //Validation is performed in function hitTriangle
         if (firstX === secondX) {
             return this.hitTriangle(firstY, secondY, firstX, thirdX, thirdY, true);
         } else if (firstX === thirdX) {
@@ -234,6 +234,7 @@ class Logic {
         } else if (secondY === thirdY) {
             return this.hitTriangle(secondX, thirdX, secondY, firstY, firstX, false);
         }
+        return false;
     }
 
     //This method is a bit disgusting.
@@ -244,9 +245,9 @@ class Logic {
       tipPosition is tecnically the half point of basis1 and basis2.
       isVertical does what it says.
 
-      Simple, isnt it?
+      Simple, isnt it? If its hard to understand, look at the hitStones -function.
 
-      THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+      THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     */
     hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
         let width = Math.abs(basis1 - basis2);
