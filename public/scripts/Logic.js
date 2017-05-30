@@ -63,7 +63,7 @@ class Logic {
     }
 
     stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
-        if (firstX === secondX) {
+        if (firstX === secondX) { //vertical
             let min = Math.min(firstY, secondY);
             let max = Math.max(firstY, secondY);
             for (let i = min + 1; i < max; i++) {
@@ -71,7 +71,7 @@ class Logic {
                     return false;
                 }
             }
-        } else if (firstY === secondY) {
+        } else if (firstY === secondY) { //horizontal
             let min = Math.min(firstX, secondX);
             let max = Math.max(firstX, secondX);
             for (let i = min + 1; i < max; i++) {
@@ -150,8 +150,8 @@ class Logic {
     //If getBiggest is true, will return 1, 2 or 3.
     //If false, will return the amount of triangles.
     trianglesFound(positionX, positionY, getBiggest) {
-        var color = this.gameboard[positionX][positionY];
-        var found = 0;
+        let color = this.gameboard[positionX][positionY];
+        let found = 0;
         let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
         let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
 
