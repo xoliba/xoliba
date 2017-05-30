@@ -46,11 +46,7 @@ class Board {
         }
         startingTurn = this.boardTable[0][1] + this.boardTable[0][5] + this.boardTable[1][0] + this.boardTable[1][6]
             + this.boardTable[5][0] + this.boardTable[5][6] +this.boardTable[6][1] + this.boardTable[6][5];
-<<<<<<< 864f1b26438b7f45b7e1650eeefc2cf3768bce8f
 
-=======
-       
->>>>>>> table from AI to front fixed
         if(startingTurn === 0) {
             for(let i = 1; i < 6; i++) {
                 startingTurn += this.boardTable[i][0];
