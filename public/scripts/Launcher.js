@@ -143,44 +143,59 @@ function onPointerDown() {
     var latestY = getStonesArrayPosition(this.y);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
-        if (!checkTurn(latestX, latestY)) {
-            return;
-        }
-        
         checkIfLegalTriangle(latestX, latestY);
     } else if (corners.length === 2) { //one corner of the triangle chosen already
-        if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
-            return;
-        }
-
-        addCorner(latestX, latestY);
-        enlarge(this);
+        parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
-        if (!checkTurn(latestX, latestY)) {
-            return;
-        }
-
-        firstClicked = this;
-        enlarge(this);
+        parseFirstCorner(latestX, latestY, this);
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
-        let firstX = getStonesArrayPosition(firstClicked.x);
-        let firstY = getStonesArrayPosition(firstClicked.y);
-
-        if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
-            return;
-        }
-
-        addCorner(latestX, latestY);
-
-        swapPositions(this, firstClicked);
-        firstClicked = undefined;
-
-        swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
+        parseClickOnWhiteStone(latestX, latestY, this);
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
-        minimize(firstClicked);
+        /*minimize(firstClicked);
         firstClicked = undefined;
+        return;*/
+        abortMove();
+    }
+}
+
+function parseFirstCorner(latestX, latestY, sprite) {
+    if (!checkTurn(latestX, latestY)) {
         return;
     }
+
+    firstClicked = sprite;
+    enlarge(sprite);
+}
+
+function abortMove() {
+    minimize(firstClicked);
+    firstClicked = undefined;
+    return;
+}
+
+function parseSecondCorner(latestX, latestY, sprite) {
+    if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
+            return;
+    }
+
+    addCorner(latestX, latestY);
+    enlarge(sprite);
+}
+
+function parseClickOnWhiteStone(latestX, latestY, sprite) {
+    let firstX = getStonesArrayPosition(firstClicked.x);
+    let firstY = getStonesArrayPosition(firstClicked.y);
+
+    if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
+        return;
+    }
+
+    addCorner(latestX, latestY);
+
+    swapPositions(sprite, firstClicked);
+    firstClicked = undefined;
+
+    swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
 }
 
 function swapPositions(a, b) {
@@ -198,6 +213,10 @@ function addCorner(x, y) {
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
+    if (!checkTurn(latestX, latestY)) {
+            return;
+    }
+
     addCorner(latestX, latestY);
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
@@ -209,7 +228,7 @@ function checkIfLegalTriangle(latestX, latestY) {
 }
 
 function checkIfLegalMove(moveIsLegal) {
-    minimize(sprites([corners[2]][corners[3]]));
+    minimize(sprites[corners[2]][corners[3]]);
 
     if(!moveIsLegal){
         for (let i = 0; i < 4; i++) {
