@@ -55,7 +55,7 @@ function checkTurn(x, y){
     return stonesArray[x][y] === logic.getTurn();
 }
 
-function updateBoard(newArray) {
+function updateBoard(newArray, fromAI) {
     stonesArray = newArray;
     logic.gameboard = newArray;
     for (var i = 0; i < 7; i++) {
@@ -71,7 +71,11 @@ function updateBoard(newArray) {
         }
     }
     }
+    if (fromAI) {
+        logic.changeTurn();
+    }
 }
+
 function updatePoints(){
     let bluesBiggest = 0;
     let redsBiggest = 0;

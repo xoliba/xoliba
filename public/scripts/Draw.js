@@ -8,6 +8,8 @@ function scale() {
     return result;
 }
 
+    
+
 function drawLines(stage, size, graphics) {
     //Dont touch these :)
     var padding = size / 10;
@@ -50,4 +52,4 @@ function drawTable(stage) {
     stage.addChild(graphics);
 }
 
-export { scale, drawTable };
+export { scale, drawTable};
