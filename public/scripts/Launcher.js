@@ -151,9 +151,6 @@ function onPointerDown() {
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
         parseClickOnWhiteStone(latestX, latestY, this);
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
-        /*minimize(firstClicked);
-        firstClicked = undefined;
-        return;*/
         abortMove();
     }
 }
