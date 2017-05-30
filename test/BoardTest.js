@@ -1,4 +1,4 @@
-var assert = require('assert');
+let assert = require('assert');
 //var BoardClass = require('../public/scripts/Board.js');
 import { Board } from '../public/scripts/Board.js';
 
@@ -13,8 +13,28 @@ describe('Board', () => {
 
     it('is right size', function() {
         assert.equal(board.gameBoard.length, 7);
-        for(var i=0; i<board.gameBoard.length; i++) {
+        for(let i=0; i<board.gameBoard.length; i++) {
             assert.equal(board.gameBoard[i].length, 7);
         }
     });
+
+    it('correct number of stones', function() {
+        let reds = 0;
+        let blues = 0;
+        let whites = 0;
+        for(let i = 0; i < board.gameBoard.length; i++) {
+            for(let j = 0; j < board.gameBoard[i].length; j++) {
+                if (board.gameBoard[i][j] === 1) {
+                    reds++;
+                } else if (board.gameBoard[i][j] === -1) {
+                    blues++
+                } else if (board.gameBoard[i][j] === 0) {
+                    whites++;
+                }
+            }
+        }
+        assert.equal(reds, 17);
+        assert.equal(blues, 17);
+        assert.equal(whites, 11);
+    })
 });

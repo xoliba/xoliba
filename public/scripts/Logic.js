@@ -38,24 +38,25 @@ class Logic {
         this.sprites = s;
     }
 
-    swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
-        var help = array[firstX][firstY];
-        array[firstX][firstY] = array[secondX][secondY];
-        array[secondX][secondY] = help;
+    swap2DArrayPositions(firstX, firstY, secondX, secondY) {
+        var help = this.gameboard[firstX][firstY];
+        this.gameboard[firstX][firstY] = this.gameboard[secondX][secondY];
+        this.gameboard[secondX][secondY] = help;
     }
 
+    //movesAvailableCheck:
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
             if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
                 return false;
             } else if (!this.stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
                 return false;
             }
-            this.swap2DArrayPositions(this.gameboard, firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
+            this.swap2DArrayPositions(firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
             if (this.trianglesFound(secondX, secondY, false) === 0) {
-                this.swap2DArrayPositions(this.gameboard, firstX, firstY, secondX, secondY);
+                this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
                 return false;
             } else if (movesAvailableCheck) {
-                this.swap2DArrayPositions(this.gameboard, firstX, firstY, secondX, secondY);
+                this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
             }
             //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
             return true;
@@ -146,6 +147,8 @@ class Logic {
         return false;
     }
 
+    //If getBiggest is true, will return 1, 2 or 3.
+    //If false, will return the amount of triangles.
     trianglesFound(positionX, positionY, getBiggest) {
         var color = this.gameboard[positionX][positionY];
         var found = 0;
@@ -166,11 +169,11 @@ class Logic {
         if (getBiggest) {
             return biggest;
         }
-        console.log("FOUND: " + found);
+        //console.log("FOUND: " + found);
         return found;
-
     }
 
+    //THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
     lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
         let foundOnThisDirection = 0;
         let triangles = 0;
@@ -193,9 +196,8 @@ class Logic {
             triangles = 1;
         }
 
-        console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
-            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));
-
+        /*console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
+            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));*/
         return triangles;
     }
 
@@ -204,8 +206,10 @@ class Logic {
 
     }
 
+    //THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
     checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
-        return this.checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color) + this.checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color);
+        return this.checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color) +
+        this.checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color);
     }
 
     checkIfColour(targetX, targetY, color) {
@@ -236,10 +240,23 @@ class Logic {
         }
     }
 
+    //This method is a bit disgusting.
+    /*
+      So in a nutshell: basis1 is the first sharp tip and the basis2 is the second.
+      BottomH is the second coordinate of those above.
+      TipH is the position of the tip, same direction as bottomH.
+      tipPosition is tecnically the half point of basis1 and basis2.
+      isVertical does what it says.
+
+      Simple, isnt it?
+
+      THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+    */
     hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
         let width = Math.abs(basis1 - basis2);
 
         if (width % 2 !== 0 || width / 2 !== Math.abs(tipH - bottomH) || Math.abs(basis1 - tipPosition) !== Math.abs(basis2 - tipPosition)) {
+            //are the parameters valid: triangle base is even length, the tip is middle of the base
             return false;
         }
 
