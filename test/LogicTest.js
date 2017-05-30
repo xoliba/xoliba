@@ -1,11 +1,13 @@
 var assert = require('assert');
 import { Logic } from '../public/scripts/Logic.js';
-import { Board } from '../public/scripts/Board.js';
+import { Actions } from '../public/scripts/logic/Actions.js';
+import { Validations } from '../public/scripts/logic/Validations.js';
 
 describe('Logic', () => {
 
     var logic;
-    var board;
+    var actions;
+    var validations;
     //PLEASE NOTE: cuz of javascript, all the X and Y coordinates are swapped ":D"
     var emptyBoard =[[-2, 0, 0, 0, 0, 0, -2],
                       [0, 0, 0, 0, 0, 0, 0],
@@ -37,8 +39,9 @@ describe('Logic', () => {
                      [-2, 1, 1, 1, 1, -1, -2]];
 
     beforeEach(() => {
-        board = new Board();
         logic = new Logic(c(emptyBoard), 1);
+        actions = new Actions(c(emptyBoard));
+        validations = new Validations(c(emptyBoard));
     });
 
     it('Turn is given right when starting the game', function() {
@@ -57,36 +60,36 @@ describe('Logic', () => {
     });
 
     it('Function stones between are white works', function() {
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 3, 0), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 1, 1), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 0, 3), false);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 1, 5), false);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 3, 6), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 5, 5), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 6, 3), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 3, 5, 1), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(5, 3, 3, 0), false);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(2, 4, 4, 6), true);
-      logic = new Logic(boardSheet1, 1);
-      assert.equal(logic.stonesBetweenAreWhite(3, 0, 3, 6), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 3, 0), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 1, 1), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 0, 3), false);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 1, 5), false);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 3, 6), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 5, 5), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 6, 3), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 3, 5, 1), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(5, 3, 3, 0), false);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(2, 4, 4, 6), true);
+      validations = new Validations(boardSheet1);
+      assert.equal(validations.stonesBetweenAreWhite(3, 0, 3, 6), true);
     });
 
     it('Swapping stones work', function() {
-      logic = new Logic(c(boardSheet1), 1);
-      logic.swap2DArrayPositions(3, 0, 3, 6);
-      logic.swap2DArrayPositions(1, 1, 1, 1);
-      logic.swap2DArrayPositions(5, 1, 0, 1);
-      logic.swap2DArrayPositions(6, 5, 6, 5);
+      validations = new Validations(c(boardSheet1));
+      validations.swap2DArrayPositions(3, 0, 3, 6);
+      validations.swap2DArrayPositions(1, 1, 1, 1);
+      validations.swap2DArrayPositions(5, 1, 0, 1);
+      validations.swap2DArrayPositions(6, 5, 6, 5);
       let temp = [[-2, 0, 0, 0, 0, 1, -2],
                         [0, 1, 1, 0, 1, 1, 0],
                         [0, 1, 0, 1, 1, 1, 0],
@@ -95,23 +98,23 @@ describe('Logic', () => {
                         [1, 0, 1, 0, 1, 1, 1],
                        [-2, 1, 1, 0, 1, -1, -2]];
 
-      for(let i=0; i<logic.gameboard.length; i++) {
-        for(let j=0; j<logic.gameboard[i].length; j++) {
-          assert.equal(logic.gameboard[i][j], temp[i][j]);
+      for(let i=0; i<validations.gameboard.length; i++) {
+        for(let j=0; j<validations.gameboard[i].length; j++) {
+          assert.equal(validations.gameboard[i][j], temp[i][j]);
         }
       }
     });
 
     it('Is on board works', function() {
-      assert.equal(logic.isThisOnBoard(-1, -1), false)
-      assert.equal(logic.isThisOnBoard(-1, 3), false)
-      assert.equal(logic.isThisOnBoard(3, -1), false)
-      assert.equal(logic.isThisOnBoard(7, 7), false)
-      assert.equal(logic.isThisOnBoard(7, 0), false)
-      assert.equal(logic.isThisOnBoard(0, 7), false)
-      assert.equal(logic.isThisOnBoard(0, 0), true)
-      assert.equal(logic.isThisOnBoard(6, 6), true)
-      assert.equal(logic.isThisOnBoard(3, 3), true)
+      assert.equal(validations.isThisOnBoard(-1, -1), false)
+      assert.equal(validations.isThisOnBoard(-1, 3), false)
+      assert.equal(validations.isThisOnBoard(3, -1), false)
+      assert.equal(validations.isThisOnBoard(7, 7), false)
+      assert.equal(validations.isThisOnBoard(7, 0), false)
+      assert.equal(validations.isThisOnBoard(0, 7), false)
+      assert.equal(validations.isThisOnBoard(0, 0), true)
+      assert.equal(validations.isThisOnBoard(6, 6), true)
+      assert.equal(validations.isThisOnBoard(3, 3), true)
     });
 
     it('Changing turn works', function() {
@@ -123,18 +126,18 @@ describe('Logic', () => {
     });
 
     it('Stones on the same line works', function() {
-      assert.equal(logic.stonesAreOnTheSameLine(1, 1, 1, 1), true);
-      assert.equal(logic.stonesAreOnTheSameLine(6, 1, 1, 1), true);
-      assert.equal(logic.stonesAreOnTheSameLine(5, 5, 1, 1), true);
-      assert.equal(logic.stonesAreOnTheSameLine(1, 1, 2, 3), false);
+      assert.equal(validations.stonesAreOnTheSameLine(1, 1, 1, 1), true);
+      assert.equal(validations.stonesAreOnTheSameLine(6, 1, 1, 1), true);
+      assert.equal(validations.stonesAreOnTheSameLine(5, 5, 1, 1), true);
+      assert.equal(validations.stonesAreOnTheSameLine(1, 1, 2, 3), false);
     });
 
     it('Checking the colour works', function() {
-      logic = new Logic(c(boardSheet1), 1);
-      assert.equal(logic.checkIfColour(1, 1, 1), 1);
-      assert.equal(logic.checkIfColour(6, 5, -1), 1);
-      assert.equal(logic.checkIfColour(3, 3, 1), 0);
-      assert.equal(logic.checkIfColour(3, 3, -1), 0);
+      validations = new Validations(c(boardSheet1));
+      assert.equal(validations.checkIfColour(1, 1, 1), 1);
+      assert.equal(validations.checkIfColour(6, 5, -1), 1);
+      assert.equal(validations.checkIfColour(3, 3, 1), 0);
+      assert.equal(validations.checkIfColour(3, 3, -1), 0);
     });
 
     it('Finding the triangles work', function() {
@@ -175,7 +178,8 @@ describe('Logic', () => {
 
     it('Hitting the stones in triangle work', function() {
       let temp;
-      logic = new Logic(c(fullBoard), 1);
+      let table = c(fullBoard);
+      actions = new Actions(table);
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 0, 0, 0, 1, 1],
                 [1, 0, 0, 0, 0, 0, 1],
@@ -183,13 +187,14 @@ describe('Logic', () => {
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
                [-2, 1, 1, 1, 1, 1, -2]];
-      assert.equal(logic.hitStones(3, 0, 0, 3, 3, 6), true);
-      for(let i=0; i<logic.gameboard.length; i++) {
-        for(let j=0; j<logic.gameboard[i].length; j++) {
-          assert.equal(logic.gameboard[i][j], temp[i][j]);
+      assert.equal(actions.hitStones(3, 0, 0, 3, 3, 6), true);
+      for(let i=0; i<table.length; i++) {
+        for(let j=0; j<table[i].length; j++) {
+          assert.equal(table[i][j], temp[i][j]);
         }
       }
-      logic = new Logic(c(fullBoard), 1);
+      table = c(fullBoard);
+      actions = new Actions(table);
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 1, 1, 0, 0, 1],
                 [1, 1, 1, 0, 0, 0, 1],
@@ -197,13 +202,14 @@ describe('Logic', () => {
                 [1, 1, 1, 0, 0, 0, 1],
                 [1, 1, 1, 1, 0, 0, 1],
                [-2, 1, 1, 1, 1, 1, -2]];
-      assert.equal(logic.hitStones(0, 5, 6, 5, 3, 2), true);
-      for(let i=0; i<logic.gameboard.length; i++) {
-        for(let j=0; j<logic.gameboard[i].length; j++) {
-          assert.equal(logic.gameboard[i][j], temp[i][j]);
+      assert.equal(actions.hitStones(0, 5, 6, 5, 3, 2), true);
+      for(let i=0; i<table.length; i++) {
+        for(let j=0; j<table[i].length; j++) {
+          assert.equal(table[i][j], temp[i][j]);
         }
       }
-      logic = new Logic(c(fullBoard), 1);
+      table = c(fullBoard);
+      actions = new Actions(table);
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
@@ -211,13 +217,14 @@ describe('Logic', () => {
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
                [-2, 1, 1, 1, 1, 1, -2]];
-      assert.equal(logic.hitStones(3, 2, 3, 4, 2, 3), true);
-      for(let i=0; i<logic.gameboard.length; i++) {
-        for(let j=0; j<logic.gameboard[i].length; j++) {
-          assert.equal(logic.gameboard[i][j], temp[i][j]);
+      assert.equal(actions.hitStones(3, 2, 3, 4, 2, 3), true);
+      for(let i=0; i<table.length; i++) {
+        for(let j=0; j<table[i].length; j++) {
+          assert.equal(table[i][j], temp[i][j]);
         }
       }
-      logic = new Logic(c(fullBoard), 1);
+      table = c(fullBoard);
+      actions = new Actions(table);
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
@@ -225,10 +232,10 @@ describe('Logic', () => {
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 0, 0, 0, 1, 1],
                [-2, 1, 0, 0, 0, 1, -2]];
-      assert.equal(logic.hitStones(7, 3, 5, 5, 5, 1), true);
-      for(let i=0; i<logic.gameboard.length; i++) {
-        for(let j=0; j<logic.gameboard[i].length; j++) {
-          assert.equal(logic.gameboard[i][j], temp[i][j]);
+      assert.equal(actions.hitStones(7, 3, 5, 5, 5, 1), true);
+      for(let i=0; i<table.length; i++) {
+        for(let j=0; j<table[i].length; j++) {
+          assert.equal(table[i][j], temp[i][j]);
         }
       }
     });

@@ -65,7 +65,7 @@ function updateBoard(stonesArray, sprites) {
             } else if (stonesArray[i][j] === 1) {
                 sprites[i][j].texture = PIXI.loader.resources["images/redCircle64.png"].texture;
             } else if (stonesArray[i][j] === -1) {
-                console.log("haloo");
+                //console.log("haloo");
                 sprites[i][j].texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
             }
         }
@@ -146,7 +146,7 @@ function onPointerDown() {
         if (!checkTurn(latestX, latestY)) {
             return;
         }
-        
+
         checkIfLegalTriangle(latestX, latestY);
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
@@ -213,7 +213,7 @@ function checkIfLegalTriangle(latestX, latestY) {
             logic.changeTurn();
         } else if(!availableMoves) {
             alert("Two consecutive turns skipped, round ended!");
-            logic.updatePoints();
+            updatePoints();
         } else if(roundskipped !== 0) {
             roundskipped = 0;
         }
