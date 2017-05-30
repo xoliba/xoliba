@@ -154,15 +154,13 @@ function onPointerDown() {
         }
         corners.push(latestX);
         corners.push(latestY);
-        this.scale.x += highlightScaling;
-        this.scale.y += highlightScaling;
+        enlarge(this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
         if (!checkTurn(latestX, latestY)) {
             return;
         }
         firstClicked = this;
-        this.scale.x += highlightScaling;
-        this.scale.y += highlightScaling;
+        enlarge(this);
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
 
         let firstX = getStonesArrayPosition(firstClicked.x);
@@ -188,8 +186,7 @@ function onPointerDown() {
         swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
 
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
-        firstClicked.scale.x -= highlightScaling;
-        firstClicked.scale.y -= highlightScaling;
+        minimize(firstClicked);
         firstClicked = undefined;
         return;
     }
@@ -202,16 +199,13 @@ function checkIfLegalTriangle(latestX, latestY) {
     aisocket.sendTable(stonesArray);
     updateBoard(stonesArray, sprites);
     if(!move){
-        sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-        sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
+        minimize(sprites[corners[2]][corners[3]]);
         for (let i = 0; i < 4; i++) {
             corners.pop();
         }
     } else {
-        sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
-        sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
-        sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-        sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
+        minimize(sprites[corners[0]][corners[1]]);
+        minimize(sprites[corners[2]][corners[3]]);
         corners = [];
         let availableMoves = logic.isMovesAvailable();
         if(!availableMoves && roundskipped === 0){
@@ -225,6 +219,16 @@ function checkIfLegalTriangle(latestX, latestY) {
             roundskipped = 0;
         }
     }
+}
+
+function enlarge(sprite) {
+    sprite.scale.x += highlightScaling;
+    sprite.scale.y += highlightScaling;
+}
+
+function minimize(sprite) {
+    sprite.scale.x -= highlightScaling;
+    sprite.scale.y -= highlightScaling;
 }
 
 function setup() {
