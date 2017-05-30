@@ -3,7 +3,6 @@
 var gameboard;
 var sprites;
 var startingTurn;
-
 class Logic {
 
     constructor(gameBoard, starting) {
@@ -29,9 +28,9 @@ class Logic {
     }
 
     turnIndicator(color, turn) {
-        /*var turnTeller = document.getElementById("turn");
+       /* var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
-        turnTeller.innerHTML = "It's " + "turnTeller" + " turn!";*/
+        turnTeller.innerHTML = "It's " + turnTeller + " turn!";*/
     }
 
     setSprites(s) {

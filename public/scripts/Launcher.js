@@ -42,7 +42,7 @@ px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
 
-function updateBoard(newArray) {
+function updateBoard(newArray, fromAI) {
     stonesArray = newArray;
     logic.gameboard = newArray;
 
@@ -59,7 +59,11 @@ function updateBoard(newArray) {
         }
     }
     }
+    if (fromAI) {
+        logic.changeTurn();
+    }
 }
+
 function updatePoints(){
     let bluesBiggest = 0;
     let redsBiggest = 0;
