@@ -146,35 +146,7 @@ function onPointerDown() {
         if (!checkTurn(latestX, latestY)) {
             return;
         }
-        /*corners.push(latestX);
-        corners.push(latestY);
-        let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
-        aisocket.sendTable(stonesArray);
-        updateBoard(stonesArray, sprites);
-        if(!move){
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            for (let i = 0; i < 4; i++) {
-                corners.pop();
-            }
-        } else {
-            sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
-            sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            corners = [];
-            let availableMoves = logic.isMovesAvailable();
-            if(!availableMoves && roundskipped === 0){
-                roundskipped++;
-                alert("No moves available, skipping turn!");
-                logic.changeTurn();
-            } else if(!availableMoves) {
-                alert("Two consecutive turns skipped, round ended!");
-                logic.updatePoints();
-            } else if(roundskipped !== 0) {
-                roundskipped = 0;
-            }
-        }*/
+        
         checkIfLegalTriangle(latestX, latestY);
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
