@@ -153,8 +153,6 @@ function onPointerDown() {
             return;
         }
 
-        //corners.push(latestX);
-        //corners.push(latestY);
         addCorner(latestX, latestY);
         enlarge(this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
@@ -172,15 +170,12 @@ function onPointerDown() {
             return;
         }
 
-        //corners.push(latestX);
-        //corners.push(latestY);
         addCorner(latestX, latestY);
 
-        swapStones(this, firstClicked);
+        swapPositions(this, firstClicked);
         firstClicked = undefined;
 
         swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
-
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
         minimize(firstClicked);
         firstClicked = undefined;
@@ -188,7 +183,7 @@ function onPointerDown() {
     }
 }
 
-function swapStones(a, b) {
+function swapPositions(a, b) {
     let tmpx = a.x;
     let tmpy = a.y;
     a.x = b.x;
@@ -203,19 +198,25 @@ function addCorner(x, y) {
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
-    corners.push(latestX);
-    corners.push(latestY);
-    let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+    addCorner(latestX, latestY);
+
+    let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+
     aisocket.sendTable(stonesArray);
     updateBoard(stonesArray, sprites);
-    if(!move){
-        minimize(sprites[corners[2]][corners[3]]);
+
+    checkIfLegalMove(moveIsLegal);
+}
+
+function checkIfLegalMove(moveIsLegal) {
+    minimize(sprites([corners[2]][corners[3]]));
+
+    if(!moveIsLegal){
         for (let i = 0; i < 4; i++) {
             corners.pop();
         }
     } else {
         minimize(sprites[corners[0]][corners[1]]);
-        minimize(sprites[corners[2]][corners[3]]);
         corners = [];
         let availableMoves = logic.isMovesAvailable();
         if(!availableMoves && roundskipped === 0){
