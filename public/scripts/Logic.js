@@ -173,7 +173,7 @@ class Logic {
         return found;
     }
 
-    //THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+    //THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
         let foundOnThisDirection = 0;
         let triangles = 0;
@@ -206,7 +206,7 @@ class Logic {
 
     }
 
-    //THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+    //THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
         return this.checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color) +
         this.checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color);
@@ -222,9 +222,9 @@ class Logic {
         return result;
     }
 
-    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) { //TODO validate that the triangle is legal
+    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
 
-        //TODO is it possible to get rid of this if thingy?
+        //Validation is performed in function hitTriangle
         if (firstX === secondX) {
             return this.hitTriangle(firstY, secondY, firstX, thirdX, thirdY, true);
         } else if (firstX === thirdX) {
@@ -238,6 +238,7 @@ class Logic {
         } else if (secondY === thirdY) {
             return this.hitTriangle(secondX, thirdX, secondY, firstY, firstX, false);
         }
+        return false;
     }
 
     //This method is a bit disgusting.
@@ -248,9 +249,9 @@ class Logic {
       tipPosition is tecnically the half point of basis1 and basis2.
       isVertical does what it says.
 
-      Simple, isnt it?
+      Simple, isnt it? If its hard to understand, look at the hitStones -function.
 
-      THIS CLASS IS NOT TESTED SEPARATELY. so please refactor patameters as you want.
+      THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     */
     hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
         let width = Math.abs(basis1 - basis2);
