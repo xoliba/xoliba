@@ -3,6 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
+//import { getStonesArrayPosition } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -138,45 +139,16 @@ function updatePoints(){
 
 function onPointerDown() {
     let image = this.texture.baseTexture.source.src.split("/").pop();
+    var latestX = getStonesArrayPosition(this.x);
+    var latestY = getStonesArrayPosition(this.y);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
-        let latestX = getStonesArrayPosition(this.x);
-        let latestY = getStonesArrayPosition(this.y);
         if (!checkTurn(latestX, latestY)) {
             return;
         }
-        corners.push(latestX);
-        corners.push(latestY);
-        let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
-        aisocket.sendTable(stonesArray);
-        updateBoard(stonesArray, sprites);
-        if(!move){
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            for (let i = 0; i < 4; i++) {
-                corners.pop();
-            }
-        } else {
-            sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
-            sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            corners = [];
-            let availableMoves = logic.isMovesAvailable();
-            if(!availableMoves && roundskipped === 0){
-                roundskipped++;
-                alert("No moves available, skipping turn!");
-                logic.changeTurn();
-            } else if(!availableMoves) {
-                alert("Two consecutive turns skipped, round ended!");
-                logic.updatePoints();
-            } else if(roundskipped !== 0) {
-                roundskipped = 0;
-            }
-        }
+        
+        checkIfLegalTriangle(latestX, latestY);
     } else if (corners.length === 2) { //one corner of the triangle chosen already
-        let latestX = getStonesArrayPosition(this.x);
-        let latestY = getStonesArrayPosition(this.y);
         if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
             return;
         }
@@ -185,7 +157,7 @@ function onPointerDown() {
         this.scale.x += highlightScaling;
         this.scale.y += highlightScaling;
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
-        if (!checkTurn(getStonesArrayPosition(this.x), getStonesArrayPosition(this.y))) {
+        if (!checkTurn(latestX, latestY)) {
             return;
         }
         firstClicked = this;
@@ -195,8 +167,8 @@ function onPointerDown() {
 
         let firstX = getStonesArrayPosition(firstClicked.x);
         let firstY = getStonesArrayPosition(firstClicked.y);
-        let secondX = getStonesArrayPosition(this.x);
-        let secondY = getStonesArrayPosition(this.y);
+        let secondX = latestX;
+        let secondY = latestY;
 
         if (!logic.validateMove(firstX, firstY, secondX, secondY, false)) {
             return;
@@ -215,14 +187,43 @@ function onPointerDown() {
 
         swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
 
-        //aisocket.getSocket().send(JSON.stringify(stonesArray));
-        
-
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
         firstClicked.scale.x -= highlightScaling;
         firstClicked.scale.y -= highlightScaling;
         firstClicked = undefined;
         return;
+    }
+}
+
+function checkIfLegalTriangle(latestX, latestY) {
+    corners.push(latestX);
+    corners.push(latestY);
+    let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+    aisocket.sendTable(stonesArray);
+    updateBoard(stonesArray, sprites);
+    if(!move){
+        sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
+        sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
+        for (let i = 0; i < 4; i++) {
+            corners.pop();
+        }
+    } else {
+        sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
+        sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
+        sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
+        sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
+        corners = [];
+        let availableMoves = logic.isMovesAvailable();
+        if(!availableMoves && roundskipped === 0){
+            roundskipped++;
+            alert("No moves available, skipping turn!");
+            logic.changeTurn();
+        } else if(!availableMoves) {
+            alert("Two consecutive turns skipped, round ended!");
+            logic.updatePoints();
+        } else if(roundskipped !== 0) {
+            roundskipped = 0;
+        }
     }
 }
 
