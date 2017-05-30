@@ -13,7 +13,13 @@ describe('Logic', () => {
                       [0, 0, 0, 0, 0, 0, 0],
                       [0, 0, 0, 0, 0, 0, 0],
                       [-2, 0, 0, 0, 0, 0, -2]];
-
+    var boardSheet1=[[-2, 0, 0, 0, 0, 1, -2],
+                      [0, 1, 1, 0, 1, 1, 0],
+                      [0, 1, 0, 1, 1, 1, 0],
+                      [0, 0, 0, 0, 0, 0, 1],
+                      [0, 1, 0, 0, 0, 0, 0],
+                      [1, 0, 1, 0, 1, 1, 1],
+                     [-2, 1, 1, 0, 1, 0, -2]];
     beforeEach(() => {
         board = new Board();
     });
@@ -32,4 +38,30 @@ describe('Logic', () => {
           assert(true);
         } else assert(false);
     });
+
+    it('Function stones between are white works', function() {
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 3, 0), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 1, 1), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 0, 3), false);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 1, 5), false);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 3, 6), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 5, 5), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 6, 3), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 3, 5, 1), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(5, 3, 3, 0), false);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(2, 4, 4, 6), true);
+      logic = new Logic(boardSheet1, 1);
+      assert.equal(logic.stonesBetweenAreWhite(3, 0, 3, 6), true);
+    });
+
 });
