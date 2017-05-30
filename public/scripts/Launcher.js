@@ -174,12 +174,7 @@ function onPointerDown() {
         corners.push(latestX);
         corners.push(latestY);
 
-        let helpx = firstClicked.x;
-        let helpy = firstClicked.y;
-        firstClicked.x = this.x;
-        firstClicked.y = this.y;
-        this.x = helpx;
-        this.y = helpy;
+        swapStones(this, firstClicked);
         firstClicked = undefined;
 
         swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
@@ -189,6 +184,15 @@ function onPointerDown() {
         firstClicked = undefined;
         return;
     }
+}
+
+function swapStones(a, b) {
+    let tmpx = a.x;
+    let tmpy = a.y;
+    a.x = b.x;
+    a.y = b.y;
+    b.x = tmpx;
+    b.y = tmpy;
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
