@@ -55,15 +55,16 @@ function checkTurn(x, y){
     return stonesArray[x][y] === logic.getTurn();
 }
 
-function updateBoard(stonesArray) {
-    for (var i = 0; i < stonesArray.length; i++) {
-        for (var j = 0; j < stonesArray.length; j++) {
+function updateBoard(stonesArray, sprites) {
+    for (var i = 0; i < 7; i++) {
+        for (var j = 0; j < 7; j++) {
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
             if (stonesArray[i][j] === 0) {
                 sprites[i][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
             } else if (stonesArray[i][j] === 1) {
                 sprites[i][j].texture = PIXI.loader.resources["images/redCircle64.png"].texture;
-            } else {
+            } else if (stonesArray[i][j] === -1) {
+                console.log("haloo");
                 sprites[i][j].texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
             }
         }
@@ -147,7 +148,8 @@ function onPointerDown() {
         corners.push(latestX);
         corners.push(latestY);
         let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
-        updateBoard(stonesArray);
+        aisocket.sendTable(stonesArray);
+        updateBoard(stonesArray, sprites);
         if(!move){
             sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
             sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
@@ -214,7 +216,7 @@ function onPointerDown() {
         swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
 
         //aisocket.getSocket().send(JSON.stringify(stonesArray));
-        aisocket.sendTable(stonesArray);
+        
 
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
         firstClicked.scale.x -= highlightScaling;
@@ -282,3 +284,5 @@ PIXI.loader.
         load(setup);
 
 app.renderer.render(app.stage);
+
+export { updateBoard, sprites };
