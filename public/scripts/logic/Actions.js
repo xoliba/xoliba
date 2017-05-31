@@ -1,26 +1,20 @@
-let gameboard
-
 class Actions {
 
-    constructor(gameboard) {
-        this.gameboard = gameboard;
-    }
-
-    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
+    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, gameboard) {
 
         //Validation is performed in function hitTriangle
         if (firstX === secondX) {
-            return this.hitTriangle(firstY, secondY, firstX, thirdX, thirdY, true);
+            return this.hitTriangle(firstY, secondY, firstX, thirdX, thirdY, true, gameboard);
         } else if (firstX === thirdX) {
-            return this.hitTriangle(firstY, thirdY, firstX, secondX, secondY, true);
+            return this.hitTriangle(firstY, thirdY, firstX, secondX, secondY, true, gameboard);
         } else if (secondX === thirdX) {
-            return this.hitTriangle(secondY, thirdY, secondX, firstX, firstY, true);
+            return this.hitTriangle(secondY, thirdY, secondX, firstX, firstY, true, gameboard);
         } else if (firstY === secondY) {
-            return this.hitTriangle(firstX, secondX, firstY, thirdY, thirdX, false);
+            return this.hitTriangle(firstX, secondX, firstY, thirdY, thirdX, false, gameboard);
         } else if (firstY === thirdY) {
-            return this.hitTriangle(firstX, thirdX, firstY, secondY, secondX, false);
+            return this.hitTriangle(firstX, thirdX, firstY, secondY, secondX, false, gameboard);
         } else if (secondY === thirdY) {
-            return this.hitTriangle(secondX, thirdX, secondY, firstY, firstX, false);
+            return this.hitTriangle(secondX, thirdX, secondY, firstY, firstX, false, gameboard);
         }
         return false;
     }
@@ -37,7 +31,7 @@ class Actions {
 
       THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
     */
-    hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
+    hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical, gameboard) {
         let width = Math.abs(basis1 - basis2);
 
         if (width % 2 !== 0 || width / 2 !== Math.abs(tipH - bottomH) || Math.abs(basis1 - tipPosition) !== Math.abs(basis2 - tipPosition)) {
@@ -59,10 +53,10 @@ class Actions {
                 }
 
                 if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
-                    this.gameboard[triangleFloor][j] = 0;
+                    gameboard[triangleFloor][j] = 0;
                     //this.sprites[triangleFloor][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
                 } else { //walk the floors in horizontal dir, (x-axis)
-                    this.gameboard[j][triangleFloor] = 0;
+                    gameboard[j][triangleFloor] = 0;
                     //this.sprites[j][triangleFloor].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
                 }
             }

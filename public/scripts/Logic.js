@@ -1,11 +1,13 @@
 import { Actions } from './logic/Actions.js';
 import { Validations } from './logic/Validations.js';
 
-var gameboard;
-var turn;
+//import * as PIXI from 'pixi.js';
 
-var actions;
-var validations;
+var gameboard;
+var sprites;
+var turn;
+var stonesHit;
+var turnCounter;
 
 class Logic {
 
@@ -49,10 +51,11 @@ class Logic {
         } else {
             this.turn = -1;
         }
-        console.log("HALOO!");
+        //console.log("HALOO!");
     }
 
     isMovesAvailable() {
+        //console.log("IS MOVES AVAILABLE");
         return this.validations.isMovesAvailable(this.turn);
     }
 
@@ -61,18 +64,21 @@ class Logic {
     }
 
     trianglesFound(positionX, positionY, getBiggest) {
+        //console.log("TRIANGLES FOUND: " + positionX + positionY, getBiggest);
         return this.validations.trianglesFound(positionX, positionY, getBiggest);
     }
 
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
+        //console.log("VALIDATING: " + firstX + firstY + secondX, secondY, movesAvailableCheck);
         return this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck);
     }
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
-        if(!this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY)) {
+        if(!this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, this.gameboard)) {
             return false;
         }
         this.changeTurn();
+        return true;
     }
 
 }
