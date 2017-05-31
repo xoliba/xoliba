@@ -34,7 +34,6 @@
 	"no-unmodified-loop-condition": 2,
 	"no-unused-expressions": 1,
 	"no-useless-escape": 1,
-	"vars-on-top": 1,
 	"no-use-before-define": 2,
 	"block-spacing": 1,
 	"brace-style": 1,
