@@ -3,7 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-import { getStonesArrayPosition, checkTurn, addCorner } from './Launcherhelpers.js';
+import { getStonesArrayPosition, checkTurn, addCorner, swapPositions } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -185,15 +185,6 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
     firstClicked = undefined;
 
     swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
-}
-
-function swapPositions(a, b) {
-    let tmpx = a.x;
-    let tmpy = a.y;
-    a.x = b.x;
-    a.y = b.y;
-    b.x = tmpx;
-    b.y = tmpy;
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
