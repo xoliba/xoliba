@@ -3,7 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-import { getStonesArrayPosition, checkTurn } from './Launcherhelpers.js';
+import { getStonesArrayPosition, checkTurn, addCorner } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -167,7 +167,7 @@ function parseSecondCorner(latestX, latestY, sprite) {
         return;
     }
 
-    addCorner(latestX, latestY);
+    addCorner(latestX, latestY, corners);
     enlarge(sprite);
 }
 
@@ -179,7 +179,7 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
         return;
     }
 
-    addCorner(latestX, latestY);
+    addCorner(latestX, latestY, corners);
 
     swapPositions(sprite, firstClicked);
     firstClicked = undefined;
@@ -196,17 +196,12 @@ function swapPositions(a, b) {
     b.y = tmpy;
 }
 
-function addCorner(x, y) {
-    corners.push(x);
-    corners.push(y);
-}
-
 function checkIfLegalTriangle(latestX, latestY) {
     if (!checkTurn(latestX, latestY, stonesArray, logic)) {
             return;
     }
 
-    addCorner(latestX, latestY);
+    addCorner(latestX, latestY, corners);
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
 
