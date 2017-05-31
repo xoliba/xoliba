@@ -33,6 +33,7 @@ class Actions {
     */
     hitTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical, gameboard) {
         let width = Math.abs(basis1 - basis2);
+        let stonesHit = false;
 
         if (width % 2 !== 0 || width / 2 !== Math.abs(tipH - bottomH) || Math.abs(basis1 - tipPosition) !== Math.abs(basis2 - tipPosition)) {
             //are the parameters valid: triangle base is even length, the tip is middle of the base
@@ -53,19 +54,24 @@ class Actions {
                 }
 
                 if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
-                    gameboard[triangleFloor][j] = 0;
-                    //this.sprites[triangleFloor][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                    if (gameboard[triangleFloor][j] != 0) {
+                        stonesHit = true;
+                        gameboard[triangleFloor][j] = 0;
+                    }
                 } else { //walk the floors in horizontal dir, (x-axis)
-                    gameboard[j][triangleFloor] = 0;
-                    //this.sprites[j][triangleFloor].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                    if (gameboard[j][triangleFloor] != 0) {
+                        stonesHit = true;
+                        gameboard[j][triangleFloor] = 0;
+                    }
+
                 }
             }
             triangleFloor += n; //we walk floors up if the tip is higher than bottom and vica verca
             min++;
             max--;
         }
-        //this.changeTurn();
-        return true;
+        if(stonesHit === false) return 1;
+        return 2;
     }
 }
 

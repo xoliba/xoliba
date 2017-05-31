@@ -12,6 +12,7 @@ var turnCounter;
 class Logic {
 
     constructor(gameBoard, starting) {
+        this.turnCounter = 0;
         this.gameboard = gameBoard;
         this.validations = new Validations(gameBoard);
         this.actions = new Actions(gameBoard);
@@ -32,7 +33,6 @@ class Logic {
             this.turn = 1;
             //this.turnIndicator("red", "REDS");
         }
-        //TODO add turn counter to indicate amount of turns without stones being hit
     }
 
     turnIndicator(color, turn) {
@@ -69,16 +69,19 @@ class Logic {
     }
 
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
-        //console.log("VALIDATING: " + firstX + firstY + secondX, secondY, movesAvailableCheck);
+        if(this.turnCounter >= 30) return false;
         return this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck);
     }
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
-        if(!this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, this.gameboard)) {
+        let result = this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, this.gameboard);
+        if(result === false) {
             return false;
         }
+        if(result === 1) this.turnCounter++;
+        else this.turnCounter = 0;
         this.changeTurn();
-        //return true;
+        return true;
     }
 
 }
