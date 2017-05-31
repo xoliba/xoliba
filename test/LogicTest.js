@@ -179,7 +179,7 @@ describe('Logic', () => {
     it('Hitting the stones in triangle work', function() {
       let temp;
       let table = c(fullBoard);
-      actions = new Actions(table);
+      actions = new Actions();
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 0, 0, 0, 1, 1],
                 [1, 0, 0, 0, 0, 0, 1],
@@ -187,14 +187,14 @@ describe('Logic', () => {
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
                [-2, 1, 1, 1, 1, 1, -2]];
-      assert.equal(actions.hitStones(3, 0, 0, 3, 3, 6), true);
+      assert.equal(actions.hitStones(3, 0, 0, 3, 3, 6, table), true);
       for(let i=0; i<table.length; i++) {
         for(let j=0; j<table[i].length; j++) {
           assert.equal(table[i][j], temp[i][j]);
         }
       }
       table = c(fullBoard);
-      actions = new Actions(table);
+      actions = new Actions();
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 1, 1, 0, 0, 1],
                 [1, 1, 1, 0, 0, 0, 1],
@@ -202,14 +202,14 @@ describe('Logic', () => {
                 [1, 1, 1, 0, 0, 0, 1],
                 [1, 1, 1, 1, 0, 0, 1],
                [-2, 1, 1, 1, 1, 1, -2]];
-      assert.equal(actions.hitStones(0, 5, 6, 5, 3, 2), true);
+      assert.equal(actions.hitStones(0, 5, 6, 5, 3, 2, table), true);
       for(let i=0; i<table.length; i++) {
         for(let j=0; j<table[i].length; j++) {
           assert.equal(table[i][j], temp[i][j]);
         }
       }
       table = c(fullBoard);
-      actions = new Actions(table);
+      actions = new Actions();
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
@@ -217,14 +217,14 @@ describe('Logic', () => {
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
                [-2, 1, 1, 1, 1, 1, -2]];
-      assert.equal(actions.hitStones(3, 2, 3, 4, 2, 3), true);
+      assert.equal(actions.hitStones(3, 2, 3, 4, 2, 3, table), true);
       for(let i=0; i<table.length; i++) {
         for(let j=0; j<table[i].length; j++) {
           assert.equal(table[i][j], temp[i][j]);
         }
       }
       table = c(fullBoard);
-      actions = new Actions(table);
+      actions = new Actions();
       temp =  [[-2, 1, 1, 1, 1, 1, -2],
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 1, 1, 1, 1, 1],
@@ -232,7 +232,7 @@ describe('Logic', () => {
                 [1, 1, 1, 1, 1, 1, 1],
                 [1, 1, 0, 0, 0, 1, 1],
                [-2, 1, 0, 0, 0, 1, -2]];
-      assert.equal(actions.hitStones(7, 3, 5, 5, 5, 1), true);
+      assert.equal(actions.hitStones(7, 3, 5, 5, 5, 1, table), true);
       for(let i=0; i<table.length; i++) {
         for(let j=0; j<table[i].length; j++) {
           assert.equal(table[i][j], temp[i][j]);

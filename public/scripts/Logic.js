@@ -78,7 +78,7 @@ class Logic {
             return false;
         }
         this.changeTurn();
-        return true;
+        //return true;
     }
 
 }
