@@ -213,13 +213,18 @@ function checkIfLegalMove(moveIsLegal) { // function name questionable
         minimize(sprites[corners[0]][corners[1]], highlightScaling);
         corners = [];
         let availableMoves = logic.isMovesAvailable();
+        if (logic.turnCounter === 3) {
+            alert("30 rounds without hits, round ended!");
+             updatePoints();
+             return;
+        }
         if(!availableMoves && roundskipped === 0){
             roundskipped++;
             alert("No moves available, skipping turn!");
             logic.changeTurn();
         } else if(!availableMoves) {
             alert("Two consecutive turns skipped, round ended!");
-            logic.updatePoints();
+            updatePoints();
         } else if(roundskipped !== 0) {
             roundskipped = 0;
         }
@@ -271,7 +276,8 @@ function setup() {
 function startNewGame(){
     gameBoard = new Board();
     stonesArray = gameBoard.boardTable;
-    setGameboard(stonesArray, gameBoard.startingTurn);
+    console.log(gameBoard.startingTurn);
+    logic = new Logic(stonesArray, gameBoard.startingTurn);
     setup();
 }
 

@@ -3,11 +3,14 @@
 var gameboard;
 var sprites;
 var startingTurn;
+var stonesHit;
+var turnCounter;
 class Logic {
 
     constructor(gameBoard, starting) {
         this.gameboard = gameBoard;
         this.startingTurn = starting;
+        this.turnCounter = 0;
         if (this.startingTurn === 0) {
             if (Math.random() > 0.5) {
                 this.startingTurn = 1;
@@ -28,7 +31,7 @@ class Logic {
     }
 
     turnIndicator(color, turn) {
-       /* var turnTeller = document.getElementById("turn");
+ /*       var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
         turnTeller.innerHTML = "It's " + turnTeller + " turn!";*/
     }
@@ -54,7 +57,11 @@ class Logic {
             } else if (movesAvailableCheck) {
                 this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
             }
-            //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
+
+            if (this.turnCounter === 30) {
+                return false;
+            }
+            console.log("turns without hit: " + this.turnCounter);
             return true;
     }
 
@@ -256,7 +263,7 @@ class Logic {
             //are the parameters valid: triangle base is even length, the tip is middle of the base
             return false;
         }
-
+        stonesHit = false;
         let min = Math.min(basis1, basis2);
         let max = Math.max(basis1, basis2);
         let n = 1;
@@ -271,23 +278,32 @@ class Logic {
                 }
 
                 if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
-                    this.gameboard[triangleFloor][j] = 0;
-                    //this.sprites[triangleFloor][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                if (this.gameboard[triangleFloor][j] != 0) {
+                        this.turnCounter = 0;
+                        stonesHit = true;
+                        this.gameboard[triangleFloor][j] = 0;
+                }
+                 
                 } else { //walk the floors in horizontal dir, (x-axis)
-                    this.gameboard[j][triangleFloor] = 0;
-                    //this.sprites[j][triangleFloor].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                    if (this.gameboard[j][triangleFloor] != 0) {
+                        this.turnCounter = 0;
+                        stonesHit = true;
+                        this.gameboard[j][triangleFloor] = 0;
+                    }
+       
                 }
             }
             triangleFloor += n; //we walk floors up if the tip is higher than bottom and vica verca
             min++;
             max--;
         }
+        if (stonesHit === false) {
+            this.turnCounter++;
+        }
         this.changeTurn();
         return true;
     }
-
 }
-
 module.exports.Logic = Logic;
 
 export { Logic };
