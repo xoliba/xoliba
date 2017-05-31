@@ -8,8 +8,7 @@ import * as PIXI from 'pixi.js';
 
 var size = scale();
 var app = new PIXI.Application(size, size, {view: document.getElementById("gameboard")});
-var gameBoard; //Board -object that creates an array that contains the positions of stones. Also gives the starting turn.
-var stonesArray; //the array created by Board.object
+var board; //Board -object that creates an array that contains the positions of stones. Also gives the starting turn.
 var firstClicked; //first clicked stone
 var sprites; //array that contains references to stones
 var corners; //array that contains the coordinates for selected stones that will form a triangle
@@ -24,11 +23,9 @@ var logic;
 
 app.renderer.backgroundColor = 0xE5E3DF;
 
-gameBoard = new Board();
-logic = new Logic(gameBoard.boardTable, gameBoard.startingTurn);
+board = new Board();
+logic = new Logic(board.table, board.startingTurn);
 drawTable(app.stage);
-
-stonesArray = gameBoard.boardTable;
 
 sprites = [];
 for (let i = 0; i < 7; i++) {
@@ -42,24 +39,24 @@ px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
 
-function updateBoard(newArray, fromAI) {
-    stonesArray = newArray;
+function updateBoard(newArray, isFromAI) {
+    board.table = newArray;
     logic.gameboard = newArray;
 
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
-            if (stonesArray[i][j] === 0) {
-                sprites[i][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
-            } else if (stonesArray[i][j] === 1) {
-                sprites[i][j].texture = PIXI.loader.resources["images/redCircle64.png"].texture;
-            } else if (stonesArray[i][j] === -1) {
-                sprites[i][j].texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
+                if (board.table[i][j] === 0) {
+                    sprites[i][j].texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+                } else if (board.table[i][j] === 1) {
+                    sprites[i][j].texture = PIXI.loader.resources["images/redCircle64.png"].texture;
+                } else if (board.table[i][j] === -1) {
+                    sprites[i][j].texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
+                }
             }
         }
     }
-    }
-    if (fromAI) {
+    if (isFromAI) {
         logic.changeTurn();
     }
 }
@@ -72,13 +69,13 @@ function updatePoints(){
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
-                if(stonesArray[i][j] == 1) {
+                if(board.table[i][j] == 1) {
                     reds++;
                     let found = logic.trianglesFound(i, j, true);
                     if(found > redsBiggest) {
                         redsBiggest = found;
                     }
-                } else if (stonesArray[i][j] == -1){
+                } else if (board.table[i][j] == -1){
                     blues++;
                     let found = logic.trianglesFound(i, j, true);
                     if(found > bluesBiggest) {
@@ -148,7 +145,7 @@ function onPointerDown() {
 }
 
 function parseFirstCorner(latestX, latestY, sprite) {
-    if (!checkTurn(latestX, latestY, stonesArray, logic)) {
+    if (!checkTurn(latestX, latestY, board.table, logic)) {
         return;
     }
 
@@ -163,7 +160,7 @@ function abortMove() {
 }
 
 function parseSecondCorner(latestX, latestY, sprite) {
-    if (!checkTurn(latestX, latestY, stonesArray, logic) || (latestX === corners[0] && latestY === corners[1])) {
+    if (!checkTurn(latestX, latestY, board.table, logic) || (latestX === corners[0] && latestY === corners[1])) {
         return;
     }
 
@@ -188,7 +185,7 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
-    if (!checkTurn(latestX, latestY, stonesArray, logic)) {
+    if (!checkTurn(latestX, latestY, board.table, logic)) {
             return;
     }
 
@@ -196,8 +193,8 @@ function checkIfLegalTriangle(latestX, latestY) {
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
 
-    aisocket.sendTable(stonesArray);
-    updateBoard(stonesArray, sprites);
+    aisocket.sendTable(board.table);
+    updateBoard(board.table, sprites);
 
     checkIfLegalMove(moveIsLegal);
 }
@@ -226,26 +223,26 @@ function checkIfLegalMove(moveIsLegal) { // function name questionable
     }
 }
 
-function setup() {
+function setupSprites() {
     for (let i = 0; i < 7; i++) {
         for (let j = 0; j < 7; j++) {
             if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
 
                 let sprite;
 
-                let c = stonesArray[i][j];
+                let stoneVal = board.table[i][j];
                 let path = "";
-                if (c === -1) {
+                if (stoneVal === -1) {
                     path = "images/blueCircle64.png";
-                } else if (c === 0) {
+                } else if (stoneVal === 0) {
                     path = "images/whiteCircle64.png";
-                } else if (c === 1) {
+                } else if (stoneVal === 1) {
                     path = "images/redCircle64.png";
                 }
 
                 sprite = new PIXI.Sprite(
                         PIXI.loader.resources[path].texture
-                        );
+                );
 
                 sprite.interactive = true;
                 sprite.buttonMode = true;
@@ -269,10 +266,10 @@ function setup() {
 }
 
 function startNewGame(){
-    gameBoard = new Board();
-    stonesArray = gameBoard.boardTable;
-    setGameboard(stonesArray, gameBoard.startingTurn);
-    setup();
+    board = new Board();
+    board.table = board.table;
+    setGameboard(board.table, board.startingTurn);
+    setupSprites();
 }
 
 PIXI.loader.
@@ -281,7 +278,7 @@ PIXI.loader.
             "images/blueCircle64.png",
             "images/redCircle64.png"
         ]).
-        load(setup);
+        load(setupSprites);
 
 app.renderer.render(app.stage);
 
