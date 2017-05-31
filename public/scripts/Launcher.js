@@ -194,7 +194,7 @@ function checkIfLegalTriangle(latestX, latestY) {
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
 
     aisocket.sendTable(board.table);
-    updateBoard(board.table, sprites);
+    updateBoard(board.table, false);
 
     checkIfLegalMove(moveIsLegal);
 }

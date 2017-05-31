@@ -14,10 +14,10 @@ class AiSocket {
             latestTable = JSON.parse(event.data);
             console.log(event.data);
             updateBoard(latestTable, true);
-            
+
         };
     }
-    
+
 
     getSocket() {
         return aisocket;
