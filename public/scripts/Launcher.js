@@ -3,7 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-import { getStonesArrayPosition } from './Launcherhelpers.js';
+import { getStonesArrayPosition, checkTurn } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -42,18 +42,10 @@ px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
 
-/*function getStonesArrayPosition(coordinate) {
-    return Math.round((coordinate - padding) / px);
-}*/
-
 function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
     var help = array[firstX][firstY];
     array[firstX][firstY] = array[secondX][secondY];
     array[secondX][secondY] = help;
-}
-
-function checkTurn(x, y){
-    return stonesArray[x][y] === logic.getTurn();
 }
 
 function updateBoard(stonesArray, sprites) {
@@ -156,7 +148,7 @@ function onPointerDown() {
 }
 
 function parseFirstCorner(latestX, latestY, sprite) {
-    if (!checkTurn(latestX, latestY)) {
+    if (!checkTurn(latestX, latestY, stonesArray, logic)) {
         return;
     }
 
@@ -171,8 +163,8 @@ function abortMove() {
 }
 
 function parseSecondCorner(latestX, latestY, sprite) {
-    if (!checkTurn(latestX, latestY) || (latestX === corners[0] && latestY === corners[1])) {
-            return;
+    if (!checkTurn(latestX, latestY, stonesArray, logic) || (latestX === corners[0] && latestY === corners[1])) {
+        return;
     }
 
     addCorner(latestX, latestY);
@@ -210,7 +202,7 @@ function addCorner(x, y) {
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
-    if (!checkTurn(latestX, latestY)) {
+    if (!checkTurn(latestX, latestY, stonesArray, logic)) {
             return;
     }
 
