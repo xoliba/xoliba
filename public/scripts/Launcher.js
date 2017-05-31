@@ -267,7 +267,6 @@ function setupSprites() {
             }
         }
     }
-    logic.setSprites(sprites);
 }
 
 function startNewGame(){

@@ -41,10 +41,6 @@ class Logic {
         turnTeller.innerHTML = "It's " + turnTeller + " turn!";*/
     }
 
-    setSprites(s) {
-        //Deprecated.
-    }
-
     changeTurn() {
         if(this.turn < 0) {
             this.turn = 1;
