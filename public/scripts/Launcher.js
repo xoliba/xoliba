@@ -3,7 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-import { getStonesArrayPosition, checkTurn, addCorner, swapPositions } from './Launcherhelpers.js';
+import { getStonesArrayPosition, checkTurn, addCorner, swapPositions, swap2DArrayPositions } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -42,11 +42,11 @@ px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
 
-function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
+/*function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
     var help = array[firstX][firstY];
     array[firstX][firstY] = array[secondX][secondY];
     array[secondX][secondY] = help;
-}
+}*/
 
 function updateBoard(stonesArray, sprites) {
     for (var i = 0; i < 7; i++) {
