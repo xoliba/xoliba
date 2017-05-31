@@ -135,49 +135,7 @@ function onPointerDown() {
     var latestY = getStonesArrayPosition(this.y, padding, px);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
-<<<<<<< HEAD
         checkIfLegalTriangle(latestX, latestY);
-=======
-        let latestX = getStonesArrayPosition(this.x);
-        let latestY = getStonesArrayPosition(this.y);
-        if (!checkTurn(latestX, latestY)) {
-            return;
-        }
-        corners.push(latestX);
-        corners.push(latestY);
-        let move = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
-        
-        
-        if(!move){
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            for (let i = 0; i < 4; i++) {
-                corners.pop();
-            }
-        } else {
-            sprites[corners[0]][corners[1]].scale.x -= highlightScaling;
-            sprites[corners[0]][corners[1]].scale.y -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.x -= highlightScaling;
-            sprites[corners[2]][corners[3]].scale.y -= highlightScaling;
-            corners = [];
-            
-            updateBoard(logic.gameboard);
-            aisocket.sendTable(stonesArray);
-            console.log("SEND TO AI: " + stonesArray);
-           
-            let availableMoves = logic.isMovesAvailable();
-            if(!availableMoves && roundskipped === 0){
-                roundskipped++;
-                alert("No moves available, skipping turn!");
-                logic.changeTurn();
-            } else if(!availableMoves) {
-                alert("Two consecutive turns skipped, round ended!");
-                logic.updatePoints();
-            } else if(roundskipped !== 0) {
-                roundskipped = 0;
-            }
-        }
->>>>>>> table from AI to front fixed
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
@@ -209,7 +167,6 @@ function parseSecondCorner(latestX, latestY, sprite) {
         return;
     }
 
-<<<<<<< HEAD
     addCorner(latestX, latestY, corners);
     enlarge(sprite, highlightScaling);
 }
@@ -217,12 +174,6 @@ function parseSecondCorner(latestX, latestY, sprite) {
 function parseClickOnWhiteStone(latestX, latestY, sprite) {
     let firstX = getStonesArrayPosition(firstClicked.x, padding, px);
     let firstY = getStonesArrayPosition(firstClicked.y, padding, px);
-=======
-        swap2DArrayPositions(sprites, firstX, firstY, secondX, secondY);
-        
-        //aisocket.getSocket().send(JSON.stringify(stonesArray));
-        
->>>>>>> table from AI to front fixed
 
     if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
         return;
