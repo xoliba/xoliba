@@ -33,6 +33,12 @@ class Logic {
         //TODO add turn counter to indicate amount of turns without stones being hit
     }
 
+    turnIndicator(color, turn) {
+       /* var turnTeller = document.getElementById("turn");
+        turnTeller.style.color = color;
+        turnTeller.innerHTML = "It's " + turnTeller + " turn!";*/
+    }
+
     setSprites(s) {
         //Deprecated.
     }
