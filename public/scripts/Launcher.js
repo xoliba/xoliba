@@ -3,7 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-//import { getStonesArrayPosition } from './Launcherhelpers.js';
+import { getStonesArrayPosition } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -42,9 +42,9 @@ px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
 
-function getStonesArrayPosition(coordinate) {
+/*function getStonesArrayPosition(coordinate) {
     return Math.round((coordinate - padding) / px);
-}
+}*/
 
 function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
     var help = array[firstX][firstY];
@@ -139,8 +139,8 @@ function updatePoints(){
 
 function onPointerDown() {
     let image = this.texture.baseTexture.source.src.split("/").pop();
-    var latestX = getStonesArrayPosition(this.x);
-    var latestY = getStonesArrayPosition(this.y);
+    var latestX = getStonesArrayPosition(this.x, padding, px);
+    var latestY = getStonesArrayPosition(this.y, padding, px);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
         checkIfLegalTriangle(latestX, latestY);
@@ -180,8 +180,8 @@ function parseSecondCorner(latestX, latestY, sprite) {
 }
 
 function parseClickOnWhiteStone(latestX, latestY, sprite) {
-    let firstX = getStonesArrayPosition(firstClicked.x);
-    let firstY = getStonesArrayPosition(firstClicked.y);
+    let firstX = getStonesArrayPosition(firstClicked.x, padding, px);
+    let firstY = getStonesArrayPosition(firstClicked.y, padding, px);
 
     if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
         return;
