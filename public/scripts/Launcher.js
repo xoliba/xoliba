@@ -3,7 +3,8 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-import { getStonesArrayPosition, checkTurn, addCorner, swapPositions, swap2DArrayPositions, enlarge, minimize } from './Launcherhelpers.js';
+//import { getStonesArrayPosition, checkTurn, addCorner, swapPositions, swap2DArrayPositions, enlarge, minimize } from './Launcherhelpers.js';
+import { Launcherhelper } from './Launcherhelper.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -20,11 +21,13 @@ var roundskipped = 0;
 var aisocket = new AiSocket();
 
 var logic;
+var helpers;
 
 app.renderer.backgroundColor = 0xE5E3DF;
 
 board = new Board();
 logic = new Logic(board.table, board.startingTurn);
+helpers = new Launcherhelper();
 drawTable(app.stage);
 
 sprites = [];
@@ -128,8 +131,8 @@ function updatePoints(){
 
 function onPointerDown() {
     let image = this.texture.baseTexture.source.src.split("/").pop();
-    var latestX = getStonesArrayPosition(this.x, padding, px);
-    var latestY = getStonesArrayPosition(this.y, padding, px);
+    var latestX = helpers.getStonesArrayPosition(this.x, padding, px);
+    var latestY = helpers.getStonesArrayPosition(this.y, padding, px);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
         checkIfLegalTriangle(latestX, latestY);
@@ -145,51 +148,51 @@ function onPointerDown() {
 }
 
 function parseFirstCorner(latestX, latestY, sprite) {
-    if (!checkTurn(latestX, latestY, board.table, logic)) {
+    if (!helpers.checkTurn(latestX, latestY, board.table, logic)) {
         return;
     }
 
     firstClicked = sprite;
-    enlarge(sprite, highlightScaling);
+    helpers.enlarge(sprite, highlightScaling);
 }
 
 function abortMove() {
-    minimize(firstClicked, highlightScaling);
+    helpers.minimize(firstClicked, highlightScaling);
     firstClicked = undefined;
     return;
 }
 
 function parseSecondCorner(latestX, latestY, sprite) {
-    if (!checkTurn(latestX, latestY, board.table, logic) || (latestX === corners[0] && latestY === corners[1])) {
+    if (!helpers.checkTurn(latestX, latestY, board.table, logic) || (latestX === corners[0] && latestY === corners[1])) {
         return;
     }
 
-    addCorner(latestX, latestY, corners);
-    enlarge(sprite, highlightScaling);
+    helpers.addCorner(latestX, latestY, corners);
+    helpers.enlarge(sprite, highlightScaling);
 }
 
 function parseClickOnWhiteStone(latestX, latestY, sprite) {
-    let firstX = getStonesArrayPosition(firstClicked.x, padding, px);
-    let firstY = getStonesArrayPosition(firstClicked.y, padding, px);
+    let firstX = helpers.getStonesArrayPosition(firstClicked.x, padding, px);
+    let firstY = helpers.getStonesArrayPosition(firstClicked.y, padding, px);
 
     if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
         return;
     }
 
-    addCorner(latestX, latestY, corners);
+    helpers.addCorner(latestX, latestY, corners);
 
-    swapPositions(sprite, firstClicked);
+    helpers.swapPositions(sprite, firstClicked);
     firstClicked = undefined;
 
-    swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
+    helpers.swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
-    if (!checkTurn(latestX, latestY, board.table, logic)) {
-            return;
+    if (!helpers.checkTurn(latestX, latestY, board.table, logic)) {
+        return;
     }
 
-    addCorner(latestX, latestY, corners);
+    helpers.addCorner(latestX, latestY, corners);
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
 
@@ -200,14 +203,14 @@ function checkIfLegalTriangle(latestX, latestY) {
 }
 
 function checkIfLegalMove(moveIsLegal) { // function name questionable
-    minimize(sprites[corners[2]][corners[3]], highlightScaling);
+    helpers.minimize(sprites[corners[2]][corners[3]], highlightScaling);
 
     if(!moveIsLegal){
         for (let i = 0; i < 4; i++) {
             corners.pop();
         }
     } else {
-        minimize(sprites[corners[0]][corners[1]], highlightScaling);
+        helpers.minimize(sprites[corners[0]][corners[1]], highlightScaling);
         corners = [];
         let availableMoves = logic.isMovesAvailable();
         if (logic.turnCounter === 3) {
