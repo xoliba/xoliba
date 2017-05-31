@@ -3,7 +3,7 @@ import { scale, drawTable } from './Draw.js';
 import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
-import { getStonesArrayPosition, checkTurn, addCorner, swapPositions, swap2DArrayPositions } from './Launcherhelpers.js';
+import { getStonesArrayPosition, checkTurn, addCorner, swapPositions, swap2DArrayPositions, enlarge, minimize } from './Launcherhelpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -41,12 +41,6 @@ padding = size / 10;
 px = size / 7.5;
 radius = px / 4;
 highlightScaling = radius / 100;
-
-/*function swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
-    var help = array[firstX][firstY];
-    array[firstX][firstY] = array[secondX][secondY];
-    array[secondX][secondY] = help;
-}*/
 
 function updateBoard(stonesArray, sprites) {
     for (var i = 0; i < 7; i++) {
@@ -153,11 +147,11 @@ function parseFirstCorner(latestX, latestY, sprite) {
     }
 
     firstClicked = sprite;
-    enlarge(sprite);
+    enlarge(sprite, highlightScaling);
 }
 
 function abortMove() {
-    minimize(firstClicked);
+    minimize(firstClicked, highlightScaling);
     firstClicked = undefined;
     return;
 }
@@ -168,7 +162,7 @@ function parseSecondCorner(latestX, latestY, sprite) {
     }
 
     addCorner(latestX, latestY, corners);
-    enlarge(sprite);
+    enlarge(sprite, highlightScaling);
 }
 
 function parseClickOnWhiteStone(latestX, latestY, sprite) {
@@ -202,15 +196,15 @@ function checkIfLegalTriangle(latestX, latestY) {
     checkIfLegalMove(moveIsLegal);
 }
 
-function checkIfLegalMove(moveIsLegal) {
-    minimize(sprites[corners[2]][corners[3]]);
+function checkIfLegalMove(moveIsLegal) { // function name questionable
+    minimize(sprites[corners[2]][corners[3]], highlightScaling);
 
     if(!moveIsLegal){
         for (let i = 0; i < 4; i++) {
             corners.pop();
         }
     } else {
-        minimize(sprites[corners[0]][corners[1]]);
+        minimize(sprites[corners[0]][corners[1]], highlightScaling);
         corners = [];
         let availableMoves = logic.isMovesAvailable();
         if(!availableMoves && roundskipped === 0){
@@ -224,16 +218,6 @@ function checkIfLegalMove(moveIsLegal) {
             roundskipped = 0;
         }
     }
-}
-
-function enlarge(sprite) {
-    sprite.scale.x += highlightScaling;
-    sprite.scale.y += highlightScaling;
-}
-
-function minimize(sprite) {
-    sprite.scale.x -= highlightScaling;
-    sprite.scale.y -= highlightScaling;
 }
 
 function setup() {
