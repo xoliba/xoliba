@@ -3,7 +3,7 @@ import { Logic } from '../public/scripts/Logic.js';
 import { Actions } from '../public/scripts/logic/Actions.js';
 import { Validations } from '../public/scripts/logic/Validations.js';
 
-describe('Logic', () => {
+describe('Logic (and logic/*.js)', () => {
 
     var logic;
     var actions;
@@ -91,12 +91,12 @@ describe('Logic', () => {
       validations.swap2DArrayPositions(5, 1, 0, 1);
       validations.swap2DArrayPositions(6, 5, 6, 5);
       let temp = [[-2, 0, 0, 0, 0, 1, -2],
-                        [0, 1, 1, 0, 1, 1, 0],
-                        [0, 1, 0, 1, 1, 1, 0],
-                        [1, 0, 0, 0, 0, 0, 0],
-                        [0, 1, 0, 0, 0, 0, 0],
-                        [1, 0, 1, 0, 1, 1, 1],
-                       [-2, 1, 1, 0, 1, -1, -2]];
+                  [0, 1, 1, 0, 1, 1, 0],
+                  [0, 1, 0, 1, 1, 1, 0],
+                  [1, 0, 0, 0, 0, 0, 0],
+                  [0, 1, 0, 0, 0, 0, 0],
+                  [1, 0, 1, 0, 1, 1, 1],
+                 [-2, 1, 1, 0, 1, -1, -2]];
 
       for(let i=0; i<validations.gameboard.length; i++) {
         for(let j=0; j<validations.gameboard[i].length; j++) {
@@ -156,6 +156,15 @@ describe('Logic', () => {
       assert.equal(logic.trianglesFound(4, 3, true), 2);
       assert.equal(logic.trianglesFound(4, 4, true), 2);
       assert.equal(logic.trianglesFound(3, 3, true), 2);
+      let temp =[  [-2, 0, 1, 1, 0, 0,-2],
+                    [0, 0, 0, 1,-1, 0,-1],
+                    [0, 0, 0, 0,-1,-1, 0],
+                    [0, 1, 0, 1, 1, 0, 0],
+                    [0, 0, 1, 0, 0, 0, 0],
+                    [0, 1, 0,-1, 0, 1, 0],
+                   [-2, 0, 0, 1, 0, 0,-2]];
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.trianglesFound(3, 3, false), 2);
     });
 
     it('Validating the moves work', function() {
@@ -174,6 +183,39 @@ describe('Logic', () => {
       assert.equal(logic.validateMove(1, 1, 6, 2, true), false);
       assert.equal(logic.validateMove(6, 5, 4, 5, false), false);
       assert.equal(logic.validateMove(6, 5, 4, 5, true), false);
+
+      let temp=[[-2, 0, 1, 1, 0, 0,-2],
+                 [0, 1, 0, 1,-1, 0,-1],
+                 [0, 0, 0, 0,-1,-1, 0],
+                 [0, 1, 0, 0, 1, 0, 0],
+                 [0, 0, 1, 0, 0, 0, 0],
+                 [0, 1, 0,-1, 0, 1, 0],
+                [-2, 0, 0, 1, 0, 0,-2]];
+
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(1, 1, 2, 2, false), true);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(1, 1, 3, 3, false), true);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(1, 1, 4, 4, false), false);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(1, 1, 2, 0, false), true);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(1, 1, 0, 1, false), false);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(3, 4, 3, 3, false), true);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(3, 4, 3, 3, false), true);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(3, 4, 3, 5, false), true);
+      logic = new Logic(c(temp), -1);
+      assert.equal(logic.validateMove(2, 4, 2, 1, false), false);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(1, 4, 0, 4, false), false);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(5, 3, 3, 3, false), false);
+      logic = new Logic(c(temp), 1);
+      assert.equal(logic.validateMove(5, 3, 2, 3, false), true);
     });
 
     describe('Hitting the stones in triangle work', function() {

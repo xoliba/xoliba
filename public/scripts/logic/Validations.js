@@ -29,7 +29,6 @@ class Validations {
             } else if (movesAvailableCheck) {
                 this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
             }
-            //if(stonesHitted yms.) turnCounter = 0; else turnCounter++;
             return true;
     }
 

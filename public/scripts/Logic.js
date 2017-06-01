@@ -66,12 +66,14 @@ class Logic {
 
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
         if(this.turnCounter >= 30) return false;
+        console.log("SIIRTO: " + this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck));
         return this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck);
     }
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
         let result = this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, this.gameboard);
         if(result === false) {
+            console.log("EI VIDHU");
             return false;
         }
         if(result === 1) this.turnCounter++;
