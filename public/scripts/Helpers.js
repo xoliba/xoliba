@@ -1,4 +1,4 @@
-class Launcherhelper {
+class Helpers {
     getStonesArrayPosition(coordinate, padding, px) {
         return Math.round((coordinate - padding) / px);
     }
@@ -39,4 +39,4 @@ class Launcherhelper {
 }
 
 
-export { Launcherhelper };
+export { Helpers };

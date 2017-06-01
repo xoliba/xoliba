@@ -4,7 +4,7 @@ import { Board } from './Board.js';
 import { Logic } from './Logic.js';
 import { AiSocket } from './Websocket.js';
 //import { getStonesArrayPosition, checkTurn, addCorner, swapPositions, swap2DArrayPositions, enlarge, minimize } from './Launcherhelpers.js';
-import { Launcherhelper } from './Launcherhelper.js';
+import { Helpers } from './Helpers.js';
 import * as PIXI from 'pixi.js';
 
 var size = scale();
@@ -27,7 +27,7 @@ app.renderer.backgroundColor = 0xE5E3DF;
 
 board = new Board();
 logic = new Logic(board.table, board.startingTurn);
-helpers = new Launcherhelper();
+helpers = new Helpers();
 drawTable(app.stage);
 
 sprites = [];
