@@ -19,17 +19,18 @@ class Validations {
     }
 
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
-            if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
-                return false;
-            }
-            this.swap2DArrayPositions(firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
-            if (this.trianglesFound(secondX, secondY, false) === 0) {
-                this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
-                return false;
-            } else if (movesAvailableCheck) {
-                this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
-            }
-            return true;
+        //This function will DO the move if its valid. Refactoring would be great.
+        if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
+            return false;
+        }
+        this.swap2DArrayPositions(firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
+        if (this.trianglesFound(secondX, secondY, false) === 0) {
+            this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
+            return false;
+        } else if (movesAvailableCheck) {
+            this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
+        }
+        return true;
     }
 
     stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
