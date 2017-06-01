@@ -60,16 +60,14 @@ class Logic {
         return this.turn;
     }
 
-    trianglesFound(positionX, positionY, getBiggest) {
+    trianglesFound(positionX, positionY, board, getBiggest) {
         //console.log("TRIANGLES FOUND: " + positionX + positionY, getBiggest);
-        return this.validations.trianglesFound(positionX, positionY, getBiggest);
+        return this.validations.trianglesFound(positionX, positionY, board, getBiggest);
     }
 
-    validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
+    validateMove(firstX, firstY, secondX, secondY) {
         if(this.turnCounter >= 30) return false;
-        let result = this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck)
-        console.log("SIIRTO: " + result);
-        return result;
+        return this.validations.moveIsValid(firstX, firstY, secondX, secondY);
     }
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {

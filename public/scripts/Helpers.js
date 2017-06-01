@@ -36,6 +36,17 @@ class Helpers {
         sprite.scale.x -= highlightScaling;
         sprite.scale.y -= highlightScaling;
     }
+
+    arrayCopy(array) { //copy the array
+      let newArray = new Array(7);
+      for (let i = 0; i < 7; i++) {
+          newArray[i] = [];
+          for (let j = 0; j < 7; j++) {
+              newArray[i][j] = array[i][j];
+          }
+      }
+      return newArray;
+    }
 }
 
 

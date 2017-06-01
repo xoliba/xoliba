@@ -175,7 +175,7 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
     let firstX = helpers.getStonesArrayPosition(firstClicked.x, padding, px);
     let firstY = helpers.getStonesArrayPosition(firstClicked.y, padding, px);
 
-    if (!logic.validateMove(firstX, firstY, latestX, latestY, false)) {
+    if (!logic.validateMove(firstX, firstY, latestX, latestY)) {
         return;
     }
 

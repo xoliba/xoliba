@@ -164,7 +164,7 @@ describe('Logic (and logic/*.js)', () => {
                     [0, 1, 0,-1, 0, 1, 0],
                    [-2, 0, 0, 1, 0, 0,-2]];
       logic = new Logic(c(temp), 1);
-      assert.equal(logic.trianglesFound(3, 3, false), 2);
+      assert.equal(logic.trianglesFound(3, 3, temp, false), 2);
     });
 
     it('Validating the moves work', function() {

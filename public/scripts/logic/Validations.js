@@ -1,9 +1,13 @@
-let gameboard
+import { Helpers } from '../Helpers.js';
+
+var gameboard;
+var helpers;
 
 class Validations {
 
     constructor(gameboard) {
         this.gameboard = gameboard;
+        this.helpers = new Helpers();
     }
 
     turnIndicator(color, turn) {
@@ -18,19 +22,19 @@ class Validations {
         this.gameboard[secondX][secondY] = help;
     }
 
-    validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
-        //This function will DO the move if its valid. Refactoring would be great.
+    moveIsValid(firstX, firstY, secondX, secondY) {
         if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
             return false;
         }
-        this.swap2DArrayPositions(firstX, firstY, secondX, secondY); //swap the positions and check if triangles are found
-        if (this.trianglesFound(secondX, secondY, false) === 0) {
-            this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
+
+        var board = this.helpers.arrayCopy(this.gameboard);
+        this.helpers.swap2DArrayPositions(this.gameboard, firstX, firstY, secondX, secondY);
+
+        if (this.trianglesFound(secondX, secondY, this.gameboard, false) === 0) {
             return false;
-        } else if (movesAvailableCheck) {
-            this.swap2DArrayPositions(firstX, firstY, secondX, secondY);
+        } else {
+            return true;
         }
-        return true;
     }
 
     stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
@@ -99,7 +103,7 @@ class Validations {
             for (var j = 0; j < 7; j++) {
                 if ((i === 0 && (j === 0 || j === 6)) || (i === 6 && ( j === 0 || j === 6)) || (x === i && y === j) || this.gameboard[i][j] !== 0) {
                     continue;
-                } else if (this.validateMove(x, y, i, j, true)) {
+                } else if (this.moveIsValid(x, y, i, j)) {
                     return true;
                 }
             }
@@ -109,8 +113,8 @@ class Validations {
 
     //If getBiggest is true, will return 1, 2 or 3.
     //If false, will return the amount of triangles.
-    trianglesFound(positionX, positionY, getBiggest) {
-        let color = this.gameboard[positionX][positionY];
+    trianglesFound(positionX, positionY, board, getBiggest) {
+        let color = board[positionX][positionY];
         let found = 0;
         let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
         let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
