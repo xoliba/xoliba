@@ -70,8 +70,11 @@ class Actions {
             min++;
             max--;
         }
-        if(stonesHit === false) return 1;
-        return 2;
+        if (stonesHit === false) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 

@@ -26,7 +26,8 @@ var helpers;
 app.renderer.backgroundColor = 0xE5E3DF;
 
 board = new Board();
-logic = new Logic(board.table, board.startingTurn);
+//logic = new Logic(board.table, board.startingTurn);
+logic = new Logic();
 helpers = new Helpers();
 drawTable(app.stage);
 
@@ -44,7 +45,7 @@ highlightScaling = radius / 100;
 
 function updateBoard(newArray, isFromAI) {
     board.table = newArray;
-    logic.gameboard = newArray;
+    //logic.gameboard = newArray;
 
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
@@ -72,13 +73,13 @@ function updatePoints(){
     for (var i = 0; i < 7; i++) {
         for (var j = 0; j < 7; j++) {
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
-                if(board.table[i][j] == 1) {
+                if(board.table[i][j] === 1) {
                     reds++;
                     let found = logic.trianglesFound(i, j, true);
                     if(found > redsBiggest) {
                         redsBiggest = found;
                     }
-                } else if (board.table[i][j] == -1){
+                } else if (board.table[i][j] === -1){
                     blues++;
                     let found = logic.trianglesFound(i, j, true);
                     if(found > bluesBiggest) {
@@ -139,7 +140,7 @@ function onPointerDown() {
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
-        parseFirstCorner(latestX, latestY, this);
+        parseFirstClick(latestX, latestY, this);
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
         parseClickOnWhiteStone(latestX, latestY, this);
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
@@ -147,10 +148,10 @@ function onPointerDown() {
     }
 }
 
-function parseFirstCorner(latestX, latestY, sprite) {
-    if (!helpers.checkTurn(latestX, latestY, board.table, logic)) {
+function parseFirstClick(latestX, latestY, sprite) {
+    /*if (!helpers.checkTurn(latestX, latestY, board.table, logic)) {
         return;
-    }
+    }*/
 
     firstClicked = sprite;
     helpers.enlarge(sprite, highlightScaling);
@@ -175,13 +176,21 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
     let firstX = helpers.getStonesArrayPosition(firstClicked.x, padding, px);
     let firstY = helpers.getStonesArrayPosition(firstClicked.y, padding, px);
 
-    if (!logic.validateMove(firstX, firstY, latestX, latestY)) {
+    if (!logic.validateMove(firstX, firstY, latestX, latestY, board.table)) {
         return;
     }
 
     helpers.addCorner(latestX, latestY, corners);
-
     helpers.swapPositions(sprite, firstClicked);
+
+    //console.log(board.table[firstX][firstY]);
+    //console.log(board.table[latestX][latestY]);
+    //helpers.swap2DArrayPositions(board.table, firstX, firstY, latestX, latestY);
+    /*var help = board.table[firstX][firstY];
+    board.table[firstX][firstY] = board.table[latestX][latestY];
+    board.table[latestX][latestY] = help;*/
+    //console.log(board.table[firstX][firstY]);
+    //console.log(board.table[latestX][latestY]);
     firstClicked = undefined;
 
     helpers.swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
@@ -194,10 +203,15 @@ function checkIfLegalTriangle(latestX, latestY) {
 
     helpers.addCorner(latestX, latestY, corners);
 
-    let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5]);
+    console.log(board.table);
+    let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5], board.table);
+    console.log(board.table);
 
-    aisocket.sendTable(board.table);
-    updateBoard(board.table, false);
+    if (moveIsLegal === false) {
+        return;
+    }
+
+    //console.log(board.table);
 
     checkIfLegalMove(moveIsLegal);
 }
@@ -212,7 +226,7 @@ function checkIfLegalMove(moveIsLegal) { // function name questionable
     } else {
         helpers.minimize(sprites[corners[0]][corners[1]], highlightScaling);
         corners = [];
-        let availableMoves = logic.isMovesAvailable();
+        let availableMoves = logic.isMovesAvailable(board.table);
         if (logic.turnCounter === 3) {
             alert("30 rounds without hits, round ended!");
              updatePoints();
@@ -229,6 +243,11 @@ function checkIfLegalMove(moveIsLegal) { // function name questionable
             roundskipped = 0;
         }
     }
+
+    //aisocket.sendTable(board.table);
+    //console.log(board.table);
+    updateBoard(board.table, false);
+    //console.log(board.table);
 }
 
 function setupSprites() {
@@ -274,7 +293,7 @@ function setupSprites() {
 
 function startNewGame(){
     board = new Board();
-    board.table = board.table;
+    //board.table = board.table;
     setGameboard(board.table, board.startingTurn);
     setupSprites();
 }

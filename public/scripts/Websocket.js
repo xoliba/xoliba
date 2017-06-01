@@ -6,7 +6,7 @@ import { sprites } from './Launcher.js';
 
 class AiSocket {
     constructor() {
-        const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
+        /*const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
         //const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
@@ -14,8 +14,7 @@ class AiSocket {
             latestTable = JSON.parse(event.data);
             console.log(event.data);
             updateBoard(latestTable, true);
-
-        };
+        };*/
     }
 
 

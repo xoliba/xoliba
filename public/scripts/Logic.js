@@ -3,7 +3,7 @@ import { Validations } from './logic/Validations.js';
 
 //import * as PIXI from 'pixi.js';
 
-var gameboard;
+//var gameboard;
 var sprites;
 var turn;
 var stonesHit;
@@ -11,12 +11,12 @@ var turnCounter;
 
 class Logic {
 
-    constructor(gameBoard, starting) {
+    constructor() {
         this.turnCounter = 0;
-        this.gameboard = gameBoard;
-        this.validations = new Validations(gameBoard);
-        this.actions = new Actions(gameBoard);
-        this.turn = starting;
+        //this.gameboard = gameBoard;
+        this.validations = new Validations();
+        this.actions = new Actions();
+        //this.turn = starting;
         /*if (this.turn === 0) {
             if (Math.random() > 0.5) {
                 this.turn = 1;
@@ -42,18 +42,18 @@ class Logic {
         turnTeller.innerHTML = "It's " + turnTeller + " turn!";*/
     }
 
-    changeTurn() {
+    /*changeTurn() {
         if(this.turn < 0) {
             this.turn = 1;
         } else {
             this.turn = -1;
         }
         //console.log("HALOO!");
-    }
+    }*/
 
-    isMovesAvailable() {
+    isMovesAvailable(board) {
         //console.log("IS MOVES AVAILABLE");
-        return this.validations.isMovesAvailable(this.turn);
+        return this.validations.isMovesAvailable(this.turn, board);
     }
 
     getTurn() {
@@ -65,18 +65,18 @@ class Logic {
         return this.validations.trianglesFound(positionX, positionY, board, getBiggest);
     }
 
-    validateMove(firstX, firstY, secondX, secondY) {
+    validateMove(firstX, firstY, secondX, secondY, board) {
         if(this.turnCounter >= 30) return false;
-        return this.validations.moveIsValid(firstX, firstY, secondX, secondY);
+        return this.validations.moveIsValid(firstX, firstY, secondX, secondY, board);
     }
 
-    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
-        let result = this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, this.gameboard);
+    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, table) {
+        let result = this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, table);
         if(result === false) {
             console.log("EI VIDHU");
             return false;
         }
-        if(result === 1) this.turnCounter++;
+        if(result === true) this.turnCounter++;
         else this.turnCounter = 0;
         //this.changeTurn();
         return true;

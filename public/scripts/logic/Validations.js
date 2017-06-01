@@ -1,12 +1,12 @@
 import { Helpers } from '../Helpers.js';
 
-var gameboard;
+//var gameboard;
 var helpers;
 
 class Validations {
 
-    constructor(gameboard) {
-        this.gameboard = gameboard;
+    constructor() {
+        //this.gameboard = gameboard;
         this.helpers = new Helpers();
     }
 
@@ -16,28 +16,28 @@ class Validations {
         turnTeller.innerHTML = "It's " + "turnTeller" + " turn!";*/
     }
 
-    swap2DArrayPositions(firstX, firstY, secondX, secondY) {
+    /*swap2DArrayPositions(firstX, firstY, secondX, secondY) {
         var help = this.gameboard[firstX][firstY];
         this.gameboard[firstX][firstY] = this.gameboard[secondX][secondY];
         this.gameboard[secondX][secondY] = help;
-    }
+    }*/
 
-    moveIsValid(firstX, firstY, secondX, secondY) {
-        if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY)) {
+    moveIsValid(firstX, firstY, secondX, secondY, board) {
+        if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY, board)) {
             return false;
         }
 
-        var board = this.helpers.arrayCopy(this.gameboard);
-        this.helpers.swap2DArrayPositions(this.gameboard, firstX, firstY, secondX, secondY);
+        var boardCopy = this.helpers.arrayCopy(board);
+        this.helpers.swap2DArrayPositions(boardCopy, firstX, firstY, secondX, secondY);
 
-        if (this.trianglesFound(secondX, secondY, this.gameboard, false) === 0) {
+        if (this.trianglesFound(secondX, secondY, boardCopy, false) === 0) {
             return false;
         } else {
             return true;
         }
     }
 
-    stonesBetweenAreWhite(firstX, firstY, secondX, secondY) {
+    stonesBetweenAreWhite(firstX, firstY, secondX, secondY, board) {
         if (!this.stonesAreOnTheSameLine(firstX, firstY, secondX, secondY)) {
             return false;
         }
@@ -45,7 +45,7 @@ class Validations {
             let min = Math.min(firstY, secondY);
             let max = Math.max(firstY, secondY);
             for (let i = min + 1; i < max; i++) {
-                if (this.gameboard[firstX][i] !== 0) {
+                if (board[firstX][i] !== 0) {
                     return false;
                 }
             }
@@ -53,7 +53,7 @@ class Validations {
             let min = Math.min(firstX, secondX);
             let max = Math.max(firstX, secondX);
             for (let i = min + 1; i < max; i++) {
-                if (this.gameboard[i][firstY] !== 0) {
+                if (board[i][firstY] !== 0) {
                     return false;
                 }
             }
@@ -63,7 +63,7 @@ class Validations {
             let minY = Math.min(firstY, secondY);
             for (let i = minX + 1; i < maxX; i++) {
                 minY++;
-                if (this.gameboard[i][minY] !== 0) {
+                if (board[i][minY] !== 0) {
                     return false;
                 }
             }
@@ -73,7 +73,7 @@ class Validations {
             let minY = Math.max(firstY, secondY);
             for (let i = minX + 1; i < maxX; i++) {
                 minY--;
-                if (this.gameboard[i][minY] !== 0) {
+                if (board[i][minY] !== 0) {
                     return false;
                 }
             }
@@ -87,10 +87,10 @@ class Validations {
         return firstX === secondX || firstY === secondY || diffX === diffY;
     }
 
-    isMovesAvailable(startingTurn) {
+    isMovesAvailable(startingTurn, board) {
         for (let i = 0; i < 7; i++) {
             for (let j = 0; j < 7; j++) {
-                if (this.gameboard[i][j] === startingTurn && this.moveFound(i, j)) {
+                if (board[i][j] === startingTurn && this.moveFound(i, j, board)) {
                     return true;
                 }
             }
@@ -98,12 +98,12 @@ class Validations {
         return false;
     }
 
-    moveFound(x, y) {
+    moveFound(x, y, board) {
         for (let i = 0; i < 7; i++) {
             for (var j = 0; j < 7; j++) {
-                if ((i === 0 && (j === 0 || j === 6)) || (i === 6 && ( j === 0 || j === 6)) || (x === i && y === j) || this.gameboard[i][j] !== 0) {
+                if ((i === 0 && (j === 0 || j === 6)) || (i === 6 && ( j === 0 || j === 6)) || (x === i && y === j) || board[i][j] !== 0) {
                     continue;
-                } else if (this.moveIsValid(x, y, i, j)) {
+                } else if (this.moveIsValid(x, y, i, j, board)) {
                     return true;
                 }
             }
@@ -123,7 +123,7 @@ class Validations {
         for (let i = 2; i <= 6; i += 2) { //for all possible triangle distances
             let distanceSide = i / 2;
             for (let j = 0; j < 4; j++) { //for all four directions
-                found += this.lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color);
+                found += this.lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color, board);
             }
             if (getBiggest && found > 0) {
                 biggest = i / 2;
@@ -138,12 +138,12 @@ class Validations {
     }
 
     //THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
-    lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
+    lookForTriangles(originX, originY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color, board) {
         let foundOnThisDirection = 0;
         let triangles = 0;
         let targetX = originX + directionX;
         let targetY = originY + directionY;
-        foundOnThisDirection += this.checkDiagonals(originX, originY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color);
+        foundOnThisDirection += this.checkDiagonals(originX, originY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color, board);
 
 
         if (!this.isThisOnBoard(targetX, targetY)) { //if the target is out of board
@@ -152,9 +152,9 @@ class Validations {
             } else {
                 triangles = 0;
             }
-        } else if (foundOnThisDirection === 0 || (foundOnThisDirection === 1 && this.gameboard[originX + directionX][originY + directionY] !== color)) { //no triangles, target on board
+        } else if (foundOnThisDirection === 0 || (foundOnThisDirection === 1 && board[originX + directionX][originY + directionY] !== color)) { //no triangles, target on board
             triangles = 0;
-        } else if (foundOnThisDirection === 2 && this.gameboard[originX + directionX][originY + directionY] === color) { //all four stones are the right colour
+        } else if (foundOnThisDirection === 2 && board[originX + directionX][originY + directionY] === color) { //all four stones are the right colour
             triangles = 3;
         } else {
             triangles = 1;
@@ -171,15 +171,15 @@ class Validations {
     }
 
     //THIS FUNCTION IS NOT TESTED SEPARATELY. so please refactor parameters as you want.
-    checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color) {
-        return this.checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color) +
-        this.checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color);
+    checkDiagonals(positionX, positionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color, board) {
+        return this.checkIfColour(positionX + firstChangeX, positionY + firstChangeY, color, board) +
+        this.checkIfColour(positionX + secondChangeX, positionY + secondChangeY, color, board);
     }
 
-    checkIfColour(targetX, targetY, color) {
+    checkIfColour(targetX, targetY, color, board) {
         var result = 0;
         if (this.isThisOnBoard(targetX, targetY)) {
-            if (this.gameboard[targetX][targetY] === color) {
+            if (board[targetX][targetY] === color) {
                 result++;
             }
         }
