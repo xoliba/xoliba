@@ -60,7 +60,7 @@ function updateBoard(newArray, isFromAI) {
         }
     }
     if (isFromAI) {
-        logic.changeTurn();
+        //logic.changeTurn();
     }
 }
 
@@ -221,7 +221,7 @@ function checkIfLegalMove(moveIsLegal) { // function name questionable
         if(!availableMoves && roundskipped === 0){
             roundskipped++;
             alert("No moves available, skipping turn!");
-            logic.changeTurn();
+            //logic.changeTurn();
         } else if(!availableMoves) {
             alert("Two consecutive turns skipped, round ended!");
             updatePoints();

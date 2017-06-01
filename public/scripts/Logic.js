@@ -17,7 +17,7 @@ class Logic {
         this.validations = new Validations(gameBoard);
         this.actions = new Actions(gameBoard);
         this.turn = starting;
-        if (this.turn === 0) {
+        /*if (this.turn === 0) {
             if (Math.random() > 0.5) {
                 this.turn = 1;
                 //this.turnIndicator("blue", "BLUES");
@@ -25,14 +25,15 @@ class Logic {
                 this.turn = -1;
                 //this.turnIndicator("red", "REDS");
             }
-        }
-        if (this.turn > 0) {
+        }*/
+        this.turn = -1;
+        /*if (this.turn > 0) {
             this.turn = -1;
             //this.turnIndicator("blue", "BLUES");
         } else {
             this.turn = 1;
             //this.turnIndicator("red", "REDS");
-        }
+        }*/
     }
 
     turnIndicator(color, turn) {
@@ -79,7 +80,7 @@ class Logic {
         }
         if(result === 1) this.turnCounter++;
         else this.turnCounter = 0;
-        this.changeTurn();
+        //this.changeTurn();
         return true;
     }
 
