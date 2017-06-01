@@ -66,8 +66,9 @@ class Logic {
 
     validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck) {
         if(this.turnCounter >= 30) return false;
-        console.log("SIIRTO: " + this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck));
-        return this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck);
+        let result = this.validations.validateMove(firstX, firstY, secondX, secondY, movesAvailableCheck)
+        console.log("SIIRTO: " + result);
+        return result;
     }
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
