@@ -1,8 +1,11 @@
 class Actions {
 
+
+
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, gameboard) {
 
         //Validation is performed in function hitTriangle
+        //Will return false (0) when triangle is invalid, 1 when no stones were hit and 2 when stones are hit.
         if (firstX === secondX) {
             return this.hitTriangle(firstY, secondY, firstX, thirdX, thirdY, true, gameboard);
         } else if (firstX === thirdX) {
@@ -71,9 +74,9 @@ class Actions {
             max--;
         }
         if (stonesHit === false) {
-            return false;
+            return 1;
         } else {
-            return true;
+            return 2;
         }
     }
 }

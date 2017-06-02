@@ -76,7 +76,7 @@ class Logic {
             console.log("EI VIDHU");
             return false;
         }
-        if(result === true) this.turnCounter++;
+        if(result === 1) this.turnCounter++;
         else this.turnCounter = 0;
         //this.changeTurn();
         return true;

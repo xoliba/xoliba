@@ -23,6 +23,12 @@ var aisocket = new AiSocket();
 var logic;
 var helpers;
 
+//kinda shady workaround try for the bug...
+var movedStoneX;
+var movedStoneY;
+var movedStoneX2;
+var movedStoneY2;
+
 app.renderer.backgroundColor = 0xE5E3DF;
 
 board = new Board();
@@ -173,6 +179,7 @@ function parseSecondCorner(latestX, latestY, sprite) {
 }
 
 function parseClickOnWhiteStone(latestX, latestY, sprite) {
+
     let firstX = helpers.getStonesArrayPosition(firstClicked.x, padding, px);
     let firstY = helpers.getStonesArrayPosition(firstClicked.y, padding, px);
 
@@ -193,7 +200,13 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
     //console.log(board.table[latestX][latestY]);
     firstClicked = undefined;
 
+/*
     helpers.swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
+    movedStoneX = firstX;
+    movedStoneY = firstY;
+    movedStoneX2 = latestX;
+    movedStoneY2 = latestY;
+    console.log("JUST MOVED SOME SHIT! " + "("+movedStoneX+","+movedStoneY+") + ("+movedStoneX2+","+movedStoneY2+")");*/
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
@@ -208,12 +221,16 @@ function checkIfLegalTriangle(latestX, latestY) {
     console.log(board.table);
 
     if (moveIsLegal === false) {
-        return;
+        return false;
     }
 
     //console.log(board.table);
+    //workaround for the bug
+    helpers.swap2DArrayPositions(sprites, movedStoneX, movedStoneY, movedStoneX2, movedStoneY2);
+    console.log("("+movedStoneX+","+movedStoneY+") + ("+movedStoneX2+","+movedStoneY2+")");
 
     checkIfLegalMove(moveIsLegal);
+    return true;
 }
 
 function checkIfLegalMove(moveIsLegal) { // function name questionable
