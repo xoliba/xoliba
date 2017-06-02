@@ -1,5 +1,4 @@
 var aisocket;
-var latestTable;
 
 import { updateBoard } from './Launcher.js';
 import { sprites } from './Launcher.js';
@@ -10,24 +9,41 @@ class AiSocket {
         const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
+        //aisocket.send(JSON.stringify({ type: "ping" }))
+        
+
         aisocket.onmessage = function(event) {
-            latestTable = JSON.parse(event.data);
+            var latestTable = JSON.parse(event.data);
             console.log(event.data);
             updateBoard(latestTable, true);
         };
-    }
 
+        aisocket.onopen = function() {
+            console.log("connected to ai server");
+            setInterval(ping, 60000);
+        }
 
-    getSocket() {
-        return aisocket;
+        aisocket.onclose = function() {
+            console.log("disconnected from ai server");
+        }
+
+        function ping() {
+            let msg = {
+                type: "ping"
+            }
+
+            if (aisocket.readyState === 1) {
+                aisocket.send(JSON.stringify(msg));
+            }
+        }
     }
 
     sendTable(table) {
-        aisocket.send(JSON.stringify(table));
-    }
-
-    getTable() {
-        return latestTable;
+        let msg = {
+            type: "message",
+            table: table
+        }
+        aisocket.send(JSON.stringify(msg));
     }
 }
 
