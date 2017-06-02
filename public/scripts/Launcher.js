@@ -218,9 +218,9 @@ function checkIfLegalTriangle(latestX, latestY) {
     helpers.addCorner(latestX, latestY, corners);
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5], board.table);
-    
+
     if (moveIsLegal === false) {
-        abortMove();
+        //DO SOMETHING?
         return false;
     }
 
