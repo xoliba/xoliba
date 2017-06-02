@@ -200,13 +200,13 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
     //console.log(board.table[latestX][latestY]);
     firstClicked = undefined;
 
-/*
+
     helpers.swap2DArrayPositions(sprites, firstX, firstY, latestX, latestY);
     movedStoneX = firstX;
     movedStoneY = firstY;
     movedStoneX2 = latestX;
     movedStoneY2 = latestY;
-    console.log("JUST MOVED SOME SHIT! " + "("+movedStoneX+","+movedStoneY+") + ("+movedStoneX2+","+movedStoneY2+")");*/
+    console.log("JUST MOVED SOME SHIT! " + "("+movedStoneX+","+movedStoneY+") + ("+movedStoneX2+","+movedStoneY2+")");
 }
 
 function checkIfLegalTriangle(latestX, latestY) {
@@ -225,9 +225,9 @@ function checkIfLegalTriangle(latestX, latestY) {
     }
 
     //console.log(board.table);
-    //workaround for the bug
-    helpers.swap2DArrayPositions(sprites, movedStoneX, movedStoneY, movedStoneX2, movedStoneY2);
-    console.log("("+movedStoneX+","+movedStoneY+") + ("+movedStoneX2+","+movedStoneY2+")");
+    //workaround for the bug:
+    /*helpers.swap2DArrayPositions(sprites, movedStoneX, movedStoneY, movedStoneX2, movedStoneY2);
+    console.log("("+movedStoneX+","+movedStoneY+") + ("+movedStoneX2+","+movedStoneY2+")");*/
 
     checkIfLegalMove(moveIsLegal);
     return true;
