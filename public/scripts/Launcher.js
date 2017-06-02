@@ -143,6 +143,7 @@ function onPointerDown() {
 
     if (corners.length === 4) { //two corners of the triangle chosen already
         checkIfLegalTriangle(latestX, latestY);
+        aisocket.sendTable(board.table);
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
@@ -261,7 +262,7 @@ function checkIfLegalMove(moveIsLegal) { // function name questionable
         }
     }
 
-    //aisocket.sendTable(board.table);
+    
     //console.log(board.table);
     updateBoard(board.table, false);
     //console.log(board.table);
