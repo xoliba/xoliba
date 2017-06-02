@@ -114,7 +114,7 @@ class Validations {
     //If getBiggest is true, will return 1, 2 or 3.
     //If false, will return the amount of triangles.
     trianglesFound(positionX, positionY, board, getBiggest) {
-        let color = -1; //PLAYER COLOR IS HARDCODED HERE!
+        let color = board[positionX][positionY];
         let found = 0;
         let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
         let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
@@ -147,7 +147,7 @@ class Validations {
 
 
         if (!this.isThisOnBoard(targetX, targetY)) { //if the target is out of board
-            if (foundOnThisDirection === 2) { //if there are two on diagonals
+            if (foundOnThisDirection === 2) { //if there are two on diagonals. THIS IS IMPORTANT even tho the target is not on board.
                 triangles = 1;
             } else {
                 triangles = 0;
@@ -160,7 +160,7 @@ class Validations {
             triangles = 1;
         }
 
-        /*console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
+        /*console.info("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
             + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));*/
         return triangles;
     }
