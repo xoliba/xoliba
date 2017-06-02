@@ -221,6 +221,7 @@ function checkIfLegalTriangle(latestX, latestY) {
     console.log(board.table);
 
     if (moveIsLegal === false) {
+        abortMove();
         return false;
     }
 

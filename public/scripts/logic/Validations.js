@@ -114,7 +114,7 @@ class Validations {
     //If getBiggest is true, will return 1, 2 or 3.
     //If false, will return the amount of triangles.
     trianglesFound(positionX, positionY, board, getBiggest) {
-        let color = board[positionX][positionY];
+        let color = -1; //PLAYER COLOR IS HARDCODED HERE!
         let found = 0;
         let hypotenuseDirections = [[-1, 0], [1, 0], [0, -1], [0, 1]]; //left, right, down, up
         let edgeDirections = [[-1, 1, -1, -1], [1, 1, 1, -1], [-1, -1, 1, -1], [-1, 1, 1, 1]]; //left, right, down, up
