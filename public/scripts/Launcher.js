@@ -81,13 +81,13 @@ function updatePoints(){
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                 if(board.table[i][j] === 1) {
                     reds++;
-                    let found = logic.trianglesFound(i, j, true);
+                    let found = logic.trianglesFound(i, j, board.table, true);
                     if(found > redsBiggest) {
                         redsBiggest = found;
                     }
                 } else if (board.table[i][j] === -1){
                     blues++;
-                    let found = logic.trianglesFound(i, j, true);
+                    let found = logic.trianglesFound(i, j, board.table, true);
                     if(found > bluesBiggest) {
                         bluesBiggest = found;
                     }
@@ -311,7 +311,7 @@ function setupSprites() {
 function startNewGame(){
     board = new Board();
     //board.table = board.table;
-    setGameboard(board.table, board.startingTurn);
+  //  setGameboard(board.table, board.startingTurn);
     setupSprites();
 }
 
