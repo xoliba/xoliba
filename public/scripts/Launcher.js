@@ -146,7 +146,9 @@ function onPointerDown() {
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
+        if (image === "blueCircle64.png") {
         parseFirstClick(latestX, latestY, this);
+        }
     } else if (image === "whiteCircle64.png") { //it is not the first click, and no corners are choosed: it is time to motor!
         parseClickOnWhiteStone(latestX, latestY, this);
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
@@ -158,7 +160,7 @@ function parseFirstClick(latestX, latestY, sprite) {
     /*if (!helpers.checkTurn(latestX, latestY, board.table, logic)) {
         return;
     }*/
-
+    
     firstClicked = sprite;
     helpers.enlarge(sprite, highlightScaling);
 }
@@ -300,8 +302,9 @@ function setupSprites() {
                 sprite.y = padding + j * px;
                 sprite.width = radius * 2;
                 sprite.height = radius * 2;
-
+                if (path === "images/blueCircle64.png" || path === "images/whiteCircle64.png") {    //NOT FINAL VERSION
                 sprite.on('pointerdown', onPointerDown);
+            }
 
                 sprites[i][j] = sprite;
 
