@@ -5,3 +5,6 @@ cache:
         - node_modules
 dist: trusty
 before_install: npm install mocha
+
+after_success:
+    - ./node_modules/.bin/nyc report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov
