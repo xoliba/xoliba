@@ -310,6 +310,7 @@ function setupSprites() {
 
 function startNewGame(){
     board = new Board();
+    logic = new Logic();
     //board.table = board.table;
   //  setGameboard(board.table, board.startingTurn);
     setupSprites();
