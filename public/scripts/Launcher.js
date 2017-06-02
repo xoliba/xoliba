@@ -138,6 +138,7 @@ function updatePoints(){
 
 function onPointerDown() {
     let image = this.texture.baseTexture.source.src.split("/").pop();
+    if (image === "blueCircle64.png" || image === "whiteCircle64.png") {
     var latestX = helpers.getStonesArrayPosition(this.x, padding, px);
     var latestY = helpers.getStonesArrayPosition(this.y, padding, px);
 
@@ -153,6 +154,7 @@ function onPointerDown() {
         parseClickOnWhiteStone(latestX, latestY, this);
     } else if (firstClicked.x === this.x && firstClicked.y === this.y) {
         abortMove();
+    }
     }
 }
 
@@ -302,17 +304,14 @@ function setupSprites() {
                 sprite.y = padding + j * px;
                 sprite.width = radius * 2;
                 sprite.height = radius * 2;
-                if (path === "images/blueCircle64.png" || path === "images/whiteCircle64.png") {    //NOT FINAL VERSION
                 sprite.on('pointerdown', onPointerDown);
-            }
-
                 sprites[i][j] = sprite;
 
                 app.stage.addChild(sprite);
 
             }
         }
-    }
+}
 }
 
 function startNewGame(){
