@@ -142,8 +142,7 @@ function onPointerDown() {
     var latestY = helpers.getStonesArrayPosition(this.y, padding, px);
 
     if (corners.length === 4) { //two corners of the triangle chosen already
-        checkIfLegalTriangle(latestX, latestY);
-        aisocket.sendTable(board.table);
+        checkIfLegalTriangle(latestX, latestY);    
     } else if (corners.length === 2) { //one corner of the triangle chosen already
         parseSecondCorner(latestX, latestY, this);
     } else if (firstClicked === undefined) { //no stone is clicked, it's the first click of this move!
@@ -219,6 +218,9 @@ function checkIfLegalTriangle(latestX, latestY) {
     helpers.addCorner(latestX, latestY, corners);
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5], board.table);
+    if (moveIsLegal) {
+        aisocket.sendTable(board.table);
+    }
 
     /*if (moveIsLegal === false) {
         //DO SOMETHING?
@@ -232,6 +234,7 @@ function checkIfLegalTriangle(latestX, latestY) {
 
     checkIfLegalMove(moveIsLegal);
     return true;
+    
 }
 
 function checkIfLegalMove(moveIsLegal) { // function name questionable
