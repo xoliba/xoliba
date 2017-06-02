@@ -170,7 +170,7 @@ function abortMove() {
 }
 
 function parseSecondCorner(latestX, latestY, sprite) {
-    if (!helpers.checkTurn(latestX, latestY, board.table, logic) || (latestX === corners[0] && latestY === corners[1])) {
+    if (!helpers.checkTurn(latestX, latestY, board.table, logic) || (latestX === corners[0] && latestY === corners[1]) || (latestX === corners[2] && latestY === corners[3])) {
         return;
     }
 
@@ -189,6 +189,7 @@ function parseClickOnWhiteStone(latestX, latestY, sprite) {
 
     helpers.addCorner(latestX, latestY, corners);
     helpers.swapPositions(sprite, firstClicked);
+    helpers.swap2DArrayPositions(board.table, firstX, firstY, latestX, latestY);
 
     //console.log(board.table[firstX][firstY]);
     //console.log(board.table[latestX][latestY]);
@@ -216,10 +217,8 @@ function checkIfLegalTriangle(latestX, latestY) {
 
     helpers.addCorner(latestX, latestY, corners);
 
-    console.log(board.table);
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5], board.table);
-    console.log(board.table);
-
+    
     if (moveIsLegal === false) {
         abortMove();
         return false;
