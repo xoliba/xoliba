@@ -219,10 +219,10 @@ function checkIfLegalTriangle(latestX, latestY) {
 
     let moveIsLegal = logic.hitStones(corners[0], corners[1], corners[2], corners[3], corners[4], corners[5], board.table);
 
-    if (moveIsLegal === false) {
+    /*if (moveIsLegal === false) {
         //DO SOMETHING?
         return false;
-    }
+    }*7
 
     //console.log(board.table);
     //workaround for the bug:
