@@ -62,3 +62,6 @@ nbproject/
 .idea/
 public/scripts/bundle.js
 .vs/
+
+#package-lock
+package-lock.json
