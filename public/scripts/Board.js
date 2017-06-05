@@ -44,7 +44,7 @@ class Board {
                 stonesList[i].value = array[stonesList[i].x][stonesList[i].y];
             }
         }
-        return table;
+        return result;
     }
 
     swap(firstX, firstY, secondX, secondY) {
