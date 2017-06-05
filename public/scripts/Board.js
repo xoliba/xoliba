@@ -1,65 +1,82 @@
 const ROWS = 7;
 //let startingTurn;
-let spritesList;
+let stonesList;
 import { BoardActions } from './logic/BoardActions.js';
 
 class Board {
 
 
     constructor() {
-        this.table = new Array(ROWS);
+        actions = new BoardActions();
         //this.generateStartingBoard();
     }
 
-    get gameboardArray() {
+    get gameboardTo2dArray() {
         //generate empty table
-        let table;
+        let table = new Array(ROWS);
         for (let i = 0; i < ROWS; i++) {
             table[i] = [];
             for (let j = 0; j < ROWS; j++) {
                 table[i][j] = 0;
             }
         }
-        //corners
-        table[0][0] = -2;
-        table[6][0] = -2;
-        table[0][6] = -2;
-        table[6][6] = -2;
         //load the sprites
-        for(let i=0; i<spritesList.length; i++) {
-            table[spritesList[i].x()][spritesList[i].y()] = spritesList[i].color();
+        for(let i=0; i<this.stonesList.length; i++) {
+            table[stonesList[i].x()][stonesList[i].y()] = stonesList[i].color();
         }
         return table;
     }
 
-
-
-    //Deprecated.
     /*
+      Will return false (0) if the move is not for some reason legit(!) This
+      shouldnt ever happen. Really. But since the validation in BoardActions is
+      so short amount of code, its left there and works just fine.
+
+      If no stones are being hit, it will return 1.
+      If stones are hit, will return 2.
+    */
+    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
+        let array = this.gameboardTo2dArray();
+        let result = actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, array);
+        if(result === false) return false;
+        for(let i=0; i<stonesList.length; i++) {
+            if(stonesList[i].value !== array[stonesList[i].x][stonesList[i].y]) {
+                stonesList[i].value = array[stonesList[i].x][stonesList[i].y];
+            }
+        }
+        return table;
+    }
+
+    swap(firstX, firstY, secondX, secondY) {
+        this.findStone(firstX, firstY).swap(this.findStone(secondX, secondY));
+    }
+
+
     generateStartingBoard() {
         let reds = 17;
         let blues = 17;
         let whites = 11;
-        startingTurn = 0;
+        stonesList = new Array(reds + blues + whites + 4);
+        for(int i=0; )
 
-        for (let i = 0; i < this.table.length; i++) {
-            for (let j = 0; j < this.table.length; j++) {
-                let sum = reds + blues + whites;
-                let value = Math.floor(Math.random() * sum + 1);
-                if((i === 0 || i === 6) && (j === 0 || j === 6)){
-                    this.table[i][j] = -2;
-                } else if(value <= reds){
-                    this.table[i][j] = 1;
-                    reds--;
-                } else if (value <= reds + blues){
-                    this.table[i][j] = -1;
-                    blues--;
-                } else {
-                    this.table[i][j] = 0;
-                    whites--;
-                }
+        for (i=0; reds + blues + whites > 0; i++) {
+            let value = Math.floor(Math.random() * reds + blues + whites + 1);
+            if((i === 0 || i === 6) && (j === 0 || j === 6)){
+                //dont do anything
+                continue;
+            } else if(value <= reds){
+                this.stonesList[i] = 1;
+                reds--;
+            } else if (value <= reds + blues){
+                this.stonesList[i] = -1;
+                blues--;
+            } else {
+                this.stonesList[i] = 0;
+                whites--;
             }
         }
+
+        /*  //Deprecated?
         startingTurn = this.table[0][1] + this.table[0][5] + this.table[1][0] + this.table[1][6]
             + this.table[5][0] + this.table[5][6] +this.table[6][1] + this.table[6][5];
 
@@ -70,17 +87,21 @@ class Board {
                 startingTurn += this.table[0][i];
                 startingTurn += this.table[6][i];
             }
+        }*/
+    }
+
+    findStone(x, y) {
+        for(let i=0; i<stonesList.length; i++) {
+            if(stonesList[i].x() === x && stonesList[i].y() === y) {
+                return stonesList[i];
+            }
         }
     }
 
-    get gameBoard() {
-        return this.table;
+    save2dArray() {
+        for(let i=0; i<)
     }
 
-    get startingTurn() {
-        return startingTurn;
-    }
-    */
 }
 
 //Tests wont run without export (cannot be accessed outside)
