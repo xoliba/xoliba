@@ -26,15 +26,15 @@ class TurnHandler {
     spriteClicked(stone) {
         if (firstClicked === undefined) {
             parseFirstClick(stone);
-        } else if (firstClicked === stone) {
-            stone.unchoose();
-            firstClicked = undefined;      
-        } else if (corners.length === 1) {
+        }  else if (corners.length === 1) {
             parseClickOnSecondCorner(stone);
         } else if (corners.length === 2) {
             parseClickOnThirdCorner(stone);
         } else if (stone.color === 0) {
             parseClickOnWhiteStone(stone);
+        } else if (firstClicked === stone) {
+            stone.unchoose();
+            firstClicked = undefined;      
         }
     }
 
