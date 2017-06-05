@@ -20,7 +20,7 @@ class AiSocket {
 
         aisocket.onopen = function() {
             console.log("connected to ai server");
-            setInterval(ping, 60000);
+            setInterval(ping, 30000);
         }
 
         aisocket.onclose = function() {
@@ -34,6 +34,7 @@ class AiSocket {
 
             if (aisocket.readyState === 1) {
                 aisocket.send(JSON.stringify(msg));
+                console.log("ping");
             }
         }
     }
