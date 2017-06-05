@@ -1,13 +1,17 @@
 const ROWS = 7;
-//let startingTurn;
-let stonesList;
 import { BoardActions } from './logic/BoardActions.js';
+
+let stonesList;
+//let startingTurn;
+let app;
+let turnHandler;
 
 class Board {
 
-
-    constructor() {
+    constructor(app, turnHandler) {
         actions = new BoardActions();
+        this.app = app;
+        this.turnHandler = turnHandler;
         //this.generateStartingBoard();
     }
 
@@ -57,9 +61,12 @@ class Board {
         let blues = 17;
         let whites = 11;
         stonesList = new Array(reds + blues + whites + 4);
-        for(int i=0; )
+        this.stonesList[0] = new Stone(-2, 0, 0, app, turnHandler);
+        this.stonesList[1] = new Stone(-2, 6, 0, app, turnHandler);
+        this.stonesList[2] = new Stone(-2, 0, 6, app, turnHandler);
+        this.stonesList[3] = new Stone(-2, 6, 6, app, turnHandler);
 
-        for (i=0; reds + blues + whites > 0; i++) {
+        for (i=4; reds + blues + whites > 0; i++) {
             let value = Math.floor(Math.random() * reds + blues + whites + 1);
             if((i === 0 || i === 6) && (j === 0 || j === 6)){
                 //dont do anything
@@ -96,10 +103,6 @@ class Board {
                 return stonesList[i];
             }
         }
-    }
-
-    save2dArray() {
-        for(let i=0; i<)
     }
 
 }
