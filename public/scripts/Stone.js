@@ -45,7 +45,7 @@ class Stone {
         sprite.y = padding + this.y * px;
         sprite.width = radius * 2;
         sprite.height = radius * 2;
-        
+
         sprite.on('pointerdown', function(turnHandler) {
             turnHandler.spriteClicked(this)
         }).bind(this);
@@ -58,9 +58,9 @@ class Stone {
             return;
         }
 
-        enlargeSprite();
-
         this.isChosen = true;
+
+        enlargeSprite();
     }
 
     unchoose() {
@@ -68,9 +68,34 @@ class Stone {
             return;
         }
 
-        minimizeSprite();
-
         this.isChosen = false;
+
+        minimizeSprite();
+    }
+
+    swap(stone) {
+        if (this.x === stone.x && this.y === stone.y) {
+            return;
+        }
+
+        swapCoordinates(this, stone);
+
+        updateSpriteCoordinates(this);
+        updateSpriteCoordinates(stone);
+    }
+
+    swapCoordinates(stoneA, stoneB) {
+        let tmpx = stoneA.x;
+        let tmpy = stoneA.y;
+        stoneA.x = stoneB.x;
+        stoneA.y = stoneB.y;
+        stoneB.x = tmpx;
+        stoneB.y = tmpy;
+    }
+
+    updateSpriteCoordinates(stone) {
+        stone.sprite.x = padding + stone.x * px;
+        stone.sprite.x = padding + stone.y * px;
     }
 
     updateSprite() {
