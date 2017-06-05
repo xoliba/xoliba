@@ -7,7 +7,7 @@ const radius = px / 4;
 const highlightScaling = radius / 100;
 
 let value;
-var sprite;
+let sprite;
 var isChosen;
 var x;
 var y;
@@ -101,6 +101,10 @@ class Stone {
         this.value = value;
         
         updateSprite();
+    }
+
+    get value() {
+        return this.value;
     }
 
     updateSpriteCoordinates(stone) {
