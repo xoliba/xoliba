@@ -45,6 +45,7 @@ class Stone {
         sprite.y = padding + this.y * px;
         sprite.width = radius * 2;
         sprite.height = radius * 2;
+        
         sprite.on('pointerdown', function(turnHandler) {
             turnHandler.spriteClicked(this)
         }).bind(this);
@@ -57,8 +58,7 @@ class Stone {
             return;
         }
 
-        sprite.scale.x += highlightScaling;
-        sprite.scale.y += highlightScaling;
+        enlargeSprite();
 
         this.isChosen = true;
     }
@@ -68,9 +68,28 @@ class Stone {
             return;
         }
 
-        sprite.scale.x -= highlightScaling;
-        sprite.scale.y -= highlightScaling;
+        minimizeSprite();
 
         this.isChosen = false;
+    }
+
+    updateSprite() {
+        if (this.value === 0) {
+            this.sprite.texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+        } else if (this.value === 1) {
+            this.sprite.texture = PIXI.loader.resources["images/redCircle64.png"].texture;
+        } else if (this.value === -1) {
+            this.sprite.texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
+        }
+    }
+
+    enlargeSprite() {
+        this.sprite.scale.x += highlightScaling;
+        this.sprite.scale.y += highlightScaling;
+    }
+
+    minimizeSprite() {
+        this.sprite.scale.x -= highlightScaling;
+        this.sprite.scale.y -= highlightScaling;
     }
 }
