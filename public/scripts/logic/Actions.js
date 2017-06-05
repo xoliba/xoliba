@@ -1,6 +1,10 @@
 class Actions {
 
-
+    swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
+        let help = array[firstX][firstY];
+        array[firstX][firstY] = array[secondX][secondY];
+        array[secondX][secondY] = help;
+    }
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, gameboard) {
 

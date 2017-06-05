@@ -11,16 +11,11 @@ class Validations {
     }
 
     turnIndicator(color, turn) {
+        //deprecated
         /*var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
         turnTeller.innerHTML = "It's " + "turnTeller" + " turn!";*/
     }
-
-    /*swap2DArrayPositions(firstX, firstY, secondX, secondY) {
-        var help = this.gameboard[firstX][firstY];
-        this.gameboard[firstX][firstY] = this.gameboard[secondX][secondY];
-        this.gameboard[secondX][secondY] = help;
-    }*/
 
     moveIsValid(firstX, firstY, secondX, secondY, board) {
         if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY, board)) {
@@ -160,8 +155,8 @@ class Validations {
             triangles = 1;
         }
 
-        /*console.info("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
-            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));*/
+        console.info("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
+            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));
         return triangles;
     }
 

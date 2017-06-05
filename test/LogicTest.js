@@ -1,9 +1,8 @@
 var assert = require('assert');
-import { Logic } from '../public/scripts/Logic.js';
 import { Actions } from '../public/scripts/logic/Actions.js';
 import { Validations } from '../public/scripts/logic/Validations.js';
 
-describe('Logic (and logic/*.js)', () => {
+describe('Logic (Actions and Validations)', () => {
 
     var logic;
     var actions;
@@ -39,12 +38,11 @@ describe('Logic (and logic/*.js)', () => {
                      [-2, 1, 1, 1, 1,-1, -2]];
 
     beforeEach(() => {
-        logic = new Logic();
         actions = new Actions();
         validations = new Validations();
     });
 
-    //This is reprecated, and need to be fixed when turning system with AI is fixed.
+    //This is reprecated.
     /*
     it('Turn is given right when starting the game', function() {
         //This is reprecated
@@ -78,15 +76,13 @@ describe('Logic (and logic/*.js)', () => {
       assert.equal(validations.stonesBetweenAreWhite(3, 0, 3, 6, boardSheet1), true);
     });
 
-    //This is deprecated: function swap2DArrayPositions is no longer part of logic.
-    /*
     it('Swapping stones work', function() {
-      validations = new Validations(c(boardSheet1));
-      validations.swap2DArrayPositions(3, 0, 3, 6);
-      validations.swap2DArrayPositions(1, 1, 1, 1);
-      validations.swap2DArrayPositions(5, 1, 0, 1);
-      validations.swap2DArrayPositions(6, 5, 6, 5);
-      let temp = [[-2, 0, 0, 0, 0, 1, -2],
+      let temp = c(boardSheet1);
+      actions.swap2DArrayPositions(temp, 3, 0, 3, 6);
+      actions.swap2DArrayPositions(temp, 1, 1, 1, 1);
+      actions.swap2DArrayPositions(temp, 5, 1, 0, 1);
+      actions.swap2DArrayPositions(temp, 6, 5, 6, 5);
+      let temp2 = [[-2, 0, 0, 0, 0, 1, -2],
                   [0, 1, 1, 0, 1, 1, 0],
                   [0, 1, 0, 1, 1, 1, 0],
                   [1, 0, 0, 0, 0, 0, 0],
@@ -94,13 +90,12 @@ describe('Logic (and logic/*.js)', () => {
                   [1, 0, 1, 0, 1, 1, 1],
                  [-2, 1, 1, 0, 1, -1, -2]];
 
-      for(let i=0; i<validations.gameboard.length; i++) {
-        for(let j=0; j<validations.gameboard[i].length; j++) {
-          assert.equal(validations.gameboard[i][j], temp[i][j]);
+      for(let i=0; i<temp.length; i++) {
+        for(let j=0; j<temp[i].length; j++) {
+          assert.equal(temp[i][j], temp2[i][j]);
         }
       }
     });
-    */
 
     it('Is on board works', function() {
       assert.equal(validations.isThisOnBoard(-1, -1), false)
@@ -140,20 +135,20 @@ describe('Logic (and logic/*.js)', () => {
     });
 
     it('Finding the triangles work', function() {
-      assert.equal(logic.trianglesFound(3, 3, boardSheet2, false), 4);
-      assert.equal(logic.trianglesFound(3, 0, boardSheet2, false), 8);
-      assert.equal(logic.trianglesFound(0, 3, boardSheet2, false), 10);
-      assert.equal(logic.trianglesFound(3, 4, boardSheet2, false), 10);
-      assert.equal(logic.trianglesFound(4, 3, boardSheet2, false), 10);
-      assert.equal(logic.trianglesFound(4, 4, boardSheet2, false), 3);
-      assert.equal(logic.trianglesFound(3, 3, boardSheet2, false), 4);
-      assert.equal(logic.trianglesFound(3, 3, boardSheet2, true), 2);
-      assert.equal(logic.trianglesFound(3, 0, boardSheet2, true), 3);
-      assert.equal(logic.trianglesFound(0, 3, boardSheet2, true), 3);
-      assert.equal(logic.trianglesFound(3, 4, boardSheet2, true), 2);
-      assert.equal(logic.trianglesFound(4, 3, boardSheet2, true), 2);
-      assert.equal(logic.trianglesFound(4, 4, boardSheet2, true), 2);
-      assert.equal(logic.trianglesFound(3, 3, boardSheet2, true), 2);
+      assert.equal(validations.trianglesFound(3, 3, boardSheet2, false), 4);
+      assert.equal(validations.trianglesFound(3, 0, boardSheet2, false), 8);
+      assert.equal(validations.trianglesFound(0, 3, boardSheet2, false), 10);
+      assert.equal(validations.trianglesFound(3, 4, boardSheet2, false), 10);
+      assert.equal(validations.trianglesFound(4, 3, boardSheet2, false), 10);
+      assert.equal(validations.trianglesFound(4, 4, boardSheet2, false), 3);
+      assert.equal(validations.trianglesFound(3, 3, boardSheet2, false), 4);
+      assert.equal(validations.trianglesFound(3, 3, boardSheet2, true), 2);
+      assert.equal(validations.trianglesFound(3, 0, boardSheet2, true), 3);
+      assert.equal(validations.trianglesFound(0, 3, boardSheet2, true), 3);
+      assert.equal(validations.trianglesFound(3, 4, boardSheet2, true), 2);
+      assert.equal(validations.trianglesFound(4, 3, boardSheet2, true), 2);
+      assert.equal(validations.trianglesFound(4, 4, boardSheet2, true), 2);
+      assert.equal(validations.trianglesFound(3, 3, boardSheet2, true), 2);
       let temp =[  [-2, 0, 1, 1, 0, 0,-2],
                     [0, 0, 0, 1,-1, 0,-1],
                     [0, 0, 0, 0,-1,-1, 0],
@@ -161,18 +156,10 @@ describe('Logic (and logic/*.js)', () => {
                     [0, 0, 1, 0, 0, 0, 0],
                     [0, 1, 0,-1, 0, 1, 0],
                    [-2, 0, 0, 1, 0, 0,-2]];
-      logic = new Logic(c(temp), 1);
-      assert.equal(logic.trianglesFound(3, 3, temp, false), 2);
+      assert.equal(validations.trianglesFound(3, 3, temp, false), 2);
     });
 
-    it('Validating the moves work', function() {
-      assert.equal(logic.validateMove(1, 1, 1, 0, boardSheet2), true);
-      assert.equal(logic.validateMove(2, 3, 6, 3, boardSheet2), false);
-      assert.equal(logic.validateMove(2, 3, 3, 3, boardSheet2), true);
-      assert.equal(logic.validateMove(5, 6, 4, 6, boardSheet2), true);
-      assert.equal(logic.validateMove(1, 1, 2, 0, boardSheet2), true);
-      assert.equal(logic.validateMove(1, 1, 6, 2, boardSheet2), false);
-      assert.equal(logic.validateMove(6, 5, 4, 5, boardSheet2), false);
+    describe('Validating the moves work', function() {
 
       let temp=[[-2, 0, 1, 1, 0, 0,-2],
                  [0, 1, 0, 1,-1, 0,-1],
@@ -182,18 +169,39 @@ describe('Logic (and logic/*.js)', () => {
                  [0, 1, 0,-1, 0, 1, 0],
                 [-2, 0, 0, 1, 0, 0,-2]];
 
-      assert.equal(logic.validateMove(1, 1, 2, 2, temp), true);
-      assert.equal(logic.validateMove(1, 1, 3, 3, temp), true);
-      assert.equal(logic.validateMove(1, 1, 4, 4, temp), false);
-      assert.equal(logic.validateMove(1, 1, 2, 0, temp), true);
-      assert.equal(logic.validateMove(1, 1, 0, 1, temp), false);
-      assert.equal(logic.validateMove(3, 4, 3, 3, temp), true);
-      assert.equal(logic.validateMove(3, 4, 3, 3, temp), true);
-      assert.equal(logic.validateMove(3, 4, 3, 5, temp), true);
-      assert.equal(logic.validateMove(2, 4, 2, 1, temp), false);
-      assert.equal(logic.validateMove(1, 4, 0, 4, temp), false);
-      assert.equal(logic.validateMove(5, 3, 3, 3, temp), false);
-      assert.equal(logic.validateMove(5, 3, 2, 3, temp), true);
+      let temp2=[[-2, 1, 0, 0, 0, 1,-2],
+                  [0, 0, 0, 0, 0,-1, 0],
+                  [1, 0, 0, 1,-1, 0, 0],
+                  [0, 1, 0,-1, 0, 0,-1],
+                  [1, 0,-1, 0, 0, 0, 0],
+                  [1, 0, 0,-1, 0,-1, 0],
+                 [-2,-1, 0, 0, 0, 1,-2]]
+
+      it('Legit moves return true', function() {
+        assert.equal(validations.moveIsValid(1, 1, 1, 0, boardSheet2), true);
+        assert.equal(validations.moveIsValid(2, 3, 3, 3, boardSheet2), true);
+        assert.equal(validations.moveIsValid(5, 6, 4, 6, boardSheet2), true);
+        assert.equal(validations.moveIsValid(1, 1, 2, 0, boardSheet2), true);
+        assert.equal(validations.moveIsValid(1, 1, 2, 2, temp), true);
+        assert.equal(validations.moveIsValid(1, 1, 3, 3, temp), true);
+        assert.equal(validations.moveIsValid(1, 1, 2, 0, temp), true);
+        assert.equal(validations.moveIsValid(3, 4, 3, 3, temp), true);
+        assert.equal(validations.moveIsValid(3, 4, 3, 3, temp), true);
+        assert.equal(validations.moveIsValid(3, 4, 3, 5, temp), true);
+        assert.equal(validations.moveIsValid(5, 3, 2, 3, temp), true);
+      });
+
+      it('Unlegit moves return false', function() {
+        assert.equal(validations.moveIsValid(2, 3, 6, 3, boardSheet2), false);
+        assert.equal(validations.moveIsValid(1, 1, 6, 2, boardSheet2), false);
+        assert.equal(validations.moveIsValid(6, 5, 4, 5, boardSheet2), false);
+        assert.equal(validations.moveIsValid(1, 1, 4, 4, temp), false);
+        assert.equal(validations.moveIsValid(1, 1, 0, 1, temp), false);
+        assert.equal(validations.moveIsValid(2, 4, 2, 1, temp), false);
+        assert.equal(validations.moveIsValid(1, 4, 0, 4, temp), false);
+        assert.equal(validations.moveIsValid(5, 3, 3, 3, temp), false);
+        assert.equal(validations.moveIsValid(1, 3, 3, 3, temp2), false);
+      });
     });
 
     describe('Hitting the stones in triangle work', function() {
