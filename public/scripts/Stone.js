@@ -118,3 +118,7 @@ class Stone {
         this.sprite.scale.y -= highlightScaling;
     }
 }
+
+module.exports.Stone = Stone;
+
+export { Stone };
