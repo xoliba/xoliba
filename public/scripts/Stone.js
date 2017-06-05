@@ -6,7 +6,7 @@ const px = scale() / 7.5;
 const radius = px / 4;
 const highlightScaling = radius / 100;
 
-var value;
+let value;
 var sprite;
 var isChosen;
 var x;
@@ -91,6 +91,16 @@ class Stone {
         stoneA.y = stoneB.y;
         stoneB.x = tmpx;
         stoneB.y = tmpy;
+    }
+
+    set value(value) {
+        if (this.value === value) {
+            return;
+        }
+
+        this.value = value;
+        
+        updateSprite();
     }
 
     updateSpriteCoordinates(stone) {
