@@ -45,8 +45,8 @@ class Stone {
         sprite.width = radius * 2;
         sprite.height = radius * 2;
         sprite.on('pointerdown', function(turnHandler) {
-            turnHandler.spriteClicked(this.x, this.y)
-        });
+            turnHandler.spriteClicked(this)
+        }).bind(this);
 
         app.stage.addChild(sprite);
     }
