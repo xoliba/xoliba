@@ -1,4 +1,4 @@
-class Actions {
+class BoardActions {
 
     swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
         let help = array[firstX][firstY];
@@ -85,6 +85,6 @@ class Actions {
     }
 }
 
-module.exports.Logic = Actions;
+module.exports.BoardActions = BoardActions;
 
-export { Actions };
+export { BoardActions };

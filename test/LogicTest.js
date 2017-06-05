@@ -1,5 +1,5 @@
 var assert = require('assert');
-import { Actions } from '../public/scripts/logic/Actions.js';
+import { BoardActions } from '../public/scripts/logic/BoardActions.js';
 import { Validations } from '../public/scripts/logic/Validations.js';
 
 describe('Logic (Actions and Validations)', () => {
@@ -38,7 +38,7 @@ describe('Logic (Actions and Validations)', () => {
                      [-2, 1, 1, 1, 1,-1, -2]];
 
     beforeEach(() => {
-        actions = new Actions();
+        actions = new BoardActions();
         validations = new Validations();
     });
 
@@ -209,7 +209,7 @@ describe('Logic (Actions and Validations)', () => {
       let table;
       it('Legit moves work', function() {
         table = c(fullBoard);
-        actions = new Actions();
+        actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
                   [1, 1, 0, 0, 0, 1, 1],
                   [1, 0, 0, 0, 0, 0, 1],
@@ -224,7 +224,7 @@ describe('Logic (Actions and Validations)', () => {
           }
         }
         table = c(fullBoard);
-        actions = new Actions();
+        actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
                   [1, 1, 1, 1, 0, 0, 1],
                   [1, 1, 1, 0, 0, 0, 1],
@@ -239,7 +239,7 @@ describe('Logic (Actions and Validations)', () => {
           }
         }
         table = c(fullBoard);
-        actions = new Actions();
+        actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
                   [1, 1, 1, 1, 1, 1, 1],
                   [1, 1, 1, 1, 1, 1, 1],
@@ -254,7 +254,7 @@ describe('Logic (Actions and Validations)', () => {
           }
         }
         table = c(fullBoard);
-        actions = new Actions();
+        actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
                   [1, 1, 1, 1, 1, 1, 1],
                   [1, 1, 1, 1, 1, 1, 1],
@@ -271,7 +271,7 @@ describe('Logic (Actions and Validations)', () => {
       });
       it('Unlegit moves wont happen and will return false', function() {
         table = c(fullBoard);
-        actions = new Actions();
+        actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
                   [1, 1, 1, 1, 1, 1, 1],
                   [1, 1, 1, 1, 1, 1, 1],
