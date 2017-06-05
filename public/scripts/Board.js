@@ -1,26 +1,42 @@
-"use strict";
 const ROWS = 7;
-let startingTurn;
+//let startingTurn;
+let spritesList;
+import { BoardActions } from './logic/BoardActions.js';
 
 class Board {
 
+
     constructor() {
         this.table = new Array(ROWS);
-        this.create2DArray();
-        this.generateStartingBoard();
+        //this.generateStartingBoard();
     }
 
-    create2DArray() {
+    get gameboardArray() {
+        //generate empty table
+        let table;
         for (let i = 0; i < ROWS; i++) {
-            this.table[i] = [];
+            table[i] = [];
             for (let j = 0; j < ROWS; j++) {
-                this.table[i][j] = 0;
+                table[i][j] = 0;
             }
         }
+        //corners
+        table[0][0] = -2;
+        table[6][0] = -2;
+        table[0][6] = -2;
+        table[6][6] = -2;
+        //load the sprites
+        for(let i=0; i<spritesList.length; i++) {
+            table[spritesList[i].x()][spritesList[i].y()] = spritesList[i].color();
+        }
+        return table;
     }
 
-    generateStartingBoard() {
 
+
+    //Deprecated.
+    /*
+    generateStartingBoard() {
         let reds = 17;
         let blues = 17;
         let whites = 11;
@@ -64,7 +80,7 @@ class Board {
     get startingTurn() {
         return startingTurn;
     }
-
+    */
 }
 
 //Tests wont run without export (cannot be accessed outside)

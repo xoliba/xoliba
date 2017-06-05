@@ -1,5 +1,4 @@
 var assert = require('assert');
-import { BoardActions } from '../public/scripts/logic/BoardActions.js';
 import { Validations } from '../public/scripts/logic/Validations.js';
 
 describe('Logic (Actions and Validations)', () => {
@@ -38,7 +37,6 @@ describe('Logic (Actions and Validations)', () => {
                      [-2, 1, 1, 1, 1,-1, -2]];
 
     beforeEach(() => {
-        actions = new BoardActions();
         validations = new Validations();
     });
 
@@ -74,27 +72,6 @@ describe('Logic (Actions and Validations)', () => {
       assert.equal(validations.stonesBetweenAreWhite(5, 3, 3, 0, boardSheet1), false);
       assert.equal(validations.stonesBetweenAreWhite(2, 4, 4, 6, boardSheet1), true);
       assert.equal(validations.stonesBetweenAreWhite(3, 0, 3, 6, boardSheet1), true);
-    });
-
-    it('Swapping stones work', function() {
-      let temp = c(boardSheet1);
-      actions.swap2DArrayPositions(temp, 3, 0, 3, 6);
-      actions.swap2DArrayPositions(temp, 1, 1, 1, 1);
-      actions.swap2DArrayPositions(temp, 5, 1, 0, 1);
-      actions.swap2DArrayPositions(temp, 6, 5, 6, 5);
-      let temp2 = [[-2, 0, 0, 0, 0, 1, -2],
-                  [0, 1, 1, 0, 1, 1, 0],
-                  [0, 1, 0, 1, 1, 1, 0],
-                  [1, 0, 0, 0, 0, 0, 0],
-                  [0, 1, 0, 0, 0, 0, 0],
-                  [1, 0, 1, 0, 1, 1, 1],
-                 [-2, 1, 1, 0, 1, -1, -2]];
-
-      for(let i=0; i<temp.length; i++) {
-        for(let j=0; j<temp[i].length; j++) {
-          assert.equal(temp[i][j], temp2[i][j]);
-        }
-      }
     });
 
     it('Is on board works', function() {
@@ -201,90 +178,6 @@ describe('Logic (Actions and Validations)', () => {
         assert.equal(validations.moveIsValid(1, 4, 0, 4, temp), false);
         assert.equal(validations.moveIsValid(5, 3, 3, 3, temp), false);
         assert.equal(validations.moveIsValid(1, 3, 3, 3, temp2), false);
-      });
-    });
-
-    describe('Hitting the stones in triangle work', function() {
-      let temp;
-      let table;
-      it('Legit moves work', function() {
-        table = c(fullBoard);
-        actions = new BoardActions();
-        temp =  [[-2, 1, 1, 1, 1, 1, -2],
-                  [1, 1, 0, 0, 0, 1, 1],
-                  [1, 0, 0, 0, 0, 0, 1],
-                  [1, 0, 0, 0, 0, 0, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                 [-2, 1, 1, 1, 1, 1, -2]];
-        assert.equal(actions.hitStones(3, 0, 0, 3, 3, 6, table), 2);
-        for(let i=0; i<table.length; i++) {
-          for(let j=0; j<table[i].length; j++) {
-            assert.equal(table[i][j], temp[i][j]);
-          }
-        }
-        table = c(fullBoard);
-        actions = new BoardActions();
-        temp =  [[-2, 1, 1, 1, 1, 1, -2],
-                  [1, 1, 1, 1, 0, 0, 1],
-                  [1, 1, 1, 0, 0, 0, 1],
-                  [1, 1, 1, 0, 0, 0, 1],
-                  [1, 1, 1, 0, 0, 0, 1],
-                  [1, 1, 1, 1, 0, 0, 1],
-                 [-2, 1, 1, 1, 1, 1, -2]];
-        assert.equal(actions.hitStones(0, 5, 6, 5, 3, 2, table), 2);
-        for(let i=0; i<table.length; i++) {
-          for(let j=0; j<table[i].length; j++) {
-            assert.equal(table[i][j], temp[i][j]);
-          }
-        }
-        table = c(fullBoard);
-        actions = new BoardActions();
-        temp =  [[-2, 1, 1, 1, 1, 1, -2],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 0, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                 [-2, 1, 1, 1, 1, 1, -2]];
-        assert.equal(actions.hitStones(3, 2, 3, 4, 2, 3, table), 2);
-        for(let i=0; i<table.length; i++) {
-          for(let j=0; j<table[i].length; j++) {
-            assert.equal(table[i][j], temp[i][j]);
-          }
-        }
-        table = c(fullBoard);
-        actions = new BoardActions();
-        temp =  [[-2, 1, 1, 1, 1, 1, -2],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 0, 0, 0, 1, 1],
-                 [-2, 1, 0, 0, 0, 1, -2]];
-        assert.equal(actions.hitStones(7, 3, 5, 5, 5, 1, table), 2);
-        for(let i=0; i<table.length; i++) {
-          for(let j=0; j<table[i].length; j++) {
-            assert.equal(table[i][j], temp[i][j]);
-          }
-        }
-      });
-      it('Unlegit moves wont happen and will return false', function() {
-        table = c(fullBoard);
-        actions = new BoardActions();
-        temp =  [[-2, 1, 1, 1, 1, 1, -2],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                  [1, 1, 1, 1, 1, 1, 1],
-                 [-2, 1, 1, 1, 1, 1, -2]];
-        assert.equal(actions.hitStones(0, 0, 6, 0, 0, 6, table), false);
-        for(let i=0; i<table.length; i++) {
-          for(let j=0; j<table[i].length; j++) {
-            assert.equal(table[i][j], temp[i][j]);
-          }
-        }
       });
     });
 
