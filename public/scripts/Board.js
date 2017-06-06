@@ -60,26 +60,24 @@ class Board {
         let reds = 17;
         let blues = 17;
         let whites = 11;
-        stonesList = new Array(reds + blues + whites + 4);
-        this.stonesList[0] = new Stone(-2, 0, 0, app, turnHandler);
-        this.stonesList[1] = new Stone(-2, 6, 0, app, turnHandler);
-        this.stonesList[2] = new Stone(-2, 0, 6, app, turnHandler);
-        this.stonesList[3] = new Stone(-2, 6, 6, app, turnHandler);
+        stonesList = new Array(reds + blues + whites);
+        let n = 0;
 
-        for (i=4; reds + blues + whites > 0; i++) {
-            let value = Math.floor(Math.random() * reds + blues + whites + 1);
-            if((i === 0 || i === 6) && (j === 0 || j === 6)){
-                //dont do anything
-                continue;
-            } else if(value <= reds){
-                this.stonesList[i] = 1;
-                reds--;
-            } else if (value <= reds + blues){
-                this.stonesList[i] = -1;
-                blues--;
-            } else {
-                this.stonesList[i] = 0;
-                whites--;
+        for (i=0; i < 7; i++) {
+            for (j=0; j < 7; j++) {
+                if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
+                    let value = Math.floor(Math.random() * reds + blues + whites + 1);
+                    if(value <= reds){
+                        this.stonesList[n++] = new Stone(1, i, j, app, turnHandler);
+                        reds--;
+                    } else if (value <= reds + blues){
+                        this.stonesList[n++] = new Stone(-1, i, j, app, turnHandler);
+                        blues--;
+                    } else {
+                        this.stonesList[n++] = new Stone(0, i, j, app, turnHandler);
+                        whites--;
+                    }
+                }
             }
         }
 
