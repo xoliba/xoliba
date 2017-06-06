@@ -1,9 +1,9 @@
 import { Board } from './Board.js';
 
-var board;
-var turn;
-var redPoints;
-var bluePoints;
+let board;
+let turn;
+let redPoints;
+let bluePoints;
 
 class Game {
     constructor() {
@@ -18,5 +18,9 @@ class Game {
         } else if (this.turn === -1) {
             this.turn = 1;
         }
+    }
+
+    get turn() {
+        return this.turn;
     }
 }
