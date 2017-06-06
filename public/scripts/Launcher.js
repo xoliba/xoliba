@@ -270,8 +270,7 @@ function checkIfRoundEnds(moveIsLegal) { // function name questionable
             roundskipped = 0;
         }
     }
-    
-    aisocket.sendTable(board.table);
+
     //console.log(board.table);
     //updateBoard(board.table, false);
     //console.log(board.table);
