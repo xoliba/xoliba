@@ -26,6 +26,11 @@ class Board {
         for(let i=0; i<this.stonesList.length; i++) {
             table[this.stonesList[i].x][this.stonesList[i].y] = this.stonesList[i].value;
         }
+        //corners
+        table[0][0] = -2;
+        table[6][0] = -2;
+        table[0][6] = -2;
+        table[6][6] = -2;
         return table;
     }
 
@@ -64,7 +69,7 @@ class Board {
         for (let i=0; i < 7; i++) {
             for (let j=0; j < 7; j++) {
                 if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
-                    let value = Math.floor(Math.random() * reds + blues + whites + 1);
+                    let value = Math.floor(Math.random() * (reds + blues + whites) + 1);
                     if(value <= reds){
                         this.stonesList[n++] = new Stone(1, i, j, app, PIXI, this.turnHandler);
                         reds--;

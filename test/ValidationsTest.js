@@ -1,7 +1,7 @@
 var assert = require('assert');
 import { Validations } from '../public/scripts/logic/Validations.js';
 
-describe('Logic (Actions and Validations)', () => {
+describe('Validations', () => {
 
     var logic;
     var actions;

@@ -155,8 +155,8 @@ class Validations {
             triangles = 1;
         }
 
-        console.info("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
-            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));
+        /*console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
+            + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));*/
         return triangles;
     }
 
