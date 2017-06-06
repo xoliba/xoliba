@@ -30,7 +30,7 @@ class TurnHandler {
             parseClickOnSecondCorner(stone);
         } else if (corners.length === 2) {
             parseClickOnThirdCorner(stone);
-        } else if (stone.color === 0) {
+        } else if (stone.value === 0) {
             parseClickOnWhiteStone(stone);
         } else if (firstClicked === stone) {
             stone.unchoose();
@@ -39,7 +39,7 @@ class TurnHandler {
     }
 
     parseFirstClick(stone) {
-        if (game.turn === stone.color) {
+        if (game.turn === stone.value) {
             firstClicked = stone;
             stone.choose();
         } else {
@@ -57,7 +57,7 @@ class TurnHandler {
     }
 
     parseClickOnSecondCorner(stone) {
-        if (game.turn === stone.color && (corners[0].x != stone.x || corners[0].y != stone.y)) {
+        if (game.turn === stone.value && (corners[0].x != stone.x || corners[0].y != stone.y)) {
             corners.push(stone);
             stone.choose();
         } else {
@@ -66,7 +66,7 @@ class TurnHandler {
     }
     parseClickOnThirdCorner(stone) {
         corners.push(stone);
-        if (game.turn === stone.color && validate.checkIfTriangle(corners[0].x, corners[0].y, corners[1].x, corners[1].y, corners[2].x, corners[2].y, this.board)) {
+        if (game.turn === stone.value && validate.checkIfTriangle(corners[0].x, corners[0].y, corners[1].x, corners[1].y, corners[2].x, corners[2].y, this.board)) {
             this.board.hitStones(corners[0].x, corners[0].y, corners[1].x, corners[1].y, corners[2].x, corners[2].y, this.board);
             for (var i = 2; i >= 0; i--) {
                 corners[i].unchoose();
