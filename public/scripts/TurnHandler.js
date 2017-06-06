@@ -83,8 +83,9 @@ class TurnHandler {
         }
     }
 
-    clientTurn() {
-
+    aiTurn(from, target, corners) {
+        this.board.swap(from[0], from[1], target[0], target[1]);
+        this.board.hitStones(target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
     }
     
     

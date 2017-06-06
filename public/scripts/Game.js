@@ -1,15 +1,18 @@
 import { Board } from './Board.js';
+import { AiSocket } from './Websocket.js';
 
 let board;
 let turn;
 let redPoints;
 let bluePoints;
+let socket;
 
 class Game {
-    constructor() {
-        this.board = new Board();
+    constructor(app) {
+        this.board = new Board(app);
         this.redPoints = 0;
         this.bluePoints = 0;
+        this.socket = new AiSocket();
     }
 
     changeTurn() {
