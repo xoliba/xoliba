@@ -6,11 +6,11 @@ var app = new PIXI.Application(scale(), scale(), {view: document.getElementById(
 
 drawTable(app.stage);
 
-PIXI.loader.add([
+/*PIXI.loader.add([
     "images/whiteCircle64.png",
     "images/blueCircle64.png",
     "images/redCircle64.png"
-]).load();
+]).load();*/
 
 app.renderer.render(app.stage);
 app.renderer.backgroundColor = 0xE5E3DF;
