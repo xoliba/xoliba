@@ -16,7 +16,8 @@ class Game {
         this.redPoints = 0;
         this.bluePoints = 0;
         this.socket = new AiSocket();
-        this.turnHandler.set(board);
+        this.turnHandler.board = this.board;
+        this.turn = -1;
     }
 
     changeTurn() {

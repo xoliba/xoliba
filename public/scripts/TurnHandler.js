@@ -7,22 +7,32 @@ import { Board }from './Board.js';
 import { Validations } from './logic/Validations.js';
 import { Stone } from './Stone.js';
 import { BoardActions } from './logic/BoardActions.js';
+import { scale } from './Draw.js';
 
 var firstClicked
 var corners;
 var board;
 var validate;
 var actions;
+var stoneX;
+var stoneY;
+var stone;
+
+const padding = scale() / 10;
+const px = scale() / 7.5;
+
 
 class TurnHandler {
 
     constructor(board, game) {
         this.board = board;
         this.game = game;
-        validate = new Validations();
-        actions = new BoardActions();
-        corners = [];
-        firstClicked = undefined;
+        this.validate = new Validations();
+        this.actions = new BoardActions();
+        this.corners = [];
+        this.firstClicked = undefined;
+        stoneX = 0;
+        stoneY = 0;
     }
 
     set(board) {
@@ -30,15 +40,16 @@ class TurnHandler {
     }
 
     spriteClicked(stone) {
-        if (firstClicked === undefined) {
+        if (this.firstClicked === undefined) {
+            console.log("ekaa painettu");
             this.parseFirstClick(stone);
-        }  else if (corners.length === 1) {
+        }  else if (this.corners.length === 1) {
             this.parseClickOnSecondCorner(stone);
-        } else if (corners.length === 2) {
+        } else if (this.corners.length === 2) {
             this.parseClickOnThirdCorner(stone);
         } else if (stone.value === 0) {
             this.parseClickOnWhiteStone(stone);
-        } else if (firstClicked === stone) {
+        } else if (this.firstClicked === stone) {
             stone.unchoose();
             this.firstClicked = undefined;      
         }
@@ -46,7 +57,8 @@ class TurnHandler {
 
     parseFirstClick(stone) {
         if (this.game.turn === stone.value) {
-            firstClicked = stone;
+            console.log("aaasd");
+            this.firstClicked = stone;
             stone.choose();
         } else {
             return false;
@@ -55,7 +67,8 @@ class TurnHandler {
 
     parseClickOnWhiteStone(stone) {
          if(this.validate.moveIsValid(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y, this.board.gameboardTo2dArray())) {
-             this.board.swap(firstClicked.x, firstClicked.y, stone.x, stone.y);
+             this.board.swap(this.firstClicked, stone);
+             console.log(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y);
              this.corners.push(this.firstClicked);
          } else {
              return false; 
@@ -93,6 +106,12 @@ class TurnHandler {
         this.board.swap(from[0], from[1], target[0], target[1]);
         this.board.hitStones(target[0], target[1], this.corners[0][0], this.corners[0][1], this.corners[1][0], this.corners[1][1]);
         this.game.changeTurn();
+    }
+
+    findStone(x, y) {
+        this.stoneX = Math.round((x - padding) / px);
+        this.stoneY = Math.round((y - padding) / px);
+        return this.board.findStone(this.stoneX, this.stoneY);
     }
     
     

@@ -8,12 +8,12 @@ let actions;
 class Board {
 
     constructor(app, PIXI, turnHandler) {
-        actions = new BoardActions();
+        this.actions = new BoardActions();
         this.turnHandler = turnHandler;
         this.generateStartingBoard(app, PIXI);
     }
 
-    get gameboardTo2dArray() {
+    gameboardTo2dArray() {
         //generate empty table
         let table = new Array(ROWS);
         for (let i = 0; i < ROWS; i++) {
@@ -24,7 +24,7 @@ class Board {
         }
         //load the sprites
         for(let i=0; i<this.stonesList.length; i++) {
-            table[stonesList[i].x()][stonesList[i].y()] = stonesList[i].color();
+            table[this.stonesList[i].x][this.stonesList[i].y] = this.stonesList[i].value;
         }
         return table;
     }
@@ -39,18 +39,18 @@ class Board {
     */
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
         let array = this.gameboardTo2dArray();
-        let result = actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, array);
+        let result = this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, array);
         if(result === false) return false;
-        for(let i=0; i<stonesList.length; i++) {
-            if(stonesList[i].value !== array[stonesList[i].x][stonesList[i].y]) {
-                stonesList[i].value = array[stonesList[i].x][stonesList[i].y];
+        for(let i=0; i<this.stonesList.length; i++) {
+            if(this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
+                this.stonesList[i].value = array[this.stonesList[i].x][this.stonesList[i].y];
             }
         }
         return result;
     }
 
-    swap(firstX, firstY, secondX, secondY) {
-        this.findStone(firstX, firstY).swap(this.findStone(secondX, secondY));
+    swap(firstStone, secondStone) {
+        firstStone.swap(secondStone);
     }
 
 
@@ -94,9 +94,9 @@ class Board {
     }
 
     findStone(x, y) {
-        for(let i=0; i<stonesList.length; i++) {
-            if(stonesList[i].x() === x && stonesList[i].y() === y) {
-                return stonesList[i];
+        for(let i=0; i<this.stonesList.length; i++) {
+            if(this.stonesList[i].x === x && this.stonesList[i].y === y) {
+                return this.stonesList[i];
             }
         }
     }

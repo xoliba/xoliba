@@ -10,8 +10,10 @@ drawTable(app.stage);
     "images/whiteCircle64.png",
     "images/blueCircle64.png",
     "images/redCircle64.png"
+<<<<<<< ecae31792c7ce5006d7c9f386ed2c9dc39c1baeb
 ]).load();*/
 
+// a bit less buggy version
 app.renderer.render(app.stage);
 app.renderer.backgroundColor = 0xE5E3DF;
 
