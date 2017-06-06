@@ -1,7 +1,8 @@
 var aisocket;
 
-import { updateBoard } from './Launcher.js';
-import { sprites } from './Launcher.js';
+//import { updateBoard } from './Launcher.js';
+//import { sprites } from './Launcher.js';
+import { aiTurn } from './TurnHandler.js';
 
 class AiSocket {
     constructor() {
@@ -13,9 +14,9 @@ class AiSocket {
         
 
         aisocket.onmessage = function(event) {
-            var latestTable = JSON.parse(event.data);
-            console.log(event.data);
-            updateBoard(latestTable, true);
+            let msg = JSON.parse(event.data);
+            console.log(msg.table);
+            aiTurn(msg.from, msg.target, msg.corners);
         };
 
         aisocket.onopen = function() {
