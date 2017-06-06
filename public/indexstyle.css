@@ -27,6 +27,7 @@ body {
 
 .submenu a {
     color: #818181;
+    display: block;
 }
 
 .submenu ul {
