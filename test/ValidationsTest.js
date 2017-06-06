@@ -181,6 +181,15 @@ describe('Validations', () => {
       });
     });
 
+    it('isTrinagle works', function() {
+      assert.equal(validations.checkIfTriangle(0, 0, 6, 0, 0, 6), false);
+      assert.equal(validations.checkIfTriangle(6, 0, 6, 0, 0, 6), false);
+      assert.equal(validations.checkIfTriangle(1, 0, 0, 1, 2, 1), true);
+      assert.equal(validations.checkIfTriangle(0, 1, 1, 0, 2, 1), true);
+      assert.equal(validations.checkIfTriangle(2, 1, 1, 0, 0, 1), true);
+      assert.equal(validations.checkIfTriangle(0, 1, 2, 1, 1, 0), true);
+    });
+
     function c(array) { //copy the array
       let rArray = new Array(7);
       for (let i = 0; i < 7; i++) {

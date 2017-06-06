@@ -1,9 +1,9 @@
 let assert = require('assert');
 //var BoardClass = require('../public/scripts/Board.js');
-import { Board } from '../public/scripts/Board.js';
+//import { Board } from '../public/scripts/Board.js';
 
 describe('Board', () => {
-
+/*
     var board;
 
     beforeEach(() => {
@@ -40,8 +40,8 @@ describe('Board', () => {
     });
 
     it('swapping works', function() {
-        /*his swaps only 5 stones: so there is (theoretical) chance it will swap
-        same colored stones and the test will pass.*/
+        //his swaps only 5 stones: so there is (theoretical) chance it will swap
+        //same colored stones and the test will pass.
         let table = board.gameboardTo2dArray;
         let temp;
         temp = table[1][1];
@@ -73,6 +73,6 @@ describe('Board', () => {
 
     it.skip('Hitting stones work', function() {
         //TODO
-    });
+    });*/
 
 });
