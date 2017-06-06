@@ -13,7 +13,7 @@ body {
     background-color: #111111;
     overflow-x: hidden;
     padding top: 60px;
-    transition: 0.1s;
+    transition: 0.5s;
 }
 
 .sidenav .submenu {
@@ -27,6 +27,7 @@ body {
 
 .submenu a {
     color: #818181;
+    white-space: nowrap;
 }
 
 .submenu ul {
