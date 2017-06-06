@@ -12,6 +12,7 @@ var firstClicked
 var corners;
 var board;
 var validate;
+var actions;
 
 class TurnHandler {
 
@@ -21,6 +22,10 @@ class TurnHandler {
         actions = new BoardActions();
         corners = [];
         firstClicked = undefined;
+    }
+
+    set(board) {
+        this.board = board;
     }
 
     spriteClicked(stone) {
@@ -91,4 +96,6 @@ class TurnHandler {
     
     
 }
+
+export { TurnHandler };
 

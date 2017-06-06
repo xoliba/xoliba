@@ -5,7 +5,7 @@ let stonesList;
 //let startingTurn;
 let app;
 let turnHandler;
-
+let actions;
 class Board {
 
     constructor(app, turnHandler) {

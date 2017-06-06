@@ -1,5 +1,6 @@
 import { Board } from './Board.js';
 import { AiSocket } from './Websocket.js';
+import { TurnHandler } from './TurnHandler';
 
 let board;
 let turn;
@@ -10,11 +11,12 @@ let turnHandler;
 
 class Game {
     constructor(app) {
-        this.board = new Board(app);
+        this.turnHandler = new TurnHandler();
+        this.board = new Board(app, this.turnHandler);
         this.redPoints = 0;
         this.bluePoints = 0;
         this.socket = new AiSocket();
-        this.turnHandler = new turnHandler(board);
+        this.turnHandler.set(board);
     }
 
     changeTurn() {
@@ -30,3 +32,5 @@ class Game {
         return this.turn;
     }
 }
+
+export { Game };
