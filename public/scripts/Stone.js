@@ -20,7 +20,7 @@ class Stone {
         this.y = y;
         this.isChosen = false;
 
-        createSprite(app, turnHandler);
+        this.createSprite(app, turnHandler);
     }
 
     createSprite(app, turnHandler) {
@@ -33,24 +33,24 @@ class Stone {
             path = "images/redCircle64.png";
         }
 
-        this.sprite = new PIXI.sprite(
+        this.sprite = new PIXI.Sprite(
             PIXI.loader.resources[path].texture
         );
 
-        sprite.interactive = true;
-        sprite.buttonMode = true;
-        sprite.anchor.x = 0.5;
-        sprite.anchor.y = 0.5;
-        sprite.x = padding + this.x * px;
-        sprite.y = padding + this.y * px;
-        sprite.width = radius * 2;
-        sprite.height = radius * 2;
+        this.sprite.interactive = true;
+        this.sprite.buttonMode = true;
+        this.sprite.anchor.x = 0.5;
+        this.sprite.anchor.y = 0.5;
+        this.sprite.x = padding + this.x * px;
+        this.sprite.y = padding + this.y * px;
+        this.sprite.width = radius * 2;
+        this.sprite.height = radius * 2;
 
-        sprite.on('pointerdown', function(turnHandler) {
+        this.sprite.on('pointerdown', function(turnHandler) {
             turnHandler.spriteClicked(this)
-        }).bind(this);
+        }.bind(this));
 
-        app.stage.addChild(sprite);
+        app.stage.addChild(this.sprite);
     }
 
     choose() {
@@ -93,7 +93,7 @@ class Stone {
         stoneB.y = tmpy;
     }
 
-    set value(value) {
+    /*set value(value) {
         if (this.value === value) {
             return;
         }
@@ -101,11 +101,11 @@ class Stone {
         this.value = value;
         
         updateSprite();
-    }
+    }*/
 
-    get value() {
+    /*get value() {
         return this.value;
-    }
+    }*/
 
     updateSpriteCoordinates(stone) {
         stone.sprite.x = padding + stone.x * px;
