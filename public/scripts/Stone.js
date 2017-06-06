@@ -1,5 +1,6 @@
-import * as PIXI from 'pixi.js';
+//import * as PIXI from 'pixi.js';
 import { scale } from './Draw.js';
+import { TurnHandler } from './TurnHandler.js';
 
 const padding = scale() / 10;
 const px = scale() / 7.5;
@@ -11,14 +12,16 @@ let sprite;
 var isChosen;
 var x;
 var y;
+var PIXI;
 
 class Stone {
 
-    constructor(value, x, y, app, turnHandler) {
+    constructor(value, x, y, app, PIXI, turnHandler) {
         this.value = value;
         this.x = x;
         this.y = y;
         this.isChosen = false;
+        this.PIXI = PIXI;
 
         this.createSprite(app, turnHandler);
     }
@@ -33,8 +36,8 @@ class Stone {
             path = "images/redCircle64.png";
         }
 
-        this.sprite = new PIXI.Sprite(
-            PIXI.loader.resources[path].texture
+        this.sprite = new this.PIXI.Sprite(
+            this.PIXI.loader.resources[path].texture
         );
 
         this.sprite.interactive = true;
@@ -46,9 +49,7 @@ class Stone {
         this.sprite.width = radius * 2;
         this.sprite.height = radius * 2;
 
-        this.sprite.on('pointerdown', function(turnHandler) {
-            turnHandler.spriteClicked(this)
-        }.bind(this));
+        this.sprite.on('pointerdown', turnHandler.spriteClicked(this));
 
         app.stage.addChild(this.sprite);
     }
@@ -114,11 +115,11 @@ class Stone {
 
     updateSprite() {
         if (this.value === 0) {
-            this.sprite.texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+            this.sprite.texture = this.PIXI.loader.resources["images/whiteCircle64.png"].texture;
         } else if (this.value === 1) {
-            this.sprite.texture = PIXI.loader.resources["images/redCircle64.png"].texture;
+            this.sprite.texture = this.PIXI.loader.resources["images/redCircle64.png"].texture;
         } else if (this.value === -1) {
-            this.sprite.texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
+            this.sprite.texture = this.PIXI.loader.resources["images/blueCircle64.png"].texture;
         }
     }
 

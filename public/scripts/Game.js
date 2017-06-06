@@ -10,9 +10,9 @@ let socket;
 let turnHandler;
 
 class Game {
-    constructor(app) {
-        this.turnHandler = new TurnHandler();
-        this.board = new Board(app, this.turnHandler);
+    constructor(app, PIXI) {
+        this.turnHandler = new TurnHandler(false, this);
+        this.board = new Board(app, PIXI, this.turnHandler);
         this.redPoints = 0;
         this.bluePoints = 0;
         this.socket = new AiSocket();
@@ -28,9 +28,9 @@ class Game {
         }
     }
 
-    get turn() {
+    /*get turn() {
         return this.turn;
-    }
+    }*/
 }
 
 export { Game };
