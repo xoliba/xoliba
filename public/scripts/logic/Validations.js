@@ -181,26 +181,26 @@ class Validations {
         return result;
     }
 
-     checkIfTriangle(firstX, firstY, secondX, secondY, thirdX, thirdY, gameboard) {
+     checkIfTriangle(firstX, firstY, secondX, secondY, thirdX, thirdY) {
 
         //Validation is performed in function hitTriangle
         //Will return false (0) when triangle is invalid, 1 when no stones were hit and 2 when stones are hit.
         if (firstX === secondX) {
-            return this.isTriangle(firstY, secondY, firstX, thirdX, thirdY, true, gameboard);
+            return this.isTriangle(firstY, secondY, firstX, thirdX, thirdY, true);
         } else if (firstX === thirdX) {
-            return this.isTriangle(firstY, thirdY, firstX, secondX, secondY, true, gameboard);
+            return this.isTriangle(firstY, thirdY, firstX, secondX, secondY, true);
         } else if (secondX === thirdX) {
-            return this.isTriangle(secondY, thirdY, secondX, firstX, firstY, true, gameboard);
+            return this.isTriangle(secondY, thirdY, secondX, firstX, firstY, true);
         } else if (firstY === secondY) {
-            return this.isTriangle(firstX, secondX, firstY, thirdY, thirdX, false, gameboard);
+            return this.isTriangle(firstX, secondX, firstY, thirdY, thirdX, false);
         } else if (firstY === thirdY) {
-            return this.isTriangle(firstX, thirdX, firstY, secondY, secondX, false, gameboard);
+            return this.isTriangle(firstX, thirdX, firstY, secondY, secondX, false);
         } else if (secondY === thirdY) {
-            return this.isTriangle(secondX, thirdX, secondY, firstY, firstX, false, gameboard);
+            return this.isTriangle(secondX, thirdX, secondY, firstY, firstX, false);
         }
         return false;
     }
-        isTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical, gameboard) {
+        isTriangle(basis1, basis2, bottomH, tipH, tipPosition, isVertical) {
         let width = Math.abs(basis1 - basis2);
 
         if (width % 2 !== 0 || width / 2 !== Math.abs(tipH - bottomH) || Math.abs(basis1 - tipPosition) !== Math.abs(basis2 - tipPosition)) {

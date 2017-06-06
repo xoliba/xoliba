@@ -7,7 +7,6 @@ import { Board }from './Board.js';
 import { Validations } from './logic/Validations.js';
 import { Stone } from './Stone.js';
 import { BoardActions } from './logic/BoardActions.js';
-import { scale } from './Draw.js';
 
 var firstClicked
 var corners;
@@ -18,8 +17,7 @@ var stoneX;
 var stoneY;
 var stone;
 
-const padding = scale() / 10;
-const px = scale() / 7.5;
+
 
 
 class TurnHandler {
@@ -57,7 +55,6 @@ class TurnHandler {
 
     parseFirstClick(stone) {
         if (this.game.turn === stone.value) {
-            console.log("aaasd");
             this.firstClicked = stone;
             stone.choose();
         } else {
@@ -67,8 +64,9 @@ class TurnHandler {
 
     parseClickOnWhiteStone(stone) {
          if(this.validate.moveIsValid(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y, this.board.gameboardTo2dArray())) {
+             console.log(this.firstClicked.sprite.x, this.firstClicked.sprite.y, stone.sprite.x, stone.sprite.y);
              this.board.swap(this.firstClicked, stone);
-             console.log(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y);
+             console.log(this.firstClicked.sprite.x, this.firstClicked.sprite.y, stone.sprite.x, stone.sprite.y);
              this.corners.push(this.firstClicked);
          } else {
              return false; 
@@ -85,8 +83,10 @@ class TurnHandler {
     }
     parseClickOnThirdCorner(stone) {
         this.corners.push(stone);
-        if (this.game.turn === stone.value && this.validate.checkIfTriangle(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y, this.board)) {
-            this.board.hitStones(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y, this.board);
+        console.log(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
+        if (this.game.turn === stone.value && this.validate.checkIfTriangle(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y)) {   
+            console.log("validate läpi");
+            this.board.hitStones(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
             for (var i = 2; i >= 0; i--) {
                 this.corners[i].unchoose();
                 this.corners.pop();
@@ -94,6 +94,7 @@ class TurnHandler {
             this.firstClicked = undefined;
             this.game.changeTurn();
         } else {
+            console.log("validate ei läpi");
             this.corners[2].unchoose();
             this.corners.pop();
             this.corners[1].unchoose();
@@ -108,11 +109,7 @@ class TurnHandler {
         this.game.changeTurn();
     }
 
-    findStone(x, y) {
-        this.stoneX = Math.round((x - padding) / px);
-        this.stoneY = Math.round((y - padding) / px);
-        return this.board.findStone(this.stoneX, this.stoneY);
-    }
+    
     
     
 }

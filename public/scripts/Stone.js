@@ -123,7 +123,7 @@ class Stone {
 
     updateSpriteCoordinates(stone) {
         stone.sprite.x = padding + stone.x * px;
-        stone.sprite.x = padding + stone.y * px;
+        stone.sprite.y = padding + stone.y * px;
     }
 
     updateSprite() {
