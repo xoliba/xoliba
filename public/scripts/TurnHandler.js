@@ -91,7 +91,7 @@ class TurnHandler {
             this.stonesHit = this.board.hitStones(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
             if (this.stonesHit === 1) {
                 this.game.updateTurnCounter(false);
-            } else {
+            } else if (this.stonesHit === 2) {
                 this.game.updateTurnCounter(true);
             }
             for (var i = 2; i >= 0; i--) {
@@ -119,7 +119,7 @@ class TurnHandler {
         this.stonesHit = this.board.hitStones(target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
         if (this.stonesHit === 1) {
                 this.game.updateTurnCounter(false);
-            } else {
+            } else if (this.stonesHit === 2) {
                 this.game.updateTurnCounter(true);
             }
         this.game.changeTurn();
