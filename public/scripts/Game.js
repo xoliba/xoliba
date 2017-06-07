@@ -15,7 +15,7 @@ class Game {
         this.board = new Board(app, PIXI, this.turnHandler);
         this.redPoints = 0;
         this.bluePoints = 0;
-        this.socket = new AiSocket();
+        this.socket = new AiSocket(this);
         this.turnHandler.board = this.board;
         this.turn = -1;
     }
@@ -24,14 +24,20 @@ class Game {
         if (this.turn === 1) {
             this.turn = -1;
         } else if (this.turn === -1) {
-            this.socket.sendTable(this.board.gameboardTo2dArray());
             this.turn = 1;
+            this.socket.sendTable(this.board.gameboardTo2dArray());  
         }
     }
+
+    aiTurn(start, target, corners) {
+        this.turnHandler.aiTurn(start, target, corners);
+    }
+
 
     /*get turn() {
         return this.turn;
     }*/
 }
+
 
 export { Game };
