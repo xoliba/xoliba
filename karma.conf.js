@@ -4,7 +4,7 @@
 module.exports = function(config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'testdouble'],
     files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
       'test/**/*.js'
@@ -13,11 +13,13 @@ module.exports = function(config) {
         'karma-babel-preprocessor',
         'karma-webpack',
         'karma-mocha',
+        'karma-testdouble',
+        'karma-coverage',
         'karma-chrome-launcher',
         'karma-firefox-launcher'
     ],
     preprocessors: {
-        'test/**/*.js': ['webpack']
+        'test/**/*.js': ['webpack', 'coverage']
     },
     webpack: require("./webpack.config.js"),
     babelPreprocessor: {
@@ -25,7 +27,11 @@ module.exports = function(config) {
             presets: ['es2015']
         }
     },
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+    coverageReporter: {
+        type: 'lcov',
+        dir: 'coverage/'
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
