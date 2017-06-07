@@ -1,6 +1,4 @@
-class Actions {
-
-
+class BoardActions {
 
     hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, gameboard) {
 
@@ -81,6 +79,6 @@ class Actions {
     }
 }
 
-module.exports.Logic = Actions;
+module.exports.BoardActions = BoardActions;
 
-export { Actions };
+export { BoardActions };

@@ -1,4 +1,4 @@
-import { Actions } from './logic/Actions.js';
+import { BoardActions } from './logic/BoardActions.js';
 import { Validations } from './logic/Validations.js';
 
 //import * as PIXI from 'pixi.js';
@@ -15,7 +15,7 @@ class Logic {
         this.turnCounter = 0;
         //this.gameboard = gameBoard;
         this.validations = new Validations();
-        this.actions = new Actions();
+        this.actions = new BoardActions();
         //this.turn = starting;
         /*if (this.turn === 0) {
             if (Math.random() > 0.5) {

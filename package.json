@@ -24,7 +24,10 @@
     "eslint-plugin-node": "4.2.2",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
+    "karma-firefox-launcher": "1.0.1",
     "karma-mocha": "^1.3.0",
+    "karma-babel-preprocessor": "6.0.1",
+    "karma-webpack": "2.0.3",
     "mocha-lcov-reporter": "^1.3.0",
     "mocha": "3.4.1",
     "nyc": "^10.3.2",
@@ -41,7 +44,8 @@
     "prestart": "./node_modules/.bin/webpack",
     "start": "node server.js",
     "pretest": "./node_modules/.bin/webpack",
-    "test": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill",
-    "lint": "./node_modules/.bin/eslint ."
+    "mocha": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill",
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/karma start"
   }
 }

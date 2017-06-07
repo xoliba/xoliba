@@ -11,16 +11,11 @@ class Validations {
     }
 
     turnIndicator(color, turn) {
+        //deprecated
         /*var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
         turnTeller.innerHTML = "It's " + "turnTeller" + " turn!";*/
     }
-
-    /*swap2DArrayPositions(firstX, firstY, secondX, secondY) {
-        var help = this.gameboard[firstX][firstY];
-        this.gameboard[firstX][firstY] = this.gameboard[secondX][secondY];
-        this.gameboard[secondX][secondY] = help;
-    }*/
 
     moveIsValid(firstX, firstY, secondX, secondY, board) {
         if (!this.stonesBetweenAreWhite(firstX, firstY, secondX, secondY, board)) {
@@ -160,7 +155,7 @@ class Validations {
             triangles = 1;
         }
 
-        /*console.info("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
+        /*console.log("for stone (" + originX + "," + originY + ") to the direction of stone (" + (originX + directionX) + "," + (originY + directionY) + ") "
             + "found " + triangles + " triangles, foundOnThisDirection is " + foundOnThisDirection + " is target on board " + this.isThisOnBoard(targetX, targetY));*/
         return triangles;
     }
@@ -184,6 +179,37 @@ class Validations {
             }
         }
         return result;
+    }
+
+     checkIfTriangle(firstX, firstY, secondX, secondY, thirdX, thirdY) {
+        if(((firstX === secondX) && (firstY === secondY)) || ((firstX === thirdX) && (firstY === thirdY)) || ((secondX === thirdX) && (secondY === thirdY))) {
+            //if any of the coordinates are the same, return false
+            return false;
+        }
+
+        //Validation is performed in function hitTriangle
+        if (firstX === secondX) {
+            return this.checkTriangleShape(firstY, secondY, firstX, thirdX, thirdY);
+        } else if (firstX === thirdX) {
+            return this.checkTriangleShape(firstY, thirdY, firstX, secondX, secondY);
+        } else if (secondX === thirdX) {
+            return this.checkTriangleShape(secondY, thirdY, secondX, firstX, firstY);
+        } else if (firstY === secondY) {
+            return this.checkTriangleShape(firstX, secondX, firstY, thirdY, thirdX);
+        } else if (firstY === thirdY) {
+            return this.checkTriangleShape(firstX, thirdX, firstY, secondY, secondX);
+        } else if (secondY === thirdY) {
+            return this.checkTriangleShape(secondX, thirdX, secondY, firstY, firstX);
+        }
+        return false;
+    }
+
+    checkTriangleShape(basis1, basis2, bottomH, tipH, tipPosition) {
+        let width = Math.abs(basis1 - basis2);
+        if (width % 2 !== 0 || width / 2 !== Math.abs(tipH - bottomH) || Math.abs(basis1 - tipPosition) !== Math.abs(basis2 - tipPosition)) {
+            return false;
+        }
+        return true;
     }
 }
 
