@@ -1,7 +1,7 @@
 let assert = require('assert');
 //var BoardClass = require('../public/scripts/Board.js');
 import { Board } from '../public/scripts/Board.js';
-import { MockTurnHandler } from './mock/TurnHandler.js';
+import { MockTurnHandler } from './mock/MockTurnHandler.js';
 import * as PIXI from 'pixi.js';
 
 describe('Board', () => {
