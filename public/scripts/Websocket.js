@@ -16,8 +16,8 @@ class AiSocket {
 
         aisocket.onmessage = function(event) {
             let msg = JSON.parse(event.data);
-            console.log(msg.start);
-            game.aiTurn(msg.start, msg.target, msg.corners);
+            game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
+            
         };
 
         aisocket.onopen = function() {

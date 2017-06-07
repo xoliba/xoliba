@@ -106,7 +106,8 @@ class TurnHandler {
         }
     }
 
-    aiTurn(start, target, corners) {
+    aiTurn(didMove, start, target, corners) {
+        if (didMove) {
         startStone = this.board.findStone(start[0], start[1]);
         targetStone = this.board.findStone(target[0], target[1]);
         secondCorner = this.board.findStone(corners[0][0], corners[0][1]);
@@ -114,6 +115,9 @@ class TurnHandler {
         this.board.swap(startStone, targetStone);
         this.board.hitStones(target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
         this.game.changeTurn();
+          } else {
+              this.game.changeTurn();
+          }
     }
 
     
