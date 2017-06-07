@@ -108,7 +108,7 @@ class TurnHandler {
 
     aiTurn(start, target, corners) {
         startStone = this.board.findStone(start[0], start[1]);
-        targetStone = this.board.findStone(target[0], start[1]);
+        targetStone = this.board.findStone(target[0], target[1]);
         secondCorner = this.board.findStone(corners[0][0], corners[0][1]);
         thirdCorner = this.board.findStone(corners[1][0], corners[1][1]);
         this.board.swap(startStone, targetStone);
