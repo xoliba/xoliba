@@ -44,7 +44,7 @@ class Game {
 
     checkIfRoundEnds() {
         let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray());
-        if (this.turnCounter === 10) {
+        if (this.turnCounter === 3) {
              alert("30 rounds without hits, round ended!");
              this.updatePoints();
              return;
@@ -65,8 +65,10 @@ class Game {
 
     updateTurnCounter(areStonesHit) {
         if (areStonesHit === true) {
+            console.log("turncounter: " + this.turnCounter);
             this.turnCounter = 0;
         } else {
+            console.log("turncounter: " + this.turnCounter);
             this.turnCounter++;
         }
     }

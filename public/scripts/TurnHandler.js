@@ -69,9 +69,7 @@ class TurnHandler {
 
     parseClickOnWhiteStone(stone) {
          if(this.validate.moveIsValid(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y, this.board.gameboardTo2dArray())) {
-             console.log(this.firstClicked.sprite.x, this.firstClicked.sprite.y, stone.sprite.x, stone.sprite.y);
              this.board.swap(this.firstClicked, stone);
-             console.log(this.firstClicked.sprite.x, this.firstClicked.sprite.y, stone.sprite.x, stone.sprite.y);
              this.corners.push(this.firstClicked);
          } else {
              return false; 
@@ -118,7 +116,12 @@ class TurnHandler {
         secondCorner = this.board.findStone(corners[0][0], corners[0][1]);
         thirdCorner = this.board.findStone(corners[1][0], corners[1][1]);
         this.board.swap(startStone, targetStone);
-        this.board.hitStones(target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
+        this.stonesHit = this.board.hitStones(target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
+        if (this.stonesHit === 1) {
+                this.game.updateTurnCounter(false);
+            } else {
+                this.game.updateTurnCounter(true);
+            }
         this.game.changeTurn();
           } else {
               this.game.changeTurn();
