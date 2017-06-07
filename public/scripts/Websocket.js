@@ -5,12 +5,11 @@ import { sprites } from './Launcher.js';
 
 class AiSocket {
     constructor() {
-        //const server = 'wss://xoliba-ai.herokuapp.com/ai';
-        const server = 'ws://localhost:4567/ai';
+        const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
+        //const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
         //aisocket.send(JSON.stringify({ type: "ping" }))
-        
 
         aisocket.onmessage = function(event) {
             var latestTable = JSON.parse(event.data);
