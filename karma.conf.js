@@ -19,7 +19,7 @@ module.exports = function(config) {
         'karma-firefox-launcher'
     ],
     preprocessors: {
-        'test/**/*.js': ['webpack', 'coverage']
+        'test/**/*.js': ['webpack']
     },
     webpack: require("./webpack.config.js"),
     babelPreprocessor: {

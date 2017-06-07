@@ -15,7 +15,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
 	        options: {
-            	presets: ['babel-preset-es2015']
+            	presets: ['babel-preset-es2015'],
+                plugins: ['istanbul']
           }
         }  
       }
