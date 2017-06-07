@@ -44,7 +44,6 @@ class TurnHandler {
 
     spriteClicked(stone) {
         if (this.firstClicked === undefined) {
-            console.log("ekaa painettu");
             this.parseFirstClick(stone);
         }  else if (this.corners.length === 1) {
             this.parseClickOnSecondCorner(stone);
@@ -60,7 +59,7 @@ class TurnHandler {
 
     parseFirstClick(stone) {
         //if (this.game.turn === stone.value) {
-          if (this.game.turn === -1) {     
+          if (this.game.turn === -1 && stone.value === -1) {     
             this.firstClicked = stone;
             stone.choose();
         } else {

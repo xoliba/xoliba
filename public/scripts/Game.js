@@ -44,20 +44,22 @@ class Game {
 
     checkIfRoundEnds() {
         let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray());
-        if (this.turnCounter === 3) {
+        if (this.turnCounter === 10) {
              alert("30 rounds without hits, round ended!");
              this.updatePoints();
              return;
         }
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
+            var whoSkipped = this.turn;
             alert("No moves available, skipping turn!");
             this.changeTurn();
-        } else if(!availableMoves) {
+        } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");
             this.updatePoints();
-        } else if(this.roundskipped !== 0) {
+        } else if(availableMoves && this.turn === whoSkipped) {
             this.roundskipped = 0;
+            
         }
     }
 
@@ -131,7 +133,8 @@ class Game {
             document.getElementById("redpoints").innerHTML = 0;
         }
     }
-
+    this.turnCounter = 0;
+    this.roundskipped = 0;
     this.board.generateStartingBoard();
 }
 
