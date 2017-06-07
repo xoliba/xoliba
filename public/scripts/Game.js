@@ -105,7 +105,7 @@ class Game {
         current += points;
         element.innerHTML = current;
         alert("Red wins the round! " + points + " points awarded!");
-        if (current > 50){
+        if (current >= 50){
             element.style.fontSize = "x-large";
             element.style.color = "GoldenRod";
             element.innerHTML += " WINNER";
