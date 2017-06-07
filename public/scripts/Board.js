@@ -49,7 +49,6 @@ class Board {
         for(let i=0; i<this.stonesList.length; i++) {
             if(this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
                 this.stonesList[i].value = array[this.stonesList[i].x][this.stonesList[i].y];
-                this.stonesList[i].updateSprite();
             }
         }
         return result;
@@ -72,13 +71,16 @@ class Board {
                 if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     let value = Math.floor(Math.random() * (reds + blues + whites) + 1);
                     if(value <= reds){
-                        this.stonesList[n++] = new Stone(1, i, j, app, PIXI, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, app, PIXI, this.turnHandler);
+                        else this.stonesList[n++].value = 1;
                         reds--;
                     } else if (value <= reds + blues){
-                        this.stonesList[n++] = new Stone(-1, i, j, app, PIXI, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(-1, i, j, app, PIXI, this.turnHandler);
+                        else this.stonesList[n++].value = -1;
                         blues--;
                     } else {
-                        this.stonesList[n++] = new Stone(0, i, j, app, PIXI, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(0, i, j, app, PIXI, this.turnHandler);
+                        else this.stonesList[n++].value = 0;
                         whites--;
                     }
                 }

@@ -21,7 +21,7 @@ PIXI.loader.add([
 class Stone {
 
     constructor(value, x, y, app, PIXI, turnHandler) {
-        this.value = value;
+        this._value = value;
         this.x = x;
         this.y = y;
         this.isChosen = false;
@@ -29,17 +29,17 @@ class Stone {
 
         this.createSprite(app, turnHandler);
     }
-    
+
 
     createSprite(app, turnHandler) {
         let path = "";
-        if (this.value === -1) {
+        if (this._value === -1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle64.png');
             path = "images/blueCircle64.png";
-        } else if (this.value === 0) {
+        } else if (this._value === 0) {
             this.sprite = new PIXI.Sprite.fromImage('/images/whiteCircle64.png');
             path = "images/whiteCircle64.png";
-        } else if (this.value === 1) {
+        } else if (this._value === 1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/redCircle64.png');
             path = "images/redCircle64.png";
         }
@@ -60,7 +60,7 @@ class Stone {
         this.sprite.on('pointerdown', () => {
             turnHandler.spriteClicked(this)
         });
-        
+
 
         app.stage.addChild(this.sprite);
     }
@@ -107,19 +107,19 @@ class Stone {
         stoneB.y = tmpy;
     }
 
-    /*set value(value) {
-        if (this.value === value) {
+    set value(value) {
+        if (this._value === value) {
             return;
         }
 
-        this.value = value;
-        
-        updateSprite();
-    }*/
+        this._value = value;
 
-    /*get value() {
-        return this.value;
-    }*/
+        this.updateSprite();
+    }
+
+    get value() {
+        return this._value;
+    }
 
     updateSpriteCoordinates(stone) {
         stone.sprite.x = padding + stone.x * px;
@@ -127,11 +127,11 @@ class Stone {
     }
 
     updateSprite() {
-        if (this.value === 0) {
+        if (this._value === 0) {
             this.sprite.texture = this.PIXI.loader.resources["images/whiteCircle64.png"].texture;
-        } else if (this.value === 1) {
+        } else if (this._value === 1) {
             this.sprite.texture = this.PIXI.loader.resources["images/redCircle64.png"].texture;
-        } else if (this.value === -1) {
+        } else if (this._value === -1) {
             this.sprite.texture = this.PIXI.loader.resources["images/blueCircle64.png"].texture;
         }
     }
