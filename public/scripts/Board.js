@@ -10,7 +10,7 @@ class Board {
     constructor(app, PIXI, turnHandler) {
         this.actions = new BoardActions();
         this.turnHandler = turnHandler;
-        this.generateStartingBoard(app, PIXI);
+        return this.generateStartingBoard(app, PIXI);
     }
 
     gameboardTo2dArray() {
@@ -86,19 +86,28 @@ class Board {
                 }
             }
         }
+        return this.startingTurn;
+    }
 
-        /*  //Deprecated?
-        startingTurn = this.table[0][1] + this.table[0][5] + this.table[1][0] + this.table[1][6]
-            + this.table[5][0] + this.table[5][6] +this.table[6][1] + this.table[6][5];
+    get startingTurn() {
+        let table = this.gameboardTo2dArray();
+        let sTurn = table[0][1] + table[0][5] + table[1][0] + table[1][6]
+            + table[5][0] + table[5][6] + table[6][1] + table[6][5];
 
-        if(startingTurn === 0) {
+        if(sTurn === 0) {
             for(let i = 1; i < 6; i++) {
-                startingTurn += this.table[i][0];
-                startingTurn += this.table[i][6];
-                startingTurn += this.table[0][i];
-                startingTurn += this.table[6][i];
+                sTurn += table[i][0];
+                sTurn += table[i][6];
+                sTurn += table[0][i];
+                sTurn += table[6][i];
             }
-        }*/
+        }
+        if(sTurn = 0) {
+            if(Math.floor(Math.random()*2)) return -1;
+            return 1;
+        }
+        if(sTurn < 0) return -1;
+        return 1;
     }
 
     findStone(x, y) {
