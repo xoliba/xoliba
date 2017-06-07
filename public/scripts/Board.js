@@ -49,6 +49,7 @@ class Board {
         for(let i=0; i<this.stonesList.length; i++) {
             if(this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
                 this.stonesList[i].value = array[this.stonesList[i].x][this.stonesList[i].y];
+                this.stonesList[i].updateSprite();
             }
         }
         return result;
