@@ -127,11 +127,11 @@ class Stone {
 
     updateSprite() {
         if (this._value === 0) {
-            this.sprite.texture = this.PIXI.loader.resources["images/whiteCircle64.png"].texture;
+            this.sprite.texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
         } else if (this._value === 1) {
-            this.sprite.texture = this.PIXI.loader.resources["images/redCircle64.png"].texture;
+            this.sprite.texture = PIXI.loader.resources["images/redCircle64.png"].texture;
         } else if (this._value === -1) {
-            this.sprite.texture = this.PIXI.loader.resources["images/blueCircle64.png"].texture;
+            this.sprite.texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
         }
     }
 
