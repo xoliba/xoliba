@@ -1,23 +1,11 @@
-//import * as PIXI from 'pixi.js';
-//import { scale } from './Draw.js';
-//import { TurnHandler } from './TurnHandler.js';
 import { StoneSprite } from './StoneSprite.js';
-
-/*const padding = scale() / 10;
-const px = scale() / 7.5;
-const radius = px / 4;
-const highlightScaling = radius / 100;*/
 
 let value;
 let sprite;
 var isChosen;
 var x;
 var y;
-/*PIXI.loader.add([
-    "images/whiteCircle64.png",
-    "images/blueCircle64.png",
-    "images/redCircle64.png"
-]).load();*/
+
 class Stone {
 
     constructor(value, x, y, app, turnHandler) {
@@ -27,45 +15,7 @@ class Stone {
         this.isChosen = false;
 
         this.sprite = new StoneSprite(x, y, app, turnHandler, this);
-        //this.createSprite(app, turnHandler);
     }
-
-
-    /*createSprite(app, turnHandler) {
-        //let path = "";
-        if (this._value === -1) {
-            this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle64.png');
-            //path = "images/blueCircle64.png";
-        } else if (this._value === 0) {
-            this.sprite = new PIXI.Sprite.fromImage('/images/whiteCircle64.png');
-            //path = "images/whiteCircle64.png";
-        } else if (this._value === 1) {
-            this.sprite = new PIXI.Sprite.fromImage('/images/redCircle64.png');
-            //path = "images/redCircle64.png";
-        }
-
-        this.sprite = new PIXI.Sprite(
-            PIXI.loader.resources[path].texture
-        );
-
-        this.sprite.interactive = true;
-        this.sprite.buttonMode = true;
-        this.sprite.anchor.x = 0.5;
-        this.sprite.anchor.y = 0.5;
-        this.sprite.x = padding + this.x * px;
-        this.sprite.y = padding + this.y * px;
-        this.sprite.width = radius * 2;
-        this.sprite.height = radius * 2;
-
-        this.sprite.on('pointerdown', () => {
-            turnHandler.spriteClicked(this)
-        });
-
-
-        app.stage.addChild(this.sprite);
-}*/
-
-
 
     choose() {
         if (this.isChosen) {
@@ -74,7 +24,6 @@ class Stone {
 
         this.isChosen = true;
 
-        //this.enlargeSprite();
         this.sprite.enlarge();
     }
 
@@ -85,7 +34,6 @@ class Stone {
 
         this.isChosen = false;
 
-        //this.minimizeSprite();
         this.sprite.minimize();
     }
 
@@ -126,26 +74,6 @@ class Stone {
     updateSpriteCoordinates() {
         this.sprite.updateCoordinates(this.x, this.y);
     }
-
-    /*updateSprite(newVal) {
-        if (this._value === 0) {
-            this.sprite.texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
-        } else if (this._value === 1) {
-            this.sprite.texture = PIXI.loader.resources["images/redCircle64.png"].texture;
-        } else if (this._value === -1) {
-            this.sprite.texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
-        }
-    }
-
-    enlargeSprite() {
-        this.sprite.scale.x += highlightScaling;
-        this.sprite.scale.y += highlightScaling;
-    }
-
-    minimizeSprite() {
-        this.sprite.scale.x -= highlightScaling;
-        this.sprite.scale.y -= highlightScaling;
-    }*/
 }
 
 module.exports.Stone = Stone;

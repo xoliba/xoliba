@@ -6,8 +6,6 @@ const px = scale() / 7.5;
 const radius = px / 4;
 const highlightScaling = radius / 100;
 
-//let app;
-//let turnHandler;
 let sprite;
 
 PIXI.loader.add([
@@ -18,8 +16,6 @@ PIXI.loader.add([
 class StoneSprite {
 
     constructor(x, y, app, turnHandler, parent) {
-        //this.app = app;
-        //this.turnHandler = turnHandler;
 
         if (parent.value === -1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle64.png');
