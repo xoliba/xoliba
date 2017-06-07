@@ -1,23 +1,23 @@
-import * as PIXI from 'pixi.js';
-import { scale } from './Draw.js';
-import { TurnHandler } from './TurnHandler.js';
+//import * as PIXI from 'pixi.js';
+//import { scale } from './Draw.js';
+//import { TurnHandler } from './TurnHandler.js';
+import { StoneSprite } from './StoneSprite.js';
 
-const padding = scale() / 10;
+/*const padding = scale() / 10;
 const px = scale() / 7.5;
 const radius = px / 4;
-const highlightScaling = radius / 100;
+const highlightScaling = radius / 100;*/
 
 let value;
 let sprite;
 var isChosen;
 var x;
 var y;
-//var PIXI;
-PIXI.loader.add([
+/*PIXI.loader.add([
     "images/whiteCircle64.png",
     "images/blueCircle64.png",
     "images/redCircle64.png"
-]).load();
+]).load();*/
 class Stone {
 
     constructor(value, x, y, app, turnHandler) {
@@ -26,11 +26,12 @@ class Stone {
         this.y = y;
         this.isChosen = false;
 
-        this.createSprite(app, turnHandler);
+        this.sprite = new StoneSprite(x, y, app, turnHandler, this);
+        //this.createSprite(app, turnHandler);
     }
 
 
-    createSprite(app, turnHandler) {
+    /*createSprite(app, turnHandler) {
         //let path = "";
         if (this._value === -1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle64.png');
@@ -43,9 +44,9 @@ class Stone {
             //path = "images/redCircle64.png";
         }
 
-        /*this.sprite = new PIXI.Sprite(
+        this.sprite = new PIXI.Sprite(
             PIXI.loader.resources[path].texture
-        );*/
+        );
 
         this.sprite.interactive = true;
         this.sprite.buttonMode = true;
@@ -62,7 +63,7 @@ class Stone {
 
 
         app.stage.addChild(this.sprite);
-    }
+}*/
 
 
 
@@ -73,7 +74,8 @@ class Stone {
 
         this.isChosen = true;
 
-        this.enlargeSprite();
+        //this.enlargeSprite();
+        this.sprite.enlarge();
     }
 
     unchoose() {
@@ -83,7 +85,8 @@ class Stone {
 
         this.isChosen = false;
 
-        this.minimizeSprite();
+        //this.minimizeSprite();
+        this.sprite.minimize();
     }
 
     swap(stone) {
@@ -93,8 +96,8 @@ class Stone {
 
         this.swapCoordinates(this, stone);
 
-        this.updateSpriteCoordinates(this);
-        this.updateSpriteCoordinates(stone);
+        this.updateSpriteCoordinates();
+        stone.updateSpriteCoordinates();
     }
 
     swapCoordinates(stoneA, stoneB) {
@@ -113,19 +116,18 @@ class Stone {
 
         this._value = value;
 
-        this.updateSprite();
+        this.sprite.updateColor(value);
     }
 
     get value() {
         return this._value;
     }
 
-    updateSpriteCoordinates(stone) {
-        stone.sprite.x = padding + stone.x * px;
-        stone.sprite.y = padding + stone.y * px;
+    updateSpriteCoordinates() {
+        this.sprite.updateCoordinates(this.x, this.y);
     }
 
-    updateSprite() {
+    /*updateSprite(newVal) {
         if (this._value === 0) {
             this.sprite.texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
         } else if (this._value === 1) {
@@ -143,7 +145,7 @@ class Stone {
     minimizeSprite() {
         this.sprite.scale.x -= highlightScaling;
         this.sprite.scale.y -= highlightScaling;
-    }
+    }*/
 }
 
 module.exports.Stone = Stone;
