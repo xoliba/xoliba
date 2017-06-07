@@ -11,9 +11,6 @@ describe('Board', () => {
     beforeEach(() => {
         //board = new BoardClass.Board();
         board = new Board(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}), new MockTurnHandler());
-        if (!board == undefined) {
-            console.log("haloo");
-        }
     });
 
 
