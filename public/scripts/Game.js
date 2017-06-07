@@ -61,6 +61,14 @@ class Game {
         }
     }
 
+    updateTurnCounter(areStonesHit) {
+        if (areStonesHit === true) {
+            this.turnCounter = 0;
+        } else {
+            this.turnCounter++;
+        }
+    }
+
     updatePoints(){
     let bluesBiggest = 0;
     let redsBiggest = 0;
@@ -71,13 +79,13 @@ class Game {
             if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                 if(this.board.gameboardTo2dArray()[i][j] === 1) {
                     reds++;
-                    let found = this.validate.trianglesFound(i, j, this.board, true);
+                    let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
                     if(found > redsBiggest) {
                         redsBiggest = found;
                     }
                 } else if (this.board.gameboardTo2dArray()[i][j] === -1){
                     blues++;
-                    let found = this.validate.trianglesFound(i, j, this.board, true);
+                    let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
                     if(found > bluesBiggest) {
                         bluesBiggest = found;
                     }
@@ -123,6 +131,8 @@ class Game {
             document.getElementById("redpoints").innerHTML = 0;
         }
     }
+
+    this.board.generateStartingBoard();
 }
 
 
