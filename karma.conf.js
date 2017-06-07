@@ -6,23 +6,30 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['mocha'],
     files: [
-      'test/**/*.js',
-      'public/**/*.js',
-      'public/**/*.ejs'
+      'node_modules/babel-polyfill/dist/polyfill.js',
+      'test/**/*.js'
+      //'public/**/*.js',
+      //'public/**/*.ejs'
     ],
-    //plugins: ['karma-babel-preprocessor'],
+    plugins: ['karma-babel-preprocessor', 'karma-webpack', 'karma-mocha', 'karma-chrome-launcher'],
     //plugins: ['karma-webpack'],
     preprocessors: {
-        'test/**/*.js': ['webpack'],
-        'public/**/*.js': ['webpack'],
+        'public/scripts/Launcher.js': ['webpack'],
+        'test/**/*.js': ['webpack']
+        //'public/**/*.js': ['webpack'],
         //'public/**/*.ejs': ['webpack']
     },
     webpack: require("./webpack.config.js"),
-    /*babelPreprocessor: {
+    babelPreprocessor: {
         options: {
-            modules: "es2015"
+            presets: ['es2015']
         }
-    },*/
+    },
+    client: {
+        mocha: {
+            opts: 'test/mocha.opts'
+        }
+    },
     reporters: ['progress'],
     port: 9876,
     colors: true,
