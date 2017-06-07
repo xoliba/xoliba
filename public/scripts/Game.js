@@ -10,7 +10,7 @@ let bluePoints;
 let socket;
 let turnHandler;
 let turnCounter
-let roundSkipped;
+let roundskipped;
 let validate;
 
 class Game {
@@ -23,7 +23,7 @@ class Game {
         this.turnHandler.board = this.board;
         this.turn = -1;
         this.turnCounter = 0;
-        this.roundSkipped = 0;
+        this.roundskipped = 0;
         this.validate = new Validations();
     }
 
