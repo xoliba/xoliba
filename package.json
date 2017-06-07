@@ -44,6 +44,7 @@
     "start": "node server.js",
     "pretest": "./node_modules/.bin/webpack",
     "test": "./node_modules/.bin/nyc mocha --compilers js:babel-register --require babel-polyfill",
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint .",
+    "karma": "./node_modules/.bin/karma start"
   }
 }
