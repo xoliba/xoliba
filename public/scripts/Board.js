@@ -7,10 +7,10 @@ let turnHandler;
 let actions;
 class Board {
 
-    constructor(app, PIXI, turnHandler) {
+    constructor(app, turnHandler) {
         this.actions = new BoardActions();
         this.turnHandler = turnHandler;
-        return this.generateStartingBoard(app, PIXI);
+        return this.generateStartingBoard(app);
     }
 
     gameboardTo2dArray() {
@@ -59,7 +59,7 @@ class Board {
     }
 
 
-    generateStartingBoard(app, PIXI) {
+    generateStartingBoard(app) {
         let reds = 17;
         let blues = 17;
         let whites = 11;
@@ -71,15 +71,15 @@ class Board {
                 if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     let value = Math.floor(Math.random() * (reds + blues + whites) + 1);
                     if(value <= reds){
-                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, app, PIXI, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, app, this.turnHandler);
                         else this.stonesList[n++].value = 1;
                         reds--;
                     } else if (value <= reds + blues){
-                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(-1, i, j, app, PIXI, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(-1, i, j, app, this.turnHandler);
                         else this.stonesList[n++].value = -1;
                         blues--;
                     } else {
-                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(0, i, j, app, PIXI, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(0, i, j, app, this.turnHandler);
                         else this.stonesList[n++].value = 0;
                         whites--;
                     }

@@ -20,32 +20,31 @@ PIXI.loader.add([
 ]).load();
 class Stone {
 
-    constructor(value, x, y, app, PIXI, turnHandler) {
+    constructor(value, x, y, app, turnHandler) {
         this._value = value;
         this.x = x;
         this.y = y;
         this.isChosen = false;
-        this.PIXI = PIXI;
 
         this.createSprite(app, turnHandler);
     }
 
 
     createSprite(app, turnHandler) {
-        let path = "";
+        //let path = "";
         if (this._value === -1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle64.png');
-            path = "images/blueCircle64.png";
+            //path = "images/blueCircle64.png";
         } else if (this._value === 0) {
             this.sprite = new PIXI.Sprite.fromImage('/images/whiteCircle64.png');
-            path = "images/whiteCircle64.png";
+            //path = "images/whiteCircle64.png";
         } else if (this._value === 1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/redCircle64.png');
-            path = "images/redCircle64.png";
+            //path = "images/redCircle64.png";
         }
 
-      /*  this.sprite = new this.PIXI.Sprite(
-            this.PIXI.loader.resources[path].texture
+        /*this.sprite = new PIXI.Sprite(
+            PIXI.loader.resources[path].texture
         );*/
 
         this.sprite.interactive = true;
