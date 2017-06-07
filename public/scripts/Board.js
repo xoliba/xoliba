@@ -31,6 +31,7 @@ class Board {
         table[6][0] = -2;
         table[0][6] = -2;
         table[6][6] = -2;
+        
         return table;
     }
 

@@ -38,27 +38,6 @@ describe('BoardActions', () => {
         actions = new BoardActions();
     });
 
-    it('Swapping stones work', function() {
-      let temp = c(boardSheet1);
-      actions.swap2DArrayPositions(temp, 3, 0, 3, 6);
-      actions.swap2DArrayPositions(temp, 1, 1, 1, 1);
-      actions.swap2DArrayPositions(temp, 5, 1, 0, 1);
-      actions.swap2DArrayPositions(temp, 6, 5, 6, 5);
-      let temp2 = [[-2, 0, 0, 0, 0, 1, -2],
-                  [0, 1, 1, 0, 1, 1, 0],
-                  [0, 1, 0, 1, 1, 1, 0],
-                  [1, 0, 0, 0, 0, 0, 0],
-                  [0, 1, 0, 0, 0, 0, 0],
-                  [1, 0, 1, 0, 1, 1, 1],
-                 [-2, 1, 1, 0, 1, -1, -2]];
-
-      for(let i=0; i<temp.length; i++) {
-        for(let j=0; j<temp[i].length; j++) {
-          assert.equal(temp[i][j], temp2[i][j]);
-        }
-      }
-    });
-
     describe('Hitting the stones in triangle work', function() {
       let temp;
       let table;

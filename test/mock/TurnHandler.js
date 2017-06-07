@@ -1,4 +1,4 @@
-class TurnHandler {
+class MockTurnHandler {
 
     spriteClicked(stone) {
 
@@ -6,4 +6,4 @@ class TurnHandler {
 
 }
 
-export { TurnHandler };
+export { MockTurnHandler };
