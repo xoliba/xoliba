@@ -25,14 +25,17 @@ class Game {
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.validate = new Validations();
+        this.turnIndicator("blue", "BLUES");
     }
 
     changeTurn() {
         if (this.turn === 1) {
             this.turn = -1;
+            this.turnIndicator("blue", "BLUES");
             this.checkIfRoundEnds();
         } else if (this.turn === -1) {
             this.turn = 1;
+            this.turnIndicator("red", "REDS");
             this.checkIfRoundEnds();
             this.socket.sendTable(this.board.gameboardTo2dArray());   
         }
@@ -138,10 +141,12 @@ class Game {
     this.board.generateStartingBoard();
 }
 
+turnIndicator(color, turn) {
+        var turnTeller = document.getElementById("turn");
+        turnTeller.style.color = color;
+        turnTeller.innerHTML = "It's " + turn + " turn!";
+    }
 
-    /*get turn() {
-        return this.turn;
-    }*/
 }
 
 
