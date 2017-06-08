@@ -41,18 +41,13 @@ class Game {
     }
 
     changeTurn() {
-        if (this.turn === 1) {
-            this.turn *= -1;
-            this.turnIndicator("blue", "BLUES");
-            this.checkIfRoundEnds();
-        } else if (this.turn === -1) {
-            this.turn *= -1;
-            this.turnIndicator("red", "REDS");
-            this.checkIfRoundEnds();
+        this.checkIfRoundEnds();
 
-            this.socket.sendTable(this.board.gameboardTo2dArray());
-            
+        if (this.turn === -1) {
+            this.socket.sendTable(this.board.gameboardTo2dArray(), this.turn);
         }
+
+        this.turn *= -1;
     }
 
     aiTurn(didMove, start, target, corners) {

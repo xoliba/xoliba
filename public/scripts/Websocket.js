@@ -1,23 +1,21 @@
+import { Game } from './Game.js';
+
+//var game;
 var aisocket;
 
-//import { updateBoard } from './Launcher.js';
-//import { sprites } from './Launcher.js';
-import { Game } from './Game.js';
-var game;
 class AiSocket {
-    constructor(gamee) {
-        game = gamee;
+
+    constructor(game) {
+        //this.game = game;
+
         //const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
         const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
-        //aisocket.send(JSON.stringify({ type: "ping" }))
-        
 
         aisocket.onmessage = function(event) {
             let msg = JSON.parse(event.data);
             game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
-            
         };
 
         aisocket.onopen = function() {
@@ -42,15 +40,18 @@ class AiSocket {
 
     }
 
-    sendTable(table) {
-        /*
+    sendTable(table, aiColor) {
         let msg = {
             type: "message",
-            table: table
+            board: table,
+            color: aiColor,
+            start: null,
+            target: null,
+            didMove: true
         }
+        console.log("HALOO");
         aisocket.send(JSON.stringify(msg));
-        */
-        aisocket.send(JSON.stringify(table));
+        //aisocket.send(JSON.stringify(table));
     }
 
 }  
