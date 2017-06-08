@@ -15,12 +15,14 @@ let validate;
 let playerColor;
 let scoreLimit;
 let whoSkipped;
+let aiColor;
 
 class Game {
     constructor(app, playerColor, scoreLimit) {
         console.log(playerColor, scoreLimit);
         this.socket = new AiSocket(this);
         this.playerColor = playerColor;
+        this.aiColor = this.playerColor * -1;
         this.scoreLimit = scoreLimit;
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
@@ -45,7 +47,7 @@ class Game {
         this.checkIfRoundEnds();
 
         //if it is AIs turn now
-        if (this.turn === 1) {
+        if (this.turn === this.aiColor) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.turn);
         }
     }
