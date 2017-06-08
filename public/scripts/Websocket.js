@@ -39,6 +39,7 @@ class AiSocket {
                 console.log("ping");
             }
         }
+
     }
 
     sendTable(table) {
@@ -51,6 +52,7 @@ class AiSocket {
         */
         aisocket.send(JSON.stringify(table));
     }
+
 }
 
 export { AiSocket };

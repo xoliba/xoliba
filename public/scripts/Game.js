@@ -12,14 +12,22 @@ let turnHandler;
 let turnCounter
 let roundskipped;
 let validate;
+let playerColor;
 
 class Game {
-    constructor(app) {
+    constructor(app, result) {
+        this.socket = new AiSocket(this);
+        if(result) {
+            this.playerColor = 1;
+            //this.socket.sendColor(result); tms.
+        } else {
+            this.playerColor = -1;
+            //this.socket.sendColor(result);
+        }
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
         this.redPoints = 0;
         this.bluePoints = 0;
-        this.socket = new AiSocket(this);
         this.turnHandler.board = this.board;
         this.turn = -1;
         this.turnCounter = 0;
@@ -29,12 +37,12 @@ class Game {
     }
 
     changeTurn() {
-        if (this.turn === 1) {
-            this.turn = -1;
+        if (this.turn === this.playerColor) {
+            this.turn *= -1;
             this.turnIndicator("blue", "BLUES");
             this.checkIfRoundEnds();
-        } else if (this.turn === -1) {
-            this.turn = 1;
+        } else if (this.turn === this.playerColor) {
+            this.turn *= -1;
             this.turnIndicator("red", "REDS");
             this.checkIfRoundEnds();
             this.socket.sendTable(this.board.gameboardTo2dArray());   

@@ -17,5 +17,7 @@ drawTable(app.stage);
 app.renderer.render(app.stage);
 app.renderer.backgroundColor = 0xE5E3DF;
 
-var game = new Game(app);
+let result = confirm("Choose your color\nThis is ugly. Needs to be changed\nOK = red, cancel = blue");
+
+var game = new Game(app, result);
 //game.start(); ?
