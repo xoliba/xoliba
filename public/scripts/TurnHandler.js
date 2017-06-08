@@ -120,10 +120,8 @@ class TurnHandler {
             } else {
                 this.game.updateTurnCounter(true);
             }
-            this.game.changeTurn();
-            } else {
-                this.game.changeTurn();
-            }
+        }
+        this.game.changeTurn();
     }
 
     
