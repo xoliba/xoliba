@@ -5,16 +5,60 @@
         <meta charset="utf-8">
         <title>Xoliba</title>
         <link rel="stylesheet" type="text/css" href="indexstyle.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="menuScripts/sidenav.js"></script>
+        <script src="menuScripts/submenu.js"></script>
     </head>
 
     <body>
 
-        <d id="turn"></d>
-        <d id="notification"></d>
-        <p id="blue" style="color: blue">Blue's points: <p id="bluepoints">0</p></p>
-        <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <ul>
+                <li class="submenu">
+                    <a href="#">Play against AI</a>
+                    <ul class="dropdown">
+                        <li >
+                            <a href="#">Easy (not supported yet)</a>
+                        </li>
+                        <li>
+                            <a href="#">Medium (not supported yet)</a>
+                        </li>
+                        <li>
+                            <a href="#">Hard (not supported yet)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="submenu">
+                    <a href="#">Help</a>
+                    <ul class="dropdown">
+                        <li>
+                            <a target="_blank" href="https://books.google.fi/books?id=-R3vDQAAQBAJ&printsec=frontcover&dq=xoliba&hl=fi&sa=X&ved=0ahUKEwjpmOfLjKnUAhWCOSwKHWUyC5YQ6AEIJzAA#v=onepage&q=xoliba&f=true">Manual (in finnish)</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-        <canvas id="gameboard"></canvas>
+        <div id="left">
+
+            <button id="Play">Play</button>
+
+            <button id="MenuButton" onclick="openNav()">Menu</button>
+
+            <div id="turn"></div>
+            <div id="notification"></div>
+            <p id="blue" style="color: blue">Blue's points: <p id="bluepoints">0</p></p>
+
+        </div>
+
+        <div id="gamecontainer">
+            <canvas id="gameboard"></canvas>
+        </div>
+
+        <div id="right">
+            <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
+        </div>
 
         <script src="scripts/bundle.js"></script>
     </body>

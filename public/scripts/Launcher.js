@@ -16,5 +16,17 @@ drawTable(app.stage);
 app.renderer.render(app.stage);
 app.renderer.backgroundColor = 0xE5E3DF;
 
+
 var game = new Game(app);
+
+function startNewGame(){
+    var game = new Game(app);
+}
+
+var button = document.getElementById("Play");
+if(button.addEventListener){
+    button.addEventListener("click", function(){ var game = new Game(app); }, false);
+} else if (button.attachEvent){
+    button.attachEvent("onclick", function(){ var game = new Game(app); });
+}
 //game.start(); ?

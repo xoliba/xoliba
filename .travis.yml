@@ -7,7 +7,7 @@ dist: trusty
 before_install: npm install mocha
 
 after_success:
-    - ./node_modules/.bin/nyc report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov
+    - ./node_modules/.bin/codecov 
 
 before_script:
     - "export DISPLAY=:99.0"

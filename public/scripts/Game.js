@@ -12,29 +12,46 @@ let turnHandler;
 let turnCounter
 let roundskipped;
 let validate;
+let playerColor;
 
 class Game {
     constructor(app) {
+        this.socket = new AiSocket(this);
+     /*   if(result) {
+            this.playerColor = 1            //this.socket.sendColor(result); tms.
+        } else {
+            this.playerColor = -1;
+            //this.socket.sendColor(result);
+        }*/
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
         this.redPoints = 0;
         this.bluePoints = 0;
-        this.socket = new AiSocket(this);
         this.turnHandler.board = this.board;
-        this.turn = -1;
+        this.turn = this.board.startingTurn();
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.validate = new Validations();
+        if (this.turn === -1) {
+        this.turnIndicator("blue", "BLUES");
+    } else {
+            this.turn = -1;
+            setTimeout(() => { this.changeTurn(); }, 1000);
+        }
     }
 
     changeTurn() {
         if (this.turn === 1) {
-            this.turn = -1;
+            this.turn *= -1;
+            this.turnIndicator("blue", "BLUES");
             this.checkIfRoundEnds();
         } else if (this.turn === -1) {
-            this.turn = 1;
+            this.turn *= -1;
+            this.turnIndicator("red", "REDS");
             this.checkIfRoundEnds();
-            this.socket.sendTable(this.board.gameboardTo2dArray());   
+
+            this.socket.sendTable(this.board.gameboardTo2dArray());
+            
         }
     }
 
@@ -71,6 +88,7 @@ class Game {
             console.log("turncounter: " + this.turnCounter);
             this.turnCounter++;
         }
+        console.log(this.turnCounter);
     }
 
     updatePoints(){
@@ -107,7 +125,7 @@ class Game {
         current += points;
         element.innerHTML = current;
         alert("Red wins the round! " + points + " points awarded!");
-        if (current > 50){
+        if (current >= 50){
             element.style.fontSize = "x-large";
             element.style.color = "GoldenRod";
             element.innerHTML += " WINNER";
@@ -140,10 +158,12 @@ class Game {
     this.board.generateStartingBoard();
 }
 
+turnIndicator(color, turn) {
+        var turnTeller = document.getElementById("turn");
+        turnTeller.style.color = color;
+        turnTeller.innerHTML = "It's " + turn + " turn!";
+    }
 
-    /*get turn() {
-        return this.turn;
-    }*/
 }
 
 

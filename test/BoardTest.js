@@ -1,7 +1,7 @@
 let assert = require('assert');
 //var BoardClass = require('../public/scripts/Board.js');
 import { Board } from '../public/scripts/Board.js';
-import { MockTurnHandler } from './mock/MockTurnHandler.js';
+import { TurnHandler } from '../public/scripts/TurnHandler.js';
 import * as PIXI from 'pixi.js';
 
 describe('Board', () => {
@@ -10,7 +10,7 @@ describe('Board', () => {
 
     beforeEach(() => {
         //board = new BoardClass.Board();
-        board = new Board(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}), new MockTurnHandler());
+        board = new Board(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}), td.object(['TurnHandler']));
     });
 
 
@@ -76,5 +76,5 @@ describe('Board', () => {
     it.skip('Hitting stones work', function() {
         //TODO
     });
-
+    
 });
