@@ -72,6 +72,7 @@ class Game {
         } else {
             this.turnCounter++;
         }
+        console.log(this.turnCounter);
     }
 
     updatePoints(){
