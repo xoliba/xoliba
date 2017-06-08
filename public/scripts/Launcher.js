@@ -17,17 +17,36 @@ drawTable(app.stage);
 app.renderer.render(app.stage);
 app.renderer.backgroundColor = 0xE5E3DF;
 
-
 var game = new Game(app);
 
-function startNewGame(){
-    var game = new Game(app);
+var blueButton = document.getElementById("playAsBlue");
+var redButton = document.getElementById("playAsRed");
+
+if(blueButton.addEventListener){
+    blueButton.addEventListener("click",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            var game = new Game(app, -1, score);
+        } , false);
+} else if (blueButton.attachEvent){
+    blueButton.attachEvent("onclick",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            var game = new Game(app, -1, score);
+        });
 }
 
-var button = document.getElementById("Play");
-if(button.addEventListener){
-    button.addEventListener("click", function(){ var game = new Game(app); }, false);
-} else if (button.attachEvent){
-    button.attachEvent("onclick", function(){ var game = new Game(app); });
+if(redButton.addEventListener){
+    redButton.addEventListener("click",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            var game = new Game(app, 1, score);
+        } , false);
+} else if (redButton.attachEvent){
+    redButton.attachEvent("onclick",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            var game = new Game(app, 1, score);
+        });
 }
 //game.start(); ?

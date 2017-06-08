@@ -166,3 +166,42 @@ button {
         height: 5%;
     }
 }
+
+#newGamePopUp {
+    display: none;
+    width: 40vw;
+    height: 50vh;
+    top: 35vh;
+    left: 30vw;
+    position: absolute;
+    background-color: green;
+}
+
+#limit {
+    margin-top: 1vh;
+    padding-left: 5vw;
+    font-size: 3vhS
+    height: 3vh;
+    float: left
+}
+
+#scorelimitinput {
+    margin-top: 1vh;
+    margin-left: 2vh;
+    height: 3vh;
+    width: 10vw;
+}
+
+#playAsBlue {
+    top: 50%;
+    left: 10%;
+    width: 10vw;
+    font-size: 1vw;
+}
+
+#playAsRed {
+    top: 50%;
+    left: 60%;
+    width: 10vw;
+    font-size: 1vw;
+}

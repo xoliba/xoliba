@@ -15,7 +15,8 @@ let validate;
 let playerColor;
 
 class Game {
-    constructor(app) {
+    constructor(app, playerColor, scoreLimit) {
+        console.log(playerColor, scoreLimit);
         this.socket = new AiSocket(this);
      /*   if(result) {
             this.playerColor = 1            //this.socket.sendColor(result); tms.
@@ -51,7 +52,7 @@ class Game {
             this.checkIfRoundEnds();
 
             this.socket.sendTable(this.board.gameboardTo2dArray());
-            
+
         }
     }
 
@@ -76,7 +77,7 @@ class Game {
             this.updatePoints();
         } else if(availableMoves && this.turn === whoSkipped) {
             this.roundskipped = 0;
-            
+
         }
     }
 

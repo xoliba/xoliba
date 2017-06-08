@@ -8,6 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="menuScripts/sidenav.js"></script>
         <script src="menuScripts/submenu.js"></script>
+        <script src="menuScripts/newgamepopup.js"></script>
     </head>
 
     <body>
@@ -42,7 +43,7 @@
 
         <div id="left">
 
-            <button id="Play">Play</button>
+            <button id="Play" onclick="openNewGamePopUp()">Play</button>
 
             <button id="MenuButton" onclick="openNav()">Menu</button>
 
@@ -58,6 +59,13 @@
 
         <div id="right">
             <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
+        </div>
+
+        <div id="newGamePopUp">
+            <p id="limit">Score Limit: </p>
+            <input type="number" id="scorelimit" value="50" id="scorelimitinput">
+            <button type="button" id="playAsBlue">Play as Blue</button>
+            <button type="button" id="playAsRed">Play as Red</button>
         </div>
 
         <script src="scripts/bundle.js"></script>
