@@ -8,8 +8,8 @@ class AiSocket {
     constructor(game) {
         //this.game = game;
 
-        //const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
-        const server = 'ws://localhost:4567/ai';
+        const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
+        //const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
 
