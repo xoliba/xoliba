@@ -42,17 +42,18 @@ class AiSocket {
 
     }
 
-    sendTable(table) {
-        /*
+    sendTable(table, aiColor) {
         let msg = {
             type: "message",
-            table: table
+            board: table,
+            color: aiColor,
+            start: null,
+            target: null,
+            didMove: true
         }
+        console.log("HALOO");
         aisocket.send(JSON.stringify(msg));
-        */
-        aisocket.send(JSON.stringify(table));
     }
-
 }  
 
 export { AiSocket };

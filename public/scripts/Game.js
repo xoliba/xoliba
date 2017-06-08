@@ -19,8 +19,8 @@ class Game {
     constructor(app, playerColor, scoreLimit) {
         console.log(playerColor, scoreLimit);
         this.socket = new AiSocket(this);
-        this.playerColor = color;
-        this.scoreLimit = score;
+        this.playerColor = playerColor;
+        this.scoreLimit = scoreLimit;
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
         this.redPoints = 0;
@@ -39,18 +39,13 @@ class Game {
     }
 
     changeTurn() {
-        if (this.turn === 1) {
-            this.turn *= -1;
-            this.turnIndicator("blue", "BLUES");
-            this.checkIfRoundEnds();
-        } else if (this.turn === -1) {
-            this.turn *= -1;
-            this.turnIndicator("red", "REDS");
-            this.checkIfRoundEnds();
+        this.checkIfRoundEnds();
 
-            this.socket.sendTable(this.board.gameboardTo2dArray());
-
+        if (this.turn === -1) {
+            this.socket.sendTable(this.board.gameboardTo2dArray(), this.turn);
         }
+
+        this.turn *= -1;
     }
 
     aiTurn(didMove, start, target, corners) {
@@ -58,11 +53,11 @@ class Game {
     }
 
     checkIfRoundEnds() {
-        let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray());
+        let availableMoves = this.validate.isMovesAvailable(-1 * this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 10) {
-             alert("30 rounds without hits, round ended!");
-             this.updatePoints();
-             return;
+            alert("10 rounds without hits, round ended!");
+            this.updatePoints();
+            return;
         }
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
