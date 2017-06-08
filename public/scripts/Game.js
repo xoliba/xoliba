@@ -152,9 +152,9 @@ class Game {
 }
 
 turnIndicator(color, turn) {
-        var turnTeller = document.getElementById("turn");
+        /*var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
-        turnTeller.innerHTML = "It's " + turn + " turn!";
+        turnTeller.innerHTML = "It's " + turn + " turn!";*/
     }
 
 }
