@@ -56,7 +56,7 @@ class TurnHandler {
     }
 
     parseFirstClick(stone) {
-        //if (this.game.turn === stone.value) {
+        //if (this.game.playerColor === stone.value && this.game.playerColor === this.game.turn) {
           if (this.game.turn === -1 && stone.value === -1) {     
             this.firstClicked = stone;
             stone.choose();

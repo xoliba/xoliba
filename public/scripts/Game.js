@@ -15,15 +15,14 @@ let validate;
 let playerColor;
 
 class Game {
-    constructor(app, result) {
+    constructor(app) {
         this.socket = new AiSocket(this);
-        if(result) {
-            this.playerColor = 1;
-            //this.socket.sendColor(result); tms.
+     /*   if(result) {
+            this.playerColor = 1            //this.socket.sendColor(result); tms.
         } else {
             this.playerColor = -1;
             //this.socket.sendColor(result);
-        }
+        }*/
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
         this.redPoints = 0;
@@ -42,11 +41,11 @@ class Game {
     }
 
     changeTurn() {
-        if (this.turn === this.playerColor) {
+        if (this.turn === 1) {
             this.turn *= -1;
             this.turnIndicator("blue", "BLUES");
             this.checkIfRoundEnds();
-        } else if (this.turn === this.playerColor) {
+        } else if (this.turn === -1) {
             this.turn *= -1;
             this.turnIndicator("red", "REDS");
             this.checkIfRoundEnds();
@@ -158,9 +157,9 @@ class Game {
 }
 
 turnIndicator(color, turn) {
-        /*var turnTeller = document.getElementById("turn");
+        var turnTeller = document.getElementById("turn");
         turnTeller.style.color = color;
-        turnTeller.innerHTML = "It's " + turn + " turn!";*/
+        turnTeller.innerHTML = "It's " + turn + " turn!";
     }
 
 }
