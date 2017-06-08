@@ -10,6 +10,8 @@ let app;
 class Board {
 
     constructor(app, turnHandler) {
+
+        this.stonesList = new Array(45);
         this.actions = new BoardActions();
         this.turnHandler = turnHandler;
         this.app = app;
@@ -67,7 +69,6 @@ class Board {
         let reds = 17;
         let blues = 17;
         let whites = 11;
-        this.stonesList = new Array(reds + blues + whites);
         let n = 0;
 
         for (let i=0; i < 7; i++) {
