@@ -76,5 +76,5 @@ describe('Board', () => {
     it.skip('Hitting stones work', function() {
         //TODO
     });
-
+    
 });
