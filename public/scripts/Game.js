@@ -13,17 +13,14 @@ let turnCounter
 let roundskipped;
 let validate;
 let playerColor;
+let scoreLimit;
 
 class Game {
     constructor(app, playerColor, scoreLimit) {
         console.log(playerColor, scoreLimit);
         this.socket = new AiSocket(this);
-     /*   if(result) {
-            this.playerColor = 1            //this.socket.sendColor(result); tms.
-        } else {
-            this.playerColor = -1;
-            //this.socket.sendColor(result);
-        }*/
+        this.playerColor = color;
+        this.scoreLimit = score;
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
         this.redPoints = 0;
@@ -124,7 +121,7 @@ class Game {
         current += points;
         element.innerHTML = current;
         alert("Red wins the round! " + points + " points awarded!");
-        if (current >= 50){
+        if (current >= this.scoreLimit){
             element.style.fontSize = "x-large";
             element.style.color = "GoldenRod";
             element.innerHTML += " WINNER";
@@ -141,7 +138,7 @@ class Game {
         current += points;
         element.innerHTML = current;
         alert("Blue Wins! " + points + " points awarded!");
-        if (current > 50){
+        if (current > this.scoreLimit){
             element.style.fontSize = "x-large";
             element.style.color = "GoldenRod";
             element.innerHTML += " WINNER";
