@@ -14,6 +14,7 @@ let roundskipped;
 let validate;
 let playerColor;
 let scoreLimit;
+let whoSkipped;
 
 class Game {
     constructor(app, playerColor, scoreLimit) {
@@ -30,6 +31,7 @@ class Game {
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.validate = new Validations();
+        this.whoSkipped = 0;
         if (this.turn === -1) {
         this.turnIndicator("blue", "BLUES");
     } else {
@@ -39,13 +41,13 @@ class Game {
     }
 
     changeTurn() {
+        this.turn *= -1;
         this.checkIfRoundEnds();
 
-        if (this.turn === -1) {
+        //if it is AIs turn now
+        if (this.turn === 1) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.turn);
         }
-
-        this.turn *= -1;
     }
 
     aiTurn(didMove, start, target, corners) {
@@ -53,7 +55,7 @@ class Game {
     }
 
     checkIfRoundEnds() {
-        let availableMoves = this.validate.isMovesAvailable(-1 * this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
+        let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 10) {
             alert("10 rounds without hits, round ended!");
             this.updatePoints();
@@ -61,11 +63,13 @@ class Game {
         }
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
-            var whoSkipped = this.turn;
-            alert("No moves available, skipping turn!");
-            this.changeTurn();
+            this.whoSkipped = this.turn;
+            let c = this.turn === 1 ? "red" : "blue";
+            alert("No moves available, skipping turn of " + c + "!");
+            this.changeTurn(); //is it wise to call a method that calls this method?! Recursion?
         } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");
+            this.whoSkipped = 0;
             this.updatePoints();
         } else if(availableMoves && this.turn === whoSkipped) {
             this.roundskipped = 0;
