@@ -40,16 +40,24 @@
             </ul>
         </div>
 
-        <button>Play</button>
+        <div id="left">
 
-        <button id="MenuButton" onclick="openNav()">Open Sidenav</button>
+            <button id="Play">Play</button>
 
-        <d id="turn"></d>
-        <d id="notification"></d>
-        <p id="blue" style="color: blue">Blue's points: <p id="bluepoints">0</p></p>
-        <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
+            <button id="MenuButton" onclick="openNav()">Menu</button>
+
+            <div id="turn"></div>
+            <div id="notification"></div>
+            <p id="blue" style="color: blue">Blue's points: <p id="bluepoints">0</p></p>
+
+        </div>
 
         <canvas id="gameboard"></canvas>
+
+        <div id="right">
+            <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
+        </div>
+
 
         <script src="scripts/bundle.js"></script>
     </body>

@@ -1,6 +1,11 @@
+* {
+    margin: 0;
+}
+
+
+
 body {
   background-color: #E5E3DF;
-  font-size: 20;
 }
 
 .sidenav {
@@ -63,21 +68,51 @@ ul {
     padding: 0;
 }
 
+p {
+    text-align: center;
+    font-size: 3vw;
+    display: block;
+    vertical-align: middle;
+}
+
 button {
-    display: inline-block;
+    position: absolute;
+    display: block;
     background-color: darkgrey;
     color: white;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-right: 20px;
-    padding-bottom: 10px;
+    text-align: center;
+    font-size: 3vh;
+    height: 7%;
+    width: 15%;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+#MenuButton {
+    top: 50%;
+    left: 5%;
+}
+
+#Play {
+    top: 60%;
+    left: 5%;
+}
+
+#left {
+    display: table;
+    width: 25%;
+    height: 100vh;
+    float: left;
 }
 
 #gameboard {
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin:auto;
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+
+#right {
+    display: table;
+    height: 100vh;
+    width: 25%;
 }
