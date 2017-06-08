@@ -55,7 +55,7 @@ class Game {
     }
 
     checkIfRoundEnds() {
-        let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray());
+        let availableMoves = this.validate.isMovesAvailable(-1 * this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 10) {
              alert("10 rounds without hits, round ended!");
              this.updatePoints();
