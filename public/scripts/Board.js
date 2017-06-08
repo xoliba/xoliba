@@ -15,7 +15,7 @@ class Board {
         this.actions = new BoardActions();
         this.turnHandler = turnHandler;
         this.app = app;
-        return this.generateStartingBoard(app);
+        this.generateStartingBoard(app);
     }
 
     gameboardTo2dArray() {
@@ -91,10 +91,9 @@ class Board {
                 }
             }
         }
-        return this.startingTurn;
     }
 
-    get startingTurn() {
+    startingTurn() {
         let table = this.gameboardTo2dArray();
         let sTurn = table[0][1] + table[0][5] + table[1][0] + table[1][6]
             + table[5][0] + table[5][6] + table[6][1] + table[6][5];
@@ -107,12 +106,19 @@ class Board {
                 sTurn += table[6][i];
             }
         }
-        if(sTurn = 0) {
-            if(Math.floor(Math.random()*2)) return -1;
+        if(sTurn < 0) {
             return 1;
+        } else if (sTurn > 0) {
+            return -1;
+        } else {
+        if(sTurn === 0) {
+            if(Math.floor(Math.random()*2)) {
+                return -1;
+            } else {
+                return 1;
+            }
+         }
         }
-        if(sTurn < 0) return -1;
-        return 1;
     }
 
     findStone(x, y) {

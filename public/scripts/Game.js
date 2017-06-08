@@ -29,11 +29,16 @@ class Game {
         this.redPoints = 0;
         this.bluePoints = 0;
         this.turnHandler.board = this.board;
-        this.turn = -1;
+        this.turn = this.board.startingTurn();
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.validate = new Validations();
+        if (this.turn === -1) {
         this.turnIndicator("blue", "BLUES");
+    } else {
+            this.turn = -1;
+            setTimeout(() => { this.changeTurn(); }, 1000);
+        }
     }
 
     changeTurn() {
@@ -45,7 +50,9 @@ class Game {
             this.turn *= -1;
             this.turnIndicator("red", "REDS");
             this.checkIfRoundEnds();
-            this.socket.sendTable(this.board.gameboardTo2dArray());   
+
+            this.socket.sendTable(this.board.gameboardTo2dArray());
+            
         }
     }
 
