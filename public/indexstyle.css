@@ -88,7 +88,7 @@ button {
     overflow-x: hidden;
 }
 
-@media screen and (orientation: landscape){
+@media screen and (min-aspect-ratio: 5/3){
 
     #MenuButton {
         top: 50%;
@@ -121,7 +121,7 @@ button {
 
 }
 
-@media screen and (orientation: portrait){
+@media screen and (max-aspect-ratio: 5/3){
     #left {
         width: 50%;
         height: 20%;
@@ -139,7 +139,7 @@ button {
     }
 
     #gameboard {
-        width: 90%;
+        height: 80vh;
         display: inline;
         vertical-align: bottom;
     }
