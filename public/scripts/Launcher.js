@@ -26,6 +26,7 @@ if(blueButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             var game = new Game(app, -1, score);
         } , false);
 } else if (blueButton.attachEvent){
@@ -33,6 +34,7 @@ if(blueButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+          for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             var game = new Game(app, -1, score);
         });
 }
@@ -42,6 +44,7 @@ if(redButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             var game = new Game(app, 1, score);
         } , false);
 } else if (redButton.attachEvent){
@@ -49,7 +52,7 @@ if(redButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             var game = new Game(app, 1, score);
         });
 }
-//game.start(); ?
