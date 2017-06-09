@@ -5,7 +5,7 @@ var aisocket;
 
 class AiSocket {
 
-    constructor(game) {
+    constructor(turnHandler) {
         const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
         //const server = 'ws://localhost:4567/ai';
 
@@ -14,7 +14,7 @@ class AiSocket {
         aisocket.onmessage = (event) => {
             let msg = JSON.parse(event.data);
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
-            game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
+            turnHandler.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
         };
 
         aisocket.onopen = function() {
@@ -36,7 +36,6 @@ class AiSocket {
                 console.log("ping");
             }
         }
-
     }
 
     sendTable(table, aiColor) {
@@ -52,7 +51,6 @@ class AiSocket {
         aisocket.send(JSON.stringify(msg));
         //aisocket.send(JSON.stringify(table));
     }
-
-}  
+}
 
 export { AiSocket };

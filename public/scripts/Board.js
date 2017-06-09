@@ -4,12 +4,15 @@ import { Stone } from './Stone.js';
 
 let stonesList;
 let actions;
+let turnHandler;
 
 class Board {
 
     constructor(app, turnHandler) {
         this.stonesList = new Array(45);
         this.actions = new BoardActions();
+        //this.turnHandler = new TurnHandler(false, this);
+        turnHandler.board = this;
         this.generateStartingBoard(app, turnHandler);
     }
 
