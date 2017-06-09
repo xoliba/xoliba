@@ -16,6 +16,7 @@ let playerColor;
 let scoreLimit;
 let whoSkipped;
 let aiColor;
+let surrender;
 
 class Game {
     constructor(app, playerColor, scoreLimit) {
@@ -29,14 +30,20 @@ class Game {
         this.redPoints = 0;
         this.bluePoints = 0;
         this.turnHandler.board = this.board;
-        this.turn = this.board.startingTurn();
+        this.turn = 0
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.validate = new Validations();
         this.whoSkipped = 0;
+        this.startFirstTurn();
+    }
+
+    startFirstTurn() {
+        this.turn = this.board.startingTurn();
         if (this.turn === this.playerColor) {
-        this.turnIndicator(this.turn);
-    } else {
+            this.turnIndicator(this.turn);
+        } else {
+            this.turnIndicator(this.turn);
             setTimeout(() => {
                 this.turn = this.playerColor;
                 this.changeTurn();
@@ -45,10 +52,11 @@ class Game {
     }
 
 
+
     changeTurn() {
         this.turn *= -1;
         this.checkIfRoundEnds();
-
+        this.turnIndicator(this.turn);
         //if it is AIs turn now
         if (this.turn === this.aiColor) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
