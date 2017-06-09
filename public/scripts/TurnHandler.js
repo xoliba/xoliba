@@ -21,7 +21,7 @@ var startStone;
 var targetStone;
 var stonesHit;
 
-
+ 
 class TurnHandler {
 
     constructor(board, game) {
@@ -29,7 +29,7 @@ class TurnHandler {
         this.game = game;
         this.validate = new Validations();
         this.actions = new BoardActions();
-        this.corners = [];
+        this.corners = []; 
         this.firstClicked = undefined;
         stoneX = 0;
         stoneY = 0;
@@ -56,8 +56,8 @@ class TurnHandler {
     }
 
     parseFirstClick(stone) {
-        //if (this.game.playerColor === stone.value && this.game.playerColor === this.game.turn) {
-          if (this.game.turn === -1 && stone.value === -1) {     
+        if (this.game.playerColor === stone.value && this.game.playerColor === this.game.turn) {
+        //  if (this.game.turn === -1 && stone.value === -1) {
             this.firstClicked = stone;
             stone.choose();
         } else {
@@ -120,8 +120,10 @@ class TurnHandler {
             } else {
                 this.game.updateTurnCounter(true);
             }
-        }
-        this.game.changeTurn();
+            this.game.changeTurn();
+            } else {
+                this.game.changeTurn();
+            }
     }
 
     

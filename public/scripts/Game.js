@@ -34,13 +34,14 @@ class Game {
         this.roundskipped = 0;
         this.validate = new Validations();
         this.whoSkipped = 0;
-        if (this.turn === -1) {
-        this.turnIndicator("blue", "BLUES");
+        if (this.turn === this.playerColor) {
+        this.turnIndicator(this.turn);
     } else {
-            this.turn = -1;
+            this.turn = this.playerColor;
             setTimeout(() => { this.changeTurn(); }, 1000);
         }
     }
+
 
     changeTurn() {
         this.turn *= -1;
@@ -48,7 +49,7 @@ class Game {
 
         //if it is AIs turn now
         if (this.turn === this.aiColor) {
-            this.socket.sendTable(this.board.gameboardTo2dArray(), this.turn);
+            this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
         }
     }
 
@@ -66,9 +67,9 @@ class Game {
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
             this.whoSkipped = this.turn;
-            let c = this.turn === 1 ? "red" : "blue";
+      //      let c = this.turn === 1 ? "red" : "blue";
             alert("No moves available, skipping turn of " + c + "!");
-            this.changeTurn(); //is it wise to call a method that calls this method?! Recursion?
+        //    this.changeTurn(); //is it wise to call a method that calls this method?! Recursion?
         } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");
             this.whoSkipped = 0;
@@ -155,10 +156,19 @@ class Game {
     this.board.generateStartingBoard();
 }
 
-turnIndicator(color, turn) {
+turnIndicator(turn) {
+        var boardColor;
+        var playerTurn;
+        if (color === 1) {
+            boardColor = "red";
+            playerTurn = "REDS";
+        } else {
+            boardColor = "blue";
+            playerTurn = "REDS";
+        }
         var turnTeller = document.getElementById("turn");
-        turnTeller.style.color = color;
-        turnTeller.innerHTML = "It's " + turn + " turn!";
+        turnTeller.style.color = boardColor;
+        turnTeller.innerHTML = "It's " + playerTurn + " turn!";
     }
 
 }
