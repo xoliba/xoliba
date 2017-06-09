@@ -37,8 +37,10 @@ class Game {
         if (this.turn === this.playerColor) {
         this.turnIndicator(this.turn);
     } else {
-            this.turn = this.playerColor;
-            setTimeout(() => { this.changeTurn(); }, 1000);
+            setTimeout(() => {
+                this.turn = this.playerColor;
+                this.changeTurn();
+            }, 1000);
         }
     }
 
@@ -69,7 +71,7 @@ class Game {
             this.whoSkipped = this.turn;
             let c = this.turn === 1 ? "red" : "blue";
             alert("No moves available, skipping turn of " + c + "!");
-            this.turn *= -1; //is it wise to call a method that calls this method?! Recursion?
+            this.turn *= -1;
         } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");
             this.whoSkipped = 0;
@@ -124,12 +126,8 @@ class Game {
         element.innerHTML = current;
         alert("Red wins the round! " + points + " points awarded!");
         if (current >= this.scoreLimit){
-            element.style.fontSize = "x-large";
-            element.style.color = "GoldenRod";
             element.innerHTML += " WINNER";
             alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
-            element.style.fontSize = "medium";
-            element.style.color = "black";
             element.innerHTML = 0;
             document.getElementById("bluepoints").innerHTML = 0;
         }
@@ -141,12 +139,8 @@ class Game {
         element.innerHTML = current;
         alert("Blue Wins! " + points + " points awarded!");
         if (current > this.scoreLimit){
-            element.style.fontSize = "x-large";
-            element.style.color = "GoldenRod";
             element.innerHTML += " WINNER";
             alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
-            element.style.fontSize = "medium";
-            element.style.color = "black";
             element.innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
         }
@@ -159,12 +153,12 @@ class Game {
 turnIndicator(turn) {
         var boardColor;
         var playerTurn;
-        if (color === 1) {
+        if (turn === 1) {
             boardColor = "red";
             playerTurn = "REDS";
         } else {
             boardColor = "blue";
-            playerTurn = "REDS";
+            playerTurn = "BLUES";
         }
         var turnTeller = document.getElementById("turn");
         turnTeller.style.color = boardColor;
