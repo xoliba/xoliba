@@ -26,14 +26,14 @@ if(blueButton.addEventListener){
     blueButton.addEventListener("click",
         function(){
             var score = document.getElementById("scorelimit").value;
-            document.getElementById("newGamePopUp").style.visibility = "hidden";
+            document.getElementById("newGamePopUp").style.display = "none";
             var game = new Game(app, -1, score);
         } , false);
 } else if (blueButton.attachEvent){
     blueButton.attachEvent("onclick",
         function(){
             var score = document.getElementById("scorelimit").value;
-            document.getElementById("newGamePopUp").style.visibility = "hidden";
+            document.getElementById("newGamePopUp").style.display = "none";
             var game = new Game(app, -1, score);
         });
 }
@@ -42,14 +42,14 @@ if(redButton.addEventListener){
     redButton.addEventListener("click",
         function(){
             var score = document.getElementById("scorelimit").value;
-            document.getElementById("newGamePopUp").style.visibility = "hidden";
+            document.getElementById("newGamePopUp").style.display = "none";
             var game = new Game(app, 1, score);
         } , false);
 } else if (redButton.attachEvent){
     redButton.attachEvent("onclick",
         function(){
             var score = document.getElementById("scorelimit").value;
-            document.getElementById("newGamePopUp").style.visibility = "hidden";
+            document.getElementById("newGamePopUp").style.display = "none";
             var game = new Game(app, 1, score);
         });
 }
