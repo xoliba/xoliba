@@ -67,9 +67,9 @@ class Game {
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
             this.whoSkipped = this.turn;
-      //      let c = this.turn === 1 ? "red" : "blue";
+            let c = this.turn === 1 ? "red" : "blue";
             alert("No moves available, skipping turn of " + c + "!");
-        //    this.changeTurn(); //is it wise to call a method that calls this method?! Recursion?
+            this.turn *= -1; //is it wise to call a method that calls this method?! Recursion?
         } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");
             this.whoSkipped = 0;
