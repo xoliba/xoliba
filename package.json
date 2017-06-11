@@ -4,7 +4,8 @@
   "description": "Online version for game Xoliba",
   "main": "index.js",
   "engines": {
-    "node": "6.10.2"
+    "node": "6.10.3",
+    "npm": "3.10.10"
   },
   "dependencies": {
     "ejs": "2.5.6",
