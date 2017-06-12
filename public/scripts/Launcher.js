@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import { Game } from './Game';
 
 var app = new PIXI.Application(scale(), scale(), {view: document.getElementById("gameboard")});
+var game;
 
 drawTable(app.stage);
 
@@ -17,16 +18,54 @@ app.renderer.render(app.stage);
 app.renderer.backgroundColor = 0xE5E3DF;
 
 
-var game = new Game(app);
+var blueButton = document.getElementById("playAsBlue");
+var redButton = document.getElementById("playAsRed");
+var undoButton = document.getElementById("undo");
 
-function startNewGame(){
-    var game = new Game(app);
+if(blueButton.addEventListener){
+    blueButton.addEventListener("click",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            document.getElementById("newGamePopUp").style.display = "none";
+            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            game = new Game(app, -1, score);
+        } , false);
+} else if (blueButton.attachEvent){
+    blueButton.attachEvent("onclick",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            document.getElementById("newGamePopUp").style.display = "none";
+          for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            game = new Game(app, -1, score);
+        });
 }
 
-var button = document.getElementById("Play");
-if(button.addEventListener){
-    button.addEventListener("click", function(){ var game = new Game(app); }, false);
-} else if (button.attachEvent){
-    button.attachEvent("onclick", function(){ var game = new Game(app); });
+if(redButton.addEventListener){
+    redButton.addEventListener("click",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            document.getElementById("newGamePopUp").style.display = "none";
+            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            game = new Game(app, 1, score);
+        } , false);
+} else if (redButton.attachEvent){
+    redButton.attachEvent("onclick",
+        function(){
+            var score = document.getElementById("scorelimit").value;
+            document.getElementById("newGamePopUp").style.display = "none";
+            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            game = new Game(app, 1, score);
+        });
 }
-//game.start(); ?
+
+if(undoButton.addEventListener){
+    undoButton.addEventListener("click",
+        function(){
+            game.undo();
+        } , false);
+} else if (undoButton.attachEvent){
+    undoButton.attachEvent("onclick",
+        function(){
+            game.undo();
+        });
+}

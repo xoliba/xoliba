@@ -6,8 +6,8 @@ var aisocket;
 class AiSocket {
 
     constructor(turnHandler) {
-        const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
-        //const server = 'ws://localhost:4567/ai';
+        //const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
+        const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
 
@@ -49,8 +49,8 @@ class AiSocket {
         }
         console.log("HALOO");
         aisocket.send(JSON.stringify(msg));
-        //aisocket.send(JSON.stringify(table));
     }
 }
+
 
 export { AiSocket };

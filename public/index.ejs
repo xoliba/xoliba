@@ -8,6 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="menuScripts/sidenav.js"></script>
         <script src="menuScripts/submenu.js"></script>
+        <script src="menuScripts/newgamepopup.js"></script>
     </head>
 
     <body>
@@ -22,7 +23,7 @@
                             <a href="#">Easy (not supported yet)</a>
                         </li>
                         <li>
-                            <a href="#">Medium (not supported yet)</a>
+                            <a href="javascript:void(0)" onclick="openNewGamePopUp()">Medium</a>
                         </li>
                         <li>
                             <a href="#">Hard (not supported yet)</a>
@@ -37,18 +38,28 @@
                         </li>
                     </ul>
                 </li>
+                <li class="submenu">
+                    <a href="#">Feedback</a>
+                    <ul class="dropdown">
+                        <li>
+                            <a target="_blank" href="https://docs.google.com/forms/d/1cqPo4kzA5V-KKDrwVhaB6HXkPYYZv589-42eRoKyNlY/prefill">Give us feedback!</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
         <div id="left">
 
-            <button id="Play">Play</button>
+            <button id="Play" onclick="openNewGamePopUp()">Play</button>
 
             <button id="MenuButton" onclick="openNav()">Menu</button>
 
             <div id="turn"></div>
             <div id="notification"></div>
             <p id="blue" style="color: blue">Blue's points: <p id="bluepoints">0</p></p>
+
+            <button type="button" id="undo">Undo</button>
 
         </div>
 
@@ -58,6 +69,15 @@
 
         <div id="right">
             <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
+        </div>
+
+        <div id="newGamePopUp">
+            <div id="input">
+                <p id="limit">Score Limit: </p>
+                <input type="number" id="scorelimit" value="50">
+            </div>
+            <button type="button" id="playAsBlue">Play as Blue</button>
+            <button type="button" id="playAsRed">Play as Red</button>
         </div>
 
         <script src="scripts/bundle.js"></script>
