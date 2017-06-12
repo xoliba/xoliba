@@ -3,19 +3,17 @@ import { BoardActions } from './logic/BoardActions.js';
 import { Stone } from './Stone.js';
 
 let stonesList;
-let turnHandler;
 let actions;
-let app;
+let turnHandler;
 
 class Board {
 
     constructor(app, turnHandler) {
-
         this.stonesList = new Array(45);
         this.actions = new BoardActions();
-        this.turnHandler = turnHandler;
-        this.app = app;
-        this.generateStartingBoard(app);
+        //this.turnHandler = new TurnHandler(false, this);
+        turnHandler.board = this;
+        this.generateStartingBoard(app, turnHandler);
     }
 
     gameboardTo2dArray() {
@@ -65,7 +63,7 @@ class Board {
     }
 
 
-    generateStartingBoard() {
+    generateStartingBoard(app, turnHandler) {
         let reds = 17;
         let blues = 17;
         let whites = 11;
@@ -76,15 +74,15 @@ class Board {
                 if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     let value = Math.floor(Math.random() * (reds + blues + whites) + 1);
                     if(value <= reds){
-                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, this.app, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, app, turnHandler);
                         else this.stonesList[n++].value = 1;
                         reds--;
                     } else if (value <= reds + blues){
-                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(-1, i, j, this.app, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(-1, i, j, app, turnHandler);
                         else this.stonesList[n++].value = -1;
                         blues--;
                     } else {
-                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(0, i, j, this.app, this.turnHandler);
+                        if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(0, i, j, app, turnHandler);
                         else this.stonesList[n++].value = 0;
                         whites--;
                     }

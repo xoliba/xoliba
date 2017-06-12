@@ -8,6 +8,8 @@ body {
   background-color: #E5E3DF;
 }
 
+/* This creates the sidenav menu*/
+
 .sidenav {
     height: 100%;
     width: 0;
@@ -68,6 +70,8 @@ ul {
     padding: 0;
 }
 
+/* sidenav ends here */
+
 p {
     text-align: center;
     font-size: 3vw;
@@ -82,13 +86,69 @@ button {
     color: white;
     text-align: center;
     font-size: 3vh;
-    height: 7%;
-    width: 15%;
+    width: 20%;
+    height: 5%;
     white-space: nowrap;
     overflow-x: hidden;
 }
 
-@media screen and (orientation: landscape){
+/* Pop up that asks the color player will play as and the scorelimit. */
+
+#newGamePopUp {
+    display: none;
+    width: 30vw;
+    height: 15vh;
+    top: 40vh;
+    left: 35vw;
+    position: absolute;
+    border-radius: 20px;
+    border: 2px solid black;
+    background-color: #e5e5e5;
+    box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.7);
+    z-index: 10;
+}
+
+#input {
+    margin-left: 10%;
+    margin-top: 2%;
+    background-color: blue;
+    width: 80%;
+}
+
+#limit {
+    margin-left: 10%;
+    font-size: 4vh;
+    height: 3vh;
+    float: left
+}
+
+#scorelimit {
+    margin-right: 4vh;
+    width: 30%;;
+    height: 3vh;
+    font-size: 3vh;
+    float: right;
+}
+
+#playAsBlue {
+    top: 60%;
+    left: 15%;
+    width: 30%;
+    height: 20%;
+    font-size: 2vh;
+}
+
+#playAsRed {
+    top: 60%;
+    left: 55%;
+    width: 30%;
+    height: 20%;
+    font-size: 2vh;
+}
+
+/* For wide screens: */
+
+@media screen and (min-aspect-ratio: 5/3){
 
     #MenuButton {
         top: 50%;
@@ -121,7 +181,9 @@ button {
 
 }
 
-@media screen and (orientation: portrait){
+/* For narrow screen */
+
+@media screen and (max-aspect-ratio: 5/3){
     #left {
         width: 50%;
         height: 20%;
@@ -139,7 +201,7 @@ button {
     }
 
     #gameboard {
-        width: 90%;
+        height: 80vh;
         display: inline;
         vertical-align: bottom;
     }
@@ -153,16 +215,43 @@ button {
     }
 
     #MenuButton {
-        top: 15%;
+        top: 18%;
         left: 20%;
-        width: 20%;
-        height: 5%;
+        z-index: 10;
     }
 
     #Play {
-        top: 15%;
+        top: 18%;
         left: 60%;
-        width: 20%;
-        height: 5%;
+        z-index: 10;
+    }
+}
+
+/* For very narrow screens*/
+
+@media screen and (max-aspect-ratio: 4/5){
+    #gameboard {
+        width: 90%;
+        height: auto;
+    }
+
+    button {
+        top: 10%;
+        font-size: 5vw;
+        height: 8vw;
+    }
+}
+
+/* Better button positions for medium screens*/
+
+@media screen and (min-aspect-ratio: 3/2) {
+    #MenuButton {
+        top: 50%;
+        left: 5%;
+    }
+
+    #Play {
+        top: 60%;
+        left: 5%;
     }
 }

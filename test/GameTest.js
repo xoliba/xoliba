@@ -13,9 +13,9 @@ describe('Game', () => {
         game.socket = td.object('AiSocket');
     });
 
-    it('Ending turn works', function() {
+/*    it('Ending turn works', function() {
         game.changeTurn();
         console.log("HALOo" + game.redPoints + " " + game.bluePoints);
-    });
+    });*/
 
 });

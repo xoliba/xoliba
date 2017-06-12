@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,6 +20,7 @@ var stone;
 var startStone;
 var targetStone;
 var stonesHit;
+var whiteStoneClicked;
 
 
 class TurnHandler {
@@ -51,13 +52,13 @@ class TurnHandler {
             this.parseClickOnWhiteStone(stone);
         } else if (this.firstClicked === stone) {
             stone.unchoose();
-            this.firstClicked = undefined;      
+            this.firstClicked = undefined;
         }
     }
 
     parseFirstClick(stone) {
-        //if (this.game.playerColor === stone.value && this.game.playerColor === this.game.turn) {
-          if (this.game.turn === -1 && stone.value === -1) {     
+        if (this.game.playerColor === stone.value && this.game.playerColor === this.game.turn) {
+        //  if (this.game.turn === -1 && stone.value === -1) {
             this.firstClicked = stone;
             stone.choose();
         } else {
@@ -67,10 +68,11 @@ class TurnHandler {
 
     parseClickOnWhiteStone(stone) {
          if(this.validate.moveIsValid(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y, this.board.gameboardTo2dArray())) {
+             this.whiteStoneClicked = stone;
              this.board.swap(this.firstClicked, stone);
              this.corners.push(this.firstClicked);
          } else {
-             return false; 
+             return false;
          }
     }
 
@@ -85,7 +87,7 @@ class TurnHandler {
     parseClickOnThirdCorner(stone) {
         this.corners.push(stone);
         console.log(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
-        if (this.game.turn === stone.value && this.validate.checkIfTriangle(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y)) {   
+        if (this.game.turn === stone.value && this.validate.checkIfTriangle(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y)) {
             this.stonesHit = this.board.hitStones(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
             if (this.stonesHit === 1) {
                 this.game.updateTurnCounter(false);
@@ -125,10 +127,19 @@ class TurnHandler {
         }
     }
 
-    
-    
-    
+    undo() {
+        if(this.firstClicked === undefined || this.whiteStoneClicked === undefined) {
+            return;
+        }
+        this.board.swap(this.firstClicked, this.whiteStoneClicked);
+        this.whiteStoneClicked = undefined;
+        for(let i=this.corners.length-1; i>=0; i--) {
+            this.corners[i].unchoose();
+            this.corners.pop();
+        }
+        this.firstClicked = undefined;
+    }
+
 }
 
 export { TurnHandler };
-
