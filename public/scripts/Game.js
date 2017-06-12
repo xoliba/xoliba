@@ -44,7 +44,6 @@ class Game {
         if (this.turn === this.playerColor) {
             this.turnIndicator(this.turn);
         } else {
-            this.turnIndicator(this.turn);
             setTimeout(() => {
                 this.turn = this.playerColor;
                 this.changeTurn();
@@ -163,20 +162,8 @@ class Game {
     }
 
     turnIndicator(turn) {
-        var boardColor;
-        var playerTurn;
-        if (turn === 1) {
-            printLine("Its reds turn!");
-            boardColor = "red";
-            playerTurn = "REDS";
-        } else {
-            printLine("Its blues turn!");
-            boardColor = "blue";
-            playerTurn = "BLUES";
-        }
-        var turnTeller = document.getElementById("turn");
-        turnTeller.style.color = boardColor;
-        turnTeller.innerHTML = "It's " + playerTurn + " turn!";
+        if (turn === 1) printLine("Its reds turn!");
+        else printLine("Its blues turn!");
     }
 
     undo() {
