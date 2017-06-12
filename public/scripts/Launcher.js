@@ -21,6 +21,8 @@ app.renderer.backgroundColor = 0xE5E3DF;
 var blueButton = document.getElementById("playAsBlue");
 var redButton = document.getElementById("playAsRed");
 var undoButton = document.getElementById("undo");
+var surrenderButton = document.getElementById("Surrender");
+var continueButton = document.getElementById("Continue");
 
 if(blueButton.addEventListener){
     blueButton.addEventListener("click",
@@ -69,3 +71,26 @@ if(undoButton.addEventListener){
             game.undo();
         });
 }
+
+if(surrenderButton.addEventListener) {
+    surrenderButton.addEventListener("click",
+    function(){
+        game.playerSurrender(true);
+    }, false);
+    } else if (surrenderButton.attachEvent){
+        surrenderButton.attachEvent("onClick",
+        function(){
+            game.playerSurrender(true);
+        });
+    }
+    if(continueButton.addEventListener) {
+    surrenderButton.addEventListener("click",
+    function(){
+        game.playerSurrender(false);
+    }, false);
+    } else if (continueButton.attachEvent){
+        surrenderButton.attachEvent("onClick",
+        function(){
+            game.playerSurrender(false);
+        });
+    }

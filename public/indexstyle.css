@@ -159,6 +159,16 @@ button {
         top: 60%;
         left: 5%;
     }
+    
+    #Surrender {
+        top:70%;
+        left:5%;
+    }
+
+    #Continue {
+        top:80%;
+        left:5%
+    }
 
     #left {
         display: table;
