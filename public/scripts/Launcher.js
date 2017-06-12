@@ -15,7 +15,7 @@ drawTable(app.stage);
 
 // a bit less buggy version
 app.renderer.render(app.stage);
-app.renderer.backgroundColor = 0xE5E3DF;
+app.renderer.backgroundColor = 0xF8F8F8;
 
 
 var blueButton = document.getElementById("playAsBlue");
