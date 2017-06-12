@@ -8,7 +8,6 @@ let turn;
 let redPoints;
 let bluePoints;
 let socket;
-//let turnHandler;
 let turnCounter
 let roundskipped;
 let validate;
@@ -64,9 +63,9 @@ class Game {
         }
     }
 
-    aiTurn(didMove, start, target, corners) {
+    /*aiTurn(didMove, start, target, corners) {
         this.turnHandler.aiTurn(didMove, start, target, corners);
-    }
+    }*/
 
     checkIfRoundEnds() {
 
