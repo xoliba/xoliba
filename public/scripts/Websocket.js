@@ -15,7 +15,6 @@ class AiSocket {
         aisocket.onmessage = (event, turnHandler) => {
             let msg = JSON.parse(event.data);
             if (msg.type === "startRound") {
-                console.log("AI answered: " + msg.surrender);
                 this.game.aiSurrender(msg.surrender);
             } else {
                 console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)

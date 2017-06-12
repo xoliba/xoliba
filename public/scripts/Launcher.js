@@ -77,19 +77,19 @@ if(surrenderButton.addEventListener) {
     function(){
         game.playerSurrender(true);
     }, false);
-    } else if (surrenderButton.attachEvent){
+} else if (surrenderButton.attachEvent){
         surrenderButton.attachEvent("onClick",
         function(){
             game.playerSurrender(true);
         });
     }
-    if(continueButton.addEventListener) {
-    surrenderButton.addEventListener("click",
+if(continueButton.addEventListener) {
+    continueButton.addEventListener("click",
     function(){
         game.playerSurrender(false);
     }, false);
-    } else if (continueButton.attachEvent){
-        surrenderButton.attachEvent("onClick",
+} else if (continueButton.attachEvent){
+        continueButton.attachEvent("onClick",
         function(){
             game.playerSurrender(false);
         });

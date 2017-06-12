@@ -17,6 +17,7 @@ let whoSkipped;
 let aiColor;
 let playerHasAnsweredStartRound;
 let aiHasAnsweredStartRound;
+let isFirstTurn;
 
 class Game {
 
@@ -38,6 +39,7 @@ class Game {
         this.whoSkipped = 0;
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
+        this.isFirstTurn = true;
         setTimeout(() => {
                 this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
             }, 1000);
@@ -45,6 +47,7 @@ class Game {
     }
 
     startFirstTurn() {
+        this.isFirstTurn = false;
         if(this.playerHasAnsweredStartRound === false || this.aiHasAnsweredStartRound === false) {
             return;
         }
@@ -62,11 +65,15 @@ class Game {
         }
     }
     
-    playerSurrender(surrender) {        
+    playerSurrender(surrender) {
+        if(!this.isFirstTurn) {
+            return false;
+        }        
         if (surrender) {
             this.updateSurrenderPoints(this.playerColor);
-        } else {
-            if (this.aiHasAnsweredStartRound = true) {
+        } else {           
+            if (this.aiHasAnsweredStartRound === true) {
+                this.playerHasAnsweredStartRound = true;
                 this.startFirstTurn();
             } else {
                 this.playerHasAnsweredStartRound = true;
@@ -80,7 +87,8 @@ class Game {
         if (surrender) {
             this.updateSurrenderPoints(this.aiColor);
         } else {
-            if (this.playerHasAnsweredStartRound = true) {
+            if (this.playerHasAnsweredStartRound === true) {
+                this.aiHasAnsweredStartRound = true;
                 this.startFirstTurn();
             } else {
                 this.aiHasAnsweredStartRound = true;
@@ -195,6 +203,7 @@ class Game {
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.board.generateStartingBoard();
+        this.isFirstTurn = true;
     }
 
     updateSurrenderPoints(color) {
@@ -229,8 +238,11 @@ class Game {
             this.turnCounter = 0;
             this.roundskipped = 0;
             this.board.generateStartingBoard();
+            this.turn = 0;
             this.playerHasAnsweredStartRound = false;
             this.aiHasAnsweredStartRound = false;
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
+            this.isFirstTurn = true;
     }
 
     turnIndicator(turn) {
