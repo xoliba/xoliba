@@ -1,5 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
+new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery'
+});
 
 module.exports = {
   entry: "./public/scripts/Launcher.js",

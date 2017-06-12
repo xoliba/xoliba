@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <title>Xoliba</title>
         <link rel="stylesheet" type="text/css" href="indexstyle.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
         <script src="menuScripts/sidenav.js"></script>
         <script src="menuScripts/submenu.js"></script>
         <script src="menuScripts/newgamepopup.js"></script>
@@ -13,72 +13,17 @@
 
     <body>
 
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <ul>
-                <li class="submenu">
-                    <a href="#">Play against AI</a>
-                    <ul class="dropdown">
-                        <li >
-                            <a href="#">Easy (not supported yet)</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" onclick="openNewGamePopUp()">Medium</a>
-                        </li>
-                        <li>
-                            <a href="#">Hard (not supported yet)</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#">Help</a>
-                    <ul class="dropdown">
-                        <li>
-                            <a target="_blank" href="https://books.google.fi/books?id=-R3vDQAAQBAJ&printsec=frontcover&dq=xoliba&hl=fi&sa=X&ved=0ahUKEwjpmOfLjKnUAhWCOSwKHWUyC5YQ6AEIJzAA#v=onepage&q=xoliba&f=true">Manual (in finnish)</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="submenu">
-                    <a href="#">Feedback</a>
-                    <ul class="dropdown">
-                        <li>
-                            <a target="_blank" href="https://docs.google.com/forms/d/1cqPo4kzA5V-KKDrwVhaB6HXkPYYZv589-42eRoKyNlY/prefill">Give us feedback!</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <% include ./partials/sidenav %>
 
-        <div id="left">
-
-            <button id="Play" onclick="openNewGamePopUp()">Play</button>
-
-            <button id="MenuButton" onclick="openNav()">Menu</button>
-
-            <div id="turn"></div>
-            <div id="notification"></div>
-            <p id="blue" style="color: blue">Blue's points: <p id="bluepoints">0</p></p>
-
-            <button type="button" id="undo">Undo</button>
-
-        </div>
+        <% include ./partials/left %>
 
         <div id="gamecontainer">
             <canvas id="gameboard"></canvas>
         </div>
 
-        <div id="right">
-            <p id="red" style="color: red">Red's points: <p id="redpoints">0</p></p>
-        </div>
+        <% include ./partials/right %>
 
-        <div id="newGamePopUp">
-            <div id="input">
-                <p id="limit">Score Limit: </p>
-                <input type="number" id="scorelimit" value="50">
-            </div>
-            <button type="button" id="playAsBlue">Play as Blue</button>
-            <button type="button" id="playAsRed">Play as Red</button>
-        </div>
+        <% include ./partials/newGamePopup %>
 
         <script src="scripts/bundle.js"></script>
     </body>
