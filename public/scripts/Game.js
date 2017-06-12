@@ -166,9 +166,11 @@ class Game {
         var boardColor;
         var playerTurn;
         if (turn === 1) {
+            printLine("Its reds turn!");
             boardColor = "red";
             playerTurn = "REDS";
         } else {
+            printLine("Its blues turn!");
             boardColor = "blue";
             playerTurn = "BLUES";
         }
