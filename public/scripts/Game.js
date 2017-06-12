@@ -238,6 +238,7 @@ class Game {
             this.turnCounter = 0;
             this.roundskipped = 0;
             this.board.generateStartingBoard();
+            turnIndicator(this.board.startingTurn());
             this.turn = 0;
             this.playerHasAnsweredStartRound = false;
             this.aiHasAnsweredStartRound = false;
