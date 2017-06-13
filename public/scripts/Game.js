@@ -257,6 +257,7 @@ class Game {
         document.getElementById("GiveUp").style.display = "none";
         document.getElementById("StartRound").style.display = "block";
         document.getElementById("Surrender").style.display = "block";
+        newRoundToConsole();
     }
 
     turnIndicator(turn) {
