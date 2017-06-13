@@ -23,6 +23,7 @@ var redButton = document.getElementById("playAsRed");
 var undoButton = document.getElementById("undo");
 var surrenderButton = document.getElementById("Surrender");
 var continueButton = document.getElementById("Continue");
+var giveUpButton = document.getElementById("GiveUp");
 
 if(blueButton.addEventListener){
     blueButton.addEventListener("click",
@@ -92,5 +93,17 @@ if(continueButton.addEventListener) {
         continueButton.attachEvent("onClick",
         function(){
             game.playerSurrender(false);
+        });
+    }
+
+if(giveUpButton.addEventListener) {
+    giveUpButton.addEventListener("click",
+    function(){
+        game.giveUp();
+    }, false);
+} else if (giveUpButton.attachEvent){
+        giveUpButton.attachEvent("onClick",
+        function(){
+            game.giveUp();
         });
     }

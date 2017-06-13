@@ -18,7 +18,7 @@ class AiSocket {
                 this.game.aiSurrender(msg.surrender);
             } else {
                 console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
-                this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
+                this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
             }
         };
 

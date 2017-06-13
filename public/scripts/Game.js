@@ -96,6 +96,10 @@ class Game {
         }
     }
 
+    giveUp() {
+        this.socket.sendTable(this.board.gameboardTo2dArray, this.aiColor, true);
+    }
+
 
     changeTurn() {
         this.turn *= -1;
@@ -107,8 +111,12 @@ class Game {
         }
     }
 
-    aiTurn(didMove, start, target, corners) {
+    aiTurn(didMove, start, target, corners, surrender) {
+        if (surrender) {
+            this.updatePoints();
+        } else {
         this.turnHandler.aiTurn(didMove, start, target, corners);
+        }
     }
 
     checkIfRoundEnds() {
