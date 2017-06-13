@@ -20,16 +20,22 @@ describe('Game', () => {
         validate = td.object('Validate');
 
         td.when(board.gameboardTo2dArray()).thenReturn(new Array());
+        td.when(validate.isMovesAvailable()).thenReturn(true);
 
         game.board = board;
         game.socket = socket;
         game.validate = validate;
     });
 
-    it('Ending turn works', () => {
+    it('sends table to ai when turn ends', () => {
+        game.checkIfRoundEnds = td.function('checkIfRoundEnds');
+
+        game.turn = -1;
+        game.aiColor = 1;
         game.changeTurn();
         td.verify(board.gameboardTo2dArray());
-        console.log("HALOo" + game.redPoints + " " + game.bluePoints);
+        //td.verify(validate.isMovesAvailable(1, []));
+        td.verify(socket.sendTable([], 1));
     });
 
 });

@@ -87,7 +87,6 @@ class Game {
             this.updatePoints();
         } else if(availableMoves && this.turn === whoSkipped) {
             this.roundskipped = 0;
-
         }
     }
 
@@ -162,7 +161,7 @@ class Game {
     }
 
     turnIndicator(turn) {
-        var boardColor;
+        /*var boardColor;
         var playerTurn;
         if (turn === 1) {
             boardColor = "red";
@@ -173,7 +172,7 @@ class Game {
         }
         var turnTeller = document.getElementById("turn");
         turnTeller.style.color = boardColor;
-        turnTeller.innerHTML = "It's " + playerTurn + " turn!";
+        turnTeller.innerHTML = "It's " + playerTurn + " turn!";*/
     }
 
     undo() {
