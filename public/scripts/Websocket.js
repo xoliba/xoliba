@@ -5,17 +5,22 @@ var aisocket;
 
 class AiSocket {
 
-    constructor(game) {
+    constructor(newGame) {
+        this.game = newGame;
         //const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
         const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
-        game = game;
 
-        aisocket.onmessage = (event) => {
+        aisocket.onmessage = (event, turnHandler) => {
             let msg = JSON.parse(event.data);
-            console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
-            game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
+
+            if (msg.type === "startRound") {
+                this.game.aiSurrender(msg.surrender);
+            } else {
+                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
+                this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
+            }
         };
 
         aisocket.onopen = function() {
@@ -39,18 +44,35 @@ class AiSocket {
         }
     }
 
-    sendTable(table, aiColor) {
+    sendTable(table, aiColor, giveUp) {
         let msg = {
             type: "message",
             board: table,
             color: aiColor,
             start: null,
             target: null,
-            didMove: true
+            didMove: true,
+            surrender: giveUp
         }
-        console.log("HALOO");
+        console.log("send table");
         aisocket.send(JSON.stringify(msg));
     }
+
+    sendStartRound(table, aiColor) {
+        let msg = {
+            type: "startRound",
+            board: table,
+            color: aiColor,
+            start: null,
+            target: null,
+            didMove: true,
+            surrender: null
+        }
+        console.log("send starting round");
+        aisocket.send(JSON.stringify(msg));
+
+        }
+
 }
 
 

@@ -5,7 +5,8 @@
 
 
 body {
-  background-color: #E5E3DF;
+  background-color: #F8F8F8;
+  font-family: 'Jura', sans-serif;
 }
 
 /* This creates the sidenav menu*/
@@ -21,6 +22,7 @@ body {
     overflow-x: hidden;
     padding top: 60px;
     transition: 0.5s;
+    z-index: 20;
 }
 
 .sidenav .submenu {
@@ -82,14 +84,30 @@ p {
 button {
     position: absolute;
     display: block;
-    background-color: darkgrey;
-    color: white;
+    background-color: #FFFFFF;
+    color: #FF3333;
+    border: 2px #FF3333 solid;
     text-align: center;
     font-size: 3vh;
-    width: 20%;
+    font-family: 'Jura', sans-serif;
+    width: 15%;
     height: 5%;
     white-space: nowrap;
     overflow-x: hidden;
+    z-index: 5;
+}
+
+#undo, #GiveUp, #StartRound, #Surrender {
+    display: none;
+}
+
+button:hover{
+    background-color: blue;
+    color: white;
+}
+
+textarea {
+    resize: none;
 }
 
 /* Pop up that asks the color player will play as and the scorelimit. */
@@ -111,7 +129,6 @@ button {
 #input {
     margin-left: 10%;
     margin-top: 2%;
-    background-color: blue;
     width: 80%;
 }
 
@@ -146,19 +163,46 @@ button {
     font-size: 2vh;
 }
 
+
+/* Better button positions for medium screens*/
+
+@media screen and (min-aspect-ratio: 3/2) {
+
+    button {
+        height: 3vw;
+        width: 15vw;
+        font-size: 2vw;
+    }
+
+    #MenuButton {
+        top: 20vw;
+        left: 5%;
+    }
+
+    #NewGame {
+        top: 30vw;
+        left: 5%;
+    }
+
+    #Surrender {
+        top:70%;
+        left:5%;
+    }
+
+    #Continue {
+        top:80%;
+        left:5%
+    }
+
+    #undo {
+        top: 35vw;
+        left: 5%;
+    }
+}
+
 /* For wide screens: */
 
 @media screen and (min-aspect-ratio: 5/3){
-
-    #MenuButton {
-        top: 50%;
-        left: 5%;
-    }
-
-    #Play {
-        top: 60%;
-        left: 5%;
-    }
 
     #left {
         display: table;
@@ -177,6 +221,34 @@ button {
         display: table;
         height: 100vh;
         width: 25%;
+    }
+
+    #MenuButton {
+        top: 12vw;
+        left: 5%;
+    }
+
+    #NewGame {
+        top: 25vw;
+        left: 5%;
+    }
+
+    #undo, #StartRound {
+        top: 22vw;
+        left: 5%;
+    }
+
+    #GiveUp, #Surrender {
+        top: 27vw;
+        left: 5%;
+    }
+
+    #info {
+        position: absolute;
+        left: 80%;
+        top: 12vw;
+        width: 15vw;
+        height: 20vw;
     }
 
 }
@@ -214,17 +286,6 @@ button {
         font-size: 5vw;
     }
 
-    #MenuButton {
-        top: 18%;
-        left: 20%;
-        z-index: 10;
-    }
-
-    #Play {
-        top: 18%;
-        left: 60%;
-        z-index: 10;
-    }
 }
 
 /* For very narrow screens*/
@@ -239,19 +300,5 @@ button {
         top: 10%;
         font-size: 5vw;
         height: 8vw;
-    }
-}
-
-/* Better button positions for medium screens*/
-
-@media screen and (min-aspect-ratio: 3/2) {
-    #MenuButton {
-        top: 50%;
-        left: 5%;
-    }
-
-    #Play {
-        top: 60%;
-        left: 5%;
     }
 }
