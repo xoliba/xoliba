@@ -18,6 +18,7 @@ let aiColor;
 let playerHasAnsweredStartRound;
 let aiHasAnsweredStartRound;
 let isFirstTurn;
+let playerWantsToSurrender;
 
 class Game {
 
@@ -40,6 +41,7 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.isFirstTurn = true;
+        this.playerWantsToSurrender = false;
         setTimeout(() => {
                 this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
             }, 1000);
@@ -97,6 +99,7 @@ class Game {
     }
 
     giveUp() {
+        this.playerWantsToSurrender = true;
         this.socket.sendTable(this.board.gameboardTo2dArray, this.aiColor, true);
     }
 
@@ -112,7 +115,7 @@ class Game {
     }
 
     aiTurn(didMove, start, target, corners, surrender) {
-        if (surrender) {
+        if (surrender && this.playerWantsToSurrender) {
             this.updatePoints();
         } else {
         this.turnHandler.aiTurn(didMove, start, target, corners);
@@ -252,6 +255,7 @@ class Game {
             this.aiHasAnsweredStartRound = false;
             this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
             this.isFirstTurn = true;
+            this.playerWantsToSurrender = false;
     }
 
     turnIndicator(turn) {

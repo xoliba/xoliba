@@ -31,6 +31,8 @@ if(blueButton.addEventListener){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
             for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            document.getElementById("bluepoints").innerHTML = 0;
+            document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, -1, score);
         } , false);
 } else if (blueButton.attachEvent){
@@ -39,6 +41,8 @@ if(blueButton.addEventListener){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
           for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            document.getElementById("bluepoints").innerHTML = 0;
+            document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, -1, score);
         });
 }
@@ -49,6 +53,8 @@ if(redButton.addEventListener){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
             for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            document.getElementById("bluepoints").innerHTML = 0;
+            document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, 1, score);
         } , false);
 } else if (redButton.attachEvent){
@@ -57,6 +63,8 @@ if(redButton.addEventListener){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
             for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            document.getElementById("bluepoints").innerHTML = 0;
+            document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, 1, score);
         });
 }
