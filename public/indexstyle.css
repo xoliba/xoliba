@@ -179,6 +179,16 @@ textarea {
         top: 30vw;
         left: 5%;
     }
+    
+    #Surrender {
+        top:70%;
+        left:5%;
+    }
+
+    #Continue {
+        top:80%;
+        left:5%
+    }
 
     #undo {
         top: 35vw;
