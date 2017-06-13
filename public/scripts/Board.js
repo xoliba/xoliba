@@ -4,7 +4,7 @@ import { Stone } from './Stone.js';
 
 let stonesList;
 let actions;
-let turnHandler;
+//let turnHandler;
 
 class Board {
 

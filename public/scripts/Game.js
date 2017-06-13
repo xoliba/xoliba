@@ -40,10 +40,8 @@ class Game {
 
     startFirstTurn() {
         this.turn = this.board.startingTurn();
-        if (this.turn === this.playerColor) {
-            this.turnIndicator(this.turn);
-        } else {
-            this.turnIndicator(this.turn);
+        this.turnIndicator(this.turn);
+        if (this.turn !== this.playerColor) {
             setTimeout(() => {
                 this.turn = this.playerColor;
                 this.changeTurn();
@@ -63,9 +61,9 @@ class Game {
         }
     }
 
-    /*aiTurn(didMove, start, target, corners) {
+    aiTurn(didMove, start, target, corners) {
         this.turnHandler.aiTurn(didMove, start, target, corners);
-    }*/
+    }
 
     checkIfRoundEnds() {
 
@@ -78,8 +76,8 @@ class Game {
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
             this.whoSkipped = this.turn;
-            let c = this.turn === 1 ? "red" : "blue";
-            alert("No moves available, skipping turn of " + c + "!");
+            //let c = this.turn === 1 ? "red" : "blue";
+            alert("No moves available, skipping turn of " + (this.turn === 1 ? "red" : "blue") + "!");
             this.turn *= -1;
         } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");

@@ -1,20 +1,21 @@
 import { Game } from './Game.js';
 
-//var game;
+var game;
 var aisocket;
 
 class AiSocket {
 
-    constructor(turnHandler) {
+    constructor(game) {
         //const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
         const server = 'ws://localhost:4567/ai';
 
         aisocket = new WebSocket(server);
+        game = game;
 
         aisocket.onmessage = (event) => {
             let msg = JSON.parse(event.data);
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
-            turnHandler.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
+            game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners);
         };
 
         aisocket.onopen = function() {
