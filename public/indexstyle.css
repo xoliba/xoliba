@@ -102,6 +102,10 @@ button:hover{
     color: white;
 }
 
+textarea {
+    resize: none;
+}
+
 /* Pop up that asks the color player will play as and the scorelimit. */
 
 #newGamePopUp {
@@ -218,6 +222,14 @@ button:hover{
     #undo {
         top: 27vw;
         left: 5%;
+    }
+
+    #info {
+        position: absolute;
+        left: 80%;
+        top: 12vw;
+        width: 15vw;
+        height: 20vw;
     }
 
 }
