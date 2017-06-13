@@ -45,7 +45,7 @@ class Game {
         setTimeout(() => {
                 this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
             }, 1000);
-        
+
     }
 
     startFirstTurn() {
@@ -56,23 +56,21 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
-        if (this.turn === this.playerColor) {
-            this.turnIndicator(this.turn);
-        } else {
+        if (this.turn !== this.playerColor) {
             setTimeout(() => {
                 this.turn = this.playerColor;
                 this.changeTurn();
             }, 1000);
         }
     }
-    
+
     playerSurrender(surrender) {
         if(!this.isFirstTurn) {
             return false;
-        }        
+        }
         if (surrender) {
             this.updateSurrenderPoints(this.playerColor);
-        } else {           
+        } else {
             if (this.aiHasAnsweredStartRound === true) {
                 this.playerHasAnsweredStartRound = true;
                 this.startFirstTurn();
@@ -180,7 +178,7 @@ class Game {
                 }
             }
         }
-    
+
         if (redsBiggest === bluesBiggest) {
             alert("It's a draw, no points given");
         } else if (redsBiggest > bluesBiggest) {
@@ -210,51 +208,55 @@ class Game {
                 document.getElementById("redpoints").innerHTML = 0;
             }
         }
-        this.turnCounter = 0;
-        this.roundskipped = 0;
-        this.board.generateStartingBoard();
-        this.isFirstTurn = true;
+        this.startNewRound();
     }
 
     updateSurrenderPoints(color) {
         if (color === 1) {
-                let element = document.getElementById("bluepoints");
-                let points = 0.4 * this.scoreLimit;
-                let current = parseInt(element.innerHTML, 10);
-                current += points;
-                element.innerHTML = current;
-                alert("Red surrenders!  " + points + " points awarded to Blue!");
-                if (current > this.scoreLimit){
-                    element.innerHTML += " WINNER";
-                    alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
-                    element.innerHTML = 0;
-                    document.getElementById("redpoints").innerHTML = 0;
-                }
-            } else {
-                let element = document.getElementById("redpoints");
-                let points = 0.4 * this.scoreLimit;
-                let current = parseInt(element.innerHTML, 10);
-                current += points;
-                element.innerHTML = current;
-                alert("Blue surrenders! " + points + " points awarded to Red!");
-            if (current >= this.scoreLimit){
+            let element = document.getElementById("bluepoints");
+            let points = 0.4 * this.scoreLimit;
+            let current = parseInt(element.innerHTML, 10);
+            current += points;
+            element.innerHTML = current;
+            alert("Red surrenders!  " + points + " points awarded to Blue!");
+            if (current > this.scoreLimit){
                 element.innerHTML += " WINNER";
-                alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
+                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
-                document.getElementById("bluepoints").innerHTML = 0;
-                }
-        
+                document.getElementById("redpoints").innerHTML = 0;
             }
-            this.turnCounter = 0;
-            this.roundskipped = 0;
-            this.board.generateStartingBoard();
-            turnIndicator(this.board.startingTurn());
-            this.turn = 0;
-            this.playerHasAnsweredStartRound = false;
-            this.aiHasAnsweredStartRound = false;
-            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
-            this.isFirstTurn = true;
-            this.playerWantsToSurrender = false;
+        } else {
+            let element = document.getElementById("redpoints");
+            let points = 0.4 * this.scoreLimit;
+            let current = parseInt(element.innerHTML, 10);
+            current += points;
+            element.innerHTML = current;
+            alert("Blue surrenders! " + points + " points awarded to Red!");
+        if (current >= this.scoreLimit){
+            element.innerHTML += " WINNER";
+            alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
+            element.innerHTML = 0;
+            document.getElementById("bluepoints").innerHTML = 0;
+            }
+
+        }
+        this.startNewRound();
+    }
+
+    startNewRound(){
+        this.turnCounter = 0;
+        this.roundskipped = 0;
+        this.board.generateStartingBoard();
+        this.turn = 0;
+        this.playerHasAnsweredStartRound = false;
+        this.aiHasAnsweredStartRound = false;
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
+        this.isFirstTurn = true;
+        this.playerWantsToSurrender = false;
+        document.getElementById("undo").style.display = "none";
+        document.getElementById("GiveUp").style.display = "none";
+        document.getElementById("StartRound").style.display = "block";
+        document.getElementById("Surrender").style.display = "block";
     }
 
     turnIndicator(turn) {

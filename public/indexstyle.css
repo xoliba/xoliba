@@ -97,6 +97,10 @@ button {
     z-index: 5;
 }
 
+#undo, #GiveUp, #StartRound, #Surrender {
+    display: none;
+}
+
 button:hover{
     background-color: blue;
     color: white;
@@ -175,11 +179,11 @@ textarea {
         left: 5%;
     }
 
-    #Play {
+    #NewGame {
         top: 30vw;
         left: 5%;
     }
-    
+
     #Surrender {
         top:70%;
         left:5%;
@@ -224,12 +228,17 @@ textarea {
         left: 5%;
     }
 
-    #Play {
+    #NewGame {
+        top: 25vw;
+        left: 5%;
+    }
+
+    #undo, #StartRound {
         top: 22vw;
         left: 5%;
     }
 
-    #undo {
+    #GiveUp, #Surrender {
         top: 27vw;
         left: 5%;
     }

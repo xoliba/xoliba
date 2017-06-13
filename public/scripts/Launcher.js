@@ -23,7 +23,7 @@ var blueButton = document.getElementById("playAsBlue");
 var redButton = document.getElementById("playAsRed");
 var undoButton = document.getElementById("undo");
 var surrenderButton = document.getElementById("Surrender");
-var continueButton = document.getElementById("Continue");
+var continueButton = document.getElementById("StartRound");
 var giveUpButton = document.getElementById("GiveUp");
 
 if(blueButton.addEventListener){
@@ -31,6 +31,7 @@ if(blueButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            hideNewGameAndShowStartRoundOptions();
             for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
@@ -41,6 +42,7 @@ if(blueButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            hideNewGameAndShowStartRoundOptions();
           for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
@@ -53,6 +55,7 @@ if(redButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            hideNewGameAndShowStartRoundOptions();
             for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
@@ -63,6 +66,7 @@ if(redButton.addEventListener){
         function(){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
+            hideNewGameAndShowStartRoundOptions();
             for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
@@ -92,18 +96,20 @@ if(surrenderButton.addEventListener) {
         function(){
             game.playerSurrender(true);
         });
-    }
+}
 if(continueButton.addEventListener) {
     continueButton.addEventListener("click",
     function(){
         game.playerSurrender(false);
+        hideStartRoundOptionsAndShowInGameOptions();
     }, false);
 } else if (continueButton.attachEvent){
         continueButton.attachEvent("onClick",
         function(){
             game.playerSurrender(false);
+            hideStartRoundOptionsAndShowInGameOptions();
         });
-    }
+}
 
 if(giveUpButton.addEventListener) {
     giveUpButton.addEventListener("click",
@@ -115,4 +121,17 @@ if(giveUpButton.addEventListener) {
         function(){
             game.giveUp();
         });
-    }
+}
+
+function hideNewGameAndShowStartRoundOptions(){
+    document.getElementById("NewGame").style.display = "none";
+    surrenderButton.style.display = "block";
+    continueButton.style.display = "block";
+}
+
+function hideStartRoundOptionsAndShowInGameOptions(){
+    surrenderButton.style.display = "none";
+    continueButton.style.display = "none";
+    undoButton.style.display = "block";
+    giveUpButton.style.display = "block";
+}
