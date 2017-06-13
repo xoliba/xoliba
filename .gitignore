@@ -65,3 +65,5 @@ public/scripts/bundle.js
 
 #package-lock
 package-lock.json
+
+.gradle/
