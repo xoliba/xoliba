@@ -76,7 +76,6 @@ class Game {
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
             this.whoSkipped = this.turn;
-            //let c = this.turn === 1 ? "red" : "blue";
             alert("No moves available, skipping turn of " + (this.turn === 1 ? "red" : "blue") + "!");
             this.turn *= -1;
         } else if(!availableMoves && this.roundskipped === 1) {

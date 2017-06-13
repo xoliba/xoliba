@@ -23,15 +23,15 @@ var redButton = document.getElementById("playAsRed");
 var undoButton = document.getElementById("undo");
 
 if(blueButton.addEventListener){
-    blueButton.addEventListener("click", () => { doStuff(app, game) }, false);
+    blueButton.addEventListener("click", () => { doStuff(app, game, -1) }, false);
 } else if (blueButton.attachEvent){
-    blueButton.attachEvent("onclick", () => { doStuff(app, game) });
+    blueButton.attachEvent("onclick", () => { doStuff(app, game, -1) });
 }
 
 if(redButton.addEventListener){
-    redButton.addEventListener("click", () => { doStuff(app, game) }, false);
+    redButton.addEventListener("click", () => { doStuff(app, game, 1) }, false);
 } else if (redButton.attachEvent){
-    redButton.attachEvent("onclick", () => { doStuff(app, game) });
+    redButton.attachEvent("onclick", () => { doStuff(app, game, 1) });
 }
 
 if(undoButton.addEventListener){
@@ -46,9 +46,9 @@ if(undoButton.addEventListener){
         });
 }
 
-function doStuff(app, game) {
+function doStuff(app, game, color) {
     var score = document.getElementById("scorelimit").value;
     document.getElementById("newGamePopUp").style.display = "none";
     for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
-    game = new Game(app, -1, score);
+    game = new Game(app, color, score);
 }
