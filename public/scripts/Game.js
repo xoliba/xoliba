@@ -58,9 +58,6 @@ class Game {
 
     startFirstTurn() {
         this.isFirstTurn = false;
-        if(this.playerHasAnsweredStartRound === false || this.aiHasAnsweredStartRound === false) {
-            return;
-        }
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
