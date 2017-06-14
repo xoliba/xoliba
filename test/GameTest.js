@@ -1,3 +1,4 @@
+let assert = require('assert');
 import { Board } from '../public/scripts/Board.js';
 import { AiSocket } from '../public/scripts/Websocket.js';
 import { Game } from '../public/scripts/Game.js';
@@ -40,4 +41,11 @@ describe('Game', () => {
     });
     */
 
+    it('sets the turn correctly at first turn', () => {
+        td.when(board.startingTurn()).thenReturn(1);
+
+        game.startFirstTurn();
+
+        assert.equal(game.turn, 1);
+    });
 });

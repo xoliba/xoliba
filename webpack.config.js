@@ -1,12 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
-new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery'
-});
 
 module.exports = {
-  entry: "./public/scripts/Launcher.js",
+  //entry: "./public/scripts/Launcher.js",
+  entry: "./public/scripts/index.js",
   output: {
     path: __dirname,
     filename: "./public/scripts/bundle.js"
@@ -15,6 +12,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        include: path.resolve(__dirname, "public/scripts"),
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
@@ -23,6 +21,19 @@ module.exports = {
                 plugins: ['istanbul']
           }
         }  
+      },
+      {
+        test: /\.html$/,
+        use: {
+            loader: 'html-loader'
+        }
+      },
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, "public/menuScripts"),
+        use: {
+            loader: 'script-loader'
+        }
       }
     ]
   },
