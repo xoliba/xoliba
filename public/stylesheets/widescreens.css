@@ -12,27 +12,32 @@
     }
 
     #NewGame {
+        top: 32vw;
+        left: 5%;
+    }
+
+    #StartRound {
+        top:30vw;
+        left:5%
+    }
+
+    #Surrender {
+        top:35vw;
+        left:5%;
+    }
+
+    #undo {
         top: 30vw;
         left: 5%;
     }
 
-    #Surrender {
-        top:70%;
-        left:5%;
-    }
-
-    #Continue {
-        top:80%;
-        left:5%
-    }
-
-    #undo {
-        top: 35vw;
+    #GiveUp {
+        top:35vw;
         left: 5%;
     }
 
     #info {
         position: absolute;
-        
+
     }
 }
