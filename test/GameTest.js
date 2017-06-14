@@ -27,6 +27,7 @@ describe('Game', () => {
         game.validate = validate;
     });
 
+    /*
     it('sends table to ai when turn ends', () => {
         game.checkIfRoundEnds = td.function('checkIfRoundEnds');
 
@@ -37,5 +38,6 @@ describe('Game', () => {
         //td.verify(validate.isMovesAvailable(1, []));
         td.verify(socket.sendTable([], 1));
     });
+    */
 
 });
