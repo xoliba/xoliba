@@ -6,8 +6,6 @@ import { UIUpdater } from './UIUpdater.js';
 
 let board;
 let turn;
-let redPoints;
-let bluePoints;
 let socket;
 let turnCounter
 let roundskipped;
@@ -21,10 +19,7 @@ let aiHasAnsweredStartRound;
 let isFirstTurn;
 let playerWantsToSurrender;
 let uiUpdater;
-let redsBiggest;
-let bluesBiggest;
-let blues;
-let reds;
+
 
 class Game {
 
@@ -36,16 +31,10 @@ class Game {
         this.scoreLimit = scoreLimit;
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
-        this.redPoints = 0;
-        this.bluePoints = 0;
         this.turnHandler.board = this.board;
         this.turn = 0
         this.turnCounter = 0;
         this.roundskipped = 0;
-        this.bluesBiggest = 0;
-        this.redsBiggest = 0;
-        this.blues = 0;
-        this.reds = 0;
         this.validate = new Validations();
         this.whoSkipped = 0;
         this.playerHasAnsweredStartRound = false;
@@ -158,30 +147,30 @@ class Game {
     }
 
     calculatePoints() {
-        this.bluesBiggest = 0;
-        this.redsBiggest = 0;
-        this.blues = 0;
-        this.reds = 0;
+        let bluesBiggest = 0;
+        let redsBiggest = 0;
+        let blues = 0;
+        let reds = 0;
         for (var i = 0; i < 7; i++) {
             for (var j = 0; j < 7; j++) {
                 if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     if(this.board.gameboardTo2dArray()[i][j] === 1) {
-                        this.reds++;
+                        reds++;
                         let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
-                        if(found > this.redsBiggest) {
-                            this.redsBiggest = found;
+                        if(found > redsBiggest) {
+                            redsBiggest = found;
                         }
                     } else if (this.board.gameboardTo2dArray()[i][j] === -1){
-                        this.blues++;
+                        blues++;
                         let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
-                        if(found > this.bluesBiggest) {
-                            this.bluesBiggest = found;
+                        if(found > bluesBiggest) {
+                            bluesBiggest = found;
                         }
                     }
                 }
             }
         }
-        this.uiUpdater.updatePoints(this.redsBiggest, this.bluesBiggest, this.reds, this.blues, this.scoreLimit);
+        this.uiUpdater.updatePoints(redsBiggest, bluesBiggest, reds, blues, this.scoreLimit);
         this.startNewRound();
     }
 
