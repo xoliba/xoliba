@@ -48,7 +48,6 @@ describe('Game', () => {
         game.aiColor = 1;
         game.changeTurn();
 
-        td.verify(board.gameboardTo2dArray());
         td.verify(socket.sendTable(table, 1));
     });
 
@@ -60,17 +59,26 @@ describe('Game', () => {
         assert.equal(game.turn, 1);
     });
 
+    it('skips a round when there are no possible moves', () => {
+        td.when(validate.isMovesAvailable(1, table)).thenReturn(false);
+
+        game.turn = 1;
+        game.roundskipped = 0;
+        game.aiColor = -1;
+
+        game.checkIfRoundEnds();
+
+        assert.equal(game.roundskipped, 1);
+
+        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()), {times: 0});
+    });
+
     it('starts a new round when there are no moves available and round has been skipped', () => {
-        //var startNewRound = td.function('startNewRound');
-        var updatePoints = td.function('updatePoints');
-        //game.startNewRound = startNewRound;
-        game.updatePoints = updatePoints;
+        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(false);
 
         game.turn = 1;
         game.roundskipped = 1;
         game.aiColor = -1;
-
-        td.when(validate.isMovesAvailable(1, [])).thenReturn(false);
 
         game.checkIfRoundEnds();
 
