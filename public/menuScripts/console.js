@@ -7,7 +7,7 @@ function hideConsole(){
     setTimeout(() => {
         element.style.transition = '0s';
         button.style.transition = '0.5s';
-        button.style.left = '96vw';
+        button.style.left = '96%';
         setTimeout(() => {
             button.style.transition = '0s';
         }, 500);
