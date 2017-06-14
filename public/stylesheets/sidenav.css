@@ -1,0 +1,60 @@
+.sidenav {
+    height: 100%;
+    width: 0;
+    position:fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111111;
+    overflow-x: hidden;
+    padding top: 60px;
+    transition: 0.5s;
+    z-index: 20;
+}
+
+.sidenav .submenu {
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+    transition: 0.3;
+    position: relative
+}
+
+.submenu a {
+    color: #818181;
+    white-space: nowrap;
+}
+
+.submenu ul {
+    background-color: #252525;
+    display: none;
+}
+
+.submenu ul li {
+    position: relative;
+    margin: 0;
+    display: block;
+    padding-top: 8px;
+    font-size: 18px;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: #818181;
+    z-index: 2;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

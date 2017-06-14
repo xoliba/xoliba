@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+}
+
+body {
+    width: 100%;
+    background-color: #F8F8F8;
+    font-family: 'Jura', sans-serif;
+}
+
+p {
+    text-align: center;
+    font-size: 3vw;
+    display: block;
+    vertical-align: middle;
+}
+
+button {
+    position: absolute;
+    display: block;
+    background-color: #FFFFFF;
+    color: #FF3333;
+    border: 2px #FF3333 solid;
+    text-align: center;
+    font-size: 3vh;
+    font-family: 'Jura', sans-serif;
+    width: 15%;
+    height: 5%;
+    white-space: nowrap;
+    overflow-x: hidden;
+    z-index: 5;
+}
+
+#undo, #GiveUp, #StartRound, #Surrender {
+    display: none;
+}
+
+button:hover{
+    background-color: blue;
+    color: white;
+}
+
+textarea {
+    resize: none;
+}
