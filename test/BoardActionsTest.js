@@ -38,10 +38,10 @@ describe('BoardActions', () => {
         actions = new BoardActions();
     });
 
-    describe('Hitting the stones in triangle work', function() {
+    describe('Hitting the stones in triangle work', () => {
       let temp;
       let table;
-      it('Legit moves work', function() {
+      it('Legit moves work', () => {
         table = c(fullBoard);
         actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
@@ -103,7 +103,7 @@ describe('BoardActions', () => {
           }
         }
       });
-      it('Unlegit moves wont happen and will return false', function() {
+      it('Unlegit moves wont happen and will return false', () => {
         table = c(fullBoard);
         actions = new BoardActions();
         temp =  [[-2, 1, 1, 1, 1, 1, -2],
