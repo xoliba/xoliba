@@ -45,10 +45,7 @@ class Game {
         this.isFirstTurn = true;
         this.playerWantsToSurrender = false;
         this.infoConsole = new InfoConsole();
-        setTimeout(() => {
-                this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
-            }, 1000);
-
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
     }
 
     startFirstTurn() {
