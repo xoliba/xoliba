@@ -72,7 +72,8 @@ class Game {
             return false;
         }
         if (surrender) {
-            this.updateSurrenderPoints(this.playerColor);
+            this.uiUpdater.updateSurrenderPoints(this.playerColor, this.scoreLimit);
+            this.startNewRound();
         } else {
             if (this.aiHasAnsweredStartRound === true) {
                 this.playerHasAnsweredStartRound = true;
@@ -87,7 +88,8 @@ class Game {
 
     aiSurrender(surrender) {
         if (surrender) {
-            this.updateSurrenderPoints(this.aiColor);
+            this.uiUpdater.updateSurrenderPoints(this.aiColor, this.scoreLimit);
+            this.startNewRound();
         } else {
             if (this.playerHasAnsweredStartRound === true) {
                 this.aiHasAnsweredStartRound = true;
@@ -117,7 +119,6 @@ class Game {
     aiTurn(didMove, start, target, corners, surrender) {
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
-            this.updatePoints();
         } else {
         this.turnHandler.aiTurn(didMove, start, target, corners);
         }
@@ -129,7 +130,6 @@ class Game {
         if (this.turnCounter === 10) {
             alert("10 rounds without hits, round ended!");
             this.calculatePoints();
-            this.updatePoints();
             return;
         }
         if(!availableMoves && this.roundskipped === 0){
@@ -141,7 +141,6 @@ class Game {
             alert("Two consecutive turns skipped, round ended!");
             this.whoSkipped = 0;
             this.calculatePoints();
-            this.updatePoints();
         } else if(availableMoves && this.turn === this.whoSkipped) {
             this.roundskipped = 0;
         }
@@ -182,70 +181,7 @@ class Game {
                 }
             }
         }
-    }
-
-    updatePoints() {
-        if (this.redsBiggest === this.bluesBiggest) {
-            alert("It's a draw, no points given");
-        } else if (this.redsBiggest > this.bluesBiggest) {
-            let element = document.getElementById("redpoints");
-            let points = (17 - this.blues) * this.redsBiggest;
-            let current = parseInt(element.innerHTML, 10);
-            current += points;
-            element.innerHTML = current;
-            alert("Red wins the round! " + points + " points awarded!");
-            if (current >= this.scoreLimit){
-                element.innerHTML += " WINNER";
-                alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
-                element.innerHTML = 0;
-                document.getElementById("bluepoints").innerHTML = 0;
-            }
-        } else {
-            let element = document.getElementById("bluepoints");
-            let points = (17 - this.reds) * this.bluesBiggest;
-            let current = parseInt(element.innerHTML, 10);
-            current += points;
-            element.innerHTML = current;
-            alert("Blue Wins! " + points + " points awarded!");
-            if (current > this.scoreLimit){
-                element.innerHTML += " WINNER";
-                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
-                element.innerHTML = 0;
-                document.getElementById("redpoints").innerHTML = 0;
-            }
-        }
-        this.startNewRound();
-    }
-
-    updateSurrenderPoints(color) {
-        if (color === 1) {
-            let element = document.getElementById("bluepoints");
-            let points = 0.4 * this.scoreLimit;
-            let current = parseInt(element.innerHTML, 10);
-            current += points;
-            element.innerHTML = current;
-            alert("Red surrenders!  " + points + " points awarded to Blue!");
-            if (current > this.scoreLimit){
-                element.innerHTML += " WINNER";
-                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
-                element.innerHTML = 0;
-                document.getElementById("redpoints").innerHTML = 0;
-            }
-        } else {
-            let element = document.getElementById("redpoints");
-            let points = 0.4 * this.scoreLimit;
-            let current = parseInt(element.innerHTML, 10);
-            current += points;
-            element.innerHTML = current;
-            alert("Blue surrenders! " + points + " points awarded to Red!");
-        if (current >= this.scoreLimit){
-            element.innerHTML += " WINNER";
-            alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
-            element.innerHTML = 0;
-            document.getElementById("bluepoints").innerHTML = 0;
-            }
-
-        }
+        this.uiUpdater.updatePoints(redsBiggest, bluesBiggest, reds, blues);
         this.startNewRound();
     }
 
