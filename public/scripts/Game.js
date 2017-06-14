@@ -64,7 +64,7 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
-        if (this.turn !== this.playerColor) {
+        if (this.turn === this.aiColor) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
         }
         this.turnIndicator(this.turn);
