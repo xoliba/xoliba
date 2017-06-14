@@ -65,11 +65,9 @@ class Game {
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
         if (this.turn !== this.playerColor) {
-            setTimeout(() => {
-                this.turn = this.playerColor;
-                this.changeTurn();
-            }, 1000);
+            this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
         }
+        this.turnIndicator(this.turn);
     }
 
     playerSurrender(surrender) {
