@@ -1,0 +1,60 @@
+@media screen and (min-aspect-ratio: 5/3){
+
+    #left {
+        display: table;
+        width: 25%;
+        height: 100vh;
+        float: left;
+    }
+
+    #gameboard {
+        height: 100%;
+        width: 50%;
+        float: left;
+    }
+
+    #right {
+        display: table;
+        height: 100vh;
+        width: 25%;
+    }
+
+    #MenuButton {
+        top: 12vw;
+        left: 5%;
+    }
+
+    #NewGame {
+        top: 25vw;
+        left: 5%;
+    }
+
+    #undo, #StartRound {
+        top: 22vw;
+        left: 5%;
+    }
+
+    #GiveUp, #Surrender {
+        top: 27vw;
+        left: 5%;
+    }
+
+    #infoDiv {
+        position: fixed;
+        top: 12vw;
+        left: 80vw;
+        width: 15vw;
+        height: 25vw;
+        background-color: black;
+        transition-property: left;
+        transition-duration: 0.5s;
+        overflow-x: hidden;
+    }
+
+    #info {
+        width: 15vw;
+        height: 20vw;
+        transition: 0.3s;
+    }
+
+}

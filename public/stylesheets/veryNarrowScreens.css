@@ -1,0 +1,12 @@
+@media screen and (max-aspect-ratio: 4/5){
+    #gameboard {
+        width: 90%;
+        height: auto;
+    }
+
+    button {
+        top: 10%;
+        font-size: 5vw;
+        height: 8vw;
+    }
+}
