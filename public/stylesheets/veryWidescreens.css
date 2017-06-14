@@ -76,8 +76,6 @@
         display: block;
         width: 4vw;
         height: 5vw;
-        transition-property: left;
-        transition: 0s;
         overflow: hidden;
     }
 
