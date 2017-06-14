@@ -85,4 +85,14 @@ describe('Game', () => {
         td.verify(board.generateStartingBoard());
         td.verify(socket.sendStartRound(table, -1));
     });
+
+    it('resets the skip counter after a successful move', () => {
+        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(true);
+
+        game.roundskipped = 1;
+
+        game.checkIfRoundEnds();
+
+        assert.equal(game.roundskipped, 0);
+    })
 });
