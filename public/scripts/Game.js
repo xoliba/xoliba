@@ -21,6 +21,10 @@ let aiHasAnsweredStartRound;
 let isFirstTurn;
 let playerWantsToSurrender;
 let infoConsole;
+let redsBiggest;
+let bluesBiggest;
+let blues;
+let reds;
 
 class Game {
 
@@ -38,6 +42,10 @@ class Game {
         this.turn = 0
         this.turnCounter = 0;
         this.roundskipped = 0;
+        this.bluesBiggest = 0;
+        this.redsBiggest = 0;
+        this.blues = 0;
+        this.reds = 0;
         this.validate = new Validations();
         this.whoSkipped = 0;
         this.playerHasAnsweredStartRound = false;
@@ -56,7 +64,6 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
-
         if (this.turn !== this.playerColor) {
             setTimeout(() => {
                 this.turn = this.playerColor;
@@ -114,6 +121,7 @@ class Game {
 
     aiTurn(didMove, start, target, corners, surrender) {
         if (surrender && this.playerWantsToSurrender) {
+            this.calculatePoints();
             this.updatePoints();
         } else {
         this.turnHandler.aiTurn(didMove, start, target, corners);
@@ -125,6 +133,7 @@ class Game {
         let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 10) {
             alert("10 rounds without hits, round ended!");
+            this.calculatePoints();
             this.updatePoints();
             return;
         }
@@ -136,6 +145,7 @@ class Game {
         } else if(!availableMoves && this.roundskipped === 1) {
             alert("Two consecutive turns skipped, round ended!");
             this.whoSkipped = 0;
+            this.calculatePoints();
             this.updatePoints();
         } else if(availableMoves && this.turn === this.whoSkipped) {
             this.roundskipped = 0;
@@ -153,36 +163,38 @@ class Game {
         console.log(this.turnCounter);
     }
 
-    updatePoints(){             // TODO: Refactor. Separate logic update & html udpate
-        let bluesBiggest = 0;
-        let redsBiggest = 0;
-        let blues = 0;
-        let reds = 0;
+    calculatePoints() {
+        this.bluesBiggest = 0;
+        this.redsBiggest = 0;
+        this.blues = 0;
+        this.reds = 0;
         for (var i = 0; i < 7; i++) {
             for (var j = 0; j < 7; j++) {
                 if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     if(this.board.gameboardTo2dArray()[i][j] === 1) {
-                        reds++;
+                        this.reds++;
                         let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
-                        if(found > redsBiggest) {
-                            redsBiggest = found;
+                        if(found > this.redsBiggest) {
+                            this.redsBiggest = found;
                         }
                     } else if (this.board.gameboardTo2dArray()[i][j] === -1){
-                        blues++;
+                        this.blues++;
                         let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
-                        if(found > bluesBiggest) {
-                            bluesBiggest = found;
+                        if(found > this.bluesBiggest) {
+                            this.bluesBiggest = found;
                         }
                     }
                 }
             }
         }
+    }
 
-        if (redsBiggest === bluesBiggest) {
+    updatePoints() {
+        if (this.redsBiggest === this.bluesBiggest) {
             alert("It's a draw, no points given");
-        } else if (redsBiggest > bluesBiggest) {
+        } else if (this.redsBiggest > this.bluesBiggest) {
             let element = document.getElementById("redpoints");
-            let points = (17 - blues) * redsBiggest;
+            let points = (17 - this.blues) * this.redsBiggest;
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
@@ -195,7 +207,7 @@ class Game {
             }
         } else {
             let element = document.getElementById("bluepoints");
-            let points = (17 - reds) * bluesBiggest;
+            let points = (17 - this.reds) * this.bluesBiggest;
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
