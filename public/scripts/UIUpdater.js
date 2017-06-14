@@ -26,17 +26,17 @@ class UIUpdater {
         document.getElementById("Surrender").style.display = "block";
     }
 
-    updatePoints(redsBiggest, bluesBiggest, reds, blues) {
-        if (this.redsBiggest === this.bluesBiggest) {
+    updatePoints(redsBiggest, bluesBiggest, reds, blues, scoreLimit) {
+        if (redsBiggest === bluesBiggest) {
             alert("It's a draw, no points given");
-        } else if (this.redsBiggest > this.bluesBiggest) {
+        } else if (redsBiggest > bluesBiggest) {
             let element = document.getElementById("redpoints");
-            let points = (17 - this.blues) * this.redsBiggest;
+            let points = (17 - blues) * redsBiggest;
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
             alert("Red wins the round! " + points + " points awarded!");
-            if (current >= this.scoreLimit){
+            if (current >= scoreLimit){
                 element.innerHTML += " WINNER";
                 alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
                 element.innerHTML = 0;
@@ -44,12 +44,12 @@ class UIUpdater {
             }
         } else {
             let element = document.getElementById("bluepoints");
-            let points = (17 - this.reds) * this.bluesBiggest;
+            let points = (17 - reds) * bluesBiggest;
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
             alert("Blue Wins! " + points + " points awarded!");
-            if (current > this.scoreLimit){
+            if (current > scoreLimit){
                 element.innerHTML += " WINNER";
                 alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
@@ -87,6 +87,18 @@ class UIUpdater {
             }
 
         }
+    }
+
+    tooManyRoundsWithoutHits() {
+        alert("30 rounds without hits, round ended!");
+    }
+
+    noMovesAvailable(turn) {
+        alert("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+    }
+
+    twoConsecutiveRoundsSkipped() {
+        alert("Two consecutive turns skipped, round ended!");
     }
 
 

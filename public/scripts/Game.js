@@ -127,18 +127,18 @@ class Game {
     checkIfRoundEnds() {
 
         let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
-        if (this.turnCounter === 10) {
-            alert("10 rounds without hits, round ended!");
+        if (this.turnCounter === 30) {
+            this.uiUpdater.tooManyRoundsWithoutHits();
             this.calculatePoints();
             return;
         }
         if(!availableMoves && this.roundskipped === 0){
             this.roundskipped++;
             this.whoSkipped = this.turn;
-            alert("No moves available, skipping turn of " + (this.turn === 1 ? "red" : "blue") + "!");
+            this.uiUpdater.noMovesAvailable(this.turn);
             this.turn *= -1;
         } else if(!availableMoves && this.roundskipped === 1) {
-            alert("Two consecutive turns skipped, round ended!");
+            this.uiUpdater.twoConsecutiveRoundsSkipped();
             this.whoSkipped = 0;
             this.calculatePoints();
         } else if(availableMoves && this.turn === this.whoSkipped) {
@@ -181,7 +181,7 @@ class Game {
                 }
             }
         }
-        this.uiUpdater.updatePoints(redsBiggest, bluesBiggest, reds, blues);
+        this.uiUpdater.updatePoints(this.redsBiggest, this.bluesBiggest, this.reds, this.blues, this.scoreLimit);
         this.startNewRound();
     }
 
