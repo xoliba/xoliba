@@ -7,7 +7,7 @@ import { UIUpdater } from './UIUpdater.js';
 let board;
 let turn;
 let socket;
-let turnCounter
+let turnCounter;
 let roundskipped;
 let validate;
 let playerColor;
