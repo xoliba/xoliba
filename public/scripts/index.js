@@ -1,5 +1,5 @@
 window.$ = require('jquery');
-require('../menuScripts/submenu.js');
+require('../menuScripts/sidenav.js');
 require('../menuScripts/newgamepopup.js');
 require('../menuScripts/submenu.js');
 document.write(require('../partials/sidenav.html'));
