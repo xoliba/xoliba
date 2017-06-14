@@ -2,7 +2,7 @@ import { Board } from './Board.js';
 import { AiSocket } from './Websocket.js';
 import { TurnHandler } from './TurnHandler';
 import { Validations } from './logic/Validations.js';
-import { InfoConsole } from './InfoConsole.js';
+import { UIUpdater } from './UIUpdater.js';
 
 let board;
 let turn;
@@ -20,7 +20,7 @@ let playerHasAnsweredStartRound;
 let aiHasAnsweredStartRound;
 let isFirstTurn;
 let playerWantsToSurrender;
-let infoConsole;
+let uiUpdater;
 let redsBiggest;
 let bluesBiggest;
 let blues;
@@ -52,7 +52,7 @@ class Game {
         this.aiHasAnsweredStartRound = false;
         this.isFirstTurn = true;
         this.playerWantsToSurrender = false;
-        this.infoConsole = new InfoConsole();
+        this.uiUpdater = new UIUpdater();
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
     }
 
@@ -64,7 +64,7 @@ class Game {
         if (this.turn === this.aiColor) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
         }
-        this.turnIndicator(this.turn);
+        this.uiUpdater.turnIndicator(this.turn);
     }
 
     playerSurrender(surrender) {
@@ -107,7 +107,7 @@ class Game {
     changeTurn() {
         this.turn *= -1;
         this.checkIfRoundEnds();
-        this.turnIndicator(this.turn);
+        this.uiUpdater.turnIndicator(this.turn);
         //if it is AIs turn now
         if (this.turn === this.aiColor) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
@@ -259,16 +259,8 @@ class Game {
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
         this.isFirstTurn = true;
         this.playerWantsToSurrender = false;
-        document.getElementById("undo").style.display = "none";
-        document.getElementById("GiveUp").style.display = "none";
-        document.getElementById("StartRound").style.display = "block";
-        document.getElementById("Surrender").style.display = "block";
-        this.infoConsole.newRoundToConsole();
-    }
-
-    turnIndicator(turn) {
-        if (turn === 1) this.infoConsole.printLine("Its reds turn!");
-        else this.infoConsole.printLine("Its blues turn!");
+        this.uiUpdater.showStartRoundAndSurrenderButtons();
+        this.uiUpdater.newRoundToConsole();
     }
 
     undo() {
