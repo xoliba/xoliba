@@ -48,7 +48,7 @@ describe('Game', () => {
         game.aiColor = 1;
         game.changeTurn();
 
-        td.verify(socket.sendTable(table, 1));
+        td.verify(socket.sendTable(table, 1), {times: 1});
     });
 
     it('sets the turn correctly at first turn', () => {
@@ -59,8 +59,19 @@ describe('Game', () => {
         assert.equal(game.turn, 1);
     });
 
+    it('starts a new round when there have been over 30 rounds without a hit', () => {
+        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(true);
+
+        game.turnCounter = 30;
+
+        game.checkIfRoundEnds();
+
+        td.verify(board.generateStartingBoard());
+        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()), {times: 1});
+    });
+
     it('skips a round when there are no possible moves', () => {
-        td.when(validate.isMovesAvailable(1, table)).thenReturn(false);
+        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(false);
 
         game.turn = 1;
         game.roundskipped = 0;
@@ -83,7 +94,7 @@ describe('Game', () => {
         game.checkIfRoundEnds();
 
         td.verify(board.generateStartingBoard());
-        td.verify(socket.sendStartRound(table, -1));
+        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()));
     });
 
     it('resets the skip counter after a successful move', () => {
@@ -94,5 +105,5 @@ describe('Game', () => {
         game.checkIfRoundEnds();
 
         assert.equal(game.roundskipped, 0);
-    })
+    });
 });
