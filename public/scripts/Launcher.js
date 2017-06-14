@@ -2,7 +2,7 @@ import { scale, drawTable } from './Draw.js';
 import * as PIXI from 'pixi.js';
 
 import { Game } from './Game';
-import { printLine } from './infoConsole';
+import { printLine } from './InfoConsole';
 
 var app = new PIXI.Application(scale(), scale(), {view: document.getElementById("gameboard")});
 var game;

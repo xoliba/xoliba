@@ -2,6 +2,7 @@ import { Board } from './Board.js';
 import { AiSocket } from './Websocket.js';
 import { TurnHandler } from './TurnHandler';
 import { Validations } from './logic/Validations.js';
+import { InfoConsole } from './InfoConsole.js';
 
 let board;
 let turn;
@@ -19,6 +20,7 @@ let playerHasAnsweredStartRound;
 let aiHasAnsweredStartRound;
 let isFirstTurn;
 let playerWantsToSurrender;
+let infoConsole;
 
 class Game {
 
@@ -42,6 +44,7 @@ class Game {
         this.aiHasAnsweredStartRound = false;
         this.isFirstTurn = true;
         this.playerWantsToSurrender = false;
+        this.infoConsole = new InfoConsole();
         setTimeout(() => {
                 this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
             }, 1000);
@@ -256,12 +259,12 @@ class Game {
         document.getElementById("GiveUp").style.display = "none";
         document.getElementById("StartRound").style.display = "block";
         document.getElementById("Surrender").style.display = "block";
-        newRoundToConsole();
+        this.infoConsole.newRoundToConsole();
     }
 
     turnIndicator(turn) {
-        if (turn === 1) printLine("Its reds turn!");
-        else printLine("Its blues turn!");
+        if (turn === 1) this.infoConsole.printLine("Its reds turn!");
+        else this.infoConsole.printLine("Its blues turn!");
     }
 
     undo() {
