@@ -19,6 +19,7 @@ p {
 button {
     position: absolute;
     display: block;
+    padding: 0;
     background-color: #FFFFFF;
     color: #FF3333;
     border: 2px #FF3333 solid;

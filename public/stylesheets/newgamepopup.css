@@ -1,9 +1,9 @@
 #newGamePopUp {
     display: none;
-    width: 30vw;
-    height: 15vh;
-    top: 40vh;
-    left: 35vw;
+    width: 30%;
+    height: 10vw;
+    top: 20vw;
+    left: 35%;
     position: absolute;
     border-radius: 20px;
     border: 2px solid black;
@@ -14,37 +14,51 @@
 
 #input {
     margin-left: 10%;
-    margin-top: 2%;
+    margin-top: 5%;
     width: 80%;
 }
 
 #limit {
-    margin-left: 10%;
-    font-size: 4vh;
-    height: 3vh;
+    margin-left: 1vw;
+    font-size: 2vw;
+    height: 2vw;
     float: left
 }
 
 #scorelimit {
-    margin-right: 4vh;
+    margin-right: 2vw;
     width: 30%;;
-    height: 3vh;
-    font-size: 3vh;
+    height: 2vw;
+    font-size: 2vw;
     float: right;
 }
 
 #playAsBlue {
-    top: 60%;
-    left: 15%;
-    width: 30%;
-    height: 20%;
-    font-size: 2vh;
+    top: 50%;
+    left: 10%;
+    width: 38%;
+    height: 30%;
+    font-size: 1.5vw;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #000000;
+}
+
+#playAsBlue:hover {
+    background-color: #3333FF
 }
 
 #playAsRed {
-    top: 60%;
-    left: 55%;
-    width: 30%;
-    height: 20%;
-    font-size: 2vh;
+    top: 50%;
+    left: 52%;
+    width: 38%;
+    height: 30%;
+    font-size: 1.5vw;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #000000;
+}
+
+#playAsRed:hover {
+    background-color: #FF3333;
 }
