@@ -86,7 +86,7 @@ describe('Board', () => {
         }
     });
 
-    it('Hitting stones work', () => {
+    /*it('Hitting stones work', () => {
         var gameboardTo2dArray = td.function('gameboardTo2dArray');
         board.gameboardTo2dArray = gameboardTo2dArray;
         td.when(board.gameboardTo2dArray()).thenReturn(table);
@@ -98,5 +98,5 @@ describe('Board', () => {
         board.gameboardTo2dArray = gameboardTo2dArray;
         td.when(board.gameboardTo2dArray()).thenReturn(table);
         assert.equal(board.startingTurn(), -1);
-    });
+    });*/
 });
