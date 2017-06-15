@@ -28,17 +28,17 @@ class UIUpdater {
 
     updatePoints(redsBiggest, bluesBiggest, reds, blues, scoreLimit) {
         if (redsBiggest === bluesBiggest) {
-            alert("It's a draw, no points given");
+            this.showNotification("It's a draw, no points given");
         } else if (redsBiggest > bluesBiggest) {
             let element = document.getElementById("redpoints");
             let points = (17 - blues) * redsBiggest;
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
-            alert("Red wins the round! " + points + " points awarded!");
+            this.showNotification("Red wins the round! " + points + " points awarded!");
             if (current >= scoreLimit){
                 element.innerHTML += " WINNER";
-                alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
+                this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("bluepoints").innerHTML = 0;
             }
@@ -48,10 +48,10 @@ class UIUpdater {
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
-            alert("Blue Wins! " + points + " points awarded!");
+            this.showNotification("Blue Wins! " + points + " points awarded!");
             if (current > scoreLimit){
                 element.innerHTML += " WINNER";
-                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
+                this.showNotification("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
             }
@@ -65,10 +65,10 @@ class UIUpdater {
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
-            alert("Red surrenders!  " + points + " points awarded to Blue!");
+            this.showNotification("Red surrenders!  " + points + " points awarded to Blue!");
             if (current > scoreLimit){
                 element.innerHTML += " WINNER";
-                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
+                this.showNotification("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
             }
@@ -78,30 +78,47 @@ class UIUpdater {
             let current = parseInt(element.innerHTML, 10);
             current += points;
             element.innerHTML = current;
-            alert("Blue surrenders! " + points + " points awarded to Red!");
-        if (current >= scoreLimit){
-            element.innerHTML += " WINNER";
-            alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
-            element.innerHTML = 0;
-            document.getElementById("bluepoints").innerHTML = 0;
-            }
+            this.showNotification("Blue surrenders! " + points + " points awarded to Red!");
+            if (current >= scoreLimit){
+                element.innerHTML += " WINNER";
+                this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
+                element.innerHTML = 0;
+                document.getElementById("bluepoints").innerHTML = 0;
+                }
 
         }
     }
 
     tooManyRoundsWithoutHits() {
-        alert("30 rounds without hits, round ended!");
+        this.showNotification("30 rounds without hits, round ended!");
     }
 
     noMovesAvailable(turn) {
-        alert("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+        this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
     }
 
     twoConsecutiveRoundsSkipped() {
-        alert("Two consecutive turns skipped, round ended!");
+        this.showNotification("Two consecutive turns skipped, round ended!");
     }
 
 
+    noMovesAvailable(turn) {
+        this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+    }
+
+    twoConsecutiveRoundsSkipped() {
+        this.showNotification("Two consecutive turns skipped, round ended!");
+    }
+
+    showNotification(message){
+        document.getElementById('message').innerHTML = message;
+        var element = document.getElementById('notificationpopup');
+        element.style.transition = '0.5s';
+        element.style.left = '75%';
+        setTimeout(() => {
+            element.style.transition = '0s';
+        }, 500);
+    }
 }
 
 export { UIUpdater };

@@ -1,0 +1,88 @@
+@media screen and (min-aspect-ratio: 5/3){
+
+    #left {
+        display: table;
+        width: 25%;
+        height: 100vh;
+        float: left;
+    }
+
+    #gamecontainer {
+        height: 100%;
+        width: 50%;
+        float: left;
+        text-align: center;
+    }
+
+    #gameboard {
+        width: 100%;
+        height: auto;
+    }
+
+    #right {
+        display: table;
+        height: 100vh;
+        width: 25%;
+    }
+
+    #MenuButton {
+        top: 12vw;
+        left: 5%;
+    }
+
+    #NewGame {
+        top: 25vw;
+        left: 5%;
+    }
+
+    #undo, #StartRound {
+        top: 22vw;
+        left: 5%;
+    }
+
+    #GiveUp, #Surrender {
+        top: 27vw;
+        left: 5%;
+    }
+
+    #infoDiv {
+        position: fixed;
+        top: 12vw;
+        left: 80vw;
+        width: 15vw;
+        height: 25vw;
+        transition-property: left;
+        transition: 0s;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    #info {
+        width: 100%;
+        height: 80%;
+        transition: 0.3s;
+    }
+
+    #hideConsole {
+        top:20vw;
+    }
+
+    #showConsoleDiv {
+        position: fixed;
+        top: 15vw;
+        left: 100vw;
+        width: 4vw;
+        height: 5vw;
+        transition-property: left;
+        transition: 0s;
+        overflow: hidden;
+    }
+
+    #showConsole {
+        display: block;
+        width: 4vw;
+        height: 5vw;
+        overflow: hidden;
+    }
+
+}
