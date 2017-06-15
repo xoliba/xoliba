@@ -9,7 +9,6 @@ import * as PIXI from 'pixi.js';
 
 describe('Board', () => {
 
-    var game;
     var board;
     var actions;
     var validate;
@@ -23,16 +22,8 @@ describe('Board', () => {
                 [-2, 1, 1, 0, -1, 1, -2]];
 
     beforeEach(() => {
-        //board = new BoardClass.Board();
-        game = new Game(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}));
-        board = td.object('Board');
-        game.board = board;
-        turnhandler = new TurnHandler(board, game);
+        turnhandler = td.object('TurnHandler');
         board = new Board(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}), turnhandler);
-        actions = td.object('BoardActions');
-        validate = td.object('Validate');
-
-        board.validate = validate;
     });
 
 
