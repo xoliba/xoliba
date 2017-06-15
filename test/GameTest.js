@@ -106,4 +106,37 @@ describe('Game', () => {
 
         assert.equal(game.roundskipped, 0);
     });
+    
+    it('it is a draw', () => {
+        var draw = [[-2, 0, 0, 0, 0, 1, -2],
+                    [0, 1, 1, 0, 1, 1, 0],
+                    [-1, 1, 0, 1, 1, 1, -1],
+                    [1, 0, 0, 0, 0, 0, 1],
+                    [0, 1, 0, 0, 0, 0, 0],
+                    [1, 0, 1, -1, 1, 1, 1],
+                    [-2, 1, 1, 1, 1, -1, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(draw);
+        td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        game.calculatePoints();
+
+        assert.equal(game.bluePoints, 0);
+        assert.equal(game.redPoints, 0);
+    });
+
+    it('red wins', () => {
+        var reds = [[-2, 0, 0, 0, 0, 1, -2],
+                    [0, 1, 1, 0, 1, 1, 0],
+                    [0, 1, 0, 1, 1, 1, 0],
+                    [1, 0, 0, 0, 0, 0, 1],
+                    [0, 1, 0, 0, 0, 0, 0],
+                    [1, 0, 1, 0, 1, 1, 1],
+                    [-2, 1, 1, 1, 1, 0, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(reds);
+        td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        game.calculatePoints();
+
+        assert.equal(game.redPoints, 51);
+    });
 });
