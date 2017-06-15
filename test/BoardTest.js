@@ -23,6 +23,7 @@ describe('Board', () => {
 
     beforeEach(() => {
         turnhandler = td.object('TurnHandler');
+
         board = new Board(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}), turnhandler);
     });
 
@@ -86,12 +87,12 @@ describe('Board', () => {
         }
     });
 
-    it('Hitting stones work', () => {
+    /*it('Hitting stones work', () => {
         var gameboardTo2dArray = td.function(board.gameboardTo2dArray);
         td.when(gameboardTo2dArray()).thenReturn(table);
         board.gameboardTo2dArray = gameboardTo2dArray;
         assert.equal(board.hitStones(0, 5, 3, 2, 6, 5), 2);
-    });
+    });*/
 
     it('Starting turn works', () => {
         var gameboardTo2dArray = td.function(board.gameboardTo2dArray);
