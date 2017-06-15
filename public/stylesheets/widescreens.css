@@ -1,0 +1,43 @@
+@media screen and (min-aspect-ratio: 3/2) {
+
+    button {
+        height: 3vw;
+        width: 15vw;
+        font-size: 2vw;
+    }
+
+    #MenuButton {
+        top: 20vw;
+        left: 5%;
+    }
+
+    #NewGame {
+        top: 32vw;
+        left: 5%;
+    }
+
+    #StartRound {
+        top:30vw;
+        left:5%
+    }
+
+    #Surrender {
+        top:35vw;
+        left:5%;
+    }
+
+    #undo {
+        top: 30vw;
+        left: 5%;
+    }
+
+    #GiveUp {
+        top:35vw;
+        left: 5%;
+    }
+
+    #info {
+        position: absolute;
+
+    }
+}

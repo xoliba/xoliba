@@ -19,6 +19,10 @@ class UIUpdater {
         this.infoConsole.newRoundToConsole();
     }
 
+    startMessage() {
+        this.infoConsole.startMessage();
+    }
+
     showStartRoundAndSurrenderButtons() {
         document.getElementById("undo").style.display = "none";
         document.getElementById("GiveUp").style.display = "none";
@@ -26,82 +30,101 @@ class UIUpdater {
         document.getElementById("Surrender").style.display = "block";
     }
 
-    updatePoints(redsBiggest, bluesBiggest, reds, blues, scoreLimit) {
-        if (redsBiggest === bluesBiggest) {
-            alert("It's a draw, no points given");
-        } else if (redsBiggest > bluesBiggest) {
+
+    updatePoints(draw, color, score, end) {
+        if (draw) {
+            this.showNotification("It's a draw, no points given");
+        } else if (color === 1) {
+            this.showNotification("Red wins the round! " + score + " points awarded!");
             let element = document.getElementById("redpoints");
-            let points = (17 - blues) * redsBiggest;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            alert("Red wins the round! " + points + " points awarded!");
-            if (current >= scoreLimit){
+            if (end) {
                 element.innerHTML += " WINNER";
-                alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
+                this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("bluepoints").innerHTML = 0;
             }
+
         } else {
+            this.showNotification("Blue wins the round! " + score + " points awarded!");
             let element = document.getElementById("bluepoints");
-            let points = (17 - reds) * bluesBiggest;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            alert("Blue Wins! " + points + " points awarded!");
-            if (current > scoreLimit){
+            if (end) {
                 element.innerHTML += " WINNER";
-                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
+                this.showNotification("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
             }
         }
     }
 
-    updateSurrenderPoints(color, scoreLimit) {
+    updateSurrenderPoints(color, score, end) {
         if (color === 1) {
             let element = document.getElementById("bluepoints");
-            let points = 0.4 * scoreLimit;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            alert("Red surrenders!  " + points + " points awarded to Blue!");
-            if (current > scoreLimit){
+            this.showNotification("Red surrenders!  " + score + " points awarded to Blue!");
+            if (end){
                 element.innerHTML += " WINNER";
-                alert("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
+                this.showNotification("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
             }
         } else {
             let element = document.getElementById("redpoints");
-            let points = 0.4 * scoreLimit;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            alert("Blue surrenders! " + points + " points awarded to Red!");
-        if (current >= scoreLimit){
-            element.innerHTML += " WINNER";
-            alert("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
-            element.innerHTML = 0;
-            document.getElementById("bluepoints").innerHTML = 0;
-            }
+            this.showNotification("Blue surrenders! " + score + " points awarded to Red!");
+            if (end){
+                element.innerHTML += " WINNER";
+                this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
+                element.innerHTML = 0;
+                document.getElementById("bluepoints").innerHTML = 0;
+                }
 
         }
     }
 
     tooManyRoundsWithoutHits() {
-        alert("30 rounds without hits, round ended!");
+        this.showNotification("30 rounds without hits, round ended!");
     }
 
     noMovesAvailable(turn) {
-        alert("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+        this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
     }
 
     twoConsecutiveRoundsSkipped() {
-        alert("Two consecutive turns skipped, round ended!");
+        this.showNotification("Two consecutive turns skipped, round ended!");
+    }
+
+    printMove(start, target, corner2, corner3, ateEnemies, ateOwns) {
+        this.infoConsole.printMove(start, target, corner2, corner3, ateEnemies, ateOwns);
     }
 
 
+    noMovesAvailable(turn) {
+        this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+    }
+
+    twoConsecutiveRoundsSkipped() {
+        this.showNotification("Two consecutive turns skipped, round ended!");
+    }
+
+    showNotification(message){
+        document.getElementById('message').innerHTML = message;
+        var element = document.getElementById('notificationpopup');
+        element.style.transition = '0.5s';
+        element.style.left = '75%';
+        setTimeout(() => {
+            element.style.transition = '0s';
+        }, 500);
+    }
 }
 
 export { UIUpdater };

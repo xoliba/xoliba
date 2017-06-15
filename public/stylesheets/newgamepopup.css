@@ -1,0 +1,64 @@
+#newGamePopUp {
+    display: none;
+    width: 30%;
+    height: 10vw;
+    top: 20vw;
+    left: 35%;
+    position: absolute;
+    border-radius: 20px;
+    border: 2px solid black;
+    background-color: #e5e5e5;
+    box-shadow: 0px 8px 16px 2px rgba(0, 0, 0, 0.7);
+    z-index: 10;
+}
+
+#input {
+    margin-left: 10%;
+    margin-top: 5%;
+    width: 80%;
+}
+
+#limit {
+    margin-left: 1vw;
+    font-size: 2vw;
+    height: 2vw;
+    float: left
+}
+
+#scorelimit {
+    margin-right: 2vw;
+    width: 30%;;
+    height: 2vw;
+    font-size: 2vw;
+    float: right;
+}
+
+#playAsBlue {
+    top: 50%;
+    left: 10%;
+    width: 38%;
+    height: 30%;
+    font-size: 1.5vw;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #000000;
+}
+
+#playAsBlue:hover {
+    background-color: #3333FF
+}
+
+#playAsRed {
+    top: 50%;
+    left: 52%;
+    width: 38%;
+    height: 30%;
+    font-size: 1.5vw;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #000000;
+}
+
+#playAsRed:hover {
+    background-color: #FF3333;
+}

@@ -1,10 +1,11 @@
 const ROWS = 7;
 import { BoardActions } from './logic/BoardActions.js';
 import { Stone } from './Stone.js';
+import { UIUpdater } from './UIUpdater.js';
 
 let stonesList;
 let actions;
-//let turnHandler;
+let uiUpdater;
 
 class Board {
 
@@ -14,6 +15,7 @@ class Board {
         //this.turnHandler = new TurnHandler(false, this);
         turnHandler.board = this;
         this.generateStartingBoard(app, turnHandler);
+        this.uiUpdater = new UIUpdater();
     }
 
     gameboardTo2dArray() {
@@ -46,15 +48,22 @@ class Board {
       If no stones are being hit, it will return 1.
       If stones are hit, will return 2.
     */
-    hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY) {
+    hitStones(startX, startY, targetX, targetY, secondX, secondY, thirdX, thirdY) {
         let array = this.gameboardTo2dArray();
-        let result = this.actions.hitStones(firstX, firstY, secondX, secondY, thirdX, thirdY, array);
+        let result = this.actions.hitStones(targetX, targetY, secondX, secondY, thirdX, thirdY, array);
         if(result === false) return false;
-        for(let i=0; i<this.stonesList.length; i++) {
+
+        let ownColor = array[thirdX][thirdY];
+        let ateEnemies = [];
+        let ateOwns = [];
+        for(let i=0; i<this.stonesList.length; i++) { //update stones
             if(this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
+                if(this.stonesList[i].value === ownColor) ateOwns.push([this.stonesList[i].x, this.stonesList[i].y]);
+                else ateEnemies.push([this.stonesList[i].x, this.stonesList[i].y]);
                 this.stonesList[i].value = array[this.stonesList[i].x][this.stonesList[i].y];
             }
         }
+        this.uiUpdater.printMove([startX, startY], [targetX, targetY], [secondX, secondY], [thirdX, thirdY], ateEnemies, ateOwns)
         return result;
     }
 

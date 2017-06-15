@@ -23,7 +23,6 @@ describe('Board', () => {
 
     beforeEach(() => {
         turnhandler = td.object('TurnHandler');
-
         board = new Board(new PIXI.Application(20, 20, {view: document.getElementById("gameboard")}), turnhandler);
     });
 
