@@ -2,6 +2,7 @@
 class InfoConsole {
 
     appendWithNewLineIfNecessery() {
+        // == instead of === is intended.
         if (!document.getElementById("info").value == '') {
             document.getElementById("info").append("\n");
         }
@@ -27,24 +28,24 @@ class InfoConsole {
 
     scrollToBottom(){
         let psconsole = $('#info');
-        if(psconsole.length){
+        if (psconsole.length){
             psconsole.scrollTop(psconsole[0].scrollHeight - psconsole.height());
         }
     }
 
     printMove(start, target, corner2, corner3, ateEnemies, ateOwns) {
         let eatedStonesString = '';
-        if(ateEnemies.length > 0 || ateOwns.length > 0) {
+        if (ateEnemies.length > 0 || ateOwns.length > 0) {
             eatedStonesString += " (";
-            for(let i=0; i<ateEnemies.length; i++) {
+            for (let i=0; i<ateEnemies.length; i++) {
                 eatedStonesString += this.turnIntoCoordinates(ateEnemies[i]);
-                if(i<ateEnemies.length-1) eatedStonesString += " ";
+                if (i<ateEnemies.length-1) eatedStonesString += " ";
             }
-            if(ateOwns.length > 0) {
+            if (ateOwns.length > 0) {
                 eatedStonesString += "; ";
-                for(let i=0; i<ateOwns.length; i++) {
+                for (let i=0; i<ateOwns.length; i++) {
                     eatedStonesString += this.turnIntoCoordinates(ateOwns[i]);
-                    if(i<ateOwns.length-1) eatedStonesString += " ";
+                    if (i<ateOwns.length-1) eatedStonesString += " ";
                 }
             }
             eatedStonesString += ")";

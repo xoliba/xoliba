@@ -55,12 +55,12 @@ class BoardActions {
                 }
 
                 if (isVertical) { //we walk through triangle "floors" in vertical direction (y-axis)
-                    if (gameboard[triangleFloor][j] != 0) {
+                    if (gameboard[triangleFloor][j] !== 0) {
                         stonesHit = true;
                         gameboard[triangleFloor][j] = 0;
                     }
                 } else { //walk the floors in horizontal dir, (x-axis)
-                    if (gameboard[j][triangleFloor] != 0) {
+                    if (gameboard[j][triangleFloor] !== 0) {
                         stonesHit = true;
                         gameboard[j][triangleFloor] = 0;
                     }
@@ -71,11 +71,8 @@ class BoardActions {
             min++;
             max--;
         }
-        if (stonesHit === false) {
-            return 1;
-        } else {
-            return 2;
-        }
+        if (stonesHit === false) return 1;
+        return 2;
     }
 }
 

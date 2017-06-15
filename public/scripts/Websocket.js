@@ -1,5 +1,3 @@
-import { Game } from './Game.js';
-
 var game;
 var aisocket;
 
@@ -18,14 +16,14 @@ class AiSocket {
             if (msg.type === "startRound") {
                 this.game.aiSurrender(msg.surrender);
             } else {
-                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
+                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners);
                 this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
             }
         };
 
         aisocket.onopen = function() {
             console.log("connected to ai server");
-            setInterval(ping, 30000);
+            setInterval(ping(), 30000);
         }
 
         aisocket.onclose = function() {
@@ -35,7 +33,7 @@ class AiSocket {
         function ping() {
             let msg = {
                 type: "ping"
-            }
+            };
 
             if (aisocket.readyState === 1) {
                 aisocket.send(JSON.stringify(msg));
@@ -53,7 +51,7 @@ class AiSocket {
             target: null,
             didMove: true,
             surrender: giveUp
-        }
+        };
         console.log("send table");
         aisocket.send(JSON.stringify(msg));
     }
@@ -67,7 +65,7 @@ class AiSocket {
             target: null,
             didMove: true,
             surrender: null
-        }
+        };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
 

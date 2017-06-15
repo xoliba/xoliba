@@ -44,9 +44,9 @@
 	"key-spacing": 1,
 	"keyword-spacing": 1,
 	"max-depth": ["warn", 4],
-	"max-len": ["warn", 150],
+	"max-len": ["warn", 200],
 	"max-lines": ["warn", 250],
-	"max-statements": ["warn", 20]
+	"max-statements": ["warn", 30]
     },
     "env": {
         "browser": true,
