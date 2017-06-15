@@ -47,7 +47,7 @@ class InfoConsole {
             }
             eatedStonesString += ")";
         }
-        this.printLine(this.turnIntoCoordinates(start)+ "-" + this.turnIntoCoordinates(target)+ eatedStonesString);
+        this.printLine(" " + this.turnIntoCoordinates(start)+ "-" + this.turnIntoCoordinates(target)+ eatedStonesString);
     }
 
     turnIntoCoordinates(coordinates) {
@@ -57,5 +57,3 @@ class InfoConsole {
 }
 
 export { InfoConsole };
-
-
