@@ -1,20 +1,12 @@
 import { Helpers } from '../Helpers.js';
 
 //var gameboard;
-var helpers;
+let helpers;
 
 class Validations {
 
     constructor() {
-        //this.gameboard = gameboard;
         this.helpers = new Helpers();
-    }
-
-    turnIndicator(color, turn) {
-        //deprecated
-        /*var turnTeller = document.getElementById("turn");
-        turnTeller.style.color = color;
-        turnTeller.innerHTML = "It's " + "turnTeller" + " turn!";*/
     }
 
     moveIsValid(firstX, firstY, secondX, secondY, board) {
@@ -22,7 +14,7 @@ class Validations {
             return false;
         }
 
-        var boardCopy = this.helpers.arrayCopy(board);
+        let boardCopy = this.helpers.arrayCopy(board);
         this.helpers.swap2DArrayPositions(boardCopy, firstX, firstY, secondX, secondY);
 
         if (this.trianglesFound(secondX, secondY, boardCopy, false) === 0) {
@@ -77,8 +69,8 @@ class Validations {
     }
 
     stonesAreOnTheSameLine(firstX, firstY, secondX, secondY) {
-        var diffX = Math.abs(firstX - secondX);
-        var diffY = Math.abs(firstY - secondY);
+        let diffX = Math.abs(firstX - secondX);
+        let diffY = Math.abs(firstY - secondY);
         return firstX === secondX || firstY === secondY || diffX === diffY;
     }
 
@@ -95,7 +87,7 @@ class Validations {
 
     moveFound(x, y, board) {
         for (let i = 0; i < 7; i++) {
-            for (var j = 0; j < 7; j++) {
+            for (let j = 0; j < 7; j++) {
                 if ((i === 0 && (j === 0 || j === 6)) || (i === 6 && ( j === 0 || j === 6)) || (x === i && y === j) || board[i][j] !== 0) {
                     continue;
                 } else if (this.moveIsValid(x, y, i, j, board)) {
@@ -172,7 +164,7 @@ class Validations {
     }
 
     checkIfColour(targetX, targetY, color, board) {
-        var result = 0;
+        let result = 0;
         if (this.isThisOnBoard(targetX, targetY)) {
             if (board[targetX][targetY] === color) {
                 result++;
@@ -182,27 +174,27 @@ class Validations {
     }
 
      checkIfTriangle(firstX, firstY, secondX, secondY, thirdX, thirdY) {
-        if(((firstX === secondX) && (firstY === secondY)) || ((firstX === thirdX) && (firstY === thirdY)) || ((secondX === thirdX) && (secondY === thirdY))) {
+         if (((firstX === secondX) && (firstY === secondY)) || ((firstX === thirdX) && (firstY === thirdY)) || ((secondX === thirdX) && (secondY === thirdY))) {
             //if any of the coordinates are the same, return false
             return false;
         }
 
         //Validation is performed in function hitTriangle
-        if (firstX === secondX) {
-            return this.checkTriangleShape(firstY, secondY, firstX, thirdX, thirdY);
-        } else if (firstX === thirdX) {
-            return this.checkTriangleShape(firstY, thirdY, firstX, secondX, secondY);
-        } else if (secondX === thirdX) {
-            return this.checkTriangleShape(secondY, thirdY, secondX, firstX, firstY);
-        } else if (firstY === secondY) {
-            return this.checkTriangleShape(firstX, secondX, firstY, thirdY, thirdX);
-        } else if (firstY === thirdY) {
-            return this.checkTriangleShape(firstX, thirdX, firstY, secondY, secondX);
-        } else if (secondY === thirdY) {
-            return this.checkTriangleShape(secondX, thirdX, secondY, firstY, firstX);
-        }
-        return false;
-    }
+         if (firstX === secondX) {
+             return this.checkTriangleShape(firstY, secondY, firstX, thirdX, thirdY);
+         } else if (firstX === thirdX) {
+             return this.checkTriangleShape(firstY, thirdY, firstX, secondX, secondY);
+         } else if (secondX === thirdX) {
+             return this.checkTriangleShape(secondY, thirdY, secondX, firstX, firstY);
+         } else if (firstY === secondY) {
+             return this.checkTriangleShape(firstX, secondX, firstY, thirdY, thirdX);
+         } else if (firstY === thirdY) {
+             return this.checkTriangleShape(firstX, thirdX, firstY, secondY, secondX);
+         } else if (secondY === thirdY) {
+             return this.checkTriangleShape(secondX, thirdX, secondY, firstY, firstX);
+         }
+         return false;
+     }
 
     checkTriangleShape(basis1, basis2, bottomH, tipH, tipPosition) {
         let width = Math.abs(basis1 - basis2);
