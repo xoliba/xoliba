@@ -1,5 +1,5 @@
 class Helpers {
-    getStonesArrayPosition(coordinate, padding, px) {
+    /*getStonesArrayPosition(coordinate, padding, px) {
         return Math.round((coordinate - padding) / px);
     }
 
@@ -10,7 +10,7 @@ class Helpers {
     addCorner(x, y, corners) {
         corners.push(x);
         corners.push(y);
-    }
+    }*/
 
     swap2DArrayPositions(array, firstX, firstY, secondX, secondY) {
         var help = array[firstX][firstY];
@@ -18,7 +18,7 @@ class Helpers {
         array[secondX][secondY] = help;
     }
 
-    swapPositions(spriteA, spriteB) {
+    /*swapPositions(spriteA, spriteB) {
         let tmpx = spriteA.x;
         let tmpy = spriteA.y;
         spriteA.x = spriteB.x;
@@ -35,7 +35,7 @@ class Helpers {
     minimize(sprite, highlightScaling) {
         sprite.scale.x -= highlightScaling;
         sprite.scale.y -= highlightScaling;
-    }
+    }*/
 
     arrayCopy(array) { //copy the array
       let newArray = new Array(7);
