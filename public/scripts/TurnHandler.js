@@ -88,7 +88,7 @@ class TurnHandler {
         this.corners.push(stone);
         console.log(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
         if (this.game.turn === stone.value && this.validate.checkIfTriangle(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y)) {
-            this.stonesHit = this.board.hitStones(this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
+            this.stonesHit = this.board.hitStones(this.whiteStoneClicked.x, this.whiteStoneClicked.y, this.corners[0].x, this.corners[0].y, this.corners[1].x, this.corners[1].y, this.corners[2].x, this.corners[2].y);
             if (this.stonesHit === 1) {
                 this.game.updateTurnCounter(false);
             } else if (this.stonesHit === 2) {
@@ -114,7 +114,7 @@ class TurnHandler {
             startStone = this.board.findStone(start[0], start[1]);
             targetStone = this.board.findStone(target[0], target[1]);
             this.board.swap(startStone, targetStone);
-            this.stonesHit = this.board.hitStones(target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
+            this.stonesHit = this.board.hitStones(start[0], start[1], target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
 
             if (this.stonesHit === 1) {
                 this.game.updateTurnCounter(false);

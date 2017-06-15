@@ -97,7 +97,7 @@ class Game {
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
         } else {
-        this.turnHandler.aiTurn(didMove, start, target, corners);
+            this.turnHandler.aiTurn(didMove, start, target, corners);
         }
     }
 

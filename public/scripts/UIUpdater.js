@@ -101,6 +101,10 @@ class UIUpdater {
         this.showNotification("Two consecutive turns skipped, round ended!");
     }
 
+    printMove(start, target, corner2, corner3, ateEnemies, ateOwns) {
+        this.infoConsole.printMove(start, target, corner2, corner3, ateEnemies, ateOwns);
+    }
+
 
     noMovesAvailable(turn) {
         this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
