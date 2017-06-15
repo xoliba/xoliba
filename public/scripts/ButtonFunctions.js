@@ -9,7 +9,7 @@ var undoButton = document.getElementById("undo");
 var surrenderButton = document.getElementById("Surrender");
 var continueButton = document.getElementById("StartRound");
 var giveUpButton = document.getElementById("GiveUp");
-var notificationButton = document.getElementById('notificationpopup');
+var notificationButton = document.getElementById('closeNotification');
 
 function addNewGameButtonFunctions(game, app) {  //These functions create a new game
     blueButtonFunction(game, app);

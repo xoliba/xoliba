@@ -79,7 +79,7 @@ class Game {
         if (surrender) {
             this.calculateSurrenderPoints(this.aiColor);
           //  this.uiUpdater.updateSurrenderPoints(this.aiColor, this.scoreLimit);
-            this.startNewRound();
+          //  this.startNewRound();
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) {
             this.startFirstTurn();
         }
