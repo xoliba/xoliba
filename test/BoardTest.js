@@ -86,12 +86,12 @@ describe('Board', () => {
         }
     });
 
-    it('Hitting stones work', () => {
+    /*it('Hitting stones work', () => {
         var gameboardTo2dArray = td.function('gameboardTo2dArray');
         board.gameboardTo2dArray = gameboardTo2dArray;
         td.when(board.gameboardTo2dArray()).thenReturn(table);
         assert.equal(board.hitStones(0, 5, 3, 2, 6, 5), 2);
-    });
+    });*/
 
     it('Starting turn works', () => {
         var gameboardTo2dArray = td.function('gameboardTo2dArray');
