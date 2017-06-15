@@ -69,7 +69,7 @@ class Game {
         if (surrender) {
             this.calculateSurrenderPoints(this.playerColor);
         //    this.uiUpdater.updateSurrenderPoints(this.playerColor, this.scoreLimit);
-            this.startNewRound();
+      //      this.startNewRound();
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound = true, this.aiHasAnsweredStartRound)) {
             this.startFirstTurn();
         }
@@ -116,7 +116,6 @@ class Game {
         let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 30) {
             this.uiUpdater.tooManyRoundsWithoutHits();
-            this.calculatePoints();
             return;
         }
         if (!availableMoves && this.roundskipped === 0) {
@@ -127,8 +126,7 @@ class Game {
         } else if (!availableMoves && this.roundskipped === 1) {
             this.uiUpdater.twoConsecutiveRoundsSkipped();
             this.whoSkipped = 0;
-            this.calculatePoints();
-        } else if (availableMoves && this.turn === this.whoSkipped) {
+        } else if(availableMoves && this.turn === this.whoSkipped) {
             this.roundskipped = 0;
         }
     }
@@ -178,6 +176,8 @@ class Game {
             this.redPoints += points;
             if (this.redPoints >= this.scoreLimit) {
                 end = true;
+                this.bluePoints = 0;
+                this.redPoints = 0;
             }
             this.uiUpdater.updatePoints(draw, 1, points, end);
         } else {
@@ -185,10 +185,12 @@ class Game {
             this.bluePoints += points;
             if (this.bluePoints >= this.scoreLimit) {
                 end = true;
+                this.bluePoints = 0;
+                this.redPoints = 0;
             }
             this.uiUpdater.updatePoints(draw, -1, points, end);
         }
-        this.startNewRound();
+        //this.startNewRound();
     }
 
 
