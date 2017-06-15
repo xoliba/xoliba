@@ -86,17 +86,17 @@ describe('Board', () => {
         }
     });
 
-    /*it('Hitting stones work', () => {
-        var gameboardTo2dArray = td.function('gameboardTo2dArray');
+    it('Hitting stones work', () => {
+        var gameboardTo2dArray = td.function(board.gameboardTo2dArray);
+        td.when(gameboardTo2dArray()).thenReturn(table);
         board.gameboardTo2dArray = gameboardTo2dArray;
-        td.when(board.gameboardTo2dArray()).thenReturn(table);
         assert.equal(board.hitStones(0, 5, 3, 2, 6, 5), 2);
-    });*/
+    });
 
     it('Starting turn works', () => {
-        var gameboardTo2dArray = td.function('gameboardTo2dArray');
+        var gameboardTo2dArray = td.function(board.gameboardTo2dArray);
+        td.when(gameboardTo2dArray()).thenReturn(table);
         board.gameboardTo2dArray = gameboardTo2dArray;
-        td.when(board.gameboardTo2dArray()).thenReturn(table);
         assert.equal(board.startingTurn(), -1);
     });
 });
