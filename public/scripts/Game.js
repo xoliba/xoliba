@@ -53,35 +53,29 @@ class Game {
         this.uiUpdater.turnIndicator(this.turn);
     }
 
+    playerAndAiHaveAnswered(player, ai) {
+        return player && ai;
+    }
+
     playerSurrender(surrender) {
         if (surrender) {
             this.uiUpdater.updateSurrenderPoints(this.playerColor, this.scoreLimit);
             this.startNewRound();
-        } else {
-            if (this.aiHasAnsweredStartRound === true) {
-                this.playerHasAnsweredStartRound = true;
-                this.startFirstTurn();
-            } else {
-                this.playerHasAnsweredStartRound = true;
-            }
+        } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound = true, this.aiHasAnsweredStartRound)) {
+            this.startFirstTurn();
         }
-
-
     }
 
     aiSurrender(surrender) {
         if (surrender) {
             this.uiUpdater.updateSurrenderPoints(this.aiColor, this.scoreLimit);
             this.startNewRound();
-        } else {
-            if (this.playerHasAnsweredStartRound === true) {
-                this.aiHasAnsweredStartRound = true;
-                this.startFirstTurn();
-            } else {
-                this.aiHasAnsweredStartRound = true;
-            }
+        } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) {
+            this.startFirstTurn();
         }
     }
+
+    
 
     giveUp() {
         this.playerWantsToSurrender = true;
