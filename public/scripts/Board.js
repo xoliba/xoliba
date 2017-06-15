@@ -28,7 +28,7 @@ class Board {
             }
         }
         //load the sprites
-        for(let i=0; i<this.stonesList.length; i++) {
+        for (let i=0; i<this.stonesList.length; i++) {
             table[this.stonesList[i].x][this.stonesList[i].y] = this.stonesList[i].value;
         }
         //corners
@@ -51,14 +51,14 @@ class Board {
     hitStones(startX, startY, targetX, targetY, secondX, secondY, thirdX, thirdY) {
         let array = this.gameboardTo2dArray();
         let result = this.actions.hitStones(targetX, targetY, secondX, secondY, thirdX, thirdY, array);
-        if(result === false) return false;
+        if (result === false) return false;
 
         let ownColor = array[thirdX][thirdY];
         let ateEnemies = [];
         let ateOwns = [];
-        for(let i=0; i<this.stonesList.length; i++) { //update stones
-            if(this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
-                if(this.stonesList[i].value === ownColor) ateOwns.push([this.stonesList[i].x, this.stonesList[i].y]);
+        for (let i=0; i<this.stonesList.length; i++) { //update stones
+            if (this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
+                if (this.stonesList[i].value === ownColor) ateOwns.push([this.stonesList[i].x, this.stonesList[i].y]);
                 else ateEnemies.push([this.stonesList[i].x, this.stonesList[i].y]);
                 this.stonesList[i].value = array[this.stonesList[i].x][this.stonesList[i].y];
             }
@@ -80,9 +80,9 @@ class Board {
 
         for (let i=0; i < 7; i++) {
             for (let j=0; j < 7; j++) {
-                if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
+                if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     let value = Math.floor(Math.random() * (reds + blues + whites) + 1);
-                    if(value <= reds){
+                    if (value <= reds){
                         if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, app, turnHandler);
                         else this.stonesList[n++].value = 1;
                         reds--;
@@ -105,20 +105,20 @@ class Board {
         let sTurn = table[0][1] + table[0][5] + table[1][0] + table[1][6]
             + table[5][0] + table[5][6] + table[6][1] + table[6][5];
 
-        if(sTurn === 0) {
-            for(let i = 1; i < 6; i++) {
+        if (sTurn === 0) {
+            for (let i = 1; i < 6; i++) {
                 sTurn += table[i][0];
                 sTurn += table[i][6];
                 sTurn += table[0][i];
                 sTurn += table[6][i];
             }
         }
-        if(sTurn < 0) {
+        if (sTurn < 0) {
             return 1;
         } else if (sTurn > 0) {
             return -1;
         } else {
-        if(sTurn === 0) {
+        if (sTurn === 0) {
             if(Math.floor(Math.random()*2)) {
                 return -1;
             } else {
@@ -129,8 +129,8 @@ class Board {
     }
 
     findStone(x, y) {
-        for(let i=0; i<this.stonesList.length; i++) {
-            if(this.stonesList[i].x === x && this.stonesList[i].y === y) {
+        for (let i=0; i<this.stonesList.length; i++) {
+            if (this.stonesList[i].x === x && this.stonesList[i].y === y) {
                 return this.stonesList[i];
             }
         }

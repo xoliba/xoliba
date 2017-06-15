@@ -23,7 +23,7 @@ function addButtonFunctions(game) {     //These functions use the game created i
 }
 
 function blueButtonFunction(game, app) {
-    if(blueButton.addEventListener){
+    if (blueButton.addEventListener){
 
 /*
     blueButton.addEventListener("click", () => { doStuff(app, game, -1) }, false);
@@ -42,7 +42,8 @@ if(redButton.addEventListener){
             var score = document.getElementById("scorelimit").value;
             document.getElementById("newGamePopUp").style.display = "none";
             hideNewGameAndShowStartRoundOptions();
-            for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+            for (var i = app.stage.children.length - 1; i >= 1; i--)
+                app.stage.removeChild(app.stage.children[i]);
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, -1, score);
@@ -56,7 +57,8 @@ if(redButton.addEventListener){
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGameAndShowStartRoundOptions();
-                for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+                for (var i = app.stage.children.length - 1; i >= 1; i--)
+                    app.stage.removeChild(app.stage.children[i]);
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
                 game = new Game(app, -1, score);
@@ -73,7 +75,8 @@ function redButtonFunction(game, app) {
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGameAndShowStartRoundOptions();
-                for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+                for (var i = app.stage.children.length - 1; i >= 1; i--)
+                    app.stage.removeChild(app.stage.children[i]);
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
                 game = new Game(app, 1, score);
@@ -86,7 +89,8 @@ function redButtonFunction(game, app) {
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGameAndShowStartRoundOptions();
-                for (var i = app.stage.children.length - 1; i >= 1; i--) { app.stage.removeChild(app.stage.children[i]); };
+                for (var i = app.stage.children.length - 1; i >= 1; i--)
+                    app.stage.removeChild(app.stage.children[i]);
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
                 game = new Game(app, 1, score);
