@@ -1,4 +1,4 @@
-let assert = require('assert');
+var assert = require('assert');
 import { Board } from '../public/scripts/Board.js';
 import { AiSocket } from '../public/scripts/Websocket.js';
 import { Game } from '../public/scripts/Game.js';
@@ -11,13 +11,13 @@ import * as PIXI from 'pixi.js';
 
 describe('Game', () => {
 
-    let game;
-    let board;
-    let socket;
-    let validate;
-    let infoConsole;
-    let UIUpdater;
-    let table = [[-2, 0, 0, 0, 0, 1, -2],
+    var game;
+    var board;
+    var socket;
+    var validate;
+    var infoConsole;
+    var UIUpdater;
+    var table = [[-2, 0, 0, 0, 0, 1, -2],
                 [0, 1, 1, 0, 1, 1, 0],
                 [0, 1, 0, 1, 1, 1, 0],
                 [0, 0, 0, 0, 0, 0, 1],

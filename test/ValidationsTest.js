@@ -126,7 +126,7 @@ describe('Validations', () => {
       assert.equal(validations.trianglesFound(4, 3, boardSheet2, true), 2);
       assert.equal(validations.trianglesFound(4, 4, boardSheet2, true), 2);
       assert.equal(validations.trianglesFound(3, 3, boardSheet2, true), 2);
-      let temp =[  [-2, 0, 1, 1, 0, 0,-2],
+      var temp =[  [-2, 0, 1, 1, 0, 0,-2],
                     [0, 0, 0, 1,-1, 0,-1],
                     [0, 0, 0, 0,-1,-1, 0],
                     [0, 1, 0, 1, 1, 0, 0],
@@ -138,7 +138,7 @@ describe('Validations', () => {
 
     describe('Validating the moves work', function() {
 
-      let temp=[[-2, 0, 1, 1, 0, 0,-2],
+      var temp=[[-2, 0, 1, 1, 0, 0,-2],
                  [0, 1, 0, 1,-1, 0,-1],
                  [0, 0, 0, 0,-1,-1, 0],
                  [0, 1, 0, 0, 1, 0, 0],
@@ -146,7 +146,7 @@ describe('Validations', () => {
                  [0, 1, 0,-1, 0, 1, 0],
                 [-2, 0, 0, 1, 0, 0,-2]];
 
-      let temp2=[[-2, 1, 0, 0, 0, 1,-2],
+      var temp2=[[-2, 1, 0, 0, 0, 1,-2],
                   [0, 0, 0, 0, 0,-1, 0],
                   [1, 0, 0, 1,-1, 0, 0],
                   [0, 1, 0,-1, 0, 0,-1],
@@ -191,10 +191,10 @@ describe('Validations', () => {
     });
 
     function c(array) { //copy the array
-      let rArray = new Array(7);
-      for (let i = 0; i < 7; i++) {
+      var rArray = new Array(7);
+      for (var i = 0; i < 7; i++) {
           rArray[i] = [];
-          for (let j = 0; j < 7; j++) {
+          for (var j = 0; j < 7; j++) {
               rArray[i][j] = array[i][j];
           }
       }
