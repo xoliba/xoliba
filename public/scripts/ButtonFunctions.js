@@ -6,7 +6,7 @@ import { Game } from './Game';
 var blueButton = document.getElementById("playAsBlue");
 var redButton = document.getElementById("playAsRed");
 var undoButton = document.getElementById("undo");
-var surrenderButton = document.getElementById("Surrender"); 
+var surrenderButton = document.getElementById("Surrender");
 var continueButton = document.getElementById("StartRound");
 var giveUpButton = document.getElementById("GiveUp");
 
@@ -46,8 +46,9 @@ if(redButton.addEventListener){
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, -1, score);
+            game.printStartMessage();
             addButtonFunctions(game);
-            
+
         } , false);
     } else if (blueButton.attachEvent) {
         blueButton.attachEvent("onclick",
@@ -59,6 +60,7 @@ if(redButton.addEventListener){
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
                 game = new Game(app, -1, score);
+                game.printStartMessage();
                 addButtonFunctions(game);
             });
     }
@@ -75,6 +77,7 @@ function redButtonFunction(game, app) {
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
                 game = new Game(app, 1, score);
+                game.printStartMessage();
                 addButtonFunctions(game);
             }, false);
     } else if (redButton.attachEvent) {
@@ -87,6 +90,7 @@ function redButtonFunction(game, app) {
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
                 game = new Game(app, 1, score);
+                game.printStartMessage();
                 addButtonFunctions(game);
             });
     }

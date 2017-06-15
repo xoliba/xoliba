@@ -45,6 +45,9 @@ class Game {
         this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
+    }
+
+    printStartMessage() {
         this.uiUpdater.startMessage();
     }
 
