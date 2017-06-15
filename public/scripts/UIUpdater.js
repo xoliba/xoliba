@@ -19,6 +19,10 @@ class UIUpdater {
         this.infoConsole.newRoundToConsole();
     }
 
+    startMessage() {
+        this.infoConsole.startMessage();
+    }
+
     showStartRoundAndSurrenderButtons() {
         document.getElementById("undo").style.display = "none";
         document.getElementById("GiveUp").style.display = "none";

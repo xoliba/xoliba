@@ -18,9 +18,11 @@ class InfoConsole {
     }
 
     newRoundToConsole() {
-        this.appendWithNewLineIfNecessery();
-        document.getElementById("info").append("\nNew Round! Do you want to surrender or start the round?\n");
-        this.scrollToBottom();
+        this.printLine("\nNew Round! Do you want to surrender or start the round?\n");
+    }
+
+    startMessage() {
+        this.printLine("\nWelcome to Xoliba! Do you want to surrender or start the round?\n");
     }
 
     scrollToBottom(){

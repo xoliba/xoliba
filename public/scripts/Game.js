@@ -45,6 +45,7 @@ class Game {
         this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
+        this.uiUpdater.startMessage();
     }
 
     startFirstTurn() {
@@ -81,7 +82,7 @@ class Game {
         }
     }
 
-    
+
 
     giveUp() {
         this.playerWantsToSurrender = true;
