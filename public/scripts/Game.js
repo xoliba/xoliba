@@ -18,6 +18,8 @@ let playerHasAnsweredStartRound;
 let aiHasAnsweredStartRound;
 let playerWantsToSurrender;
 let uiUpdater;
+let bluePoints;
+let redPoints;
 
 
 class Game {
@@ -39,6 +41,8 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.playerWantsToSurrender = false;
+        this.redPoints = 0;
+        this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
     }
@@ -139,27 +143,65 @@ class Game {
         let redsBiggest = 0;
         let blues = 0;
         let reds = 0;
+        let end = false;
+        let draw = false;
         for (var i = 0; i < 7; i++) {
             for (var j = 0; j < 7; j++) {
-                if(!((i === 0 || i === 6) && (j === 0 || j === 6))) {
-                    if(this.board.gameboardTo2dArray()[i][j] === 1) {
+                if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
+                    if (this.board.gameboardTo2dArray()[i][j] === 1) {
                         reds++;
                         let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
-                        if(found > redsBiggest) {
+                        if (found > redsBiggest) {
                             redsBiggest = found;
                         }
-                    } else if (this.board.gameboardTo2dArray()[i][j] === -1){
+                    } else if (this.board.gameboardTo2dArray()[i][j] === -1) {
                         blues++;
                         let found = this.validate.trianglesFound(i, j, this.board.gameboardTo2dArray(), true);
-                        if(found > bluesBiggest) {
+                        if (found > bluesBiggest) {
                             bluesBiggest = found;
                         }
                     }
                 }
             }
         }
+        if (redsBiggest === bluesBiggest) {
+            draw = true;
+            this.uiUpdater.updatePoints(draw, 0, 0, 0);
+        } else if (redsBiggest > bluesBiggest) {
+            let points = (17 - blues) * redsBiggest;
+            this.redPoints += points;
+            if (this.redPoints >= this.scoreLimit) {
+                end = true;
+            }
+            this.uiUpdater.updatePoints(draw, 1, this.redPoints, end);
+        } else {
+            let points = (17 - reds) * bluesBiggest;
+            this.bluePoints += points;
+            if (this.bluePoints >= this.scoreLimit) {
+                end = true;
+            }
+            this.uiUpdater.updatePoints(draw, -1, this.bluePoints, end);
+        }
         this.uiUpdater.updatePoints(redsBiggest, bluesBiggest, reds, blues, this.scoreLimit);
         this.startNewRound();
+    }
+
+
+    calculateSurrenderPoints() {
+        var end;
+        if (this.turn === 1) {
+            this.bluePoints += 0.4 * this.scoreLimit;
+            if (this.bluePoints >= this.ScoreLimit) {
+                end = true;
+            }
+            this.uiUpdater.updateSurrenderPoints(this.turn, this.bluePoints, end);
+        } else {
+            this.redPoints += 0.4 * this.scoreLimit;
+            if (this.redPoints >= this.scoreLimit) {
+                end = true;
+            }
+            this.uiUpdater.updateSurrenderPoints(this.turn, this.redPoints, end);
+        }
     }
 
     startNewRound(){

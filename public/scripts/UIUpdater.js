@@ -26,6 +26,40 @@ class UIUpdater {
         document.getElementById("Surrender").style.display = "block";
     }
 
+/**
+ * 
+updatePoints(draw, color, score, end) {
+    if (draw) {
+        msg = its a draw;
+    } else if (color === 1) {
+        if (end) {
+            
+        }
+        msg = Red wins!, score awarded;
+        document.getElementById("redpoints") += score;
+    } else {
+        msg = Blue Wins!, score awarded;
+        document.getElementById("bluepoints") += score;
+    }
+}
+
+updateSurrenderPoints(color, score, end) {
+    if (color === 1) {
+        msg = Red surrenders! score awarded to blue!;
+        document.getElementById(bluepoints) += score;
+        if (end) {
+            BLUE WINS!
+        }
+    } else {
+        msg = Blue!;
+        document.getElementById(redpoints) += score;
+        if (end) {
+            RED WINS!
+        }
+    }
+}
+ */
+
     updatePoints(redsBiggest, bluesBiggest, reds, blues, scoreLimit) {
         if (redsBiggest === bluesBiggest) {
             this.showNotification("It's a draw, no points given");
