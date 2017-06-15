@@ -26,64 +26,30 @@ class UIUpdater {
         document.getElementById("Surrender").style.display = "block";
     }
 
-/**
- * 
-updatePoints(draw, color, score, end) {
-    if (draw) {
-        msg = its a draw;
-    } else if (color === 1) {
-        if (end) {
-            
-        }
-        msg = Red wins!, score awarded;
-        document.getElementById("redpoints") += score;
-    } else {
-        msg = Blue Wins!, score awarded;
-        document.getElementById("bluepoints") += score;
-    }
-}
 
-updateSurrenderPoints(color, score, end) {
-    if (color === 1) {
-        msg = Red surrenders! score awarded to blue!;
-        document.getElementById(bluepoints) += score;
-        if (end) {
-            BLUE WINS!
-        }
-    } else {
-        msg = Blue!;
-        document.getElementById(redpoints) += score;
-        if (end) {
-            RED WINS!
-        }
-    }
-}
- */
-
-    updatePoints(redsBiggest, bluesBiggest, reds, blues, scoreLimit) {
-        if (redsBiggest === bluesBiggest) {
+    updatePoints(draw, color, score, end) {
+        if (draw) {
             this.showNotification("It's a draw, no points given");
-        } else if (redsBiggest > bluesBiggest) {
+        } else if (color === 1) {
+            this.showNotification("Red wins the round! " + score + " points awarded!");
             let element = document.getElementById("redpoints");
-            let points = (17 - blues) * redsBiggest;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            this.showNotification("Red wins the round! " + points + " points awarded!");
-            if (current >= scoreLimit){
+            if (end) {
                 element.innerHTML += " WINNER";
                 this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("bluepoints").innerHTML = 0;
             }
+
         } else {
+            this.showNotification("Blue wins the round! " + score + " points awarded!");
             let element = document.getElementById("bluepoints");
-            let points = (17 - reds) * bluesBiggest;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            this.showNotification("Blue Wins! " + points + " points awarded!");
-            if (current > scoreLimit){
+            if (end) {
                 element.innerHTML += " WINNER";
                 this.showNotification("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
@@ -92,15 +58,14 @@ updateSurrenderPoints(color, score, end) {
         }
     }
 
-    updateSurrenderPoints(color, scoreLimit) {
+    updateSurrenderPoints(color, score, end) {
         if (color === 1) {
             let element = document.getElementById("bluepoints");
-            let points = 0.4 * scoreLimit;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            this.showNotification("Red surrenders!  " + points + " points awarded to Blue!");
-            if (current > scoreLimit){
+            this.showNotification("Red surrenders!  " + score + " points awarded to Blue!");
+            if (end){
                 element.innerHTML += " WINNER";
                 this.showNotification("Blue Wins! final score: " + current + " - " + document.getElementById("redpoints").innerHTML);
                 element.innerHTML = 0;
@@ -108,12 +73,11 @@ updateSurrenderPoints(color, score, end) {
             }
         } else {
             let element = document.getElementById("redpoints");
-            let points = 0.4 * scoreLimit;
             let current = parseInt(element.innerHTML, 10);
-            current += points;
+            current += score;
             element.innerHTML = current;
-            this.showNotification("Blue surrenders! " + points + " points awarded to Red!");
-            if (current >= scoreLimit){
+            this.showNotification("Blue surrenders! " + score + " points awarded to Red!");
+            if (end){
                 element.innerHTML += " WINNER";
                 this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
                 element.innerHTML = 0;

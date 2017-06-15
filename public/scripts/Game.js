@@ -63,7 +63,8 @@ class Game {
 
     playerSurrender(surrender) {
         if (surrender) {
-            this.uiUpdater.updateSurrenderPoints(this.playerColor, this.scoreLimit);
+            this.calculateSurrenderPoints(this.playerColor);
+        //    this.uiUpdater.updateSurrenderPoints(this.playerColor, this.scoreLimit);
             this.startNewRound();
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound = true, this.aiHasAnsweredStartRound)) {
             this.startFirstTurn();
@@ -72,7 +73,8 @@ class Game {
 
     aiSurrender(surrender) {
         if (surrender) {
-            this.uiUpdater.updateSurrenderPoints(this.aiColor, this.scoreLimit);
+            this.calculateSurrenderPoints(this.aiColor);
+          //  this.uiUpdater.updateSurrenderPoints(this.aiColor, this.scoreLimit);
             this.startNewRound();
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) {
             this.startFirstTurn();
@@ -173,34 +175,38 @@ class Game {
             if (this.redPoints >= this.scoreLimit) {
                 end = true;
             }
-            this.uiUpdater.updatePoints(draw, 1, this.redPoints, end);
+            this.uiUpdater.updatePoints(draw, 1, points, end);
         } else {
             let points = (17 - reds) * bluesBiggest;
             this.bluePoints += points;
             if (this.bluePoints >= this.scoreLimit) {
                 end = true;
             }
-            this.uiUpdater.updatePoints(draw, -1, this.bluePoints, end);
+            this.uiUpdater.updatePoints(draw, -1, points, end);
         }
-        this.uiUpdater.updatePoints(redsBiggest, bluesBiggest, reds, blues, this.scoreLimit);
         this.startNewRound();
     }
 
 
-    calculateSurrenderPoints() {
-        var end;
-        if (this.turn === 1) {
-            this.bluePoints += 0.4 * this.scoreLimit;
-            if (this.bluePoints >= this.ScoreLimit) {
+    calculateSurrenderPoints(color) {
+        var end = false;
+        var score = 0.4 * this.scoreLimit;
+        if (color === 1) {
+            this.bluePoints += score;
+            if (this.bluePoints >= this.scoreLimit) {
                 end = true;
+                this.bluePoints = 0;
+                this.redPoints = 0;
             }
-            this.uiUpdater.updateSurrenderPoints(this.turn, this.bluePoints, end);
+            this.uiUpdater.updateSurrenderPoints(color, score, end);
         } else {
-            this.redPoints += 0.4 * this.scoreLimit;
+            this.redPoints += score;
             if (this.redPoints >= this.scoreLimit) {
                 end = true;
+                this.bluePoints = 0;
+                this.redPoints = 0;
             }
-            this.uiUpdater.updateSurrenderPoints(this.turn, this.redPoints, end);
+            this.uiUpdater.updateSurrenderPoints(color, score, end);
         }
     }
 
