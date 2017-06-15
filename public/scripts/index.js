@@ -10,3 +10,4 @@ document.write(require('../partials/newGamePopup.html'));
 document.write(require('../partials/console.html'));
 
 require('./Launcher.js');
+require('./ButtonFunctions.js');
