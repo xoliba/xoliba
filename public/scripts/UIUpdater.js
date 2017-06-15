@@ -101,6 +101,15 @@ class UIUpdater {
         this.showNotification("Two consecutive turns skipped, round ended!");
     }
 
+
+    noMovesAvailable(turn) {
+        this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+    }
+
+    twoConsecutiveRoundsSkipped() {
+        this.showNotification("Two consecutive turns skipped, round ended!");
+    }
+
     showNotification(message){
         document.getElementById('message').innerHTML = message;
         var element = document.getElementById('notificationpopup');

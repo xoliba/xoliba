@@ -7,7 +7,7 @@ import { InfoConsole } from '../public/scripts/InfoConsole.js';
 import { UIUpdater } from '../public/scripts/UIUpdater.js';
 import * as PIXI from 'pixi.js';
 
-    
+
 
 describe('Game', () => {
 
