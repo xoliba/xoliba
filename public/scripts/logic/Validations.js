@@ -109,7 +109,13 @@ class Validations {
         for (let i = 2; i <= 6; i += 2) { //for all possible triangle distances
             let distanceSide = i / 2;
             for (let j = 0; j < 4; j++) { //for all four directions
-                found += this.lookForTriangles(positionX, positionY, hypotenuseDirections[j][0] * i, hypotenuseDirections[j][1] * i, edgeDirections[j][0] * distanceSide, edgeDirections[j][1] * distanceSide, edgeDirections[j][2] * distanceSide, edgeDirections[j][3] * distanceSide, color, board);
+                let directionX = hypotenuseDirections[j][0] * i;
+                let directionY = hypotenuseDirections[j][1] * i;
+                let firstChangeX = edgeDirections[j][0] * distanceSide;
+                let firstChangeY = edgeDirections[j][1] * distanceSide;
+                let secondChangeX = edgeDirections[j][2] * distanceSide;
+                let secondChangeY = edgeDirections[j][3] * distanceSide;
+                found += this.lookForTriangles(positionX, positionY, directionX, directionY, firstChangeX, firstChangeY, secondChangeX, secondChangeY, color, board);
             }
             if (getBiggest && found > 0) {
                 biggest = i / 2;
@@ -176,7 +182,7 @@ class Validations {
     }
 
     checkIfTriangle(firstX, firstY, secondX, secondY, thirdX, thirdY) {
-        if (((firstX === secondX) && (firstY === secondY)) || ((firstX === thirdX) && (firstY === thirdY)) || ((secondX === thirdX) && (secondY === thirdY))) {
+        if ((firstX === secondX && firstY === secondY) || (firstX === thirdX && firstY === thirdY) || (secondX === thirdX && secondY === thirdY)) {
             //if any of the coordinates are the same, return false
             return false;
         }

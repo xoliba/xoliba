@@ -4,9 +4,11 @@
         height: auto;
     }
 
-    button {
-        top: 10%;
-        font-size: 5vw;
-        height: 8vw;
+    #MenuButton, #NewGame, #StartRound, #Surrender, #GiveUp {
+        height: 5vw;
+    }
+
+    #undo{
+        top: 15vh;
     }
 }

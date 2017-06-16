@@ -4,14 +4,17 @@
         <li class="submenu">
             <a href="#">Play against AI</a>
             <ul class="dropdown">
-                <li >
-                    <a href="#">Easy (not supported yet)</a>
-                </li>
                 <li>
-                    <a href="javascript:void(0)" onclick="openNewGamePopUp()">Medium</a>
-                </li>
-                <li>
-                    <a href="#">Hard (not supported yet)</a>
+                    <div class="radio-toolbar">
+                        <input class="difficulty" type="radio" id="r1" name="difficulty" value="easy" checked>
+                        <label for="r1">Easy</label><br>
+
+                        <input class="difficulty" type="radio" id="r2" name="difficulty" value="medium">
+                        <label for="r2">Medium</label><br>
+
+                        <input class="difficulty" type="radio" id="r3" name="difficulty" value="hard">
+                        <label for="r3">Hard</label>
+                    </div>
                 </li>
             </ul>
         </li>

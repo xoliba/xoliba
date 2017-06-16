@@ -9,6 +9,7 @@ var undoButton = document.getElementById("undo");
 var surrenderButton = document.getElementById("Surrender");
 var continueButton = document.getElementById("StartRound");
 var giveUpButton = document.getElementById("GiveUp");
+var notificationButton = document.getElementById('closeNotification');
 
 function addNewGameButtonFunctions(game, app) {  //These functions create a new game
     blueButtonFunction(game, app);
@@ -20,6 +21,7 @@ function addButtonFunctions(game) {     //These functions use the game created i
     surrenderButtonFunction(game);
     continueButtonFunction(game);
     giveUpButtonFunction(game);
+    notificationFunction(game);
 }
 
 function blueButtonFunction(game, app) {
@@ -177,5 +179,44 @@ function hideStartRoundOptionsAndShowInGameOptions(){
     giveUpButton.style.display = "block";
 }
 
+
+function notificationFunction(game) {
+    if (notificationButton.addEventListener) {
+        notificationButton.addEventListener("click",
+            function () {
+                var msg = document.getElementById('message').innerHTML;
+                notificationHelperFunction(game, msg);
+            }, false);
+    } else if (notificationButton.attachEvent) {
+        notificationButton.attachEvent("onClick",
+            function () {
+                var msg = document.getElementById('message').innerHTML;
+                notificationHelperFunction(game, msg);
+            }, false);
+    }
+    var element = document.getElementById('notificationpopup');
+    element.style.transition = '0.5s';
+    element.style.left = '105%';
+    setTimeout(() => {
+        element.style.transition = '0s';
+    }, 500);
+}
+
+function notificationHelperFunction(game, msg) {
+    if (msg.includes("No moves available")) {
+        game.skipTurn();
+    } else if (msg.includes("Two consecutive turns skipped") || msg.includes("30 rounds without hits")) {
+        game.calculatePoints();
+    }
+    else if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw")) {
+        if (game.checkIfGameEnds()) {
+            game.winningMessage();
+        } else {
+            game.startNewRound();
+        }
+    } else if (msg.includes("Wins! final score")) {
+        game.startNewRound();
+    }
+}
 
 export { addNewGameButtonFunctions, addButtonFunctions };

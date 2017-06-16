@@ -39,6 +39,9 @@ class TurnHandler {
     }
 
     spriteClicked(stone) {
+        if (this.game.firstTurn) {
+            this.game.pressStartRound();
+        }
         if (this.firstClicked === undefined) {
             this.parseFirstClick(stone);
         } else if (this.corners.length === 1) {

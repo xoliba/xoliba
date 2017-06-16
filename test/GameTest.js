@@ -43,7 +43,7 @@ describe('Game', () => {
 
     it('sends table to ai when turn ends', () => {
         game.checkIfRoundEnds = td.function('checkIfRoundEnds');
-
+        td.when(game.checkIfRoundEnds()).thenReturn(true);
         game.turn = -1;
         game.aiColor = 1;
         game.changeTurn();
@@ -66,8 +66,9 @@ describe('Game', () => {
 
         game.checkIfRoundEnds();
 
-        td.verify(board.generateStartingBoard());
-        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()), {times: 1});
+        td.verify(UIUpdater.tooManyRoundsWithoutHits());
+    //    td.verify(board.generateStartingBoard());
+    //    td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()), {times: 1});
     });
 
     it('skips a round when there are no possible moves', () => {
@@ -92,9 +93,10 @@ describe('Game', () => {
         game.aiColor = -1;
 
         game.checkIfRoundEnds();
+        td.verify(UIUpdater.twoConsecutiveRoundsSkipped());
 
-        td.verify(board.generateStartingBoard());
-        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()));
+  //      td.verify(board.generateStartingBoard());
+  //      td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()));
     });
 
     it('resets the skip counter after a successful move', () => {
@@ -107,15 +109,15 @@ describe('Game', () => {
         assert.equal(game.roundskipped, 0);
     });
     
-    it('it is a draw', () => {
-        var draw = [[-2, 0, 0, 0, 0, 1, -2],
+    it('draw with big triangles', () => {
+        var drawBig = [[-2, 0, 0, 0, 0, 1, -2],
                     [0, 1, 1, 0, 1, 1, 0],
                     [-1, 1, 0, 1, 1, 1, -1],
                     [1, 0, 0, 0, 0, 0, 1],
                     [0, 1, 0, 0, 0, 0, 0],
                     [1, 0, 1, -1, 1, 1, 1],
                     [-2, 1, 1, 1, 1, -1, -2]];
-        td.when(board.gameboardTo2dArray()).thenReturn(draw);
+        td.when(board.gameboardTo2dArray()).thenReturn(drawBig);
         td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
 
         game.calculatePoints();
@@ -138,5 +140,40 @@ describe('Game', () => {
         game.calculatePoints();
 
         assert.equal(game.redPoints, 51);
+        assert.equal(game.bluePoints, 0);
+    });
+
+    it('draw with no triangles', () => {
+        var drawNo = [[-2, 0, 1, 0, -1, 0, -2],
+                    [1, 1, 1, 0, -1, -1, -1],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [1, 1, 1, 0, -1, -1, -1],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [1, 1, 1, 0, -1, -1, -1],
+                    [-2, 0, 1, 0, -1, 0, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(drawNo);
+        td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        game.calculatePoints();
+
+        assert.equal(game.bluePoints, 0);
+        assert.equal(game.redPoints, 0);
+    });
+
+    it('draw with small triangles', () => {
+        var drawSmall = [[-2, 0, 0, 0, 0, 1, -2],
+                    [0, 0, 0, 0, 1, 0, 1],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [-1, 0, -1, 0, 0, 0, 0],
+                    [-2, -1, 0, 0, 0, 0, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(drawSmall);
+        td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        game.calculatePoints();
+
+        assert.equal(game.bluePoints, 0);
+        assert.equal(game.redPoints, 0);
     });
 });
