@@ -5,7 +5,7 @@ import { Game } from './Game';
 import { printLine } from './InfoConsole';
 import { addButtonFunctions, addNewGameButtonFunctions } from './ButtonFunctions.js';
 
-var app = new PIXI.Application(scale(), scale(), {view: document.getElementById("gameboard")});
+var app = new PIXI.Application(scale(), scale(), {view: document.getElementById("gameboard"), transparent: true});
 var game;
 
 drawTable(app.stage);
@@ -18,5 +18,4 @@ drawTable(app.stage);
 
 // a bit less buggy version
 app.renderer.render(app.stage);
-app.renderer.backgroundColor = 0xF8F8F8;
 addNewGameButtonFunctions(game, app);
