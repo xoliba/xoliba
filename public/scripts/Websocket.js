@@ -30,7 +30,7 @@ class AiSocket {
             if (msg.type === "startRound") {
                 this.game.aiSurrender(msg.surrender);
             } else {
-                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners);
+                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
                 this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
             }
         };

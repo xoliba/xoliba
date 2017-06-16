@@ -123,7 +123,7 @@ class TurnHandler {
             }
             this.game.changeTurn();
         } else {
-            this.game.changeTurn();
+            //we shall do nothing, for game.checkIfRoundEnds will send notification to uiHandler, which will result a notification, which will trigger a change turn after clicking it
         }
     }
 

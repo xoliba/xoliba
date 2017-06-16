@@ -91,9 +91,13 @@ class Game {
         }
     }
 
-    giveUp() {
-        this.playerWantsToSurrender = true;
-        this.sendTurnDataToAI();
+    aiTurn(didMove, start, target, corners, surrender) {
+        this.uiUpdater.stopAiIsThinkingInterval();
+        if (surrender && this.playerWantsToSurrender) {
+            this.calculatePoints();
+        } else {
+            this.turnHandler.aiTurn(didMove, start, target, corners);
+        }
     }
 
     /**
@@ -104,15 +108,6 @@ class Game {
         this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
         if(!this.checkIfRoundEnds() && this.turn === this.aiColor) {
             this.sendTurnDataToAI();
-        }
-    }
-
-    aiTurn(didMove, start, target, corners, surrender) {
-        this.uiUpdater.stopAiIsThinkingInterval();
-        if (surrender && this.playerWantsToSurrender) {
-            this.calculatePoints();
-        } else {
-            this.turnHandler.aiTurn(didMove, start, target, corners);
         }
     }
 
@@ -141,9 +136,14 @@ class Game {
         return false;
     }
 
-    sendTurnDataToAI() {
+    giveUp() {
+        this.playerWantsToSurrender = true;
+        this.sendTurnDataToAI(true);
+    }
+
+    sendTurnDataToAI(surrender) {
         this.uiUpdater.startAiIsThinkingInterval();
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), this.aiColor, false, this.aiDifficulty);
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), this.aiColor, surrender, this.aiDifficulty);
     }
 
     updateTurnCounter(areStonesHit) {

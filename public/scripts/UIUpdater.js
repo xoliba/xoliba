@@ -105,7 +105,7 @@ class UIUpdater {
 
     noMovesAvailable(turn) {
         this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
-        this.infoConsole.printLine(" no moves, turn skipped");
+        this.infoConsole.printLine(" no moves, turn skipped\n");
     }
 
     twoConsecutiveRoundsSkipped() {

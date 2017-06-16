@@ -19,7 +19,7 @@ class InfoConsole {
 
     printLine(line) {
         this.appendWithNewLineIfNecessery();
-        document.getElementById("info").value += line + "\n";
+        document.getElementById("info").value += line;
         this.scrollToBottom();
     }
 
@@ -68,7 +68,7 @@ class InfoConsole {
             }
             eatedStonesString += ")";
         }
-        this.printLine(" " + this.turnIntoCoordinates(start)+ "-" + this.turnIntoCoordinates(target)+ eatedStonesString);
+        this.printLine(" " + this.turnIntoCoordinates(start)+ "-" + this.turnIntoCoordinates(target)+ eatedStonesString + "\n");
     }
 
     turnIntoCoordinates(coordinates) {
