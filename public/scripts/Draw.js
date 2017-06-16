@@ -8,7 +8,7 @@ function scale() {
     return result;
 }
 
-    
+
 
 function drawLines(stage, size, graphics) {
     //Dont touch these :)
@@ -26,7 +26,6 @@ function drawLines(stage, size, graphics) {
         graphics.lineStyle(thinLine, 0x000000).moveTo(center - 3 * rectSideLength, center + i * rectSideLength).lineTo(center + i * rectSideLength, center - 3 * rectSideLength);
         graphics.lineStyle(thinLine, 0x000000).moveTo(center - 3 * rectSideLength, center + i * rectSideLength).lineTo(center - i * rectSideLength, center + 3 * rectSideLength);
         graphics.lineStyle(thinLine, 0x000000).moveTo(center + i * rectSideLength, center + 3 * rectSideLength).lineTo(center + 3 * rectSideLength, center + i * rectSideLength);
-
     }
 
     graphics.lineStyle(lineWidth, 0x000000).moveTo(center + 3 * rectSideLength, center + 2 * rectSideLength).lineTo(center + 2 * rectSideLength, center + 3 * rectSideLength);

@@ -1,5 +1,3 @@
-import { Game } from './Game.js';
-
 var game;
 var aisocket;
 
@@ -7,9 +5,22 @@ class AiSocket {
 
     constructor(newGame) {
         this.game = newGame;
-        const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
-        //const server = 'ws://localhost:4567/ai';
 
+        //parse URL
+        let server;
+        let url = window.location.href;
+        let name = "ai";
+        name = name.replace(/[\[\]]/g, "\\$&");
+        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
+        if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai';
+        else {
+            let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
+            if (parsed === 'localhost') server = "ws://localhost:4567/ai";
+            else if (parsed === 'staging') server = "wss://xoliba-ai-staging.herokuapp.com/ai";
+            else server = decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        console.log("Trying to connect " + server);
         aisocket = new WebSocket(server);
 
         aisocket.onmessage = (event, turnHandler) => {
@@ -18,14 +29,14 @@ class AiSocket {
             if (msg.type === "startRound") {
                 this.game.aiSurrender(msg.surrender);
             } else {
-                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners)
+                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners);
                 this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
             }
         };
 
         aisocket.onopen = function() {
             console.log("connected to ai server");
-            setInterval(ping, 30000);
+            setInterval(ping(), 30000);
         }
 
         aisocket.onclose = function() {
@@ -35,7 +46,7 @@ class AiSocket {
         function ping() {
             let msg = {
                 type: "ping"
-            }
+            };
 
             if (aisocket.readyState === 1) {
                 aisocket.send(JSON.stringify(msg));
@@ -53,7 +64,7 @@ class AiSocket {
             target: null,
             didMove: true,
             surrender: giveUp
-        }
+        };
         console.log("send table");
         aisocket.send(JSON.stringify(msg));
     }
@@ -67,7 +78,7 @@ class AiSocket {
             target: null,
             didMove: true,
             surrender: null
-        }
+        };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
 
@@ -83,6 +94,8 @@ class AiSocket {
             }
         }, 1000);
     }
+
+
 }
 
 

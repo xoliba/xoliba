@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import { Board }from './Board.js';
 import { Validations } from './logic/Validations.js';
-import { Stone } from './Stone.js';
 import { BoardActions } from './logic/BoardActions.js';
-import { Game } from './Game.js';
 
-var firstClicked
+var firstClicked;
 var corners;
 var board;
 var validate;
@@ -44,7 +41,7 @@ class TurnHandler {
     spriteClicked(stone) {
         if (this.firstClicked === undefined) {
             this.parseFirstClick(stone);
-        }  else if (this.corners.length === 1) {
+        } else if (this.corners.length === 1) {
             this.parseClickOnSecondCorner(stone);
         } else if (this.corners.length === 2) {
             this.parseClickOnThirdCorner(stone);
@@ -67,7 +64,7 @@ class TurnHandler {
     }
 
     parseClickOnWhiteStone(stone) {
-         if(this.validate.moveIsValid(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y, this.board.gameboardTo2dArray())) {
+         if (this.validate.moveIsValid(this.firstClicked.x, this.firstClicked.y, stone.x, stone.y, this.board.gameboardTo2dArray())) {
              this.whiteStoneClicked = stone;
              this.board.swap(this.firstClicked, stone);
              this.corners.push(this.firstClicked);
@@ -77,7 +74,7 @@ class TurnHandler {
     }
 
     parseClickOnSecondCorner(stone) {
-        if (this.game.turn === stone.value && (this.corners[0].x != stone.x || this.corners[0].y != stone.y)) {
+        if (this.game.turn === stone.value && (this.corners[0].x !== stone.x || this.corners[0].y !== stone.y)) {
             this.corners.push(stone);
             stone.choose();
         } else {
@@ -128,12 +125,12 @@ class TurnHandler {
     }
 
     undo() {
-        if(this.firstClicked === undefined || this.whiteStoneClicked === undefined) {
+        if (this.firstClicked === undefined || this.whiteStoneClicked === undefined) {
             return;
         }
         this.board.swap(this.firstClicked, this.whiteStoneClicked);
         this.whiteStoneClicked = undefined;
-        for(let i=this.corners.length-1; i>=0; i--) {
+        for (let i=this.corners.length-1; i>=0; i--) {
             this.corners[i].unchoose();
             this.corners.pop();
         }

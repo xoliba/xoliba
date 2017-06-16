@@ -33,7 +33,7 @@ class Game {
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
         this.turnHandler.board = this.board;
-        this.turn = 0
+        this.turn = 0;
         this.turnCounter = 0;
         this.roundskipped = 0;
         this.validate = new Validations();
@@ -119,16 +119,16 @@ class Game {
             this.calculatePoints();
             return;
         }
-        if(!availableMoves && this.roundskipped === 0){
+        if (!availableMoves && this.roundskipped === 0) {
             this.roundskipped++;
             this.whoSkipped = this.turn;
             this.uiUpdater.noMovesAvailable(this.turn);
             this.turn *= -1;
-        } else if(!availableMoves && this.roundskipped === 1) {
+        } else if (!availableMoves && this.roundskipped === 1) {
             this.uiUpdater.twoConsecutiveRoundsSkipped();
             this.whoSkipped = 0;
             this.calculatePoints();
-        } else if(availableMoves && this.turn === this.whoSkipped) {
+        } else if (availableMoves && this.turn === this.whoSkipped) {
             this.roundskipped = 0;
         }
     }

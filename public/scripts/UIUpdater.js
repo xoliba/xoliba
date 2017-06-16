@@ -1,4 +1,3 @@
-import { Game } from './Game.js';
 import { InfoConsole } from './InfoConsole.js';
 
 let infoConsole;
@@ -86,8 +85,7 @@ class UIUpdater {
                 this.showNotification("Red Wins! final score: " + current + " - " + document.getElementById("bluepoints").innerHTML);
                 element.innerHTML = 0;
                 document.getElementById("bluepoints").innerHTML = 0;
-                }
-
+            }
         }
     }
 
@@ -111,11 +109,7 @@ class UIUpdater {
     noMovesAvailable(turn) {
         this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
     }
-
-    twoConsecutiveRoundsSkipped() {
-        this.showNotification("Two consecutive turns skipped, round ended!");
-    }
-
+    
     showNotification(message){
         document.getElementById('message').innerHTML = message;
         var element = document.getElementById('notificationpopup');

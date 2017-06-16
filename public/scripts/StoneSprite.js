@@ -42,7 +42,7 @@ class StoneSprite {
         this.sprite.height = radius * 2;
 
         this.sprite.on('pointerdown', () => {
-            turnHandler.spriteClicked(parent)
+            turnHandler.spriteClicked(parent);
         });
 
         app.stage.addChild(this.sprite);
