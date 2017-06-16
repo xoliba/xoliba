@@ -97,6 +97,10 @@ class UIUpdater {
         this.showNotification("Two consecutive turns skipped, round ended!");
     }
 
+    pressStartRound() {
+        this.showNotification("Press Start round!")
+    }
+
     showNotification(message){
         document.getElementById('message').innerHTML = message;
         var element = document.getElementById('notificationpopup');
