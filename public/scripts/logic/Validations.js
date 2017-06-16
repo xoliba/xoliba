@@ -73,7 +73,7 @@ class Validations {
         return firstX === secondX || firstY === secondY || diffX === diffY;
     }
 
-    isMovesAvailable(startingTurn, board) {
+    isThereMovesAvailable(startingTurn, board) {
         for (let i = 0; i < 7; i++) {
             for (let j = 0; j < 7; j++) {
                 if (board[i][j] === startingTurn && this.moveFound(i, j, board)) {

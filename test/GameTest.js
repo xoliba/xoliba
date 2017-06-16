@@ -33,7 +33,7 @@ describe('Game', () => {
         UIUpdater = td.object('UIUpdater');
 
         td.when(board.gameboardTo2dArray()).thenReturn(table);
-        //td.when(validate.isMovesAvailable()).thenReturn(true);
+        //td.when(validate.isThereMovesAvailable()).thenReturn(true);
 
         game.board = board;
         game.socket = socket;
@@ -60,7 +60,7 @@ describe('Game', () => {
     });
 
     it('starts a new round when there have been over 30 rounds without a hit', () => {
-        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(true);
+        td.when(validate.isThereMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(true);
 
         game.turnCounter = 30;
 
@@ -72,7 +72,7 @@ describe('Game', () => {
     });
 
     it('skips a round when there are no possible moves', () => {
-        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(false);
+        td.when(validate.isThereMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(false);
 
         game.turn = 1;
         game.roundskipped = 0;
@@ -86,7 +86,7 @@ describe('Game', () => {
     });
 
     it('starts a new round when there are no moves available and round has been skipped', () => {
-        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(false);
+        td.when(validate.isThereMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(false);
 
         game.turn = 1;
         game.roundskipped = 1;
@@ -100,7 +100,7 @@ describe('Game', () => {
     });
 
     it('resets the skip counter after a successful move', () => {
-        td.when(validate.isMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(true);
+        td.when(validate.isThereMovesAvailable(td.matchers.anything(), td.matchers.anything())).thenReturn(true);
 
         game.roundskipped = 1;
 

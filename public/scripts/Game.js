@@ -96,13 +96,13 @@ class Game {
         this.sendTurnDataToAI();
     }
 
+    /**
+     * changes turn, updates UI, checks if round ends, and sends turn data to AI if necessary
+     */
     changeTurn() {
         this.turn *= -1;
         this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
-        if(this.checkIfRoundEnds()) {
-            return false;
-        }
-        if (this.turn === this.aiColor) {
+        if(!this.checkIfRoundEnds() && this.turn === this.aiColor) {
             this.sendTurnDataToAI();
         }
     }
@@ -116,13 +116,17 @@ class Game {
         }
     }
 
+    /**
+     * check if the round ends AND HANDLE OPERATING UI oh plz why
+     *
+     * @returns {boolean} if the round ended or not
+     */
     checkIfRoundEnds() {
-        let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
+        let availableMoves = this.validate.isThereMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 30) {
             this.uiUpdater.tooManyRoundsWithoutHits();
             return true;
-        }
-        if (!availableMoves && this.roundskipped === 0) {
+        } else if (!availableMoves && this.roundskipped === 0) {
             this.roundskipped++;
             this.whoSkipped = this.turn;
             this.uiUpdater.noMovesAvailable(this.turn);
@@ -130,10 +134,11 @@ class Game {
         } else if (!availableMoves && this.roundskipped === 1) {
             this.uiUpdater.twoConsecutiveRoundsSkipped();
             this.whoSkipped = 0;
+            return true;
         } else if(availableMoves && this.turn === this.whoSkipped) {
             this.roundskipped = 0;
         }
-        return true;
+        return false;
     }
 
     sendTurnDataToAI() {
