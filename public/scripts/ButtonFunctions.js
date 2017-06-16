@@ -203,10 +203,19 @@ function notificationFunction(game) {
 }
 
 function notificationHelperFunction(game, msg) {
-    if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw") || msg.includes("Wins! final score")) {
-        game.startNewRound();
+    if (msg.includes("No moves available")) {
+        game.skipTurn();
     } else if (msg.includes("Two consecutive turns skipped") || msg.includes("30 rounds without hits")) {
         game.calculatePoints();
+    }
+    else if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw")) {
+        if (game.checkIfGameEnds()) {
+            game.winningMessage();
+        } else {
+            game.startNewRound();
+        }
+    } else if (msg.includes("Wins! final score")) {
+        game.startNewRound();
     }
 }
 
