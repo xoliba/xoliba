@@ -89,17 +89,24 @@ class UIUpdater {
         }
     }
 
+    winningMessage(color, score) {
+        if (color === 1) {
+            element.innerHTML += " WINNER";
+            this.showNotification("Blue Wins! final score: " + score + " - " + document.getElementById("redpoints").innerHTML);
+            element.innerHTML = 0;
+            document.getElementById("redpoints").innerHTML = 0
+        } else {
+            element.innerHTML += " WINNER";
+            this.showNotification("Red Wins! final score: " + score + " - " + document.getElementById("bluepoints").innerHTML);
+            element.innerHTML = 0;
+            document.getElementById("bluepoints").innerHTML = 0;
+        }
+    }
+
     tooManyRoundsWithoutHits() {
         this.showNotification("30 rounds without hits, round ended!");
     }
 
-    noMovesAvailable(turn) {
-        this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
-    }
-
-    twoConsecutiveRoundsSkipped() {
-        this.showNotification("Two consecutive turns skipped, round ended!");
-    }
 
     printMove(start, target, corner2, corner3, ateEnemies, ateOwns) {
         this.infoConsole.printMove(start, target, corner2, corner3, ateEnemies, ateOwns);
