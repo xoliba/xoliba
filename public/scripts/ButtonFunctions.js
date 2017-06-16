@@ -47,7 +47,7 @@ if(redButton.addEventListener){
             document.getElementById("redpoints").innerHTML = 0;
             game = new Game(app, -1, score);
             addButtonFunctions(game);
-            
+
         } , false);
     } else if (blueButton.attachEvent) {
         blueButton.attachEvent("onclick",

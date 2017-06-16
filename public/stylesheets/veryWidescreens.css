@@ -35,7 +35,7 @@
         left: 5%;
     }
 
-    #undo, #StartRound {
+    #StartRound {
         top: 22vw;
         left: 5%;
     }
@@ -43,5 +43,11 @@
     #GiveUp, #Surrender {
         top: 27vw;
         left: 5%;
+    }
+
+    #undo {
+        border: 0;
+        top: 18vw;
+        left: 9%;
     }
 }

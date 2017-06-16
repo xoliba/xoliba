@@ -113,8 +113,13 @@ class UIUpdater {
     showNotification(message){
         document.getElementById('message').innerHTML = message;
         var element = document.getElementById('notificationpopup');
+        var ratio = $(window).width() / $(window).height();
         element.style.transition = '0.5s';
-        element.style.left = '75%';
+        if(ratio > 3/2){
+            element.style.left = '75%';
+        } else {
+            element.style.left = '70%';
+        }
         setTimeout(() => {
             element.style.transition = '0s';
         }, 500);

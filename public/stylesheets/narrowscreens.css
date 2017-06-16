@@ -29,4 +29,40 @@
         font-size: 5vw;
     }
 
+    #MenuButton, #NewGame, #StartRound, #Surrender, #GiveUp {
+        font-size: 3vw;
+        top: 18vh;
+        height: 5vw;
+        width: 20vw;
+    }
+
+    #MenuButton {
+        left: 20vw;
+    }
+
+    #NewGame, #GiveUp, #Surrender {
+        left: 60vw;
+    }
+
+    #StartRound {
+        left: 40vw;
+        top: 10vh;
+    }
+
+    #undo {
+        top: 12vh;
+        height: 8vw;
+        width: 8vw;
+        left: 46vw;
+        border: 0;
+        background-color: #F8F8F8;
+        transition: all 0s ease;
+    }
+
+    #undoimg {
+        height: 8vw;
+        width: 8vw;
+        padding: 0;
+
+    }
 }

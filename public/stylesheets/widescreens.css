@@ -1,7 +1,7 @@
 @media screen and (min-aspect-ratio: 3/2) {
 
     button {
-        height: 3vw;
+        height: 4vw;
         width: 15vw;
         font-size: 2vw;
     }
@@ -22,17 +22,24 @@
     }
 
     #Surrender {
-        top:35vw;
+        top:37vw;
         left:5%;
     }
 
     #undo {
-        top: 30vw;
-        left: 5%;
+        top: 28vw;
+        left: 12%;
+        height: 7vw;
+        width: 7vw;
+    }
+
+    #undoimg {
+        height: 7vw;
+        width: 7vw;
     }
 
     #GiveUp {
-        top:35vw;
+        top:37vw;
         left: 5%;
     }
 
