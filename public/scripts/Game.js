@@ -98,12 +98,10 @@ class Game {
 
     changeTurn() {
         this.turn *= -1;
-        if(!this.checkIfRoundEnds()) {
-            this.uiUpdater.turnIndicator(this.turn);
+        this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
+        if(this.checkIfRoundEnds()) {
             return false;
-        };   
-        this.uiUpdater.turnIndicator(this.turn);
-        //if it is AIs turn now
+        }
         if (this.turn === this.aiColor) {
             this.sendTurnDataToAI();
         }
@@ -119,7 +117,6 @@ class Game {
     }
 
     checkIfRoundEnds() {
-
         let availableMoves = this.validate.isMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
         if (this.turnCounter === 30) {
             this.uiUpdater.tooManyRoundsWithoutHits();
@@ -141,7 +138,7 @@ class Game {
 
     sendTurnDataToAI() {
         this.uiUpdater.startAiIsThinkingInterval();
-        this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), this.aiColor, false, this.aiDifficulty);
     }
 
     updateTurnCounter(areStonesHit) {

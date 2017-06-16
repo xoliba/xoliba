@@ -56,7 +56,7 @@ class AiSocket {
         }
     }
 
-    sendTable(table, aiColor, giveUp) {
+    sendTurnData(table, aiColor, giveUp, difficulty) {
         let msg = {
             type: "turnData",
             board: table,
@@ -65,7 +65,7 @@ class AiSocket {
             target: null,
             didMove: true,
             surrender: giveUp,
-            difficulty: null
+            difficulty: difficulty
         };
         console.log("send turnData");
         aisocket.send(JSON.stringify(msg));
