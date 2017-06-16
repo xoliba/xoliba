@@ -2,6 +2,7 @@ import { Game } from './Game.js';
 import { InfoConsole } from './InfoConsole.js';
 
 let infoConsole;
+let aiThinkingInterval;
 
 class UIUpdater {
 
@@ -83,6 +84,19 @@ class UIUpdater {
         this.showNotification("30 rounds without hits, round ended!");
     }
 
+    startAiIsThinkingInterval() {
+        console.log("start 'ai is thinking' interval");
+        let howLong = 0;
+        this.aiThinkingInterval = setInterval(() => {
+            this.infoConsole.printAiIsThinking(howLong === 0, howLong);
+            howLong += 1;
+        }, 1000);
+    }
+
+    stopAiIsThinkingInterval() {
+        console.log("stop 'ai is thinking' interval");
+        clearInterval(this.aiThinkingInterval);
+    }
 
     printMove(start, target, corner2, corner3, ateEnemies, ateOwns) {
         this.infoConsole.printMove(start, target, corner2, corner3, ateEnemies, ateOwns);

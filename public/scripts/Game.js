@@ -65,7 +65,7 @@ class Game {
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
         if (this.turn === this.aiColor) {
-            this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
+            this.sendTurnDataToAI();
         }
         this.uiUpdater.turnIndicator(this.turn);
     }
@@ -83,6 +83,7 @@ class Game {
     }
 
     aiSurrender(surrender) {
+        this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender) {
             this.calculateSurrenderPoints(this.aiColor);
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) {
@@ -92,7 +93,7 @@ class Game {
 
     giveUp() {
         this.playerWantsToSurrender = true;
-        this.socket.sendTable(this.board.gameboardTo2dArray, this.aiColor, true);
+        this.sendTurnDataToAI();
     }
 
     changeTurn() {
@@ -104,11 +105,12 @@ class Game {
         this.uiUpdater.turnIndicator(this.turn);
         //if it is AIs turn now
         if (this.turn === this.aiColor) {
-            this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
+            this.sendTurnDataToAI();
         }
     }
 
     aiTurn(didMove, start, target, corners, surrender) {
+        this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
         } else {
@@ -141,8 +143,13 @@ class Game {
         this.turn *= -1;
         this.uiUpdater.turnIndicator(this.turn);
         if (this.turn === this.aiColor) {
-            this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
+            this.sendTurnDataToAI();
         }
+    }
+
+    sendTurnDataToAI() {
+        this.uiUpdater.startAiIsThinkingInterval();
+        this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
     }
 
     updateTurnCounter(areStonesHit) {
