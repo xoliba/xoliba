@@ -204,7 +204,7 @@ function notificationFunction(game) {
 
 function notificationHelperFunction(game, msg) {
     if (msg.includes("No moves available")) {
-        game.skipTurn();
+        game.changeTurn();
     } else if (msg.includes("Two consecutive turns skipped") || msg.includes("30 rounds without hits")) {
         game.calculatePoints();
     } else if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw")) {

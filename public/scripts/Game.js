@@ -139,14 +139,6 @@ class Game {
         return true;
     }
 
-    skipTurn() {
-        this.turn *= -1;
-        this.uiUpdater.turnIndicator(this.turn);
-        if (this.turn === this.aiColor) {
-            this.sendTurnDataToAI();
-        }
-    }
-
     sendTurnDataToAI() {
         this.uiUpdater.startAiIsThinkingInterval();
         this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
