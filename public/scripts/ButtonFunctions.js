@@ -207,8 +207,7 @@ function notificationHelperFunction(game, msg) {
         game.skipTurn();
     } else if (msg.includes("Two consecutive turns skipped") || msg.includes("30 rounds without hits")) {
         game.calculatePoints();
-    }
-    else if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw")) {
+    } else if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw")) {
         if (game.checkIfGameEnds()) {
             game.winningMessage();
         } else {
