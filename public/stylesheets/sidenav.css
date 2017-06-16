@@ -1,3 +1,4 @@
+/* todo from pixels to relative measurements */
 .sidenav {
     height: 100%;
     width: 0;
@@ -7,7 +8,7 @@
     left: 0;
     background-color: #111111;
     overflow-x: hidden;
-    padding top: 60px;
+    padding-top: 32px;
     transition: 0.5s;
     z-index: 20;
 }
@@ -38,6 +39,18 @@
     padding-top: 8px;
     font-size: 18px;
 }
+
+.radio-toolbar label {
+    color: whitesmoke;
+    padding: 2px 11px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    margin: 10px;
+}
+
 
 .sidenav a:hover, .offcanvas a:focus{
     color: #f1f1f1;
