@@ -19,7 +19,7 @@ class InfoConsole {
 
     printLine(line) {
         this.appendWithNewLineIfNecessery();
-        document.getElementById("info").value += line;
+        document.getElementById("info").value += line + "\n";
         this.scrollToBottom();
     }
 

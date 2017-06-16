@@ -57,7 +57,7 @@ function showConsoleUp(){
     setTimeout(() => {
         button.style.transition = '0s';
         element.style.transition = '0.5s';
-        element.style.top = '69%';
+        element.style.top = '70%';
         setTimeout(() => {
             element.style.transition = '0s';
         }, 500);
