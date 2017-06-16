@@ -93,7 +93,7 @@ class Game {
         if(!this.checkIfRoundEnds()) {
             this.uiUpdater.turnIndicator(this.turn);
             return false;
-        };
+        };   
         this.uiUpdater.turnIndicator(this.turn);
         //if it is AIs turn now
         if (this.turn === this.aiColor) {
@@ -117,6 +117,8 @@ class Game {
             return true;
         }
         if (!availableMoves && this.roundskipped === 0) {
+            this.roundskipped++;
+            this.whoSkipped = this.turn;
             this.uiUpdater.noMovesAvailable();
             return false;
         } else if (!availableMoves && this.roundskipped === 1) {
@@ -129,10 +131,8 @@ class Game {
     }
 
     skipTurn() {
-        this.roundskipped++;
-        this.whoSkipped = this.turn;
-        this.uiUpdater.noMovesAvailable(this.turn);
         this.turn *= -1;
+        this.uiUpdater.turnIndicator(this.turn);
         if (this.turn === this.aiColor) {
             this.socket.sendTable(this.board.gameboardTo2dArray(), this.aiColor);
         }

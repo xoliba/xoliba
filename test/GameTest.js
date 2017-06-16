@@ -43,7 +43,7 @@ describe('Game', () => {
 
     it('sends table to ai when turn ends', () => {
         game.checkIfRoundEnds = td.function('checkIfRoundEnds');
-
+        td.when(game.checkIfRoundEnds()).thenReturn(true);
         game.turn = -1;
         game.aiColor = 1;
         game.changeTurn();
@@ -66,8 +66,9 @@ describe('Game', () => {
 
         game.checkIfRoundEnds();
 
-        td.verify(board.generateStartingBoard());
-        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()), {times: 1});
+        td.verify(UIUpdater.tooManyRoundsWithoutHits());
+    //    td.verify(board.generateStartingBoard());
+    //    td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()), {times: 1});
     });
 
     it('skips a round when there are no possible moves', () => {
@@ -92,9 +93,10 @@ describe('Game', () => {
         game.aiColor = -1;
 
         game.checkIfRoundEnds();
+        td.verify(UIUpdater.twoConsecutiveRoundsSkipped());
 
-        td.verify(board.generateStartingBoard());
-        td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()));
+  //      td.verify(board.generateStartingBoard());
+  //      td.verify(socket.sendStartRound(td.matchers.anything(), td.matchers.anything()));
     });
 
     it('resets the skip counter after a successful move', () => {
