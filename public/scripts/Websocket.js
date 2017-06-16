@@ -57,19 +57,20 @@ class AiSocket {
 
     sendTable(table, aiColor, giveUp) {
         let msg = {
-            type: "message",
+            type: "turnData",
             board: table,
             color: aiColor,
             start: null,
             target: null,
             didMove: true,
-            surrender: giveUp
+            surrender: giveUp,
+            difficulty: null
         };
-        console.log("send table");
+        console.log("send turnData");
         aisocket.send(JSON.stringify(msg));
     }
 
-    sendStartRound(table, aiColor) {
+    sendStartRound(table, aiColor, difficulty) {
         let msg = {
             type: "startRound",
             board: table,
@@ -77,7 +78,8 @@ class AiSocket {
             start: null,
             target: null,
             didMove: true,
-            surrender: null
+            surrender: null,
+            difficulty: difficulty
         };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
