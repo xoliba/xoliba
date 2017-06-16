@@ -22,8 +22,8 @@ class InfoConsole {
         this.printLine("\nNew Round! Do you want to surrender or start the round?\n");
     }
 
-    startMessage() {
-        this.printLine("\nWelcome to Xoliba! Do you want to surrender or start the round?\n");
+    startMessage(aiDifficulty) {
+        this.printLine("\nWelcome to Xoliba! The AI is set to level " + aiDifficulty + ".\nDo you want to surrender or start the round?\n");
     }
 
     scrollToBottom(){

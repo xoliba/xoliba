@@ -56,7 +56,7 @@ class Game {
     }
 
     printStartMessage() {
-        this.uiUpdater.startMessage();
+        this.uiUpdater.startMessage(this.aiDifficulty);
     }
 
     startFirstTurn() {
@@ -77,8 +77,6 @@ class Game {
     playerSurrender(surrender) {
         if (surrender) {
             this.calculateSurrenderPoints(this.playerColor);
-        //    this.uiUpdater.updateSurrenderPoints(this.playerColor, this.scoreLimit);
-      //      this.startNewRound();
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound = true, this.aiHasAnsweredStartRound)) {
             this.startFirstTurn();
         }
@@ -128,7 +126,7 @@ class Game {
         if (!availableMoves && this.roundskipped === 0) {
             this.roundskipped++;
             this.whoSkipped = this.turn;
-            this.uiUpdater.noMovesAvailable();
+            this.uiUpdater.noMovesAvailable(this.turn);
             return false;
         } else if (!availableMoves && this.roundskipped === 1) {
             this.uiUpdater.twoConsecutiveRoundsSkipped();
@@ -201,12 +199,11 @@ class Game {
 
     calculateSurrenderPoints(color) {
         var score = 0.4 * this.scoreLimit;
+        this.uiUpdater.updateSurrenderPoints(color, score);
         if (color === 1) {
             this.bluePoints += score;
-            this.uiUpdater.updateSurrenderPoints(color, score);
         } else {
             this.redPoints += score;
-            this.uiUpdater.updateSurrenderPoints(color, score);
         }
     }
 

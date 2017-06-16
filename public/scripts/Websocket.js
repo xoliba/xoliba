@@ -2,6 +2,8 @@
 var game;
 var aisocket;
 
+//todo info about ai that is thinking
+//todo bug with popup of skipping turn
 class AiSocket {
 
     constructor(newGame) {

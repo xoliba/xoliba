@@ -19,8 +19,8 @@ class UIUpdater {
         this.infoConsole.newRoundToConsole();
     }
 
-    startMessage() {
-        this.infoConsole.startMessage();
+    startMessage(aiDifficulty) {
+        this.infoConsole.startMessage(aiDifficulty);
     }
 
     showStartRoundAndSurrenderButtons() {
