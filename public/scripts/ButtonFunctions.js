@@ -48,7 +48,7 @@ if(redButton.addEventListener){
                 app.stage.removeChild(app.stage.children[i]);
             document.getElementById("bluepoints").innerHTML = 0;
             document.getElementById("redpoints").innerHTML = 0;
-            game = new Game(app, -1, score);
+            game = new Game(app, -1, score, getAIdifficulty());
             game.printStartMessage();
             addButtonFunctions(game);
 
@@ -63,7 +63,7 @@ if(redButton.addEventListener){
                     app.stage.removeChild(app.stage.children[i]);
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
-                game = new Game(app, -1, score);
+                game = new Game(app, -1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
             });
@@ -81,7 +81,7 @@ function redButtonFunction(game, app) {
                     app.stage.removeChild(app.stage.children[i]);
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
-                game = new Game(app, 1, score);
+                game = new Game(app, 1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
             }, false);
@@ -95,7 +95,7 @@ function redButtonFunction(game, app) {
                     app.stage.removeChild(app.stage.children[i]);
                 document.getElementById("bluepoints").innerHTML = 0;
                 document.getElementById("redpoints").innerHTML = 0;
-                game = new Game(app, 1, score);
+                game = new Game(app, 1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
             });

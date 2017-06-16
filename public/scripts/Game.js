@@ -21,12 +21,13 @@ let uiUpdater;
 let bluePoints;
 let redPoints;
 let firstTurn;
+let aiDifficulty;
 
 
 class Game {
 
-    constructor(app, playerColor, scoreLimit) {
-        console.log(playerColor, scoreLimit);
+    constructor(app, playerColor, scoreLimit, aiDifficulty) {
+        console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
         this.socket = new AiSocket(this);
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
@@ -46,7 +47,11 @@ class Game {
         this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.firstTurn = true;
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
+        if (aiDifficulty === undefined)
+            aiDifficulty = 2;
+        console.log("ai difficulty " + aiDifficulty);
+        this.aiDifficulty = aiDifficulty
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
     }
 
     printStartMessage() {
@@ -235,7 +240,7 @@ class Game {
         this.firstTurn = true;
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor);
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
         this.playerWantsToSurrender = false;
         this.uiUpdater.showStartRoundAndSurrenderButtons();
         this.uiUpdater.newRoundToConsole();
