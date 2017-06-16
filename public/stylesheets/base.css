@@ -31,6 +31,7 @@ button {
     white-space: nowrap;
     overflow-x: hidden;
     z-index: 5;
+    transition: all 0s ease;
 }
 
 #undo, #GiveUp, #StartRound, #Surrender {
@@ -38,8 +39,17 @@ button {
 }
 
 button:hover{
+    transition: 0.25s;
     background-color: blue;
     color: white;
+}
+
+#undo:hover {
+    transition: 1s;
+    background-color: #F8F8F8;
+    -webkit-transform: rotateZ(-360deg);
+    -ms-transform: rotateZ(-360deg);
+    transform: rotateZ(-360deg);
 }
 
 textarea {

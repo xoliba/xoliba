@@ -220,4 +220,3 @@ function notificationHelperFunction(game, msg) {
 }
 
 export { addNewGameButtonFunctions, addButtonFunctions };
-
