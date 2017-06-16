@@ -23,7 +23,7 @@ let redPoints;
 let firstTurn;
 let aiDifficulty;
 
-
+//todo after one game completely new one is about to beging, not just another round
 class Game {
 
     constructor(app, playerColor, scoreLimit, aiDifficulty) {
