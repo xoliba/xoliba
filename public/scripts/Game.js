@@ -23,7 +23,7 @@ let redPoints;
 let firstTurn;
 let aiDifficulty;
 
-//todo after one game completely new one is about to beging, not just another round
+//todo after one game completely new one is about to begin, not just another round
 class Game {
 
     constructor(app, playerColor, scoreLimit, aiDifficulty) {
@@ -48,9 +48,10 @@ class Game {
         this.uiUpdater = new UIUpdater();
         this.firstTurn = true;
         if (aiDifficulty === undefined)
-            aiDifficulty = 2;
+            this.aiDifficulty = 2;
+        else
+            this.aiDifficulty = aiDifficulty;
         console.log("ai difficulty " + aiDifficulty);
-        this.aiDifficulty = aiDifficulty
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
     }
 
