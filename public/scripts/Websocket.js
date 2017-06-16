@@ -1,3 +1,4 @@
+
 var game;
 var aisocket;
 
@@ -5,7 +6,6 @@ class AiSocket {
 
     constructor(newGame) {
         this.game = newGame;
-
         //parse URL
         let server;
         let url = window.location.href;
@@ -36,7 +36,7 @@ class AiSocket {
 
         aisocket.onopen = function() {
             console.log("connected to ai server");
-            setInterval(ping(), 30000);
+            setInterval(ping, 30000);
         }
 
         aisocket.onclose = function() {
@@ -94,8 +94,6 @@ class AiSocket {
             }
         }, 1000);
     }
-
-
 }
 
 
