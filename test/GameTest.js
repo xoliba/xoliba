@@ -107,15 +107,15 @@ describe('Game', () => {
         assert.equal(game.roundskipped, 0);
     });
     
-    it('it is a draw', () => {
-        var draw = [[-2, 0, 0, 0, 0, 1, -2],
+    it('draw with big triangles', () => {
+        var drawBig = [[-2, 0, 0, 0, 0, 1, -2],
                     [0, 1, 1, 0, 1, 1, 0],
                     [-1, 1, 0, 1, 1, 1, -1],
                     [1, 0, 0, 0, 0, 0, 1],
                     [0, 1, 0, 0, 0, 0, 0],
                     [1, 0, 1, -1, 1, 1, 1],
                     [-2, 1, 1, 1, 1, -1, -2]];
-        td.when(board.gameboardTo2dArray()).thenReturn(draw);
+        td.when(board.gameboardTo2dArray()).thenReturn(drawBig);
         td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
 
         game.calculatePoints();
@@ -138,5 +138,40 @@ describe('Game', () => {
         game.calculatePoints();
 
         assert.equal(game.redPoints, 51);
+        assert.equal(game.bluePoints, 0);
+    });
+
+    it('draw with no triangles', () => {
+        var drawNo = [[-2, 0, 1, 0, -1, 0, -2],
+                    [1, 1, 1, 0, -1, -1, -1],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [1, 1, 1, 0, -1, -1, -1],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [1, 1, 1, 0, -1, -1, -1],
+                    [-2, 0, 1, 0, -1, 0, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(drawNo);
+        td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        game.calculatePoints();
+
+        assert.equal(game.bluePoints, 0);
+        assert.equal(game.redPoints, 0);
+    });
+
+    it('draw with small triangles', () => {
+        var drawSmall = [[-2, 0, 0, 0, 0, 1, -2],
+                    [0, 0, 0, 0, 1, 0, 1],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0],
+                    [-1, 0, -1, 0, 0, 0, 0],
+                    [-2, -1, 0, 0, 0, 0, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(drawSmall);
+        td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        game.calculatePoints();
+
+        assert.equal(game.bluePoints, 0);
+        assert.equal(game.redPoints, 0);
     });
 });
