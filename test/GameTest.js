@@ -43,12 +43,12 @@ describe('Game', () => {
 
     it('sends table to ai when turn ends', () => {
         game.checkIfRoundEnds = td.function('checkIfRoundEnds');
-        td.when(game.checkIfRoundEnds()).thenReturn(true);
+        td.when(game.checkIfRoundEnds()).thenReturn(false);
         game.turn = -1;
         game.aiColor = 1;
         game.changeTurn();
 
-        td.verify(socket.sendTurnData(table, 1), {times: 1});
+        td.verify(socket.sendTurnData(table, 1, td.matchers.anything(), td.matchers.anything()), {times: 1});
     });
 
     it('sets the turn correctly at first turn', () => {
