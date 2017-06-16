@@ -5,9 +5,22 @@ class AiSocket {
 
     constructor(newGame) {
         this.game = newGame;
-        const server = 'wss://xoliba-ai-staging.herokuapp.com/ai';
-        //const server = 'ws://localhost:4567/ai';
 
+        //parse URL
+        let server;
+        let url = window.location.href;
+        let name = "ai";
+        name = name.replace(/[\[\]]/g, "\\$&");
+        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
+        if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai';
+        else {
+            let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
+            if (parsed === 'localhost') server = "ws://localhost:4567/ai";
+            else if (parsed === 'staging') server = "wss://xoliba-ai-staging.herokuapp.com/ai";
+            else server = decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        console.log("Trying to connect " + server);
         aisocket = new WebSocket(server);
 
         aisocket.onmessage = (event, turnHandler) => {
@@ -81,6 +94,8 @@ class AiSocket {
             }
         }, 1000);
     }
+
+
 }
 
 
