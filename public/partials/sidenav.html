@@ -2,7 +2,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="submenu">
-            <a href="#">Play against AI</a>
+            <a href="#">Choose AI difficulty</a>
             <ul class="dropdown">
                 <li>
                     <div class="aiDifficulty" id="aiDif">
@@ -17,6 +17,20 @@
 
                         <input type="radio" id="r4" name="difficulty" value="6">
                         <label for="r4">Hard</label>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="#">Choose game mode</a>
+            <ul class="dropdown">
+                <li>
+                    <div id="gameStyle">
+                        <input type="radio" id="s1" name="mode" value="1" checked>
+                        <label for="s1">Player versus AI</label><br>
+
+                        <input type="radio" id="s2" name="mode" value="2">
+                        <label for="s2">AI versus AI</label><br>
                     </div>
                 </li>
             </ul>

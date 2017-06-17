@@ -1,5 +1,6 @@
+//todo from pixels to relative measurements
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").style.width = "269px";
 }
 
 function closeNav() {
