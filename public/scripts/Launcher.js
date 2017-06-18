@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 
 import { Game } from './Game';
 import { printLine } from './ui/InfoConsole';
-import { addButtonFunctions, addNewGameButtonFunctions } from './ButtonFunctions.js';
+import { addNewGameButtonFunctions } from './StartGameButtonFunctions.js';
 
 var app = new PIXI.Application(scale(), scale(), {view: document.getElementById("gameboard"), transparent: true});
 var game;
