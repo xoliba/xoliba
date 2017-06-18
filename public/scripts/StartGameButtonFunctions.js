@@ -7,13 +7,16 @@ import { addButtonFunctions, showStartRoundOptions } from './ButtonFunctions.js'
 
 var blueButton = document.getElementById("playAsBlue");
 var redButton = document.getElementById("playAsRed");
+var watchButton = document.getElementById("watchGame");
 
 
 function addNewGameButtonFunctions(game, app) {  //These functions create a new game
     blueButtonFunction(game, app);
     redButtonFunction(game, app);
+    watchGameButtonFunction(game, app);
 }
 
+//todo refactor this copypasta awwaaaayyyyy...
 function blueButtonFunction(game, app) {
     if (blueButton.addEventListener){
         blueButton.addEventListener("click",
@@ -79,6 +82,21 @@ function redButtonFunction(game, app) {
             });
     }
     return game;
+}
+
+function watchGameButtonFunction(game, app) {
+    if (watchButton.addEventListener){
+        watchButton.addEventListener("click",
+            notSupportedYetAlert , false);
+    } else if (watchButton.attachEvent) {
+        watchButton.attachEvent("onclick",
+            notSupportedYetAlert);
+    }
+    return game;
+}
+
+function notSupportedYetAlert() {
+    alert("not supperted yet");
 }
 
 function hideNewGame() {

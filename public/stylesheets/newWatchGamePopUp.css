@@ -22,12 +22,12 @@
     height: 33%;
 }
 
-#limit, #AIlvl, #BIlvl {
+#limitW, #AIlvl, #BIlvl {
     font-size: 2vw;
     float: left;
 }
 
-#scorelimit, #Alvl, #Blvl {
+#scorelimitW, #Alvl, #Blvl {
     width: 30%;
     font-size: 2vw;
     float: right;
@@ -56,7 +56,7 @@
         height: 30%;
     }
 
-    #limit, #scorelimit, #AIlvl, #Alvl, #BIlvl, #Blvl {
+    #limitW, #scorelimitW, #AIlvl, #Alvl, #BIlvl, #Blvl {
         height: 3vw;
         font-size: 3vw;
     }
