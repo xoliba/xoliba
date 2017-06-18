@@ -1,5 +1,5 @@
 var assert = require('assert');
-import { Board } from '../public/scripts/Board.js';
+import { Board } from '../public/scripts/logic/Board.js';
 import { AiSocket } from '../public/scripts/Websocket.js';
 import { Game } from '../public/scripts/Game.js';
 import { Validations } from '../public/scripts/logic/Validations.js';

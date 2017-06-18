@@ -1,7 +1,7 @@
 const ROWS = 7;
-import { BoardActions } from './logic/BoardActions.js';
+import { BoardActions } from './BoardActions.js';
 import { Stone } from './Stone.js';
-import { UIUpdater } from './UIUpdater.js';
+import { UIUpdater } from '../UIUpdater.js';
 
 let stonesList;
 let actions;

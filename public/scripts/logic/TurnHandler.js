@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import { Validations } from './logic/Validations.js';
-import { BoardActions } from './logic/BoardActions.js';
+import { Validations } from './Validations.js';
+import { BoardActions } from './BoardActions.js';
 
 var firstClicked;
 var corners;

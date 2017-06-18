@@ -1,7 +1,7 @@
 var assert = require('assert');
 //var BoardClass = require('../public/scripts/Board.js');
-import { Board } from '../public/scripts/Board.js';
-import { TurnHandler } from '../public/scripts/TurnHandler.js';
+import { Board } from '../public/scripts/logic/Board.js';
+import { TurnHandler } from '../public/scripts/logic/TurnHandler.js';
 import { Game } from '../public/scripts/Game.js';
 import { BoardActions } from '../public/scripts/logic/BoardActions.js';
 import { Validations } from '../public/scripts/logic/Validations.js';

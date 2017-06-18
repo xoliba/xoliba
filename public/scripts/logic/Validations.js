@@ -1,4 +1,4 @@
-import { Helpers } from '../Helpers.js';
+import { Helpers } from './Helpers.js';
 
 //var gameboard;
 let helpers;

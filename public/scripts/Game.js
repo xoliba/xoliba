@@ -1,6 +1,6 @@
-import { Board } from './Board.js';
+import { Board } from './logic/Board.js';
 import { AiSocket } from './Websocket.js';
-import { TurnHandler } from './TurnHandler';
+import { TurnHandler } from './logic/TurnHandler';
 import { Validations } from './logic/Validations.js';
 import { UIUpdater } from './UIUpdater.js';
 

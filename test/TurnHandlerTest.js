@@ -1,8 +1,8 @@
 var assert = require('assert');
 import { Game } from '../public/scripts/Game.js';
-import { Board } from '../public/scripts/Board.js';
-import { TurnHandler } from '../public/scripts/TurnHandler.js';
-import { Stone } from '../public/scripts/Stone.js';
+import { Board } from '../public/scripts/logic/Board.js';
+import { TurnHandler } from '../public/scripts/logic/TurnHandler.js';
+import { Stone } from '../public/scripts/logic/Stone.js';
 import { Validations } from '../public/scripts/logic/Validations.js';
 
 describe('TurnHandler', () => {
