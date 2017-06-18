@@ -27,16 +27,8 @@ let aiDifficulty;
 class Game {
 
     //todo refactor more sense to these constructor parameters
-    constructor(app, playerColor, scoreLimit, aiDifficulty, watchAIvsAI) {
-        if (watchAIvsAI === undefined)
-            return this.playAgainstAIconstructor(app, playerColor, scoreLimit, aiDifficulty);
-    }
-
-    playAgainstAIconstructor(app, playerColor, scoreLimit, aiDifficulty) {
-        console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
+    constructor(app, playerColor, scoreLimit, aiDifficulty, secondAIdifficulty) {
         this.socket = new AiSocket(this);
-        this.playerColor = playerColor;
-        this.aiColor = this.playerColor * -1;
         this.scoreLimit = scoreLimit;
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
@@ -53,13 +45,30 @@ class Game {
         this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.firstTurn = true;
+        this.parseAIdifficulty(aiDifficulty);
+
+        if (secondAIdifficulty !== undefined) { //is this ai vs ai?
+            return this.AIvsAIconstructor(scoreLimit, aiDifficulty, secondAIdifficulty);
+        }
+
+        this.playerColor = playerColor;
+        this.aiColor = this.playerColor * -1;
+        console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+        return this;
+    }
+
+    AIvsAIconstructor(scoreLimit, aiDifficulty, secondAIdifficulty) {
+        console.log("New Game: blue AI (lvl " + aiDifficulty + ") vs red AI (lvl " + secondAIdifficulty + "), with score limit " + scoreLimit);
+        return this;
+    }
+
+    parseAIdifficulty(aiDifficulty) {
         if (aiDifficulty === undefined)
             this.aiDifficulty = 2;
         else
             this.aiDifficulty = aiDifficulty;
         console.log("ai difficulty " + aiDifficulty);
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
-        return this;
     }
 
     printStartMessage() {

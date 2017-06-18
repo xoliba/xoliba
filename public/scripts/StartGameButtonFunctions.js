@@ -98,10 +98,10 @@ function clickOnWatchGame(game, app) {
     let blvl = document.getElementById("Blvl").value;
     alvl = alvl < 1 ? 1 : alvl; //todo validate upper bound of ai levels
     blvl = blvl < 1 ? 1 : blvl;
-    console.log("watch game was clicked! score limit " + score + " blue level + " + alvl + " red level " + blvl);
     document.getElementById("newWatchGamePopUp").style.display = "none";
     clearOldGame(app);
-
+    game = new Game(app, 0, score, alvl, blvl);
+    addButtonFunctions(game);
 }
 
 function notSupportedYetAlert() {
