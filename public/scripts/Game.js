@@ -26,7 +26,13 @@ let aiDifficulty;
 //todo after one game completely new one is about to begin, not just another round
 class Game {
 
-    constructor(app, playerColor, scoreLimit, aiDifficulty) {
+    //todo refactor more sense to these constructor parameters
+    constructor(app, playerColor, scoreLimit, aiDifficulty, watchAIvsAI) {
+        if (watchAIvsAI === undefined)
+            return this.playAgainstAIconstructor(app, playerColor, scoreLimit, aiDifficulty);
+    }
+
+    playAgainstAIconstructor(app, playerColor, scoreLimit, aiDifficulty) {
         console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
         this.socket = new AiSocket(this);
         this.playerColor = playerColor;
@@ -53,6 +59,7 @@ class Game {
             this.aiDifficulty = aiDifficulty;
         console.log("ai difficulty " + aiDifficulty);
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+        return this;
     }
 
     printStartMessage() {

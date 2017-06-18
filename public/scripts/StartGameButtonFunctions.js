@@ -82,17 +82,17 @@ function clearOldGame(app) {
 function watchGameButtonFunction(game, app) {
     if (watchButton.addEventListener){
         watchButton.addEventListener("click",
-            function() {clickOnWatchGame(app)}, false);
+            function() {clickOnWatchGame(game, app)}, false);
             //notSupportedYetAlert, false);
     } else if (watchButton.attachEvent) {
         watchButton.attachEvent("onclick",
-            function() {clickOnWatchGame(app)}, false);
+            function() {clickOnWatchGame(game, app)}, false);
             //notSupportedYetAlert);
     }
     return game;
 }
 
-function clickOnWatchGame(app) {
+function clickOnWatchGame(game, app) {
     let score = document.getElementById("scorelimitW").value;
     let alvl = document.getElementById("Alvl").value;
     let blvl = document.getElementById("Blvl").value;
