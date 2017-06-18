@@ -85,6 +85,7 @@ function redButtonFunction(game, app) {
 }
 
 function watchGameButtonFunction(game, app) {
+    //todo validate input (AI levels at least)
     if (watchButton.addEventListener){
         watchButton.addEventListener("click",
             notSupportedYetAlert , false);
