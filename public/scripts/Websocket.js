@@ -28,7 +28,8 @@ class AiSocket {
             let msg = JSON.parse(event.data);
 
             if (msg.type === "startRound") {
-                this.game.aiSurrender(msg.surrender);
+                console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
+                this.game.aiSurrender(msg.surrender, msg.color);
             } else {
                 console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
                 this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
@@ -67,7 +68,7 @@ class AiSocket {
             surrender: giveUp,
             difficulty: difficulty
         };
-        console.log("send turnData");
+        console.log("send turnData\n" + msg);
         aisocket.send(JSON.stringify(msg));
     }
 
