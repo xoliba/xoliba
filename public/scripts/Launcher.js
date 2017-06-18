@@ -1,8 +1,8 @@
-import { scale, drawTable } from './Draw.js';
+import { scale, drawTable } from './ui/Draw.js';
 import * as PIXI from 'pixi.js';
 
 import { Game } from './Game';
-import { printLine } from './InfoConsole';
+import { printLine } from './ui/InfoConsole';
 import { addButtonFunctions, addNewGameButtonFunctions } from './ButtonFunctions.js';
 
 var app = new PIXI.Application(scale(), scale(), {view: document.getElementById("gameboard"), transparent: true});

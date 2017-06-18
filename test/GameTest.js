@@ -3,8 +3,6 @@ import { Board } from '../public/scripts/logic/Board.js';
 import { AiSocket } from '../public/scripts/Websocket.js';
 import { Game } from '../public/scripts/Game.js';
 import { Validations } from '../public/scripts/logic/Validations.js';
-import { InfoConsole } from '../public/scripts/InfoConsole.js';
-import { UIUpdater } from '../public/scripts/UIUpdater.js';
 import * as PIXI from 'pixi.js';
 
 

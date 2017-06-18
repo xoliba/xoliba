@@ -2,7 +2,7 @@ import { Board } from './logic/Board.js';
 import { AiSocket } from './Websocket.js';
 import { TurnHandler } from './logic/TurnHandler';
 import { Validations } from './logic/Validations.js';
-import { UIUpdater } from './UIUpdater.js';
+import { UIUpdater } from './ui/UIUpdater.js';
 
 let board;
 let turn;

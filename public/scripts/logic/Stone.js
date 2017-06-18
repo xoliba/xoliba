@@ -1,4 +1,4 @@
-import { StoneSprite } from '../StoneSprite.js';
+import { StoneSprite } from '../ui/StoneSprite.js';
 
 let value;
 let sprite;
