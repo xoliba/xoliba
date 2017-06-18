@@ -80,7 +80,6 @@ function clearOldGame(app) {
 }
 
 function watchGameButtonFunction(game, app) {
-    //todo validate input (AI levels at least)
     if (watchButton.addEventListener){
         watchButton.addEventListener("click",
             function() {clickOnWatchGame(app)}, false);
@@ -97,6 +96,8 @@ function clickOnWatchGame(app) {
     let score = document.getElementById("scorelimitW").value;
     let alvl = document.getElementById("Alvl").value;
     let blvl = document.getElementById("Blvl").value;
+    alvl = alvl < 1 ? 1 : alvl; //todo validate upper bound of ai levels
+    blvl = blvl < 1 ? 1 : blvl;
     console.log("watch game was clicked! score limit " + score + " blue level + " + alvl + " red level " + blvl);
     document.getElementById("newWatchGamePopUp").style.display = "none";
     clearOldGame(app);
