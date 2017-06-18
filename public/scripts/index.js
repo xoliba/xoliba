@@ -10,6 +10,7 @@ document.write(require('../partials/canvas.html'));
 document.write(require('../partials/right.html'));
 document.write(require('../partials/console.html'));
 document.write(require('../partials/newGamePopup.html'));
+document.write(require('../partials/newWatchGamePopUp.html'));
 document.write(require('../partials/notificationPopups.html'));
 
 require('./Launcher.js');
