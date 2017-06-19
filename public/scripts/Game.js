@@ -21,16 +21,16 @@ let uiUpdater;
 let bluePoints;
 let redPoints;
 let firstTurn;
-let aiDifficulty;
+let aiDifficulty1;
+let aiDifficulty2;
+let playerPlays;
 
 //todo after one game completely new one is about to begin, not just another round
 class Game {
 
-    constructor(app, playerColor, scoreLimit, aiDifficulty) {
-        console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
+    //todo refactor more sense to these constructor parameters
+    constructor(app, playerColor, scoreLimit, aiDifficulty, secondAIdifficulty) {
         this.socket = new AiSocket(this);
-        this.playerColor = playerColor;
-        this.aiColor = this.playerColor * -1;
         this.scoreLimit = scoreLimit;
         this.turnHandler = new TurnHandler(false, this);
         this.board = new Board(app, this.turnHandler);
@@ -47,16 +47,49 @@ class Game {
         this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.firstTurn = true;
-        if (aiDifficulty === undefined)
-            this.aiDifficulty = 2;
+        this.parseAIdifficulty(aiDifficulty, secondAIdifficulty);
+
+        if (secondAIdifficulty != null) { //is this ai vs ai?
+            return this.AIvsAIconstructor(scoreLimit);
+        }
+
+        this.playerPlays = true;
+        this.playerColor = playerColor;
+        this.aiColor = this.playerColor * -1;
+        console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1);
+        return this;
+    }
+
+    AIvsAIconstructor(scoreLimit) {
+        this.playerPlays = false;
+        console.log("New Game: blue AI (lvl " + this.aiDifficulty1 + ") vs red AI (lvl " + this.aiDifficulty2 + "), with score limit " + scoreLimit);
+        this.sendStartRoundToTwoAIs()
+        return this;
+    }
+
+    sendStartRoundToTwoAIs(aiDif1, aiDif2) {
+        let table = this.board.gameboardTo2dArray();
+        this.socket.sendStartRound(table, -1, aiDif1);
+        this.socket.sendStartRound(table, 1, aiDif2);
+    }
+
+    parseAIdifficulty(aiDifficulty, secondAIdifficulty) {
+        if (aiDifficulty == null)
+            this.aiDifficulty1 = 2;
         else
-            this.aiDifficulty = aiDifficulty;
-        console.log("ai difficulty " + aiDifficulty);
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+            this.aiDifficulty1 = aiDifficulty;
+
+        if (secondAIdifficulty == null) {
+            this.aiDifficulty2 = 2;
+        } else {
+            this.aiDifficulty2 = secondAIdifficulty
+        }
+        console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
     }
 
     printStartMessage() {
-        this.uiUpdater.startMessage(this.aiDifficulty);
+        this.uiUpdater.startMessage(this.aiDifficulty1);
     }
 
     startFirstTurn() {
@@ -64,10 +97,14 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
-        if (this.turn === this.aiColor) {
-            this.sendTurnDataToAI();
+        if (this.playerPlays) {
+            if (this.turn === this.aiColor) {
+                this.sendTurnDataToAI();
+            }
+            this.uiUpdater.turnIndicator(this.turn);
+        } else {
+            this.sendTurnDataToAI(false, this.turn);
         }
-        this.uiUpdater.turnIndicator(this.turn);
     }
 
     playerAndAiHaveAnswered(player, ai) {
@@ -82,11 +119,13 @@ class Game {
         }
     }
 
-    aiSurrender(surrender) {
+    aiSurrender(surrender, color) {
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender) {
-            this.calculateSurrenderPoints(this.aiColor);
-        } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) {
+            this.calculateSurrenderPoints(color);
+        } else if (!this.playerPlays && this.aiHasAnsweredStartRound === true) { //it's an AI vs AI game
+            this.startFirstTurn(); //this is needed, because aiHasAnsweredStartRound is set in the next if clause... code smell from a one liner perhaps?
+        } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) { //it's a player vs ai game
             this.startFirstTurn();
         }
     }
@@ -106,8 +145,11 @@ class Game {
     changeTurn() {
         this.turn *= -1;
         this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
-        if(!this.checkIfRoundEnds() && this.turn === this.aiColor) {
-            this.sendTurnDataToAI();
+        let roundEnds = this.checkIfRoundEnds();
+        if(!roundEnds && this.turn === this.aiColor) { //player vs ai
+            this.sendTurnDataToAI(false, this.turn);
+        } else if (!this.playerPlays && !roundEnds) { //ai vs ai
+            this.sendTurnDataToAI(false, this.turn);
         }
     }
 
@@ -141,9 +183,17 @@ class Game {
         this.sendTurnDataToAI(true);
     }
 
-    sendTurnDataToAI(surrender) {
+    sendTurnDataToAI(surrender, color) {
         this.uiUpdater.startAiIsThinkingInterval();
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), this.aiColor, surrender, this.aiDifficulty);
+        let c = color;
+        if (color == null) { //== intended
+            c = this.aiColor;
+        }
+        let dif = this.aiDifficulty1;
+        if (!this.playerPlays && c === 1) {
+            dif = this.aiDifficulty2;
+        }
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif);
     }
 
     updateTurnCounter(areStonesHit) {
@@ -239,9 +289,13 @@ class Game {
         this.firstTurn = true;
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+        if (this.playerPlays) {
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+            this.uiUpdater.showStartRoundAndSurrenderButtons();
+        } else {
+            this.sendStartRoundToTwoAIs();
+        }
         this.playerWantsToSurrender = false;
-        this.uiUpdater.showStartRoundAndSurrenderButtons();
         this.uiUpdater.newRoundToConsole();
     }
 

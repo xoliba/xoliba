@@ -24,10 +24,7 @@ function blueButtonFunction(game, app) {
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGame();
-                for (var i = app.stage.children.length - 1; i >= 1; i--)
-                    app.stage.removeChild(app.stage.children[i]);
-                document.getElementById("bluepoints").innerHTML = 0;
-                document.getElementById("redpoints").innerHTML = 0;
+                clearOldGame(app);
                 game = new Game(app, -1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
@@ -39,10 +36,7 @@ function blueButtonFunction(game, app) {
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGame();
-                for (var i = app.stage.children.length - 1; i >= 1; i--)
-                    app.stage.removeChild(app.stage.children[i]);
-                document.getElementById("bluepoints").innerHTML = 0;
-                document.getElementById("redpoints").innerHTML = 0;
+                clearOldGame(app);
                 game = new Game(app, -1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
@@ -58,10 +52,7 @@ function redButtonFunction(game, app) {
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGame();
-                for (var i = app.stage.children.length - 1; i >= 1; i--)
-                    app.stage.removeChild(app.stage.children[i]);
-                document.getElementById("bluepoints").innerHTML = 0;
-                document.getElementById("redpoints").innerHTML = 0;
+                clearOldGame(app);
                 game = new Game(app, 1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
@@ -72,10 +63,7 @@ function redButtonFunction(game, app) {
                 var score = document.getElementById("scorelimit").value;
                 document.getElementById("newGamePopUp").style.display = "none";
                 hideNewGame();
-                for (var i = app.stage.children.length - 1; i >= 1; i--)
-                    app.stage.removeChild(app.stage.children[i]);
-                document.getElementById("bluepoints").innerHTML = 0;
-                document.getElementById("redpoints").innerHTML = 0;
+                clearOldGame(app);
                 game = new Game(app, 1, score, getAIdifficulty());
                 game.printStartMessage();
                 addButtonFunctions(game);
@@ -84,16 +72,36 @@ function redButtonFunction(game, app) {
     return game;
 }
 
+function clearOldGame(app) {
+    for (var i = app.stage.children.length - 1; i >= 1; i--)
+        app.stage.removeChild(app.stage.children[i]);
+    document.getElementById("bluepoints").innerHTML = 0;
+    document.getElementById("redpoints").innerHTML = 0;
+}
+
 function watchGameButtonFunction(game, app) {
-    //todo validate input (AI levels at least)
     if (watchButton.addEventListener){
         watchButton.addEventListener("click",
-            notSupportedYetAlert , false);
+            function() {clickOnWatchGame(game, app)}, false);
+            //notSupportedYetAlert, false);
     } else if (watchButton.attachEvent) {
         watchButton.attachEvent("onclick",
-            notSupportedYetAlert);
+            function() {clickOnWatchGame(game, app)}, false);
+            //notSupportedYetAlert);
     }
     return game;
+}
+
+function clickOnWatchGame(game, app) {
+    let score = document.getElementById("scorelimitW").value;
+    let alvl = document.getElementById("Alvl").value;
+    let blvl = document.getElementById("Blvl").value;
+    alvl = alvl < 1 ? 1 : alvl; //todo validate upper bound of ai levels
+    blvl = blvl < 1 ? 1 : blvl;
+    document.getElementById("newWatchGamePopUp").style.display = "none";
+    clearOldGame(app);
+    game = new Game(app, 0, score, alvl, blvl);
+    addButtonFunctions(game);
 }
 
 function notSupportedYetAlert() {
