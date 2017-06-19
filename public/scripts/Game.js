@@ -92,7 +92,7 @@ class Game {
             }
             this.uiUpdater.turnIndicator(this.turn);
         } else {
-            this.sendTurnDataToAI(this.board.startingTurn());
+            this.sendTurnDataToAI(false, this.board.startingTurn());
         }
     }
 
@@ -135,7 +135,7 @@ class Game {
         this.turn *= -1;
         this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
         if(!this.checkIfRoundEnds() && this.turn === this.aiColor) {
-            this.sendTurnDataToAI();
+            this.sendTurnDataToAI(false, this.turn);
         }
     }
 
@@ -171,7 +171,10 @@ class Game {
 
     sendTurnDataToAI(surrender, color) {
         this.uiUpdater.startAiIsThinkingInterval();
-        let c = color === undefined ? this.aiColor : color;
+        let c = this.aiColor;
+        if (color != null) { //!= intended
+            c = color;
+        }
         this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, this.aiDifficulty);
     }
 

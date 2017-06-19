@@ -68,7 +68,7 @@ class AiSocket {
             surrender: giveUp,
             difficulty: difficulty
         };
-        console.log("send turnData\n" + msg);
+        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty);
         aisocket.send(JSON.stringify(msg));
     }
 
