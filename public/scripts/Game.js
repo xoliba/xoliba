@@ -85,14 +85,14 @@ class Game {
         this.firstTurn = false;
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
+        this.turn = this.board.startingTurn();
         if (playerPlays) {
-            this.turn = this.board.startingTurn();
             if (this.turn === this.aiColor) {
                 this.sendTurnDataToAI();
             }
             this.uiUpdater.turnIndicator(this.turn);
         } else {
-            this.sendTurnDataToAI(false, this.board.startingTurn());
+            this.sendTurnDataToAI(false, this.turn);
         }
     }
 
@@ -134,7 +134,10 @@ class Game {
     changeTurn() {
         this.turn *= -1;
         this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
-        if(!this.checkIfRoundEnds() && this.turn === this.aiColor) {
+        let roundEnds = this.checkIfRoundEnds();
+        if(!roundEnds && this.turn === this.aiColor) { //player vs ai
+            this.sendTurnDataToAI(false, this.turn);
+        } else if (!playerPlays && !roundEnds) { //ai vs ai
             this.sendTurnDataToAI(false, this.turn);
         }
     }
