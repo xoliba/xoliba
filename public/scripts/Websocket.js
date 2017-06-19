@@ -1,4 +1,4 @@
-import { UIUpdater } from './UIUpdater.js';
+import { UIUpdater } from './ui/UIUpdater.js';
 
 var game;
 var aisocket;
