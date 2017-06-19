@@ -1,12 +1,17 @@
+import { UIUpdater } from './UIUpdater.js';
 
 var game;
 var aisocket;
+var uiUpdater;
 
 //todo info about ai that is thinking
 class AiSocket {
 
     constructor(newGame) {
+        console.log("HALOO");
         this.game = newGame;
+        uiUpdater = new UIUpdater();
+
         //parse URL
         let server;
         let url = window.location.href;
@@ -22,7 +27,13 @@ class AiSocket {
         }
 
         console.log("Trying to connect " + server);
-        aisocket = new WebSocket(server);
+        try {
+            aisocket = new WebSocket(server);
+            
+        } catch(e) {
+            uiUpdater = new UIUpdater();
+            uiUpdater.disconnectionError("Failed to construct websocket");
+        }
 
         aisocket.onmessage = (event, turnHandler) => {
             let msg = JSON.parse(event.data);
@@ -42,6 +53,13 @@ class AiSocket {
 
         aisocket.onclose = function() {
             console.log("disconnected from ai server");
+            uiUpdater = new UIUpdater();
+            uiUpdater.disconnectionError("disconnected from ai server");
+        }
+
+        aisocket.onerror = function (event) {
+            uiUpdater = new UIUpdater();
+            uiUpdater.disconnectionError(event);
         }
 
         function ping() {

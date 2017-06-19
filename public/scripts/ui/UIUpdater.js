@@ -3,6 +3,7 @@ import { InfoConsole } from './InfoConsole.js';
 
 let infoConsole;
 let aiThinkingInterval;
+let dcError = false;
 
 class UIUpdater {
 
@@ -17,11 +18,22 @@ class UIUpdater {
     }
 
     newRoundToConsole() {
-        this.infoConsole.newRoundToConsole();
+        this.infoConsole.printLine("\nNew Round! Do you want to surrender or start the round?\n");
     }
 
-    startMessage(aiDifficulty) {
-        this.infoConsole.startMessage(aiDifficulty);
+    startMessage() {
+        this.infoConsole.printLine("\nWelcome to Xoliba! Do you want to surrender or start the round?\n");
+    }
+
+    disconnectionError(errorMessage) {
+        if (dcError === false) {
+            this.infoConsole.printLine("\nDisconnected from AI. Either your network " +
+            "went down or we did something horrifying. If you think this was our " +
+            "fault, please report the error using feedback: you can find the feedback " +
+            "link from the menu. Thank you!\n");
+            dcError = true;
+        }
+        this.infoConsole.printLine("Error message: " + errorMessage);
     }
 
     showStartRoundAndSurrenderButtons() {
@@ -99,9 +111,28 @@ class UIUpdater {
     }
 
     printMove(start, target, corner2, corner3, ateEnemies, ateOwns) {
-        this.infoConsole.printMove(start, target, corner2, corner3, ateEnemies, ateOwns);
+        let eatedStonesString = '';
+        if (ateEnemies.length > 0 || ateOwns.length > 0) {
+            eatedStonesString += " (";
+            for (let i=0; i<ateEnemies.length; i++) {
+                eatedStonesString += this.turnIntoCoordinates(ateEnemies[i]);
+                if (i<ateEnemies.length-1) eatedStonesString += " ";
+            }
+            if (ateOwns.length > 0) {
+                eatedStonesString += "; ";
+                for (let i=0; i<ateOwns.length; i++) {
+                    eatedStonesString += this.turnIntoCoordinates(ateOwns[i]);
+                    if (i<ateOwns.length-1) eatedStonesString += " ";
+                }
+            }
+            eatedStonesString += ")";
+        }
+        this.infoConsole.printLine(" " + this.turnIntoCoordinates(start)+ "-" + this.turnIntoCoordinates(target)+ eatedStonesString);
     }
 
+    turnIntoCoordinates(coordinates) {
+        return String.fromCharCode(65 + coordinates[0]) + coordinates[1];
+    }
 
     noMovesAvailable(turn) {
         this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");

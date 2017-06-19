@@ -10,12 +10,6 @@ var game;
 
 drawTable(app.stage);
 
-/*PIXI.loader.add([
-    "images/whiteCircle64.png",
-    "images/blueCircle64.png",
-    "images/redCircle64.png"
-]).load();*/
-
 // a bit less buggy version
 app.renderer.render(app.stage);
 addNewGameButtonFunctions(game, app);
