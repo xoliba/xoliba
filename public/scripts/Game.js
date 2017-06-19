@@ -49,7 +49,7 @@ class Game {
         this.firstTurn = true;
         this.parseAIdifficulty(aiDifficulty, secondAIdifficulty);
 
-        if (secondAIdifficulty !== undefined) { //is this ai vs ai?
+        if (secondAIdifficulty != null) { //is this ai vs ai?
             return this.AIvsAIconstructor(scoreLimit);
         }
 
@@ -97,7 +97,7 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
-        if (playerPlays) {
+        if (this.playerPlays) {
             if (this.turn === this.aiColor) {
                 this.sendTurnDataToAI();
             }
@@ -148,7 +148,7 @@ class Game {
         let roundEnds = this.checkIfRoundEnds();
         if(!roundEnds && this.turn === this.aiColor) { //player vs ai
             this.sendTurnDataToAI(false, this.turn);
-        } else if (!playerPlays && !roundEnds) { //ai vs ai
+        } else if (!this.playerPlays && !roundEnds) { //ai vs ai
             this.sendTurnDataToAI(false, this.turn);
         }
     }
@@ -190,7 +190,7 @@ class Game {
             c = this.aiColor;
         }
         let dif = this.aiDifficulty1;
-        if (!playerPlays && c === 1) {
+        if (!this.playerPlays && c === 1) {
             dif = this.aiDifficulty2;
         }
         this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif);
@@ -289,7 +289,7 @@ class Game {
         this.firstTurn = true;
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
-        if (playerPlays) {
+        if (this.playerPlays) {
             this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
             this.uiUpdater.showStartRoundAndSurrenderButtons();
         } else {
