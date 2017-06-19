@@ -21,7 +21,8 @@ let uiUpdater;
 let bluePoints;
 let redPoints;
 let firstTurn;
-let aiDifficulty;
+let aiDifficulty1;
+let aiDifficulty2;
 let playerPlays;
 
 //todo after one game completely new one is about to begin, not just another round
@@ -46,39 +47,49 @@ class Game {
         this.bluePoints = 0;
         this.uiUpdater = new UIUpdater();
         this.firstTurn = true;
-        this.parseAIdifficulty(aiDifficulty);
+        this.parseAIdifficulty(aiDifficulty, secondAIdifficulty);
 
         if (secondAIdifficulty !== undefined) { //is this ai vs ai?
-            return this.AIvsAIconstructor(scoreLimit, aiDifficulty, secondAIdifficulty);
+            return this.AIvsAIconstructor(scoreLimit);
         }
 
         this.playerPlays = true;
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
         console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1);
         return this;
     }
 
-    AIvsAIconstructor(scoreLimit, aiDifficulty, secondAIdifficulty) {
+    AIvsAIconstructor(scoreLimit) {
         this.playerPlays = false;
-        console.log("New Game: blue AI (lvl " + aiDifficulty + ") vs red AI (lvl " + secondAIdifficulty + "), with score limit " + scoreLimit);
-        let table = this.board.gameboardTo2dArray();
-        this.socket.sendStartRound(table, -1, aiDifficulty);
-        this.socket.sendStartRound(table, 1, secondAIdifficulty);
+        console.log("New Game: blue AI (lvl " + this.aiDifficulty1 + ") vs red AI (lvl " + this.aiDifficulty2 + "), with score limit " + scoreLimit);
+        this.sendStartRoundToTwoAIs()
         return this;
     }
 
-    parseAIdifficulty(aiDifficulty) {
-        if (aiDifficulty === undefined)
-            this.aiDifficulty = 2;
+    sendStartRoundToTwoAIs(aiDif1, aiDif2) {
+        let table = this.board.gameboardTo2dArray();
+        this.socket.sendStartRound(table, -1, aiDif1);
+        this.socket.sendStartRound(table, 1, aiDif2);
+    }
+
+    parseAIdifficulty(aiDifficulty, secondAIdifficulty) {
+        if (aiDifficulty == null)
+            this.aiDifficulty1 = 2;
         else
-            this.aiDifficulty = aiDifficulty;
-        console.log("ai difficulty " + aiDifficulty);
+            this.aiDifficulty1 = aiDifficulty;
+
+        if (secondAIdifficulty == null) {
+            this.aiDifficulty2 = 2;
+        } else {
+            this.aiDifficulty2 = secondAIdifficulty
+        }
+        console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
     }
 
     printStartMessage() {
-        this.uiUpdater.startMessage(this.aiDifficulty);
+        this.uiUpdater.startMessage(this.aiDifficulty1);
     }
 
     startFirstTurn() {
@@ -178,7 +189,11 @@ class Game {
         if (color == null) { //== intended
             c = this.aiColor;
         }
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, this.aiDifficulty);
+        let dif = this.aiDifficulty1;
+        if (!playerPlays && c === 1) {
+            dif = this.aiDifficulty2;
+        }
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif);
     }
 
     updateTurnCounter(areStonesHit) {
@@ -274,9 +289,13 @@ class Game {
         this.firstTurn = true;
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+        if (playerPlays) {
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+            this.uiUpdater.showStartRoundAndSurrenderButtons();
+        } else {
+            this.sendStartRoundToTwoAIs();
+        }
         this.playerWantsToSurrender = false;
-        this.uiUpdater.showStartRoundAndSurrenderButtons();
         this.uiUpdater.newRoundToConsole();
     }
 
