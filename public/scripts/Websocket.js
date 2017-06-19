@@ -90,7 +90,7 @@ class AiSocket {
         console.log("ai socket ready state: " + aisocket.readyState);
         let waitForConnectionInterval = setInterval(() => {
             if (aisocket.readyState === 1) {
-                console.log("send starting round");
+                console.log("send starting round, color " + msg.color);
                 aisocket.send(JSON.stringify(msg));
                 clearInterval(waitForConnectionInterval);
             } else {

@@ -174,9 +174,9 @@ class Game {
 
     sendTurnDataToAI(surrender, color) {
         this.uiUpdater.startAiIsThinkingInterval();
-        let c = this.aiColor;
-        if (color != null) { //!= intended
-            c = color;
+        let c = color;
+        if (color == null) { //== intended
+            c = this.aiColor;
         }
         this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, this.aiDifficulty);
     }
