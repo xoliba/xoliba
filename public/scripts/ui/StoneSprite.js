@@ -60,11 +60,11 @@ class StoneSprite {
 
     updateColor(newVal) {
         if (newVal === 0) {
-            this.sprite.texture = PIXI.loader.resources["images/whiteCircle64.png"].texture;
+            this.sprite.texture = PIXI.loader.resources["images/whiteCircle128.png"].texture;
         } else if (newVal === 1) {
-            this.sprite.texture = PIXI.loader.resources["images/redCircle64.png"].texture;
+            this.sprite.texture = PIXI.loader.resources["images/redCircle128.png"].texture;
         } else if (newVal === -1) {
-            this.sprite.texture = PIXI.loader.resources["images/blueCircle64.png"].texture;
+            this.sprite.texture = PIXI.loader.resources["images/blueCircle128.png"].texture;
         }
     }
 

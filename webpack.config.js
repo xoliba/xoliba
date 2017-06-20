@@ -12,7 +12,9 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: path.resolve(__dirname, "public/scripts"),
+        include: [
+            path.resolve(__dirname, "public/scripts")
+        ],
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
@@ -29,8 +31,15 @@ module.exports = {
         }
       },
       {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' }
+        ]
+      },
+      {
         test: /\.js$/,
-        include: path.resolve(__dirname, "public/menuScripts"),
+        include: path.resolve(__dirname, "public/menu"),
         use: {
             loader: 'script-loader'
         }
