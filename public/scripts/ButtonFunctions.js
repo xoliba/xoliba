@@ -12,7 +12,7 @@ function addButtonFunctions(game) {     //These functions use the game created i
     surrenderButtonFunction(game);
     continueButtonFunction(game);
     giveUpButtonFunction(game);
-    notificationFunction(game);
+    notificationButtonFunction(game);
 }
 
 function undoButtonFunction(game) {
@@ -95,20 +95,7 @@ function hideStartRoundOptionsAndShowInGameOptions(){
 }
 
 
-function notificationFunction(game) {
-  /*  if (notificationButton.addEventListener) {
-        notificationButton.addEventListener("click",
-            function () {
-                var msg = document.getElementById('message').innerHTML;
-                notificationHelperFunction(game, msg);
-            }, false);
-    } else if (notificationButton.attachEvent) {
-        notificationButton.attachEvent("onClick",
-            function () {
-                var msg = document.getElementById('message').innerHTML;
-                notificationHelperFunction(game, msg);
-            }, false);
-    }*/
+function notificationButtonFunction(game) {
     var element = document.getElementById('notificationpopup');
     element.style.transition = '0.5s';
     element.style.left = '105%';
@@ -116,23 +103,4 @@ function notificationFunction(game) {
         element.style.transition = '0s';
     }, 500);
 }
-
-/* function notificationHelperFunction(game, msg) {
-    if (msg.includes("No moves available")) {
-        game.changeTurn();
-    } else if (msg.includes("Two consecutive turns skipped") || msg.includes("30 rounds without hits")) {
-        game.calculatePoints();
-    } else if (msg.includes("surrenders!") || msg.includes("wins the round") || msg.includes("draw")) {
-        if (game.checkIfGameEnds()) {
-            game.winningMessage();
-        } else {
-            game.startNewRound();
-        }
-    } else if (msg.includes("Wins! final score")) {
-        game.startNewRound();
-    } else if (msg.includes("Two or less")) {
-        game.calculatePoints();
-    }
-}*/
-
 export { addButtonFunctions, showStartRoundOptions };

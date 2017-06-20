@@ -236,29 +236,32 @@ class Game {
                 }
             }
         }
+        end = this.checkIfGameEnds();
         if (redsBiggest === bluesBiggest) {
             draw = true;
             this.uiUpdater.updatePoints(draw, 0, 0);
         } else if (redsBiggest > bluesBiggest) {
             let points = (17 - blues) * redsBiggest;
             this.redPoints += points;
-            this.uiUpdater.updatePoints(draw, 1, points);
+            this.uiUpdater.updatePoints(draw, 1, points, end);
         } else {
             let points = (17 - reds) * bluesBiggest;
             this.bluePoints += points;
-            this.uiUpdater.updatePoints(draw, -1, points);
+            this.uiUpdater.updatePoints(draw, -1, points, end);
         }
     }
 
 
     calculateSurrenderPoints(color) {
+        let end = false;
         var score = 0.4 * this.scoreLimit;
-        this.uiUpdater.updateSurrenderPoints(color, score);
         if (color === 1) {
             this.bluePoints += score;
         } else {
             this.redPoints += score;
         }
+        end = this.checkIfGameEnds();
+        this.uiUpdater.updateSurrenderPoints(color, score, end);
     }
 
     winningMessage() {

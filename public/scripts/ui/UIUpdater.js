@@ -6,6 +6,8 @@ let aiThinkingInterval;
 let dcError = false;
 let notificationButton;
 let game;
+let hasEventListener;
+let notificationFunction;
 
 class UIUpdater {
 
@@ -13,6 +15,8 @@ class UIUpdater {
         this.game = game;
         this.infoConsole = new InfoConsole();
         this.notificationButton = document.getElementById('closeNotification');
+        this.hasEventListener = false;
+        this.notificationFunction = function() {};
     }
 
 
@@ -48,9 +52,11 @@ class UIUpdater {
     }
 
 
-    updatePoints(draw, color, score) {
+    updatePoints(draw, color, score, end) {
         if (draw) {
             this.showNotification("It's a draw, no points given");
+            this.setNewFunctionToNotification(() => this.game.startNewRound());
+            return;
         } else if (color === 1) {
             this.showNotification("Red wins the round! " + score + " points awarded!");
             let element = document.getElementById("redpoints");
@@ -64,9 +70,14 @@ class UIUpdater {
             current += score;
             element.innerHTML = current;
         }
+        if (end) {
+            this.setNewFunctionToNotification(() => this.game.winningMessage());
+        } else {
+            this.setNewFunctionToNotification(() => this.game.startNewRound());
+        }
     }
 
-    updateSurrenderPoints(color, score) {
+    updateSurrenderPoints(color, score, end) {
         if (color === 1) {
             let element = document.getElementById("bluepoints");
             let current = parseInt(element.innerHTML, 10);
@@ -79,7 +90,11 @@ class UIUpdater {
             current += score;
             element.innerHTML = current;
             this.showNotification("Blue surrenders! " + score + " points awarded to Red!");
-            this.setNewFunctionToNotification(this.game.startNewRound());
+        }
+        if (end) {
+            this.setNewFunctionToNotification(() => this.game.winningMessage());
+        } else {
+            this.setNewFunctionToNotification(() => this.game.startNewRound());
         }
     }
 
@@ -95,10 +110,12 @@ class UIUpdater {
             element.innerHTML = 0;
             document.getElementById("bluepoints").innerHTML = 0;
         }
+        this.setNewFunctionToNotification(() => this.game.startNewRound());
     }
 
     tooManyRoundsWithoutHits() {
         this.showNotification("30 rounds without hits, round ended!");
+        this.setNewFunctionToNotification(() => this.game.calculatePoints());
     }
 
     startAiIsThinkingInterval() {
@@ -141,11 +158,13 @@ class UIUpdater {
 
     noMovesAvailable(turn) {
         this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
+        this.setNewFunctionToNotification(() => this.game.changeTurn());
         this.infoConsole.printLine(" no moves, turn skipped\n");
     }
 
     twoConsecutiveRoundsSkipped() {
         this.showNotification("Two consecutive turns skipped, round ended!");
+        this.setNewFunctionToNotification(() => this.game.calculatePoints());
     }
 
     notEnoughStonesLeft() {
@@ -157,13 +176,23 @@ class UIUpdater {
     }
 
     setNewFunctionToNotification(newFunction) {
-        this.notificationButton.detachEvent('onClick', notificationFunction());
-        this.noticicationButton.removeEventListener('click', notificationFunction());
-        if (notificationButton.addEventListener) {
-            notificationButton.addEventListener("click", newFunction, false);
-        } else if (notificationButton.attachEvent) {
-            notificationButton.attachEvent("onClick", newFunction, false);
+
+        if (this.hasEventListener) {
+            if (this.notificationButton.removeEventListener) {
+                this.notificationButton.removeEventListener('click', this.notificationFunction);
+            } else {
+                if (this.notificationButton.detachEvent) {
+                    this.notificationButton.detachEvent('onclick', this.notificationFunction);
+                }
+            }
         }
+        this.notificationFunction = newFunction;
+        if (this.notificationButton.addEventListener) {
+            this.notificationButton.addEventListener("click", this.notificationFunction, false);
+        } else if (this.notificationButton.attachEvent) {
+            this.notificationButton.attachEvent("onClick", this.notificationFunction, false);
+        }
+        this.hasEventListener = true;
     }
 
     showNotification(message){
