@@ -4,11 +4,15 @@ import { InfoConsole } from './InfoConsole.js';
 let infoConsole;
 let aiThinkingInterval;
 let dcError = false;
+let notificationButton;
+let game;
 
 class UIUpdater {
 
-    constructor() {
+    constructor(game) {
+        this.game = game;
         this.infoConsole = new InfoConsole();
+        this.notificationButton = document.getElementById('closeNotification');
     }
 
 
@@ -75,6 +79,7 @@ class UIUpdater {
             current += score;
             element.innerHTML = current;
             this.showNotification("Blue surrenders! " + score + " points awarded to Red!");
+            this.setNewFunctionToNotification(this.game.startNewRound());
         }
     }
 
@@ -149,6 +154,16 @@ class UIUpdater {
 
     pressStartRound() {
         this.showNotification("Press Start round!");
+    }
+
+    setNewFunctionToNotification(newFunction) {
+        this.notificationButton.detachEvent('onClick', notificationFunction());
+        this.noticicationButton.removeEventListener('click', notificationFunction());
+        if (notificationButton.addEventListener) {
+            notificationButton.addEventListener("click", newFunction, false);
+        } else if (notificationButton.attachEvent) {
+            notificationButton.attachEvent("onClick", newFunction, false);
+        }
     }
 
     showNotification(message){

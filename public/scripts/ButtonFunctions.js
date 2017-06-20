@@ -96,7 +96,7 @@ function hideStartRoundOptionsAndShowInGameOptions(){
 
 
 function notificationFunction(game) {
-    if (notificationButton.addEventListener) {
+  /*  if (notificationButton.addEventListener) {
         notificationButton.addEventListener("click",
             function () {
                 var msg = document.getElementById('message').innerHTML;
@@ -108,7 +108,7 @@ function notificationFunction(game) {
                 var msg = document.getElementById('message').innerHTML;
                 notificationHelperFunction(game, msg);
             }, false);
-    }
+    }*/
     var element = document.getElementById('notificationpopup');
     element.style.transition = '0.5s';
     element.style.left = '105%';
@@ -117,7 +117,7 @@ function notificationFunction(game) {
     }, 500);
 }
 
-function notificationHelperFunction(game, msg) {
+/* function notificationHelperFunction(game, msg) {
     if (msg.includes("No moves available")) {
         game.changeTurn();
     } else if (msg.includes("Two consecutive turns skipped") || msg.includes("30 rounds without hits")) {
@@ -133,6 +133,6 @@ function notificationHelperFunction(game, msg) {
     } else if (msg.includes("Two or less")) {
         game.calculatePoints();
     }
-}
+}*/
 
 export { addButtonFunctions, showStartRoundOptions };

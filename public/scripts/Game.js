@@ -45,7 +45,7 @@ class Game {
         this.playerWantsToSurrender = false;
         this.redPoints = 0;
         this.bluePoints = 0;
-        this.uiUpdater = new UIUpdater();
+        this.uiUpdater = new UIUpdater(this);
         this.firstTurn = true;
         this.parseAIdifficulty(aiDifficulty, secondAIdifficulty);
 
