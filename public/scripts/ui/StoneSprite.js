@@ -9,22 +9,22 @@ const highlightScaling = radius / 100;
 let sprite;
 
 PIXI.loader.add([
-    "images/whiteCircle64.png",
-    "images/blueCircle64.png",
-    "images/redCircle64.png"
+    "images/whiteCircle128.png",
+    "images/blueCircle128.png",
+    "images/redCircle128.png"
 ]).load();
 class StoneSprite {
 
     constructor(x, y, app, turnHandler, parent) {
 
         if (parent.value === -1) {
-            this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle64.png');
+            this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle128.png');
             //path = "images/blueCircle64.png";
         } else if (parent.value === 0) {
-            this.sprite = new PIXI.Sprite.fromImage('/images/whiteCircle64.png');
+            this.sprite = new PIXI.Sprite.fromImage('/images/whiteCircle128.png');
             //path = "images/whiteCircle64.png";
         } else if (parent.value === 1) {
-            this.sprite = new PIXI.Sprite.fromImage('/images/redCircle64.png');
+            this.sprite = new PIXI.Sprite.fromImage('/images/redCircle128.png');
             //path = "images/redCircle64.png";
         }
 
