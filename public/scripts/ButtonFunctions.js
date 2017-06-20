@@ -130,6 +130,8 @@ function notificationHelperFunction(game, msg) {
         }
     } else if (msg.includes("Wins! final score")) {
         game.startNewRound();
+    } else if (msg.includes("Two or less")) {
+        game.calculatePoints();
     }
 }
 

@@ -6,6 +6,8 @@ import { UIUpdater } from '../ui/UIUpdater.js';
 let stonesList;
 let actions;
 let uiUpdater;
+let reds;
+let blues;
 
 class Board {
 
@@ -16,6 +18,8 @@ class Board {
         turnHandler.board = this;
         this.generateStartingBoard(app, turnHandler);
         this.uiUpdater = new UIUpdater();
+        this.reds = 0;
+        this.blues = 0;
     }
 
     gameboardTo2dArray() {
@@ -58,8 +62,21 @@ class Board {
         let ateOwns = [];
         for (let i=0; i<this.stonesList.length; i++) { //update stones
             if (this.stonesList[i].value !== array[this.stonesList[i].x][this.stonesList[i].y]) {
-                if (this.stonesList[i].value === ownColor) ateOwns.push([this.stonesList[i].x, this.stonesList[i].y]);
-                else ateEnemies.push([this.stonesList[i].x, this.stonesList[i].y]);
+                if (this.stonesList[i].value === ownColor) {
+                    ateOwns.push([this.stonesList[i].x, this.stonesList[i].y]);
+                    if (ownColor === -1) {
+                        this.blues++;
+                    } else {
+                        this.reds++;
+                    }
+                } else {
+                    ateEnemies.push([this.stonesList[i].x, this.stonesList[i].y]);
+                    if (ownColor === 1) {
+                        this.blues++;
+                    } else {
+                        this.reds++;
+                    }
+                }
                 this.stonesList[i].value = array[this.stonesList[i].x][this.stonesList[i].y];
             }
         }
@@ -73,23 +90,24 @@ class Board {
 
 
     generateStartingBoard(app, turnHandler) {
-        let reds = 17;
-        let blues = 17;
+        this.reds = 17;
+        this.blues = 17;
         let whites = 11;
         let n = 0;
 
         for (let i=0; i < 7; i++) {
             for (let j=0; j < 7; j++) {
                 if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
-                    let value = Math.floor(Math.random() * (reds + blues + whites) + 1);
-                    if (value <= reds){
+                    let value = Math.floor(Math.random() * (this.reds + this.blues + whites) + 1);
+                    if (value <= this.reds){
+                        //'==' is intended in the following ifs
                         if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(1, i, j, app, turnHandler);
                         else this.stonesList[n++].value = 1;
-                        reds--;
-                    } else if (value <= reds + blues){
+                        this.reds--;
+                    } else if (value <= this.reds + this.blues){
                         if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(-1, i, j, app, turnHandler);
                         else this.stonesList[n++].value = -1;
-                        blues--;
+                        this.blues--;
                     } else {
                         if(this.stonesList[n] == null) this.stonesList[n++] = new Stone(0, i, j, app, turnHandler);
                         else this.stonesList[n++].value = 0;

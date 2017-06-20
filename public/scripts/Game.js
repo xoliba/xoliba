@@ -160,7 +160,10 @@ class Game {
      */
     checkIfRoundEnds() {
         let availableMoves = this.validate.isThereMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
-        if (this.turnCounter === 30) {
+        if (!availableMoves && (this.board.reds >= 15 || this.board.blues >= 15)) {//check if either player has less than three stones on board
+            this.uiUpdater.notEnoughStonesLeft();
+            return true;
+        } else if (this.turnCounter === 30) {
             this.uiUpdater.tooManyRoundsWithoutHits();
             return true;
         } else if (!availableMoves && this.roundskipped === 0) {

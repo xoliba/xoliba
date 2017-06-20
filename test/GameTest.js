@@ -15,8 +15,8 @@ describe('Game', () => {
     var validate;
     var infoConsole;
     var UIUpdater;
-    var table = [[-2, 0, 0, 0, 0, 1, -2],
-                [0, 1, 1, 0, 1, 1, 0],
+    var table = [[-2, 0, -1, 0, 0, 1, -2],
+                [0, 1, 1, -1, 1, 1, 0],
                 [0, 1, 0, 1, 1, 1, 0],
                 [0, 0, 0, 0, 0, 0, 1],
                 [0, 1, 0, 0, 0, 0, 0],
@@ -174,4 +174,20 @@ describe('Game', () => {
         assert.equal(game.bluePoints, 0);
         assert.equal(game.redPoints, 0);
     });
+
+    it('not enough stones left', () => {
+        var noStones = [[-2, 0, 0, 0, 0, 1, -2],
+                        [0, 0, 0, 1, 0, 0, 1],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0],
+                        [-1, 0, -1, 0, 0, 0, 0],
+                        [-2, 0, 0, 0, 0, 0, -2]];
+        td.when(board.gameboardTo2dArray()).thenReturn(noStones);
+        game.board.reds = 14;
+        game.board.blues = 15;
+        //td.when(validate.trianglesFound(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(3);
+
+        assert.equal(game.checkIfRoundEnds(), true);
+    })
 });

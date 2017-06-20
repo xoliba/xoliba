@@ -143,8 +143,12 @@ class UIUpdater {
         this.showNotification("Two consecutive turns skipped, round ended!");
     }
 
+    notEnoughStonesLeft() {
+        this.showNotification("Two or less stones left, round ended!");
+    }
+
     pressStartRound() {
-        this.showNotification("Press Start round!")
+        this.showNotification("Press Start round!");
     }
 
     showNotification(message){
