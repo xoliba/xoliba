@@ -90,7 +90,7 @@ class AiSocket {
         aisocket.send(JSON.stringify(msg));
     }
 
-    sendStartRound(table, aiColor, difficulty) {
+    sendStartRound(table, aiColor, difficulty, scoreLimit) {
         let msg = {
             type: "startRound",
             board: table,
@@ -99,7 +99,8 @@ class AiSocket {
             target: null,
             didMove: true,
             surrender: null,
-            difficulty: difficulty
+            difficulty: difficulty,
+            scoreLimit: scoreLimit
         };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
