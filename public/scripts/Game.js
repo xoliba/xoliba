@@ -83,7 +83,7 @@ class Game {
         if (secondAIdifficulty === null) {
             this.aiDifficulty2 = 2;
         } else {
-            this.aiDifficulty2 = secondAIdifficulty
+            this.aiDifficulty2 = secondAIdifficulty;
         }
         console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
     }
@@ -122,7 +122,7 @@ class Game {
     aiSurrender(surrender, color) {
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender) {
-            this.calculateSurrenderPoints(ai.color);
+            this.calculateSurrenderPoints(this.aiColor);
         } else if (!this.playerPlays && this.aiHasAnsweredStartRound === true) { //it's an AI vs AI game
             this.startFirstTurn(); //this is needed, because aiHasAnsweredStartRound is set in the next if clause... code smell from a one liner perhaps?
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) { //it's a player vs ai game
@@ -217,8 +217,8 @@ class Game {
         let reds = 0;
         let end = false;
         let draw = false;
-        for (var i = 0; i < 7; i++) {
-            for (var j = 0; j < 7; j++) {
+        for (let i = 0; i < 7; i++) {
+            for (let j = 0; j < 7; j++) {
                 if (!((i === 0 || i === 6) && (j === 0 || j === 6))) {
                     if (this.board.gameboardTo2dArray()[i][j] === 1) {
                         reds++;
@@ -255,7 +255,7 @@ class Game {
 
     calculateSurrenderPoints(color) {
         let end = false;
-        var score = 0.4 * this.scoreLimit;
+        let score = 0.4 * this.scoreLimit;
         if (color === 1) {
             this.bluePoints += score;
         } else {
@@ -297,7 +297,7 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         if (this.playerPlays) {
-            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty);
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit);
             this.uiUpdater.showStartRoundAndSurrenderButtons();
         } else {
             this.sendStartRoundToTwoAIs();
