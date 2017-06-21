@@ -1,4 +1,5 @@
 function openNewGamePopUp(){
+    closeNav();
     let radios = document.getElementsByName("mode");
     let gameMode;
     for (let i = 0, length = radios.length; i < length; i++) {
@@ -13,4 +14,8 @@ function openNewGamePopUp(){
     } else {
         document.getElementById("newWatchGamePopUp").style.display = 'block';
     }
+}
+
+function closeNewGamePopUp(){
+    document.getElementById("newGamePopUp").style.display = 'none';
 }

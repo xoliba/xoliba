@@ -29,13 +29,19 @@ button {
     width: 15%;
     height: 5%;
     white-space: nowrap;
-    overflow-x: hidden;
+    overflow: hidden;
     z-index: 5;
     transition: all 0s ease;
 }
 
 #undo, #GiveUp, #StartRound, #Surrender {
     display: none;
+}
+
+#undo {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    outline: none;
 }
 
 button:hover{
@@ -46,7 +52,6 @@ button:hover{
 
 #undo:hover {
     transition: 1s;
-    background-color: #F8F8F8;
     -webkit-transform: rotateZ(-360deg);
     -ms-transform: rotateZ(-360deg);
     transform: rotateZ(-360deg);

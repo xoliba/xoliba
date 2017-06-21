@@ -2,22 +2,34 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="submenu">
+            <a href="javascript:void(0)" onclick="openNewGamePopUp()">New Game</a>
+        </li>
+        <li class="submenu">
             <a href="#">Choose AI difficulty</a>
             <ul class="dropdown">
                 <li>
-                    <div class="aiDifficulty" id="aiDif">
-                        <input type="radio" id="r1" name="difficulty" value="1">
-                        <label for="r1">Beginner</label><br>
+                    <input type="radio" id="r1" name="difficulty" value="1">
+                    <label for="r1">Beginner</label>
 
-                        <input type="radio" id="r2" name="difficulty" value="2" checked>
-                        <label for="r2">Easy</label><br>
+                    <div class="check"></div>
+                </li>
+                <li>
+                    <input type="radio" id="r2" name="difficulty" value="2" checked>
+                    <label for="r2">Easy</label>
 
-                        <input type="radio" id="r3" name="difficulty" value="4">
-                        <label for="r3">Medium</label><br>
+                    <div class="check"></div>
+                </li>
+                <li>
+                    <input type="radio" id="r3" name="difficulty" value="4">
+                    <label for="r3">Medium</label>
 
-                        <input type="radio" id="r4" name="difficulty" value="6">
-                        <label for="r4">Hard</label>
-                    </div>
+                    <div class="check"></div>
+                </li>
+                <li>
+                    <input type="radio" id="r4" name="difficulty" value="6">
+                    <label for="r4">Hard</label>
+
+                    <div class="check"></div>
                 </li>
             </ul>
         </li>
@@ -27,6 +39,8 @@
                 <li>
                     <input type="radio" id="s1" name="mode" value="play" checked>
                     <label for="s1">Player versus AI</label><br>
+
+                    <div class="check"></div>
                 </li>
                 <!--
                 <li>
@@ -41,6 +55,8 @@
             <ul class="dropdown">
                 <li>
                     <a target="_blank" href="https://books.google.fi/books?id=-R3vDQAAQBAJ&printsec=frontcover&dq=xoliba&hl=fi&sa=X&ved=0ahUKEwjpmOfLjKnUAhWCOSwKHWUyC5YQ6AEIJzAA#v=onepage&q=xoliba&f=true">Manual (in finnish)</a>
+                </li>
+                <li>
                     <a target="_blank" href="http://www.nestorgames.com/rulebooks/XOLIBA_EN.pdf">Manual (in english)</a>
                 </li>
             </ul>

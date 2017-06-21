@@ -1,5 +1,5 @@
 window.$ = require('jquery');
-require('../menu/indexstyle.css');
+/*require('../menu/indexstyle.css');*/
 
 require('../menu/sidenav/sidenav.js');
 require('../menu/sidenav/submenu.js');
