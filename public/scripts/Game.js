@@ -49,38 +49,38 @@ class Game {
         this.firstTurn = true;
         this.parseAIdifficulty(aiDifficulty, secondAIdifficulty);
 
-        if (secondAIdifficulty != null) { //is this ai vs ai?
+        if (secondAIdifficulty !== null) { //is this ai vs ai?
             return this.AIvsAIconstructor(scoreLimit);
         }
 
         this.playerPlays = true;
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
-        console.log("playerColor " + playerColor + ", scoreLimit " +  scoreLimit);
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1);
+        console.log("playerColor " + playerColor + ", scoreLimit " + scoreLimit);
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit);
         return this;
     }
 
     AIvsAIconstructor(scoreLimit) {
         this.playerPlays = false;
         console.log("New Game: blue AI (lvl " + this.aiDifficulty1 + ") vs red AI (lvl " + this.aiDifficulty2 + "), with score limit " + scoreLimit);
-        this.sendStartRoundToTwoAIs()
+        this.sendStartRoundToTwoAIs();
         return this;
     }
 
-    sendStartRoundToTwoAIs(aiDif1, aiDif2) {
+    sendStartRoundToTwoAIs() {
         let table = this.board.gameboardTo2dArray();
-        this.socket.sendStartRound(table, -1, aiDif1);
-        this.socket.sendStartRound(table, 1, aiDif2);
+        this.socket.sendStartRound(table, -1, this.aiDifficulty1, this.scoreLimit);
+        this.socket.sendStartRound(table, 1, this.aiDifficulty2, this.scoreLimit);
     }
 
     parseAIdifficulty(aiDifficulty, secondAIdifficulty) {
-        if (aiDifficulty == null)
+        if (aiDifficulty === null) {
             this.aiDifficulty1 = 2;
-        else
+        } else {
             this.aiDifficulty1 = aiDifficulty;
-
-        if (secondAIdifficulty == null) {
+        }
+        if (secondAIdifficulty === null) {
             this.aiDifficulty2 = 2;
         } else {
             this.aiDifficulty2 = secondAIdifficulty
@@ -146,7 +146,7 @@ class Game {
         this.turn *= -1;
         this.uiUpdater.turnIndicator(this.turn); //turn changed, lets update the ui
         let roundEnds = this.checkIfRoundEnds();
-        if(!roundEnds && this.turn === this.aiColor) { //player vs ai
+        if (!roundEnds && this.turn === this.aiColor) { //player vs ai
             this.sendTurnDataToAI(false, this.turn);
         } else if (!this.playerPlays && !roundEnds) { //ai vs ai
             this.sendTurnDataToAI(false, this.turn);
@@ -160,7 +160,7 @@ class Game {
      */
     checkIfRoundEnds() {
         let availableMoves = this.validate.isThereMovesAvailable(this.turn, this.board.gameboardTo2dArray()); //check if the next player has any moves left
-        if (!availableMoves && (this.board.reds >= 15 || this.board.blues >= 15)) {//check if either player has less than three stones on board
+        if (!availableMoves && (this.board.reds >= 15 || this.board.blues >= 15)) { //check if either player has less than three stones on board
             this.uiUpdater.notEnoughStonesLeft();
             return true;
         } else if (this.turnCounter === 30) {
