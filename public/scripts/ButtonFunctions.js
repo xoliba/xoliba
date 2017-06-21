@@ -6,8 +6,16 @@ var surrenderButton = document.getElementById("Surrender");
 var continueButton = document.getElementById("StartRound");
 var giveUpButton = document.getElementById("GiveUp");
 var notificationButton = document.getElementById('closeNotification');
+var surrenderBind;
+var undoBind;
+var continueBind;
+var giveUpBind;
 
 function addButtonFunctions(game) {     //These functions use the game created in addNewGameButtonFunctions
+    surrenderBind = surrenderFunction.bind(game);
+    undoBind = undo.bind(game);
+    continueBind = continueFunction.bind(game);
+    giveUpBind = giveUp.bind(game);
     undoButtonFunction(game);
     surrenderButtonFunction(game);
     continueButtonFunction(game);
@@ -15,17 +23,47 @@ function addButtonFunctions(game) {     //These functions use the game created i
     notificationButtonFunction(game);
 }
 
+function undo() {
+    this.undo();
+}
+
+function continueFunction() {
+    hideStartRoundOptionsAndShowInGameOptions();
+    this.playerSurrender(false);
+}
+
+function surrenderFunction() {
+    this.playerSurrender(true);
+}
+
+
+function giveUp() {
+    this.giveUp();
+}
+
+function resetButtons(game) {
+    if (surrenderButton.removeEventListener) {
+        surrenderButton.removeEventListener("click", surrenderBind, false);
+        undoButton.removeEventListener("click", undoBind);
+        continueButton.removeEventListener("click", continueBind);
+        giveUpButton.removeEventListener("click", giveUpBind);
+    } else {
+        if (surrenderButton.detachEvent) {
+            surrenderButton.detachEvent('onClick', surrenderBind);
+            undoButton.detachEvent("onclick", undoBind);
+            surrenderButton.detachEvent("onclick", surrenderBind);
+            continueButton.detachEvent("onclick", continueBind);
+            giveUpButton.detachEvent("onclick", giveUpBind);
+        }
+    }
+
+}
+
 function undoButtonFunction(game) {
     if (undoButton.addEventListener) {
-        undoButton.addEventListener("click",
-            () => {
-                game.undo();
-            }, false);
+        undoButton.addEventListener("click", undoBind, false);
     } else if (undoButton.attachEvent) {
-        undoButton.attachEvent("onclick",
-            () => {
-                game.undo();
-            });
+        undoButton.attachEvent("onclick", undoBind, false);
     }
 }
 
@@ -39,46 +77,27 @@ function undoButtonFunction(game) {
 }
 */
 function surrenderButtonFunction(game) {
+
     if (surrenderButton.addEventListener) {
-        surrenderButton.addEventListener("click",
-            function () {
-                game.playerSurrender(true);
-            }, false);
+        surrenderButton.addEventListener("click", surrenderBind, false);
     } else if (surrenderButton.attachEvent) {
-        surrenderButton.attachEvent("onClick",
-            function () {
-                game.playerSurrender(true);
-            });
+        surrenderButton.attachEvent("onClick", surrenderBind);
     }
 }
 
 function continueButtonFunction(game) {
     if (continueButton.addEventListener) {
-        continueButton.addEventListener("click",
-            function () {
-                game.playerSurrender(false);
-                hideStartRoundOptionsAndShowInGameOptions();
-            }, false);
+        continueButton.addEventListener("click", continueBind, false);
     } else if (continueButton.attachEvent) {
-        continueButton.attachEvent("onClick",
-            function () {
-                game.playerSurrender(false);
-                hideStartRoundOptionsAndShowInGameOptions();
-            });
+        continueButton.attachEvent("onClick", continueBind);
     }
 }
 
 function giveUpButtonFunction(game) {
     if (giveUpButton.addEventListener) {
-        giveUpButton.addEventListener("click",
-            function () {
-                game.giveUp();
-            }, false);
+        giveUpButton.addEventListener("click", giveUpBind, false);
     } else if (giveUpButton.attachEvent) {
-        giveUpButton.attachEvent("onClick",
-            function () {
-                game.giveUp();
-            });
+        giveUpButton.attachEvent("onClick", giveUpBind);
     }
 }
 
@@ -103,4 +122,4 @@ function notificationButtonFunction(game) {
         element.style.transition = '0s';
     }, 500);
 }
-export { addButtonFunctions, showStartRoundOptions };
+export { addButtonFunctions, showStartRoundOptions, resetButtons };

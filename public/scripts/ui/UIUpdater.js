@@ -1,12 +1,12 @@
 import { Game } from '../Game.js';
 import { InfoConsole } from './InfoConsole.js';
+import { resetButtons } from '../ButtonFunctions.js';
 
 let infoConsole;
 let aiThinkingInterval;
 let dcError = false;
 let notificationButton;
 let game;
-let hasEventListener;
 let notificationFunction;
 
 class UIUpdater {
@@ -47,8 +47,17 @@ class UIUpdater {
     showStartRoundAndSurrenderButtons() {
         document.getElementById("undo").style.display = "none";
         document.getElementById("GiveUp").style.display = "none";
+        document.getElementById("NewGame").style.display = "none";
         document.getElementById("StartRound").style.display = "block";
         document.getElementById("Surrender").style.display = "block";
+    }
+
+    showNewGameButton() {
+        document.getElementById("undo").style.display = "none";
+        document.getElementById("GiveUp").style.display = "none";
+        document.getElementById("StartRound").style.display = "none";
+        document.getElementById("Surrender").style.display = "none";
+        document.getElementById("NewGame").style.display = "block"
     }
 
 
@@ -102,15 +111,12 @@ class UIUpdater {
         if (color === -1) {
             let element = document.getElementById("bluepoints");
             this.showNotification("Blue Wins! final score: " + score + " - " + document.getElementById("redpoints").innerHTML);
-            element.innerHTML = 0;
-            document.getElementById("redpoints").innerHTML = 0
         } else {
             let element = document.getElementById("redpoints");
             this.showNotification("Red Wins! final score: " + score + " - " + document.getElementById("bluepoints").innerHTML);
-            element.innerHTML = 0;
-            document.getElementById("bluepoints").innerHTML = 0;
         }
-        this.setNewFunctionToNotification(() => this.game.startNewRound());
+        resetButtons();
+        this.setNewFunctionToNotification(() => this.showNewGameButton());
     }
 
     tooManyRoundsWithoutHits() {
@@ -176,23 +182,20 @@ class UIUpdater {
     }
 
     setNewFunctionToNotification(newFunction) {
-
-        if (this.hasEventListener) {
-            if (this.notificationButton.removeEventListener) {
-                this.notificationButton.removeEventListener('click', this.notificationFunction);
-            } else {
-                if (this.notificationButton.detachEvent) {
-                    this.notificationButton.detachEvent('onclick', this.notificationFunction);
-                }
+        if (this.notificationButton.removeEventListener) {
+            this.notificationButton.removeEventListener('click', this.notificationFunction);
+        } else {
+            if (this.notificationButton.detachEvent) {
+                this.notificationButton.detachEvent('onclick', this.notificationFunction);
             }
         }
+
         this.notificationFunction = newFunction;
         if (this.notificationButton.addEventListener) {
             this.notificationButton.addEventListener("click", this.notificationFunction, false);
         } else if (this.notificationButton.attachEvent) {
             this.notificationButton.attachEvent("onClick", this.notificationFunction, false);
         }
-        this.hasEventListener = true;
     }
 
     showNotification(message){

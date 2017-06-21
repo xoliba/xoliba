@@ -236,17 +236,18 @@ class Game {
                 }
             }
         }
-        end = this.checkIfGameEnds();
         if (redsBiggest === bluesBiggest) {
             draw = true;
             this.uiUpdater.updatePoints(draw, 0, 0);
         } else if (redsBiggest > bluesBiggest) {
             let points = (17 - blues) * redsBiggest;
             this.redPoints += points;
+            end = this.checkIfGameEnds();
             this.uiUpdater.updatePoints(draw, 1, points, end);
         } else {
             let points = (17 - reds) * bluesBiggest;
             this.bluePoints += points;
+            end = this.checkIfGameEnds();
             this.uiUpdater.updatePoints(draw, -1, points, end);
         }
     }
