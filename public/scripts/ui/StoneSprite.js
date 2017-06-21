@@ -4,7 +4,7 @@ import { scale } from './Draw.js';
 const padding = scale() / 10;
 const px = scale() / 7.5;
 const radius = px / 4;
-const highlightScaling = radius / 100;
+const highlightScaling = radius / 200;
 
 let sprite;
 
