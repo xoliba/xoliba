@@ -122,7 +122,7 @@ class Game {
     aiSurrender(surrender, color) {
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender) {
-            this.calculateSurrenderPoints(color);
+            this.calculateSurrenderPoints(ai.color);
         } else if (!this.playerPlays && this.aiHasAnsweredStartRound === true) { //it's an AI vs AI game
             this.startFirstTurn(); //this is needed, because aiHasAnsweredStartRound is set in the next if clause... code smell from a one liner perhaps?
         } else if (this.playerAndAiHaveAnswered(this.playerHasAnsweredStartRound, this.aiHasAnsweredStartRound = true)) { //it's a player vs ai game
@@ -268,12 +268,8 @@ class Game {
     winningMessage() {
         if (this.redPoints >= this.scoreLimit) {
             this.uiUpdater.winningMessage(1, this.redPoints);
-            this.redPoints = 0;
-            this.bluePoints = 0;
         } else {
             this.uiUpdater.winningMessage(-1, this.bluePoints);
-            this.redPoints = 0;
-            this.bluePoints = 0;
         }
     }
 
@@ -285,7 +281,11 @@ class Game {
     }
 
     pressStartRound() {
-        this.uiUpdater.pressStartRound();
+        if (this.checkIfGameEnds()) {
+            this.uiUpdater.pressNewGame();
+        } else {
+            this.uiUpdater.pressStartRound();
+        }
     }
 
     startNewRound(){

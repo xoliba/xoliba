@@ -175,10 +175,15 @@ class UIUpdater {
 
     notEnoughStonesLeft() {
         this.showNotification("Two or less stones left, round ended!");
+        this.setNewFunctionToNotification(() => this.game.calculatePoints());
     }
 
     pressStartRound() {
         this.showNotification("Press Start round!");
+    }
+
+    pressNewGame() {
+        this.showNotification("Press New Game!");
     }
 
     setNewFunctionToNotification(newFunction) {
