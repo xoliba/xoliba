@@ -196,9 +196,10 @@ class Game {
         if (!this.playerPlays && c === 1) {
             dif = this.aiDifficulty2;
         }
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif);
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter);
     }
 
+    //todo rename 'turn counter' to a more informative option
     updateTurnCounter(areStonesHit) {
         if (areStonesHit === true) {
             console.log("turncounter: " + this.turnCounter);
