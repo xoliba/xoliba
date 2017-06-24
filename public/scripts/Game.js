@@ -49,7 +49,7 @@ class Game {
         this.firstTurn = true;
         this.parseAIdifficulty(aiDifficulty, secondAIdifficulty);
 
-        if (secondAIdifficulty !== null) { //is this ai vs ai?
+        if (secondAIdifficulty != null) { //is this ai vs ai? MUST BE != NOT !==
             return this.AIvsAIconstructor(scoreLimit);
         }
 
