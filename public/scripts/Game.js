@@ -196,7 +196,7 @@ class Game {
         if (!this.playerPlays && c === 1) {
             dif = this.aiDifficulty2;
         }
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter);
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit);
     }
 
     //todo rename 'turn counter' to a more informative option
