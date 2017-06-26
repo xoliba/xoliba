@@ -159,7 +159,7 @@ class UIUpdater {
     }
 
     turnIntoCoordinates(coordinates) {
-        return String.fromCharCode(65 + coordinates[0]) + (coordinates[1] + 1);
+        return String.fromCharCode(65 + coordinates[0]) + (Math.abs(coordinates[1] - 7));
     }
 
     noMovesAvailable(turn) {
