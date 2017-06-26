@@ -113,9 +113,18 @@ class TurnHandler {
         if (didMove) {
             startStone = this.board.findStone(start[0], start[1]);
             targetStone = this.board.findStone(target[0], target[1]);
+            var secondCorner = this.board.findStone(corners[0][0], corners[0][1]);
+            var thirdCorner = this.board.findStone(corners[1][0], corners[1][1]);
             this.board.swap(startStone, targetStone);
+            startStone.choose();
+            secondCorner.choose();
+            thirdCorner.choose();
             this.stonesHit = this.board.hitStones(start[0], start[1], target[0], target[1], corners[0][0], corners[0][1], corners[1][0], corners[1][1]);
-
+            setTimeout(() => {
+                startStone.unchoose();
+                secondCorner.unchoose();
+                thirdCorner.unchoose();
+            }, 1000);
             if (this.stonesHit === 1) {
                 this.game.updateTurnCounter(false);
             } else {
