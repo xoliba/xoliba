@@ -64,7 +64,10 @@ class UIUpdater {
     updatePoints(draw, color, score, end) {
         if (draw) {
             this.showNotification("It's a draw, no points given");
-            this.setNewFunctionToNotification(() => this.game.startNewRound());
+            this.setNewFunctionToNotification(() => {
+                this.game.startNewRound();
+                this.enableButtons();
+            });
             return;
         } else if (color === 1) {
             this.showNotification("Red wins the round! Red earns " + score + " points!");
@@ -80,9 +83,15 @@ class UIUpdater {
             element.innerHTML = current;
         }
         if (end) {
-            this.setNewFunctionToNotification(() => this.game.winningMessage());
+            this.setNewFunctionToNotification(() => {
+                this.game.winningMessage();
+                this.enableButtons();
+            });
         } else {
-            this.setNewFunctionToNotification(() => this.game.startNewRound());
+            this.setNewFunctionToNotification(() => {
+                this.game.startNewRound();
+                this.enableButtons();
+            });
         }
     }
 
@@ -101,9 +110,15 @@ class UIUpdater {
             this.showNotification("Blue surrenders! Red earns " + score + " points!");
         }
         if (end) {
-            this.setNewFunctionToNotification(() => this.game.winningMessage());
+            this.setNewFunctionToNotification(() => {
+                this.game.winningMessage();
+                this.enableButtons();
+            });
         } else {
-            this.setNewFunctionToNotification(() => this.game.startNewRound());
+            this.setNewFunctionToNotification(() => {
+                this.game.startNewRound();
+                this.enableButtons();
+            });
         }
     }
 
@@ -116,12 +131,18 @@ class UIUpdater {
             this.showNotification("Red Wins! final score: " + score + " - " + document.getElementById("bluepoints").innerHTML);
         }
         resetButtons();
-        this.setNewFunctionToNotification(() => this.showNewGameButton());
+        this.setNewFunctionToNotification(() => {
+            this.showNewGameButton();
+            this.enableButtons();
+        });
     }
 
     tooManyRoundsWithoutHits() {
         this.showNotification("30 rounds without hits, round ended!");
-        this.setNewFunctionToNotification(() => this.game.calculatePoints());
+        this.setNewFunctionToNotification(() => {
+            this.game.calculatePoints();
+            this.enableButtons();
+        });
     }
 
     startAiIsThinkingInterval() {
@@ -164,18 +185,27 @@ class UIUpdater {
 
     noMovesAvailable(turn) {
         this.showNotification("No moves available, skipping turn of " + (turn === 1 ? "red" : "blue") + "!");
-        this.setNewFunctionToNotification(() => this.game.changeTurn());
+        this.setNewFunctionToNotification(() => {
+            this.game.changeTurn();
+            this.enableButtons();
+        });
         this.infoConsole.printLine(" no moves, turn skipped\n");
     }
 
     twoConsecutiveRoundsSkipped() {
         this.showNotification("Two consecutive turns skipped, round ended!");
-        this.setNewFunctionToNotification(() => this.game.calculatePoints());
+        this.setNewFunctionToNotification(() => {
+            this.game.calculatePoints();
+            this.enableButtons();
+        });
     }
 
     notEnoughStonesLeft() {
         this.showNotification("Two or less stones left, round ended!");
-        this.setNewFunctionToNotification(() => this.game.calculatePoints());
+        this.setNewFunctionToNotification(() => {
+            this.game.calculatePoints();
+            this.enableButtons();
+        });
     }
 
     pressStartRound() {
@@ -205,6 +235,7 @@ class UIUpdater {
     }
 
     showNotification(message){
+        this.disableButtons();
         document.getElementById('message').innerHTML = message;
         var element = document.getElementById('notificationpopup');
         var ratio = $(window).width() / $(window).height();
@@ -217,6 +248,22 @@ class UIUpdater {
         setTimeout(() => {
             element.style.transition = '0s';
         }, 500);
+    }
+
+    disableButtons() {
+        document.getElementById('undo').disabled = true;
+        document.getElementById('GiveUp').disabled = true;
+        document.getElementById('StartRound').disabled = true;
+        document.getElementById('Surrender').disabled = true;
+        document.getElementById('NewGame').disabled = true;
+    }
+
+    enableButtons() {
+        document.getElementById('undo').disabled = false;
+        document.getElementById('GiveUp').disabled = false;
+        document.getElementById('StartRound').disabled = false;
+        document.getElementById('Surrender').disabled = false;
+        document.getElementById('NewGame').disabled = false;
     }
 }
 
