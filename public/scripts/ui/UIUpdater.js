@@ -210,11 +210,16 @@ class UIUpdater {
 
     pressStartRound() {
         this.showNotification("Press Start round!");
-        this.setNewFunctionToNotification(() => {});
+        this.setNewFunctionToNotification(() => {
+            this.enableButtons();
+        });
     }
 
     pressNewGame() {
         this.showNotification("Press New Game!");
+        this.setNewFunctionToNotification(() => {
+            this.enableButtons();
+        });
     }
 
     setNewFunctionToNotification(newFunction) {
