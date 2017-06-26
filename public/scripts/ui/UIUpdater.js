@@ -180,6 +180,7 @@ class UIUpdater {
 
     pressStartRound() {
         this.showNotification("Press Start round!");
+        this.setNewFunctionToNotification(() => {});
     }
 
     pressNewGame() {
