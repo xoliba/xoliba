@@ -21,8 +21,8 @@ class UIUpdater {
 
 
     turnIndicator(turn) {
-        if (turn === 1) this.infoConsole.printLine("Its reds turn!");
-        else if (turn === -1) this.infoConsole.printLine("Its blues turn!");
+        if (turn === 1) this.infoConsole.printLine("Its red's turn!");
+        else if (turn === -1) this.infoConsole.printLine("Its blue's turn!");
     }
 
     newRoundToConsole() {
@@ -67,13 +67,13 @@ class UIUpdater {
             this.setNewFunctionToNotification(() => this.game.startNewRound());
             return;
         } else if (color === 1) {
-            this.showNotification("Red wins the round! " + score + " points awarded!");
+            this.showNotification("Red wins the round! Red earns " + score + " points!");
             let element = document.getElementById("redpoints");
             let current = parseInt(element.innerHTML, 10);
             current += score;
             element.innerHTML = current;
         } else {
-            this.showNotification("Blue wins the round! " + score + " points awarded!");
+            this.showNotification("Blue wins the round! Blue earns " + score + " points!");
             let element = document.getElementById("bluepoints");
             let current = parseInt(element.innerHTML, 10);
             current += score;
@@ -92,13 +92,13 @@ class UIUpdater {
             let current = parseInt(element.innerHTML, 10);
             current += score;
             element.innerHTML = current;
-            this.showNotification("Red surrenders!  " + score + " points awarded to Blue!");
+            this.showNotification("Red surrenders!  Blue earns " + score + " points!");
         } else {
             let element = document.getElementById("redpoints");
             let current = parseInt(element.innerHTML, 10);
             current += score;
             element.innerHTML = current;
-            this.showNotification("Blue surrenders! " + score + " points awarded to Red!");
+            this.showNotification("Blue surrenders! Red earns " + score + " points!");
         }
         if (end) {
             this.setNewFunctionToNotification(() => this.game.winningMessage());
