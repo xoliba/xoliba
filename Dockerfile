@@ -1,5 +1,7 @@
 FROM openjdk:8-jdk-alpine
 
+EXPOSE 5000
+
 RUN apk update
 RUN apk add openssl nodejs-npm
 
