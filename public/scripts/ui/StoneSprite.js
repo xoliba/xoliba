@@ -73,27 +73,27 @@ class StoneSprite {
 
     animateStone(x, y) {
         if (x > this.sprite.x) {
-            this.sprite.x += 8;
+            this.sprite.x += 10;
         } else if (x < this.sprite.x) {
-            this.sprite.x -= 8;
+            this.sprite.x -= 10;
         }
         if (y > this.sprite.y) {
-            this.sprite.y += 8;
+            this.sprite.y += 10;
         } else if (y < this.sprite.y) {
-            this.sprite.y -= 8;
+            this.sprite.y -= 10;
         }
-        if (Math.abs(x - this.sprite.x) < 6) {
+        if (Math.abs(x - this.sprite.x) < 10) {
             this.sprite.x = x;
             this.pixiApp.ticker.remove(this.animate);
         }
-        if (Math.abs(y - this.sprite.y) < 6) {
+        if (Math.abs(y - this.sprite.y) < 10) {
             this.sprite.y = y;
             this.pixiApp.ticker.remove(this.animate);
         }
     }
 
     animate() {
-        this.animateStone(this.newX, this.newY);
+        this.animateStone();
     }
 
     updateCoordinates(x, y) {
