@@ -1,0 +1,62 @@
+.turnIndicator {
+    position: absolute;
+    display: none;
+    top: 2%;
+    width: 10%;
+    text-align: center;
+}
+
+#blueturn {
+    left: 22%;
+}
+
+#redturn {
+    left: 67%;
+}
+
+.blueturnmessage, .redturnmessage {
+    color: blue;
+    padding-top: 2vw;
+    font-size: 1vw;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.redturnmessage {
+    color: red;
+}
+
+#blueAIthinking, #redAIthinking {
+    padding-top: 0.5vw;
+    visibility: hidden;
+}
+
+#blueturnimg, #redturnimg {
+    width: 2vw;
+    height: 2vw;
+    animation-name: rotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+    from {-webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+#blueturnimg:hover ~p, #redturnimg:hover ~p{
+    opacity: 1;
+}

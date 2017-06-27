@@ -1,8 +1,8 @@
     #infoDiv {
         position: fixed;
         top: 12vw;
-        left: 80vw;
-        width: 15vw;
+        left: 75vw;
+        width: 20vw;
         height: 25vw;
         transition-property: left;
         transition: 0s;
@@ -12,19 +12,21 @@
     }
 
     #info {
-        width: 100%;
-        height: 80%;
+        width: 99%;
+        height: 87%;
         transition: 0.3s;
-        font-size: 1.5vw;
+        font-size: 1.2vw;
     }
 
     #hideConsole {
-        top:80%;
-        height: 20%;
+        top:88%;
+        height: 12%;
+        width: 100%;
     }
 
     #hideConsoleDown {
         display: none;
+        width: 100%;
     }
 
     #showConsoleDiv {
@@ -64,24 +66,23 @@
     #infoDiv {
         top: 100%;
         height: 30%;
-        left: 80%;
-        width: 20%;
+        left: 70%;
+        width: 30%;
     }
 
     #info {
         position: relative;
         top: 10%;
-        width: 100%;
-        height: 90%;
+        width: 99%;
+        height: 89%;
         transition: 0.3s;
-        font-size: 2vh;
+        font-size: 1.8vw;
     }
 
     #hideConsoleDown {
         display: block;
         top: 0%;
         height: 10%;
-        width: 80%;
         font-size: 2vh;
     }
 

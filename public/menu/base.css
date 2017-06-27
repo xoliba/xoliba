@@ -50,11 +50,21 @@ button:hover{
     color: white;
 }
 
+button:disabled {
+    background-color: #A9A9A9;
+    border-color: #AA3333;
+    color: #AA3333;
+}
+
 #undo:hover {
     transition: 1s;
     -webkit-transform: rotateZ(-360deg);
     -ms-transform: rotateZ(-360deg);
     transform: rotateZ(-360deg);
+}
+
+#undo:disabled {
+    transition: 0s;
 }
 
 textarea {

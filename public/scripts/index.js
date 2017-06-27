@@ -20,5 +20,7 @@ document.write(require('../menu/right/right.html'));
 require('../menu/notificationPopups/closeNotificationPopup.js');
 document.write(require('../menu/notificationPopups/notificationPopups.html'));
 
+document.write(require('../menu/turnindicators/turnindicators.html'));
+
 require('./Launcher.js');
 require('./ButtonFunctions.js');
