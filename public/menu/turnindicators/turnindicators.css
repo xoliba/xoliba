@@ -60,3 +60,26 @@
 #blueturnimg:hover ~p, #redturnimg:hover ~p{
     opacity: 1;
 }
+
+@media screen and (max-aspect-ratio: 5/3) {
+    .turnIndicator {
+        top: 10vw;
+        width: 15%
+    }
+    .turnIndicator p {
+        font-size: 2vw;
+    }
+
+    #blueturn {
+        left: 2%;
+    }
+
+    #redturn {
+        left: 83%;
+    }
+
+    #blueturnimg, #redturnimg {
+        width: 4vw;
+        height: 4vw;
+    }
+}
