@@ -5,9 +5,12 @@ const padding = scale() / 10;
 const px = scale() / 7.5;
 const radius = px / 4;
 const highlightScaling = radius / 200;
+var newX;
+var newY;
+
 
 let sprite;
-
+let pixiApp;
 PIXI.loader.add([
     "images/whiteCircle128.png",
     "images/blueCircle128.png",
@@ -16,7 +19,7 @@ PIXI.loader.add([
 class StoneSprite {
 
     constructor(x, y, app, turnHandler, parent) {
-
+        this.pixiApp = app;
         if (parent.value === -1) {
             this.sprite = new PIXI.Sprite.fromImage('/images/blueCircle128.png');
             //path = "images/blueCircle64.png";
@@ -68,9 +71,40 @@ class StoneSprite {
         }
     }
 
+    animateStone(x, y) {
+        if (x > this.sprite.x) {
+            this.sprite.x += 8;
+        } else if (x < this.sprite.x) {
+            this.sprite.x -= 8;
+        }
+        if (y > this.sprite.y) {
+            this.sprite.y += 8;
+        } else if (y < this.sprite.y) {
+            this.sprite.y -= 8;
+        }
+        if (Math.abs(x - this.sprite.x) < 6) {
+            this.sprite.x = x;
+            this.pixiApp.ticker.remove(this.animate);
+        }
+        if (Math.abs(y - this.sprite.y) < 6) {
+            this.sprite.y = y;
+            this.pixiApp.ticker.remove(this.animate);
+        }
+    }
+
+    animate() {
+        this.animateStone(this.newX, this.newY);
+    }
+
     updateCoordinates(x, y) {
-        this.sprite.x = padding + x * px;
-        this.sprite.y = padding + y * px;
+        this.newX = padding + x * px;
+        this.newY = padding + y * px;
+        this.animateStone(newX, newY);
+        this.pixiApp.ticker.add((animate) => {
+            this.animateStone(this.newX, this.newY)
+        });
+        //    this.sprite.x = padding + x * px;
+        //     this.sprite.y = padding + y * px;
     }
 }
 
