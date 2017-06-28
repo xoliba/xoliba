@@ -71,38 +71,30 @@ class StoneSprite {
         }
     }
 
-    animateStone(x, y) {
-        if (x > this.sprite.x) {
-            this.sprite.x += 10;
-        } else if (x < this.sprite.x) {
-            this.sprite.x -= 10;
+    animateStone() {
+        var velocity = 20;
+        if (this.newX > this.sprite.x) {
+            this.sprite.x += velocity;
+        } else if (this.newX < this.sprite.x) {
+            this.sprite.x -= velocity;
         }
-        if (y > this.sprite.y) {
-            this.sprite.y += 10;
-        } else if (y < this.sprite.y) {
-            this.sprite.y -= 10;
+        if (this.newY > this.sprite.y) {
+            this.sprite.y += velocity;
+        } else if (this.newY < this.sprite.y) {
+            this.sprite.y -= velocity;
         }
-        if (Math.abs(x - this.sprite.x) < 10) {
-            this.sprite.x = x;
-            this.pixiApp.ticker.remove(this.animate);
-        }
-        if (Math.abs(y - this.sprite.y) < 10) {
-            this.sprite.y = y;
-            this.pixiApp.ticker.remove(this.animate);
+        if (Math.abs(this.newX - this.sprite.x) < velocity && Math.abs(this.newY - this.sprite.y) < velocity) {
+            this.sprite.x = this.newX;
+            this.sprite.y = this.newY;
+            this.pixiApp.ticker.remove(this.animateStone, this);
         }
     }
 
-    animate() {
-        this.animateStone();
-    }
 
     updateCoordinates(x, y) {
         this.newX = padding + x * px;
         this.newY = padding + y * px;
-        this.animateStone(newX, newY);
-        this.pixiApp.ticker.add((animate) => {
-            this.animateStone(this.newX, this.newY)
-        });
+        this.pixiApp.ticker.add(this.animateStone, this);
         //    this.sprite.x = padding + x * px;
         //     this.sprite.y = padding + y * px;
     }
