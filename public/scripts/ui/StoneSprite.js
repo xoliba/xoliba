@@ -87,7 +87,6 @@ class StoneSprite {
         if (Math.abs(this.newX - this.sprite.x) < velocity && Math.abs(this.newY - this.sprite.y) < velocity) {
             this.sprite.x = this.newX;
             this.sprite.y = this.newY;
-            this.sprite.zOrder = 10;
             this.pixiApp.ticker.remove(this.animateStone, this);
         }
     }
@@ -96,7 +95,6 @@ class StoneSprite {
     updateCoordinates(x, y) {
         this.newX = padding + x * px;
         this.newY = padding + y * px;
-        this.sprite.zOrder = 600;
         this.pixiApp.ticker.add(this.animateStone, this);
         //    this.sprite.x = padding + x * px;
         //     this.sprite.y = padding + y * px;
