@@ -301,8 +301,10 @@ class UIUpdater {
         var redmsg = document.getElementById('redAIthinking');
         var bluemsg = document.getElementById('blueAIthinking');
         if(turn === 1) {
+            bluemsg.style.visibility = 'hidden';
             redmsg.style.visibility = 'visible';
         } else {
+            redmsg.style.visibility = 'hidden'
             bluemsg.style.visibility = 'visible';
         }
         this.aiTurn = turn;
