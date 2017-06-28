@@ -56,7 +56,6 @@ class Game {
         this.playerPlays = true;
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
-        this.uiUpdater.setAIthinkingMessage(this.aiColor);
         console.log("playerColor " + playerColor + ", scoreLimit " + scoreLimit);
         this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit);
         return this;
@@ -98,6 +97,7 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         this.turn = this.board.startingTurn();
+        this.uiUpdater.setAIthinkingMessage(this.aiColor);
         if (this.playerPlays) {
             if (this.turn === this.aiColor) {
                 this.sendTurnDataToAI();
