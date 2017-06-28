@@ -248,6 +248,13 @@ class UIUpdater {
         });
     }
 
+    declineResignation() {
+        this.showNotification("AI doesn't agree to end the round!");
+        this.setNewFunctionToNotification(() => {
+            this.enableButtons();
+        });
+    }
+
     setNewFunctionToNotification(newFunction) {
         if (this.notificationButton.removeEventListener) {
             this.notificationButton.removeEventListener('click', this.notificationFunction);

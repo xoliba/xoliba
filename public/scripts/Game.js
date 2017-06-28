@@ -135,7 +135,11 @@ class Game {
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
-        } else {
+        } else if (!surrender && this.playerWantsToSurrender) {
+            this.uiUpdater.declineResignation();
+            this.playerWantsToSurrender = false;
+        }
+        else {
             this.turnHandler.aiTurn(didMove, start, target, corners);
         }
     }
