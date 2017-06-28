@@ -1,0 +1,4 @@
+ignore:
+  - "public/scripts/ButtonFunctions.js"	#Graphics related stuff
+  - "public/scripts/ui"
+  - "public/scripts/Websocket.js"	#We dont like testing websocket
