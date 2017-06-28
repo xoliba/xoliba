@@ -9,7 +9,7 @@ RUN wget https://github.com/xoliba/xoliba/archive/master.zip -O front.zip; unzip
 RUN wget https://github.com/xoliba/xoliba-ai/archive/master.zip -O AI.zip; unzip AI.zip; rm AI.zip
 
 WORKDIR "/xoliba-ai-master"
-RUN ./gradlew build &
+RUN ./gradlew build
 WORKDIR "../"
 
 WORKDIR "/xoliba-master"
