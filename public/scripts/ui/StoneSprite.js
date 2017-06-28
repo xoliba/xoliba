@@ -73,7 +73,6 @@ class StoneSprite {
 
     animateStone() {
         var velocity = px / 5;
-        console.log(velocity +  "VELOCITY");
         if (this.newX > this.sprite.x) {
             this.sprite.x += velocity;
         } else if (this.newX < this.sprite.x) {
