@@ -1,9 +1,9 @@
 #newGamePopUp {
     display: none;
-    width: 30%;
+    width: 34%;
     height: 10vw;
     top: 20vw;
-    left: 35%;
+    left: 32%;
     position: absolute;
     border-radius: 10px;
     border: 2px solid black;
@@ -60,6 +60,15 @@
     background-color: #FF3333;
 }
 
+#newGamePopUp .closebtn {
+    margin-left: 0;
+    padding-top: 0;
+    margin-top: 0;
+    left: 85%;
+    top: 0%;
+    font-size: 4vw;
+}
+
 @media screen and (max-aspect-ratio: 3/2) {
     #newGamePopUp {
         left: 25%;
@@ -74,5 +83,9 @@
 
     #playAsBlue, #playAsRed {
         font-size: 2vw;
+    }
+
+    #newGamePopUp .closebtn {
+        left: 90%;
     }
 }

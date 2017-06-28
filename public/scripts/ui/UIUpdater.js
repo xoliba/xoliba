@@ -8,6 +8,7 @@ let dcError = false;
 let notificationButton;
 let game;
 let notificationFunction;
+let aiTurn;
 
 class UIUpdater {
 
@@ -21,8 +22,27 @@ class UIUpdater {
 
 
     turnIndicator(turn) {
-        if (turn === 1) this.infoConsole.printLine("Its red's turn!");
-        else if (turn === -1) this.infoConsole.printLine("Its blue's turn!");
+        var red = document.getElementById('redturn');
+        var blue = document.getElementById('blueturn');
+        if (turn === 1) {
+            red.style.display = 'block';
+            blue.style.display = 'none';
+            this.infoConsole.printLine("Its red's turn!");
+        } else if (turn === -1) {
+            blue.style.display = 'block';
+            red.style.display = 'none';
+            this.infoConsole.printLine("Its blue's turn!");
+        }
+
+        if(turn === this.aiTurn){
+            document.getElementById('undo').disabled = true;
+            document.getElementById('undoimg').src = '/images/disabledUndoImage.png';
+            document.getElementById('GiveUp').disabled = true;
+        } else {
+            document.getElementById('undo').disabled = false;
+            document.getElementById('undoimg').src = '/images/undoImage.png';
+            document.getElementById('GiveUp').disabled = false;
+        }
     }
 
     newRoundToConsole() {
@@ -62,6 +82,8 @@ class UIUpdater {
 
 
     updatePoints(draw, color, score, end) {
+        document.getElementById('redturn').style.display = 'none';
+        document.getElementById('blueturn').style.display = 'none';
         if (draw) {
             this.showNotification("It's a draw, no points given");
             this.setNewFunctionToNotification(() => {
@@ -96,6 +118,8 @@ class UIUpdater {
     }
 
     updateSurrenderPoints(color, score, end) {
+        document.getElementById('redturn').style.display = 'none';
+        document.getElementById('blueturn').style.display = 'none';
         if (color === 1) {
             let element = document.getElementById("bluepoints");
             let current = parseInt(element.innerHTML, 10);
@@ -123,6 +147,8 @@ class UIUpdater {
     }
 
     winningMessage(color, score) {
+        document.getElementById('redAIthinking').style.visibility = 'hidden';
+        document.getElementById('blueAIthinking').style.visibility = 'hidden';
         if (color === -1) {
             let element = document.getElementById("bluepoints");
             this.showNotification("Blue Wins! final score: " + score + " - " + document.getElementById("redpoints").innerHTML);
@@ -222,6 +248,13 @@ class UIUpdater {
         });
     }
 
+    declineResignation() {
+        this.showNotification("AI doesn't agree to end the round!");
+        this.setNewFunctionToNotification(() => {
+            this.enableButtons();
+        });
+    }
+
     setNewFunctionToNotification(newFunction) {
         if (this.notificationButton.removeEventListener) {
             this.notificationButton.removeEventListener('click', this.notificationFunction);
@@ -269,6 +302,19 @@ class UIUpdater {
         document.getElementById('StartRound').disabled = false;
         document.getElementById('Surrender').disabled = false;
         document.getElementById('NewGame').disabled = false;
+    }
+
+    setAIthinkingMessage(turn){
+        var redmsg = document.getElementById('redAIthinking');
+        var bluemsg = document.getElementById('blueAIthinking');
+        if(turn === 1) {
+            bluemsg.style.visibility = 'hidden';
+            redmsg.style.visibility = 'visible';
+        } else {
+            redmsg.style.visibility = 'hidden'
+            bluemsg.style.visibility = 'visible';
+        }
+        this.aiTurn = turn;
     }
 }
 

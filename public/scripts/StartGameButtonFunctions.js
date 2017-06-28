@@ -73,8 +73,9 @@ function redButtonFunction(game, app) {
 }
 
 function clearOldGame(app) {
-    for (var i = app.stage.children.length - 1; i >= 1; i--)
+    for (var i = app.stage.children.length - 1; i >= 1; i--) {    
         app.stage.removeChild(app.stage.children[i]);
+    }
     document.getElementById("bluepoints").innerHTML = 0;
     document.getElementById("redpoints").innerHTML = 0;
 }

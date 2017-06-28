@@ -90,15 +90,18 @@ describe('TurnHandler', () => {
         turnHandler.spriteClicked(stone3);
         turnHandler.spriteClicked(stone4);
 
-        td.verify(stone1.choose(), {times: 1});
-        td.verify(stone3.choose(), {times: 1});
-        td.verify(board.swap(td.matchers.isA(Object), td.matchers.isA(Object)), {times: 1});
-        td.verify(stone1.unchoose(), {times: 1});
-        td.verify(stone3.unchoose(), {times: 1});
-        td.verify(game.changeTurn(), {times: 1});
+        td.verify(stone1.choose(), { times: 1 });
+        td.verify(stone3.choose(), { times: 1 });
+        td.verify(board.swap(td.matchers.isA(Object), td.matchers.isA(Object)), { times: 1 });
+        setTimeout(() => {
+            td.verify(stone1.unchoose(), { times: 1 });
+            td.verify(stone3.unchoose(), { times: 1 });
+            td.verify(game.changeTurn(), { times: 1 });
 
-        assert.equal(turnHandler.corners.includes(stone1), false);
-        assert.equal(turnHandler.corners.includes(stone3), false);
+            assert.equal(turnHandler.corners.includes(stone1), false);
+            assert.equal(turnHandler.corners.includes(stone3), false);
+        }, 1000);
+
     });
 
     it('deselects the stone if it is clicked twice', () => {
@@ -129,9 +132,10 @@ describe('TurnHandler', () => {
         td.when(board.findStone(td.matchers.anything(), td.matchers.anything())).thenReturn(stone1, stone2);
         td.when(board.hitStones(td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(2);
 
-        turnHandler.aiTurn(true, 0, 0, [[0,0],[0,0]]);
-
-        td.verify(board.swap(td.matchers.isA(Object), td.matchers.isA(Object)), {times: 1});
-        td.verify(game.changeTurn());
+        turnHandler.aiTurn(true, 0, 0, [[0, 0], [0, 0]]);
+        setTimeout(() => {
+            td.verify(board.swap(td.matchers.isA(Object), td.matchers.isA(Object)), { times: 1 });
+            td.verify(game.changeTurn());
+        }, 1000);
     });
 });

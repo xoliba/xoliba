@@ -25,7 +25,7 @@ function showConsole(){
     setTimeout(() => {
         button.style.transition = '0s';
         element.style.transition = '0.5s';
-        element.style.left = '80vw';
+        element.style.left = '75vw';
         setTimeout(() => {
             element.style.transition = '0s';
         }, 500);

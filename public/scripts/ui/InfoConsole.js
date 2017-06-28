@@ -30,6 +30,7 @@ class InfoConsole {
         }
         this.lastLine = "\nAI is thinking (" + this.aiHasBeenThinking + "s)";
         document.getElementById("info").value = this.valueWithoutLastLine + this.lastLine;
+        this.scrollToBottom();
     }
 
     clearInfoConsole() {
