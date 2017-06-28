@@ -6,7 +6,7 @@
 
 [Production server](https://xoliba.herokuapp.com)
 
-[Production server](https://xoliba-staging.herokuapp.com)
+[Staging server](https://xoliba-staging.herokuapp.com)
 
 Xoliba-projekti on kuuluisasta strategialautapelistä kehitetty selainversio, jossa pelaaja voi pelata [tekoälyä](https://github.com/xoliba/xoliba-ai) vastaan. Projekti on tuotettu Helsingin yliopiston kurssilla Ohjelmistotuotantoprojekti.
 
