@@ -134,9 +134,9 @@ class Game {
     }
 
     aiTurn(didMove, start, target, corners, surrender, gameId) {
-        if(gameId !== this.gameId) {
+        /*if(gameId !== this.gameId) {
             this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
-        }
+        }*/ //this is not working yet (not implemented on AI side)
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
