@@ -149,10 +149,13 @@ class Game {
         }
     }
 
+    regenerateGameId() {
+        this.gameId = Date.now();
+    }
+
     resendTurnDataToAI() {
         //We will resend it only if there is something to send.
         if(this.playerColor !== this.turn && this.firstTurn === false) {
-            this.gameId = Date.now();       //We want to regenerate date id.
             this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
         }
     }

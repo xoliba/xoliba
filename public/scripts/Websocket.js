@@ -1,14 +1,14 @@
 import { UIUpdater } from './ui/UIUpdater.js';
 
 var aisocket;
-var uiUpdater;
 
 //todo info about ai that is thinking
 class AiSocket {
 
     constructor(newGame) {
+        
         this.game = newGame;
-        connect(newGame);
+        connect(newGame, new UIUpdater());
     }
 
     sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit, gameId) {
@@ -61,8 +61,8 @@ class AiSocket {
     }
 }
 
-function connect(newGame, haloo) {
-    uiUpdater = new UIUpdater();
+//yes, this must be separated function.
+function connect(newGame, uiUpdater) {
     let returnedPong = true;
 
     //parse URL
@@ -82,10 +82,8 @@ function connect(newGame, haloo) {
     console.log("Trying to connect " + server);
     try {
         aisocket = new WebSocket(server);
-
     } catch(e) {
-        uiUpdater = new UIUpdater();
-        uiUpdater.disconnectionError("Failed to construct websocket");
+        uiUpdater.disconnectionError();
     }
 
     aisocket.onmessage = (event, turnHandler) => {
@@ -105,26 +103,24 @@ function connect(newGame, haloo) {
 
     aisocket.onopen = function() {
         console.log("connected to ai server");
+        uiUpdater.connectedToAi();
         setInterval(ping, 15000);
     }
 
     aisocket.onclose = function(e) {
-        console.log("disconnected from ai server");
-
-        //For some reason onclose function is sometimes called even when theres no disconnection.
-        //uiUpdater = new UIUpdater();
-        //uiUpdater.disconnectionError("disconnected from ai server");
-
+        newGame.regenerateGameId(); //Abort all incoming boards: we are going to reconnect anyway!
+        uiUpdater.stopAiIsThinkingInterval();
+        uiUpdater.disconnectionError();
+        uiUpdater.reconnectTry();
         console.log('Socket is closed. Reconnecting in 5sec...');
         setTimeout(function() {
-            connect(newGame);
+            connect(newGame, uiUpdater);
             newGame.resendTurnDataToAI;
         }, 5000)
     }
 
     aisocket.onerror = function (event) {
-        uiUpdater = new UIUpdater();
-        uiUpdater.disconnectionError(event);
+        uiUpdater.disconnectionError();
     }
 
     function ping() {
