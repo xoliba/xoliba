@@ -61,8 +61,9 @@ class AiSocket {
     }
 }
 
-    function connect(newGame) {
+function connect(newGame, haloo) {
     uiUpdater = new UIUpdater();
+    let returnedPong = true;
 
     //parse URL
     let server;
@@ -93,15 +94,18 @@ class AiSocket {
         if (msg.type === "startRound") {
             console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
             newGame.aiSurrender(msg.surrender, msg.color);
-        } else {
+        } else if(msg.type === "TurnData") {
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
             newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
-        }
+        } else if(msg.type === "pong") {
+            returnedPong = true;
+            console.log("Pong!");
+        } else console.log("Unknown message received: " + event.data);
     };
 
     aisocket.onopen = function() {
         console.log("connected to ai server");
-        setInterval(ping, 30000);
+        setInterval(ping, 15000);
     }
 
     aisocket.onclose = function(e) {
@@ -111,10 +115,10 @@ class AiSocket {
         //uiUpdater = new UIUpdater();
         //uiUpdater.disconnectionError("disconnected from ai server");
 
-        console.log('Socket is closed. Reconnecting...');
+        console.log('Socket is closed. Reconnecting in 5sec...');
         setTimeout(function() {
-            connect();
-        }, 10)
+            connect(newGame);
+        }, 5000)
     }
 
     aisocket.onerror = function (event) {
@@ -128,6 +132,10 @@ class AiSocket {
         };
 
         if (aisocket.readyState === 1) {
+            if(returnedPong === false) {
+                console.log("Hey holy shit there is dc");
+            }
+            returnedPong = false;
             aisocket.send(JSON.stringify(msg));
             console.log("ping");
         }
