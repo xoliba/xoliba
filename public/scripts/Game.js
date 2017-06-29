@@ -24,6 +24,7 @@ let firstTurn;
 let aiDifficulty1;
 let aiDifficulty2;
 let playerPlays;
+let gameId;
 
 //todo after one game completely new one is about to begin, not just another round
 class Game {
@@ -57,7 +58,8 @@ class Game {
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
         console.log("playerColor " + playerColor + ", scoreLimit " + scoreLimit);
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit);
+        this.gameId = Date.now();
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit, this.gameId);
         return this;
     }
 
@@ -131,7 +133,10 @@ class Game {
         }
     }
 
-    aiTurn(didMove, start, target, corners, surrender) {
+    aiTurn(didMove, start, target, corners, surrender, gameId) {
+        if(gameId !== this.gameId) {
+            this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
+        }
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
@@ -201,7 +206,8 @@ class Game {
         if (!this.playerPlays && c === 1) {
             dif = this.aiDifficulty2;
         }
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit);
+        this.gameId = Date.now();
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit, this.gameId);
     }
 
     //todo rename 'turn counter' to a more informative option
@@ -307,7 +313,8 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         if (this.playerPlays) {
-            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit);
+            this.gameId = Date.now();
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit, this.gameId);
             this.uiUpdater.showStartRoundAndSurrenderButtons();
         } else {
             this.sendStartRoundToTwoAIs();

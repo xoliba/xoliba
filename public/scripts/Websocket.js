@@ -11,9 +11,7 @@ class AiSocket {
         connect(newGame);
     }
 
-    
-
-    sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit) {
+    sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit, gameId) {
         let msg = {
             type: "turnData",
             board: table,
@@ -26,13 +24,14 @@ class AiSocket {
             withoutHit: turnCounter,
             redPoints: redpoints,
             bluePoints: bluepoints,
-            scoreLimit: scorelimit
+            scoreLimit: scorelimit,
+            gameId: gameId
         };
-        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit);
+        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit + 'gameId sent ' + gameId);
         aisocket.send(JSON.stringify(msg));
     }
 
-    sendStartRound(table, aiColor, difficulty, scoreLimit) {
+    sendStartRound(table, aiColor, difficulty, scoreLimit, gameId) {
         let msg = {
             type: "startRound",
             board: table,
@@ -42,7 +41,8 @@ class AiSocket {
             didMove: true,
             surrender: null,
             difficulty: difficulty,
-            scoreLimit: scoreLimit
+            scoreLimit: scoreLimit,
+            gameId: gameId
         };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
@@ -61,7 +61,7 @@ class AiSocket {
     }
 }
 
-function connect(newGame) {
+    function connect(newGame) {
     uiUpdater = new UIUpdater();
 
     //parse URL
@@ -81,7 +81,7 @@ function connect(newGame) {
     console.log("Trying to connect " + server);
     try {
         aisocket = new WebSocket(server);
-        
+
     } catch(e) {
         uiUpdater = new UIUpdater();
         uiUpdater.disconnectionError("Failed to construct websocket");
@@ -106,7 +106,7 @@ function connect(newGame) {
 
     aisocket.onclose = function(e) {
         console.log("disconnected from ai server");
-        
+
         //For some reason onclose function is sometimes called even when theres no disconnection.
         //uiUpdater = new UIUpdater();
         //uiUpdater.disconnectionError("disconnected from ai server");

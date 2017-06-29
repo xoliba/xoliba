@@ -46,7 +46,7 @@ describe('Game', () => {
         game.aiColor = 1;
         game.changeTurn();
 
-        td.verify(socket.sendTurnData(table, 1, td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything()), {times: 1});
+        td.verify(socket.sendTurnData(table, 1, td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything(), td.matchers.anything()), {times: 1});
     });
 
     it('sets the turn correctly at first turn', () => {
