@@ -64,6 +64,14 @@ class UIUpdater {
         this.infoConsole.printLine("Error message: " + errorMessage);
     }
 
+    showUndoAndResignButtons() {
+        document.getElementById("undo").style.display = "block";
+        document.getElementById("GiveUp").style.display = "block";
+        document.getElementById("NewGame").style.display = "none";
+        document.getElementById("StartRound").style.display = "none";
+        document.getElementById("Surrender").style.display = "none";
+    }
+
     showStartRoundAndSurrenderButtons() {
         document.getElementById("undo").style.display = "none";
         document.getElementById("GiveUp").style.display = "none";
@@ -161,6 +169,7 @@ class UIUpdater {
             this.showNewGameButton();
             this.enableButtons();
         });
+        
     }
 
     tooManyRoundsWithoutHits() {
@@ -214,6 +223,7 @@ class UIUpdater {
         this.setNewFunctionToNotification(() => {
             this.game.changeTurn();
             this.enableButtons();
+            this.showUndoAndResignButtons();
         });
         this.infoConsole.printLine(" no moves, turn skipped\n");
     }
@@ -237,6 +247,7 @@ class UIUpdater {
     pressStartRound() {
         this.showNotification("Press Start round!");
         this.setNewFunctionToNotification(() => {
+            this.showStartRoundAndSurrenderButtons();
             this.enableButtons();
         });
     }
@@ -248,10 +259,19 @@ class UIUpdater {
         });
     }
 
+    itIsAIsTurn() {
+        this.showNotification("It is AI's turn!");
+        this.setNewFunctionToNotification(() => {
+            this.enableButtons();
+            this.showUndoAndResignButtons();
+        });
+    }
+
     declineResignation() {
         this.showNotification("AI doesn't agree to end the round!");
         this.setNewFunctionToNotification(() => {
             this.enableButtons();
+            this.showUndoAndResignButtons();
         });
     }
 

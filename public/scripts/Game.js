@@ -294,6 +294,10 @@ class Game {
         }
     }
 
+    itIsAIsTurn() {
+        this.uiUpdater.itIsAIsTurn();
+    }
+
     startNewRound(){
         this.turnCounter = 0;
         this.roundskipped = 0;
