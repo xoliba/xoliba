@@ -69,3 +69,9 @@
 #xG {
     left: 69vw;
 }
+
+@media screen and (max-aspect-ratio: 5/3) {
+    .xCoordinate, .yCoordinate {
+        display: none;
+    }
+}
