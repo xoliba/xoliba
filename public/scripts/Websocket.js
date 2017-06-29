@@ -98,7 +98,7 @@ function connect(newGame, haloo) {
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
             newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
         } else if(msg.type === "pong") {
-            returnedPong = true;
+            //returnedPong = true;
             console.log("Pong!");
         } else console.log("Unknown message received: " + event.data);
     };
@@ -118,6 +118,7 @@ function connect(newGame, haloo) {
         console.log('Socket is closed. Reconnecting in 5sec...');
         setTimeout(function() {
             connect(newGame);
+            newGame.resendTurnDataToAI;
         }, 5000)
     }
 
@@ -134,10 +135,12 @@ function connect(newGame, haloo) {
         if (aisocket.readyState === 1) {
             if(returnedPong === false) {
                 console.log("Hey holy shit there is dc");
+                aisocket.close();   //onlclose will handle reconnecting.
+            } else {
+                returnedPong = false;
+                aisocket.send(JSON.stringify(msg));
+                console.log("ping");
             }
-            returnedPong = false;
-            aisocket.send(JSON.stringify(msg));
-            console.log("ping");
         }
     }
 }

@@ -149,6 +149,14 @@ class Game {
         }
     }
 
+    resendTurnDataToAI() {
+        //We will resend it only if there is something to send.
+        if(this.playerColor !== this.turn && this.firstTurn === false) {
+            this.gameId = Date.now();       //We want to regenerate date id.
+            this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
+        }
+    }
+
     /**
      * changes turn, updates UI, checks if round ends, and sends turn data to AI if necessary
      */
