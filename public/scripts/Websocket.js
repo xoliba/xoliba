@@ -54,8 +54,9 @@ class AiSocket {
 
         aisocket.onclose = function() {
             console.log("disconnected from ai server");
-            uiUpdater = new UIUpdater();
-            uiUpdater.disconnectionError("disconnected from ai server");
+            //For some reason onclose function is sometimes called even when theres no disconnection.
+            //uiUpdater = new UIUpdater();
+            //uiUpdater.disconnectionError("disconnected from ai server");
         }
 
         aisocket.onerror = function (event) {
