@@ -1,0 +1,71 @@
+.yCoordinate, .xCoordinate {
+    position: absolute;
+    font-size: 2vw;
+    color: #808080;
+    z-index: 10;
+    opacity: 0.5;
+}
+
+.yCoordinate {
+    left: 26vw;
+}
+
+#y7 {
+    top: 4vw;
+}
+
+#y6 {
+    top: 10vw;
+}
+
+#y5 {
+    top: 17vw;
+}
+
+#y4 {
+    top: 23.5vw;
+}
+
+#y3 {
+    top: 30vw;
+}
+
+#y2 {
+    top: 37vw;
+}
+
+#y1 {
+    top: 43.5vw;
+}
+
+.xCoordinate {
+    top: 47.5vw;
+}
+
+#xA {
+    left: 29.5vw;
+}
+
+#xB {
+    left: 36vw;
+}
+
+#xC {
+    left: 42.7vw;
+}
+
+#xD {
+    left: 49.3vw;
+}
+
+#xE {
+    left: 56vw;
+}
+
+#xF {
+    left: 62.8vw;
+}
+
+#xG {
+    left: 69vw;
+}

@@ -1,22 +1,22 @@
 .turnIndicator {
     position: absolute;
     display: none;
-    top: 2%;
+    top: 4.4vw;
     width: 10%;
     text-align: center;
 }
 
 #blueturn {
-    left: 22%;
+    left: 1vw;
 }
 
 #redturn {
-    left: 67%;
+    left: 88vw;
 }
 
 .blueturnmessage, .redturnmessage {
     color: blue;
-    padding-top: 2vw;
+    padding-top: 1.5vw;
     font-size: 1vw;
     opacity: 0;
     transition-property: opacity;
