@@ -39,7 +39,9 @@ class TurnHandler {
     }
 
     spriteClicked(stone) {
-        if (this.game.firstTurn) {
+        if (this.game.turn === this.game.aiColor) {
+            this.game.itIsAIsTurn();
+        } else if (this.game.firstTurn) {
             this.game.pressStartRound();
         }
         if (this.firstClicked === undefined) {
