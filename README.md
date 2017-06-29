@@ -4,7 +4,7 @@
 [![bitHound Dependencies](https://www.bithound.io/github/xoliba/xoliba/badges/dependencies.svg)](https://www.bithound.io/github/xoliba/xoliba/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/xoliba/xoliba/badges/devDependencies.svg)](https://www.bithound.io/github/xoliba/xoliba/master/dependencies/npm)
 
-[Production server](https://xoliba.herokuapp.com)
+[Production server](http://www.xoliba.com)
 
 [Staging server](https://xoliba-staging.herokuapp.com)
 
