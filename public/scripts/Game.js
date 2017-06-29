@@ -85,7 +85,7 @@ class Game {
         } else {
             this.aiDifficulty2 = secondAIdifficulty;
         }
-        console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
+        //console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
     }
 
     printStartMessage() {

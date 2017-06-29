@@ -1,6 +1,5 @@
 import { UIUpdater } from './ui/UIUpdater.js';
 
-var game;
 var aisocket;
 var uiUpdater;
 
@@ -8,73 +7,11 @@ var uiUpdater;
 class AiSocket {
 
     constructor(newGame) {
-        console.log("HALOO");
         this.game = newGame;
-        uiUpdater = new UIUpdater();
-
-        //parse URL
-        let server;
-        let url = window.location.href;
-        let name = "ai";
-        name = name.replace(/[\[\]]/g, "\\$&");
-        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
-        if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai';
-        else {
-            let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
-            if (parsed === 'localhost') server = "ws://localhost:4567/ai";
-            else if (parsed === 'staging') server = "wss://xoliba-ai-staging.herokuapp.com/ai";
-            else server = decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-
-        console.log("Trying to connect " + server);
-        try {
-            aisocket = new WebSocket(server);
-            
-        } catch(e) {
-            uiUpdater = new UIUpdater();
-            uiUpdater.disconnectionError("Failed to construct websocket");
-        }
-
-        aisocket.onmessage = (event, turnHandler) => {
-            let msg = JSON.parse(event.data);
-
-            if (msg.type === "startRound") {
-                console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
-                this.game.aiSurrender(msg.surrender, msg.color);
-            } else {
-                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
-                this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
-            }
-        };
-
-        aisocket.onopen = function() {
-            console.log("connected to ai server");
-            setInterval(ping, 30000);
-        }
-
-        aisocket.onclose = function() {
-            console.log("disconnected from ai server");
-            //For some reason onclose function is sometimes called even when theres no disconnection.
-            //uiUpdater = new UIUpdater();
-            //uiUpdater.disconnectionError("disconnected from ai server");
-        }
-
-        aisocket.onerror = function (event) {
-            uiUpdater = new UIUpdater();
-            uiUpdater.disconnectionError(event);
-        }
-
-        function ping() {
-            let msg = {
-                type: "ping"
-            };
-
-            if (aisocket.readyState === 1) {
-                aisocket.send(JSON.stringify(msg));
-                console.log("ping");
-            }
-        }
+        connect(newGame);
     }
+
+    
 
     sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit) {
         let msg = {
@@ -124,5 +61,77 @@ class AiSocket {
     }
 }
 
+function connect(newGame) {
+    uiUpdater = new UIUpdater();
+
+    //parse URL
+    let server;
+    let url = window.location.href;
+    let name = "ai";
+    name = name.replace(/[\[\]]/g, "\\$&");
+    let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
+    if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai';
+    else {
+        let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
+        if (parsed === 'localhost') server = "ws://localhost:4567/ai";
+        else if (parsed === 'staging') server = "wss://xoliba-ai-staging.herokuapp.com/ai";
+        else server = decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    console.log("Trying to connect " + server);
+    try {
+        aisocket = new WebSocket(server);
+        
+    } catch(e) {
+        uiUpdater = new UIUpdater();
+        uiUpdater.disconnectionError("Failed to construct websocket");
+    }
+
+    aisocket.onmessage = (event, turnHandler) => {
+        let msg = JSON.parse(event.data);
+
+        if (msg.type === "startRound") {
+            console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
+            newGame.aiSurrender(msg.surrender, msg.color);
+        } else {
+            console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
+            newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
+        }
+    };
+
+    aisocket.onopen = function() {
+        console.log("connected to ai server");
+        setInterval(ping, 30000);
+    }
+
+    aisocket.onclose = function(e) {
+        console.log("disconnected from ai server");
+        
+        //For some reason onclose function is sometimes called even when theres no disconnection.
+        //uiUpdater = new UIUpdater();
+        //uiUpdater.disconnectionError("disconnected from ai server");
+
+        console.log('Socket is closed. Reconnecting...');
+        setTimeout(function() {
+            connect();
+        }, 10)
+    }
+
+    aisocket.onerror = function (event) {
+        uiUpdater = new UIUpdater();
+        uiUpdater.disconnectionError(event);
+    }
+
+    function ping() {
+        let msg = {
+            type: "ping"
+        };
+
+        if (aisocket.readyState === 1) {
+            aisocket.send(JSON.stringify(msg));
+            console.log("ping");
+        }
+    }
+}
 
 export { AiSocket };
