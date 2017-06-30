@@ -73,7 +73,7 @@ function connect(newGame, uiUpdater, level) {
     let name = "ai";
     name = name.replace(/[\[\]]/g, "\\$&");
     let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
-    if (!results || !results[2]) server = 'ws://52.14.103.168:4567/ai'//'wss://xoliba-ai.herokuapp.com/ai';
+    if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai'//'ws://52.14.103.168:4567/ai'
     else {
         let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
         if (parsed === 'localhost') server = "ws://localhost:4567/ai";
