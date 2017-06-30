@@ -83,6 +83,8 @@ class UIUpdater {
         document.getElementById("NewGame").style.display = "none";
         document.getElementById("StartRound").style.display = "block";
         document.getElementById("Surrender").style.display = "block";
+        document.getElementById("StartRound").disabled = false;
+        document.getElementById("Surrender").disabled = false;
     }
 
     showNewGameButton() {
@@ -267,7 +269,8 @@ class UIUpdater {
     itIsAIsTurn() {
         this.showNotification("It is AI's turn!");
         this.setNewFunctionToNotification(() => {
-            //this.enableButtons();
+            this.enableButtons();
+            document.getElementById('GiveUp').disabled = true;
             this.showUndoAndResignButtons();
         });
     }
