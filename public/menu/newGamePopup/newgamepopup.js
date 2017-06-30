@@ -9,7 +9,7 @@ function openNewGamePopUp(){
         }
     }
     console.log("open new game pop up, game mode: " + gameMode);
-    if (gameMode === 'play') {
+    if (gameMode === 'watch') {
         document.getElementById("newWatchGamePopUp").style.display = 'block';
     } else {
         document.getElementById("newGamePopUp").style.display = 'block';
