@@ -1,9 +1,9 @@
-/**
+ /**
  * Created by vili on 18.6.2017.
  */
 
 import { Game } from './Game';
-import { addButtonFunctions, showStartRoundOptions } from './ButtonFunctions.js';
+import { addButtonFunctions, showStartRoundOptions, resetButtons } from './ButtonFunctions.js';
 
 var blueButton = document.getElementById("playAsBlue");
 var redButton = document.getElementById("playAsRed");
@@ -73,9 +73,9 @@ function redButtonFunction(game, app) {
 }
 
 function clearOldGame(app) {
-    for (var i = app.stage.children.length - 1; i >= 1; i--) {    
+    for (var i = app.stage.children.length - 1; i >= 1; i--)
         app.stage.removeChild(app.stage.children[i]);
-    }
+    resetButtons();
     document.getElementById("bluepoints").innerHTML = 0;
     document.getElementById("redpoints").innerHTML = 0;
 }

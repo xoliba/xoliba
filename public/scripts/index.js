@@ -23,6 +23,9 @@ document.write(require('../menu/notificationPopups/notificationPopups.html'));
 document.write(require('../menu/turnindicators/turnindicators.html'));
 
 document.write(require('../menu/Coordinates/coordinates.html'));
+require('../menu/Coordinates/coordinates.js');
+
+document.write(require('../menu/logos/logos.html'));
 
 require('./Launcher.js');
 require('./ButtonFunctions.js');

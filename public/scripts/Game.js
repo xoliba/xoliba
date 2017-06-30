@@ -24,8 +24,10 @@ let firstTurn;
 let aiDifficulty1;
 let aiDifficulty2;
 let playerPlays;
+let msgId;
 
 //todo after one game completely new one is about to begin, not just another round
+//todo this class also handles valdating the messages (old messages are rejected). But we are running out of time and cant implement it in a clever way.
 class Game {
 
     //todo refactor more sense to these constructor parameters
@@ -57,7 +59,8 @@ class Game {
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
         console.log("playerColor " + playerColor + ", scoreLimit " + scoreLimit);
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit);
+        this.msgId = Date.now();
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit, this.msgId);
         return this;
     }
 
@@ -85,7 +88,7 @@ class Game {
         } else {
             this.aiDifficulty2 = secondAIdifficulty;
         }
-        console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
+        //console.log("ai difficulty1 " + this.aiDifficulty1 + " ai difficulty2 " + this.aiDifficulty2);
     }
 
     printStartMessage() {
@@ -120,7 +123,13 @@ class Game {
         }
     }
 
-    aiSurrender(surrender, color) {
+    aiSurrender(surrender, color, msgId) {
+        if(msgId !== this.msgId) {
+            console.log("got message with wrong ID: " + msgId + " =/= " + this.msgId);
+            msgId = Date.now();
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit, this.msgId);
+        }
+        msgId = Date.now();
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender) {
             this.calculateSurrenderPoints(this.aiColor);
@@ -131,7 +140,13 @@ class Game {
         }
     }
 
-    aiTurn(didMove, start, target, corners, surrender) {
+    aiTurn(didMove, start, target, corners, surrender, msgId) {
+        if(msgId !== this.msgId) {
+            console.log("got message with wrong ID: " + msgId + " =/= " + this.msgId);
+            msgId = Date.now();
+            this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
+        }
+        msgId = Date.now();
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
@@ -141,6 +156,13 @@ class Game {
         }
         else {
             this.turnHandler.aiTurn(didMove, start, target, corners);
+        }
+    }
+
+    resendTurnDataToAI() {
+        //We will resend it only if there is something to send.
+        if(this.playerColor !== this.turn && this.firstTurn === false) {
+            this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
         }
     }
 
@@ -201,7 +223,8 @@ class Game {
         if (!this.playerPlays && c === 1) {
             dif = this.aiDifficulty2;
         }
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit);
+        this.msgId = Date.now();
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit, this.msgId);
     }
 
     //todo rename 'turn counter' to a more informative option
@@ -307,7 +330,8 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         if (this.playerPlays) {
-            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit);
+            this.msgId = Date.now();
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit, this.msgId);
             this.uiUpdater.showStartRoundAndSurrenderButtons();
         } else {
             this.sendStartRoundToTwoAIs();
@@ -318,6 +342,10 @@ class Game {
 
     undo() {
         this.turnHandler.undo();
+    }
+
+    reconnectWebSocket() {
+        this.socket = new AiSocket(this);
     }
 
 }

@@ -2,7 +2,7 @@
     position: absolute;
     font-size: 2vw;
     color: #808080;
-    z-index: 10;
+    z-index: -10;
     opacity: 0.5;
 }
 
@@ -42,36 +42,36 @@
     top: 47.5vw;
 }
 
-#xA {
+#x1 {
     left: 29.5vw;
 }
 
-#xB {
+#x2 {
     left: 36vw;
 }
 
-#xC {
+#x3 {
     left: 42.7vw;
 }
 
-#xD {
+#x4 {
     left: 49.3vw;
 }
 
-#xE {
+#x5 {
     left: 56vw;
 }
 
-#xF {
+#x6 {
     left: 62.8vw;
 }
 
-#xG {
+#x7 {
     left: 69vw;
 }
 
 @media screen and (max-aspect-ratio: 5/3) {
     .xCoordinate, .yCoordinate {
-        display: none;
+
     }
 }

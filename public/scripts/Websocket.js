@@ -1,82 +1,17 @@
 import { UIUpdater } from './ui/UIUpdater.js';
 
-var game;
 var aisocket;
-var uiUpdater;
 
 //todo info about ai that is thinking
 class AiSocket {
 
     constructor(newGame) {
-        console.log("HALOO");
+        
         this.game = newGame;
-        uiUpdater = new UIUpdater();
-
-        //parse URL
-        let server;
-        let url = window.location.href;
-        let name = "ai";
-        name = name.replace(/[\[\]]/g, "\\$&");
-        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
-        if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai';
-        else {
-            let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
-            if (parsed === 'localhost') server = "ws://localhost:4567/ai";
-            else if (parsed === 'staging') server = "wss://xoliba-ai-staging.herokuapp.com/ai";
-            else server = decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-
-        console.log("Trying to connect " + server);
-        try {
-            aisocket = new WebSocket(server);
-            
-        } catch(e) {
-            uiUpdater = new UIUpdater();
-            uiUpdater.disconnectionError("Failed to construct websocket");
-        }
-
-        aisocket.onmessage = (event, turnHandler) => {
-            let msg = JSON.parse(event.data);
-
-            if (msg.type === "startRound") {
-                console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
-                this.game.aiSurrender(msg.surrender, msg.color);
-            } else {
-                console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
-                this.game.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
-            }
-        };
-
-        aisocket.onopen = function() {
-            console.log("connected to ai server");
-            setInterval(ping, 30000);
-        }
-
-        aisocket.onclose = function() {
-            console.log("disconnected from ai server");
-            //For some reason onclose function is sometimes called even when theres no disconnection.
-            //uiUpdater = new UIUpdater();
-            //uiUpdater.disconnectionError("disconnected from ai server");
-        }
-
-        aisocket.onerror = function (event) {
-            uiUpdater = new UIUpdater();
-            uiUpdater.disconnectionError(event);
-        }
-
-        function ping() {
-            let msg = {
-                type: "ping"
-            };
-
-            if (aisocket.readyState === 1) {
-                aisocket.send(JSON.stringify(msg));
-                console.log("ping");
-            }
-        }
+        connect(newGame, new UIUpdater(), 0);
     }
 
-    sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit) {
+    sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit, msgId) {
         let msg = {
             type: "turnData",
             board: table,
@@ -89,13 +24,15 @@ class AiSocket {
             withoutHit: turnCounter,
             redPoints: redpoints,
             bluePoints: bluepoints,
-            scoreLimit: scorelimit
+            scoreLimit: scorelimit,
+            msgId: msgId
         };
-        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit);
+        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit + 'msgId sent ' + msgId);
+        
         aisocket.send(JSON.stringify(msg));
     }
 
-    sendStartRound(table, aiColor, difficulty, scoreLimit) {
+    sendStartRound(table, aiColor, difficulty, scoreLimit, msgId) {
         let msg = {
             type: "startRound",
             board: table,
@@ -105,7 +42,8 @@ class AiSocket {
             didMove: true,
             surrender: null,
             difficulty: difficulty,
-            scoreLimit: scoreLimit
+            scoreLimit: scoreLimit,
+            msgId: msgId
         };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
@@ -124,5 +62,74 @@ class AiSocket {
     }
 }
 
+//yes, this must be separated function.
+function connect(newGame, uiUpdater, level) {
+    let interval;
+    let returnedPong = true;
+
+    //parse URL
+    let server;
+    let url = window.location.href;
+    let name = "ai";
+    name = name.replace(/[\[\]]/g, "\\$&");
+    let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
+    if (!results || !results[2]) server = 'wss://xoliba-ai.herokuapp.com/ai';
+    else {
+        let parsed = decodeURIComponent(results[2].replace(/\+/g, " "));
+        if (parsed === 'localhost') server = "ws://localhost:4567/ai";
+        else if (parsed === 'staging') server = "wss://xoliba-ai-staging.herokuapp.com/ai";
+        else server = decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    console.log("Trying to connect " + server);
+    try {
+        aisocket = new WebSocket(server);
+    } catch(e) {
+        uiUpdater.disconnectionError();
+    }
+
+    aisocket.onmessage = (event, turnHandler) => {
+        let msg = JSON.parse(event.data);
+
+        if (msg.type === "startRound") {
+            console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
+            newGame.aiSurrender(msg.surrender, msg.color, msg.msgId);
+        } else if(msg.type === "turnData" || msg.type === "TurnData") {
+            console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
+            newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender, msg.msgId);
+        } else if(msg.type === "pong") {
+            console.log("Pong! " + level);
+        } else console.log("Unknown message received: " + event.data);
+    };
+
+    aisocket.onopen = function() {
+        console.log("connected to ai server");
+        uiUpdater.connectedToAi();
+        interval = setInterval(ping, 5000);
+    }
+
+    aisocket.onclose = function(e) {
+        uiUpdater.stopAiIsThinkingInterval();
+        uiUpdater.disconnectionError();
+        uiUpdater.reconnectTry();
+        clearInterval(interval);
+        console.log('Disconnected from server. Please refresh.');
+        //newGame.reconnectWebSocket();
+    }
+
+    aisocket.onerror = function (event) {
+        uiUpdater.disconnectionError();
+    }
+
+    function ping() {
+        let msg = {
+            type: "ping"
+        };
+
+        if (aisocket.readyState === 1) {
+            aisocket.send(JSON.stringify(msg));
+        }
+    }
+}
 
 export { AiSocket };

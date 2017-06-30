@@ -103,6 +103,7 @@ function giveUpButtonFunction(game) {
 
 function showStartRoundOptions() {
     undoButton.style.display = "none";
+    giveUpButton.style.display = "none";
     surrenderButton.style.display = "block";
     continueButton.style.display = "block";
 }

@@ -53,15 +53,20 @@ class UIUpdater {
         this.infoConsole.printLine("\nWelcome to Xoliba! Do you want to surrender or start the round?\n");
     }
 
-    disconnectionError(errorMessage) {
+    disconnectionError() {
         if (dcError === false) {
-            this.infoConsole.printLine("\nDisconnected from AI. Either your network " +
-            "went down or we did something horrifying. If you think this was our " +
-            "fault, please report the error using feedback: you can find the feedback " +
-            "link from the menu. Thank you!\n");
+            this.infoConsole.printLine("\nDisconnected from AI. Check your network connection.\n");
             dcError = true;
         }
-        this.infoConsole.printLine("Error message: " + errorMessage);
+    }
+
+    reconnectTry() {
+        this.infoConsole.printLine("Trying to reconnect...");
+    }
+
+    connectedToAi() {
+        this.infoConsole.printLine("Connected to AI!");
+        dcError = false;
     }
 
     showUndoAndResignButtons() {
@@ -78,6 +83,8 @@ class UIUpdater {
         document.getElementById("NewGame").style.display = "none";
         document.getElementById("StartRound").style.display = "block";
         document.getElementById("Surrender").style.display = "block";
+        document.getElementById("StartRound").disabled = false;
+        document.getElementById("Surrender").disabled = false;
     }
 
     showNewGameButton() {
@@ -263,6 +270,7 @@ class UIUpdater {
         this.showNotification("It is AI's turn!");
         this.setNewFunctionToNotification(() => {
             this.enableButtons();
+            document.getElementById('GiveUp').disabled = true;
             this.showUndoAndResignButtons();
         });
     }
@@ -272,6 +280,7 @@ class UIUpdater {
         this.setNewFunctionToNotification(() => {
             this.enableButtons();
             this.showUndoAndResignButtons();
+
         });
     }
 
