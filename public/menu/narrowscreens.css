@@ -21,10 +21,6 @@
         vertical-align: bottom;
     }
 
-    #right{
-        float: #left;
-    }
-
     p {
         font-size: 5vw;
     }
@@ -33,11 +29,11 @@
         font-size: 3vw;
         top: 18vh;
         height: 5vw;
-        width: 20vw;
+        width: 18vw;
     }
 
     #MenuButton {
-        left: 20vw;
+        left: 22vw;
     }
 
     #NewGame, #GiveUp, #Surrender {
@@ -45,7 +41,7 @@
     }
 
     #StartRound {
-        left: 40vw;
+        left: 41vw;
         top: 10vh;
     }
 

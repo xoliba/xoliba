@@ -9,6 +9,7 @@ var app = new PIXI.Application(scale(), scale(), {view: document.getElementById(
 var game;
 
 drawTable(app.stage);
+positionCoordinatesBasedOnWindowLayout();
 
 // a bit less buggy version
 app.renderer.render(app.stage);
