@@ -344,6 +344,10 @@ class Game {
         this.turnHandler.undo();
     }
 
+    reconnectWebSocket() {
+        this.socket = new AiSocket(this);
+    }
+
 }
 
 

@@ -8,7 +8,7 @@ class AiSocket {
     constructor(newGame) {
         
         this.game = newGame;
-        connect(newGame, new UIUpdater());
+        connect(newGame, new UIUpdater(), 0);
     }
 
     sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit, msgId) {
@@ -63,7 +63,8 @@ class AiSocket {
 }
 
 //yes, this must be separated function.
-function connect(newGame, uiUpdater) {
+function connect(newGame, uiUpdater, level) {
+    let interval;
     let returnedPong = true;
 
     //parse URL
@@ -97,26 +98,23 @@ function connect(newGame, uiUpdater) {
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
             newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender, msg.msgId);
         } else if(msg.type === "pong") {
-            returnedPong = true;
-            console.log("Pong!");
+            console.log("Pong! " + level);
         } else console.log("Unknown message received: " + event.data);
     };
 
     aisocket.onopen = function() {
         console.log("connected to ai server");
         uiUpdater.connectedToAi();
-        setInterval(ping, 15000);
+        interval = setInterval(ping, 5000);
     }
 
     aisocket.onclose = function(e) {
         uiUpdater.stopAiIsThinkingInterval();
         uiUpdater.disconnectionError();
         uiUpdater.reconnectTry();
-        console.log('Socket is closed. Reconnecting in 6sec...');
-        setTimeout(function() {
-            connect(newGame, uiUpdater);
-            newGame.resendTurnDataToAI;
-        }, 6000)
+        clearInterval(interval);
+        console.log('Disconnected from server. Please refresh.');
+        //newGame.reconnectWebSocket();
     }
 
     aisocket.onerror = function (event) {
@@ -129,15 +127,7 @@ function connect(newGame, uiUpdater) {
         };
 
         if (aisocket.readyState === 1) {
-            if(returnedPong === false) {
-                console.log("AI didnt answer to the ping. Reconnecting...");
-                clearInterval(ping);
-                aisocket.close();   //onlclose will handle reconnecting.
-            } else {
-                returnedPong = false;
-                aisocket.send(JSON.stringify(msg));
-                console.log("ping");
-            }
+            aisocket.send(JSON.stringify(msg));
         }
     }
 }
