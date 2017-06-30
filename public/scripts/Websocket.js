@@ -131,6 +131,7 @@ function connect(newGame, uiUpdater) {
         if (aisocket.readyState === 1) {
             if(returnedPong === false) {
                 console.log("AI didnt answer to the ping. Reconnecting...");
+                clearInterval(ping);
                 aisocket.close();   //onlclose will handle reconnecting.
             } else {
                 returnedPong = false;
