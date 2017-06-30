@@ -267,7 +267,7 @@ class UIUpdater {
     itIsAIsTurn() {
         this.showNotification("It is AI's turn!");
         this.setNewFunctionToNotification(() => {
-            this.enableButtons();
+            //this.enableButtons();
             this.showUndoAndResignButtons();
         });
     }
@@ -277,6 +277,7 @@ class UIUpdater {
         this.setNewFunctionToNotification(() => {
             this.enableButtons();
             this.showUndoAndResignButtons();
+
         });
     }
 
