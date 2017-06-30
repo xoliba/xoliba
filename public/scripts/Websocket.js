@@ -93,7 +93,7 @@ function connect(newGame, uiUpdater) {
         if (msg.type === "startRound") {
             console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
             newGame.aiSurrender(msg.surrender, msg.color, msg.msgId);
-        } else if(msg.type === "TurnData") {
+        } else if(msg.type === "turnData" || msg.type === "TurnData") {
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
             newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender, msg.msgId);
         } else if(msg.type === "pong") {
