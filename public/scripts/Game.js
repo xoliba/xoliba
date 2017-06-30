@@ -24,9 +24,10 @@ let firstTurn;
 let aiDifficulty1;
 let aiDifficulty2;
 let playerPlays;
-let gameId;
+let msgId;
 
 //todo after one game completely new one is about to begin, not just another round
+//todo this class also handles valdating the messages (old messages are rejected). But we are running out of time and cant implement it in a clever way.
 class Game {
 
     //todo refactor more sense to these constructor parameters
@@ -58,8 +59,8 @@ class Game {
         this.playerColor = playerColor;
         this.aiColor = this.playerColor * -1;
         console.log("playerColor " + playerColor + ", scoreLimit " + scoreLimit);
-        this.gameId = Date.now();
-        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit, this.gameId);
+        this.msgId = Date.now();
+        this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty1, this.scoreLimit, this.msgId);
         return this;
     }
 
@@ -122,7 +123,13 @@ class Game {
         }
     }
 
-    aiSurrender(surrender, color) {
+    aiSurrender(surrender, color, msgId) {
+        if(msgId !== this.msgId) {
+            console.log("got message with wrong ID: " + msgId + " =/= " + this.msgId);
+            msgId = Date.now();
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit, this.msgId);
+        }
+        msgId = Date.now();
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender) {
             this.calculateSurrenderPoints(this.aiColor);
@@ -133,10 +140,13 @@ class Game {
         }
     }
 
-    aiTurn(didMove, start, target, corners, surrender, gameId) {
-        /*if(gameId !== this.gameId) {
+    aiTurn(didMove, start, target, corners, surrender, msgId) {
+        if(msgId !== this.msgId) {
+            console.log("got message with wrong ID: " + msgId + " =/= " + this.msgId);
+            msgId = Date.now();
             this.sendTurnDataToAI(this.playerWantsToSurrender, this.turn);
-        }*/ //this is not working yet (not implemented on AI side)
+        }
+        msgId = Date.now();
         this.uiUpdater.stopAiIsThinkingInterval();
         if (surrender && this.playerWantsToSurrender) {
             this.calculatePoints();
@@ -147,10 +157,6 @@ class Game {
         else {
             this.turnHandler.aiTurn(didMove, start, target, corners);
         }
-    }
-
-    regenerateGameId() {
-        this.gameId = Date.now();
     }
 
     resendTurnDataToAI() {
@@ -217,8 +223,8 @@ class Game {
         if (!this.playerPlays && c === 1) {
             dif = this.aiDifficulty2;
         }
-        this.gameId = Date.now();
-        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit, this.gameId);
+        this.msgId = Date.now();
+        this.socket.sendTurnData(this.board.gameboardTo2dArray(), c, surrender, dif, this.turnCounter, this.redPoints, this.bluePoints, this.scoreLimit, this.msgId);
     }
 
     //todo rename 'turn counter' to a more informative option
@@ -324,8 +330,8 @@ class Game {
         this.playerHasAnsweredStartRound = false;
         this.aiHasAnsweredStartRound = false;
         if (this.playerPlays) {
-            this.gameId = Date.now();
-            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit, this.gameId);
+            this.msgId = Date.now();
+            this.socket.sendStartRound(this.board.gameboardTo2dArray(), this.aiColor, this.aiDifficulty, this.scoreLimit, this.msgId);
             this.uiUpdater.showStartRoundAndSurrenderButtons();
         } else {
             this.sendStartRoundToTwoAIs();

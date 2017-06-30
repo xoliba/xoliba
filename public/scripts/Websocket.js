@@ -11,7 +11,7 @@ class AiSocket {
         connect(newGame, new UIUpdater());
     }
 
-    sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit, gameId) {
+    sendTurnData(table, aiColor, giveUp, difficulty, turnCounter, redpoints, bluepoints, scorelimit, msgId) {
         let msg = {
             type: "turnData",
             board: table,
@@ -25,13 +25,14 @@ class AiSocket {
             redPoints: redpoints,
             bluePoints: bluepoints,
             scoreLimit: scorelimit,
-            gameId: gameId
+            msgId: msgId
         };
-        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit + 'gameId sent ' + gameId);
+        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit + 'msgId sent ' + msgId);
+        
         aisocket.send(JSON.stringify(msg));
     }
 
-    sendStartRound(table, aiColor, difficulty, scoreLimit, gameId) {
+    sendStartRound(table, aiColor, difficulty, scoreLimit, msgId) {
         let msg = {
             type: "startRound",
             board: table,
@@ -42,7 +43,7 @@ class AiSocket {
             surrender: null,
             difficulty: difficulty,
             scoreLimit: scoreLimit,
-            gameId: gameId
+            msgId: msgId
         };
         this.waitForSocketToBeOpenBeforeSendingStartRound(msg);
     }
@@ -91,12 +92,12 @@ function connect(newGame, uiUpdater) {
 
         if (msg.type === "startRound") {
             console.log("got starting round info from AI:\nsurrender: " + msg.surrender + " ai color " + msg.color);
-            newGame.aiSurrender(msg.surrender, msg.color);
+            newGame.aiSurrender(msg.surrender, msg.color, msg.msgId);
         } else if(msg.type === "TurnData") {
             console.log("AI did move " + msg.didMove + "; start " + msg.start + "; target " + msg.target + "; corners " + msg.corners + "; surrender " + msg.surrender);
-            newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender);
+            newGame.aiTurn(msg.didMove, msg.start, msg.target, msg.corners, msg.surrender, msg.msgId);
         } else if(msg.type === "pong") {
-            //returnedPong = true;
+            returnedPong = true;
             console.log("Pong!");
         } else console.log("Unknown message received: " + event.data);
     };
@@ -108,15 +109,14 @@ function connect(newGame, uiUpdater) {
     }
 
     aisocket.onclose = function(e) {
-        newGame.regenerateGameId(); //Abort all incoming boards: we are going to reconnect anyway!
         uiUpdater.stopAiIsThinkingInterval();
         uiUpdater.disconnectionError();
         uiUpdater.reconnectTry();
-        console.log('Socket is closed. Reconnecting in 5sec...');
+        console.log('Socket is closed. Reconnecting in 6sec...');
         setTimeout(function() {
             connect(newGame, uiUpdater);
             newGame.resendTurnDataToAI;
-        }, 5000)
+        }, 6000)
     }
 
     aisocket.onerror = function (event) {
@@ -130,7 +130,7 @@ function connect(newGame, uiUpdater) {
 
         if (aisocket.readyState === 1) {
             if(returnedPong === false) {
-                console.log("Hey holy shit there is dc");
+                console.log("AI didnt answer to the ping. Reconnecting...");
                 aisocket.close();   //onlclose will handle reconnecting.
             } else {
                 returnedPong = false;
