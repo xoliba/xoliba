@@ -27,7 +27,8 @@ class AiSocket {
             scoreLimit: scorelimit,
             msgId: msgId
         };
-        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit + 'msgId sent ' + msgId);
+        console.log("send turnData: ai color " + aiColor + " surrender " + giveUp + " difficulty " + difficulty + " without hits " + turnCounter + " red points " + redpoints + " blue points " + bluepoints + " score limit " + scorelimit +
+            ' msgId sent ' + msgId);
         
         aisocket.send(JSON.stringify(msg));
     }
