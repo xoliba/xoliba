@@ -138,3 +138,15 @@ ul {
 a {
     text-decoration: none;
 }
+
+.credits {
+    color: #818181;
+    position: absolute;
+    display: block;
+    bottom: 7vh;
+    left: 0.5vw;
+    font-size: 2vh;
+    overflow-x: hidden;
+    white-space: nowrap;
+    cursor: default;
+}
