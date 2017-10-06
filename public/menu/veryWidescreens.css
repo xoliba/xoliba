@@ -50,4 +50,11 @@
         top: 18vw;
         left: 9%;
     }
+
+    #Help {
+        top: 35vw;
+        left: 8vw;
+        width: 9vw;
+        height: 3vw;
+    }
 }

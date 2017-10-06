@@ -46,7 +46,7 @@
     }
 
     #undo {
-        top: 12vh;
+        top: 6vh;
         height: 8vw;
         width: 8vw;
         left: 46vw;
@@ -59,5 +59,13 @@
         width: 8vw;
         padding: 0;
 
+    }
+
+    #Help {
+        left: 46vw;
+        width: 8vw;
+        top: 18vh;
+        height: 5vw;
+        font-size: 2.5vw;
     }
 }

@@ -10,4 +10,5 @@
 @import "./console/infoConsole.css";
 @import "./turnindicators/turnindicators.css";
 @import "./Coordinates/coordinates.css";
-@import "./logos/logos.css"
+@import "./helpPopup/help.css";
+@import "./logos/logos.css";
