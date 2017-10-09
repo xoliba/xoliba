@@ -29,7 +29,11 @@ dragger.onmousedown = function(event) {
     }
 
     function onMouseMove(event) {
-        moveAt(event.pageX, event.pageY);
+        if(event.pageX > 0 && event.pageX < window.innerWidth - 20 && event.pageY > 0 && event.pageY < window.innerHeight){
+            moveAt(event.pageX, event.pageY);
+        } else {
+            popup.onmouseup();
+        }
     }
 
     document.addEventListener('mousemove', onMouseMove);
