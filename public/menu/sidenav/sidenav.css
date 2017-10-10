@@ -149,4 +149,5 @@ a {
     overflow-x: hidden;
     white-space: nowrap;
     cursor: default;
+    word-wrap: normal;
 }
