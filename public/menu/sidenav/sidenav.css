@@ -145,9 +145,8 @@ a {
     display: block;
     bottom: 7vh;
     left: 0.5vw;
-    font-size: 2vh;
-    overflow-x: hidden;
+    font-size: .7em;
+    overflow-x: visible;
     white-space: nowrap;
     cursor: default;
-    word-wrap: normal;
 }
